@@ -1,1 +1,0 @@
-ALTER TABLE event_cursors ADD COLUMN IF NOT EXISTS failures integer NOT NULL DEFAULT 0;

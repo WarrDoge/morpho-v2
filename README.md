@@ -7,21 +7,29 @@ growing transcript. See `SPEC.md` for the architecture.
 ## Run
 
 ```
-cp .env.example .env            # set DEEPINFRA_API_KEY
-docker compose up -d db          # Postgres 17 + pgvector
-uv sync
-WORKER_INPROCESS=true uv run uvicorn app.api.main:app
-uv run python scripts/chat.py    # REPL; "/cycle" forces consolidation + reflection
+cp .env.example .env     # set DEEPINFRA_API_KEY
+just run                 # serves http://127.0.0.1:8000, state in ./data (MORPHO_DATA_DIR)
+curl -s localhost:8000/interact -H 'content-type: application/json' -d '{"text": "Hi, I am Dana."}'
 ```
 
-Separate worker: `uv run python -m app.workers.run` (drop `WORKER_INPROCESS`).
+The background worker runs in-process (`WORKER_INPROCESS=true` by default) and polls every
+`WORKER_POLL_SECONDS`. `POST /admin/cycle?reflect=true` forces consolidation + reflection now.
+
+## Storage
+
+One data directory, two files. `journal.jsonl` is append-only and is the only source of truth:
+events, commits (proposal + transitions with before/after images + vector slots), cursor moves and
+snapshots, one JSON record per line, synced on every append. `vectors.f32` holds embeddings at a
+fixed stride and is memory-mapped for the cosine scans. All derived state is folded from the journal
+into memory at startup; the same `apply` runs for a live commit and for the fold, so the journal is
+the audit log, the crash-recovery source and the time-travel replay (`snapshots::replay`) at once.
+A torn final line is dropped on open.
 
 ## Inspect
 
 `GET /state /events /memories /beliefs /goals /predictions /entities /relationships /proposals
 /transitions /snapshots`, `GET /why/{id}` (provenance chain), `GET /context/preview?text=...`,
-`POST /admin/cycle?reflect=true`. Rebuild derived state from the transition log:
-`uv run python -m scripts.replay`.
+`POST /admin/cycle?reflect=true`.
 
 ## Guards in the state engine
 
@@ -29,30 +37,31 @@ Separate worker: `uv run python -m app.workers.run` (drop `WORKER_INPROCESS`).
   is folded into the existing row as a reinforcement; the proposal is recorded with reason
   `folded into <id>`. A `create_goal` whose description matches a live goal is rejected.
 - `set_working_state` and `update_self_state` are patch merges with optional `expected_version`.
-- Worker cycles are serialised with a Postgres advisory lock. A consumer batch that raises is
-  retried on the next cycle and skipped after `CONSUMER_MAX_FAILURES` (default 3).
+- Worker cycles are single-flight (a cycle that finds one running returns `{}`). A consumer batch
+  that fails is retried on the next cycle and skipped after `CONSUMER_MAX_FAILURES` (default 3).
 
 ## Evaluate
 
 ```
-uv run python -m evals.run evals/scenarios/dana.json --label base          # live, records LLM cache
-uv run python -m evals.run evals/scenarios/dana.json --control --label base
-uv run python -m evals.run evals/scenarios/dana.json --strict --baseline evals/results/dana.base.json
-uv run python -m evals.gen_long                                            # regenerates long.json
+just record dana                     # live: runs the scenario and records every LLM call
+just eval dana --control --label base
+just replay dana                     # strict replay against evals/results/dana.base.json
+just gate                            # all six baselines
 ```
 
 Scenarios are JSON turns tagged `fact | update | distractor | goal | probe`; probes carry `expect`
 (AND of OR keyword groups), `reject`, and `refs` (planting turns). Every LLM call is cached in
-`evals/cache/` keyed by prompt, and ids are seeded, so a replay is free and deterministic. A structural
-refactor that leaves prompts unchanged must pass `--strict --baseline` (zero cache misses, no metric
-worse); a prompt change misses the cache and needs a live re-record. `--control` runs a stateless
-transcript-stuffing bot on the same probes under the same token budget: the harness should match it on
-the 30-turn scenarios and beat it on `long`. `uv run pytest` replays every `evals/results/*.base.json`.
+`evals/cache/` (git-ignored, ~17 MB) keyed by prompt, and ids are seeded, so a replay is free and
+deterministic. A structural refactor that leaves prompts unchanged must pass `--strict --baseline`
+(zero cache misses, no metric worse); a prompt change misses the cache and needs a live re-record.
+`--control` runs a stateless transcript-stuffing bot on the same probes under the same token budget:
+the harness should match it on the 30-turn scenarios and beat it on `long`. `cargo test` replays
+every `evals/results/*.base.json` whose cache is present.
 
 ## Develop
 
 ```
-uv run ruff check && uv run ruff format --check && uv run ty check
-uv run pytest            # needs the compose db; uses a fake LLM
-uv run pytest -m live    # real DeepInfra: schema smoke + 10-turn scenario (minutes)
+just check     # fmt --check, clippy -D warnings, unit + integration tests, replay gate
 ```
+
+The toolchain is pinned in `rust-toolchain.toml`; `rustup` installs it on first use.
