@@ -1,143 +1,191 @@
-//! Worker semantics: retry, poison batches, single-flight cycles, reflection verifying predictions.
-
 mod common;
-
 use chrono::Duration;
 use common::{event, fake, services};
-use morpho::agents::memory::{MemoryDecision, NewMemory};
-use morpho::agents::reflection::{Reflection, Verification};
-use morpho::context::composer::compose_text;
-use morpho::pyfmt::{iso, now};
-use morpho::state::engine::commit;
-use morpho::state::models::Proposal;
-use morpho::worker::cycle;
-use serde_json::json;
-
-fn decision(summary: &str) -> MemoryDecision {
-    MemoryDecision {
-        new_memories: vec![NewMemory {
-            summary: summary.into(),
-            importance: 0.8,
-            confidence: 0.9,
-            entities: vec![],
-        }],
-        reinforce: vec![],
-    }
-}
-
-fn memories(svc: &morpho::Services) -> usize {
-    svc.store.lock().unwrap().state.table("memories").rows.len()
-}
+use morpho::{
+    agents::{
+        reflection::{Reflection, Verification},
+        self_model::SelfPatch,
+    },
+    context::composer::compose_text,
+    interact::interact,
+    pyfmt::{iso, now},
+    state::{engine::commit, models::Proposal},
+    worker::{commit_all, cycle},
+};
+use serde_json::{Value, json};
 
 #[tokio::test]
-async fn failed_batch_is_retried() {
-    let svc = services("retry");
-    event(&svc, "I moved to Berlin");
-    fake(&svc).fail("boom");
-    cycle(&svc, false).await.unwrap();
-    assert_eq!(svc.store.lock().unwrap().state.cursor("memory"), 0);
-    assert_eq!(memories(&svc), 0);
-    fake(&svc).queue("MemoryDecision", decision("User moved to Berlin"));
-    cycle(&svc, false).await.unwrap();
-    assert_eq!(svc.store.lock().unwrap().state.cursor("memory"), 1);
-    assert_eq!(memories(&svc), 1);
-}
-
-#[tokio::test]
-async fn poison_batch_skipped_after_max_failures() {
-    let svc = services("poison");
-    event(&svc, "poison");
-    for _ in 0..2 {
-        fake(&svc).fail("boom");
-        cycle(&svc, false).await.unwrap();
-        assert_eq!(svc.store.lock().unwrap().state.cursor("memory"), 0);
-    }
-    fake(&svc).fail("boom");
-    cycle(&svc, false).await.unwrap();
-    assert_eq!(svc.store.lock().unwrap().state.cursor("memory"), 1);
-    assert_eq!(memories(&svc), 0);
-    event(&svc, "fine now");
-    fake(&svc).queue("MemoryDecision", decision("All fine"));
-    cycle(&svc, false).await.unwrap();
-    assert_eq!(memories(&svc), 1);
-}
-
-#[tokio::test]
-async fn concurrent_cycles_process_each_event_once() {
-    let svc = services("concurrent");
-    event(&svc, "once");
-    fake(&svc).queue("MemoryDecision", decision("Said once"));
-    let (a, b) = tokio::join!(cycle(&svc, false), cycle(&svc, false));
-    a.unwrap();
-    b.unwrap();
-    assert_eq!(memories(&svc), 1);
-    let st = svc.store.lock().unwrap();
-    assert_eq!(
-        st.state
-            .proposals
+async fn failed_maintenance_keeps_progress_and_retries_atomically() {
+    let svc = services("maintenance-retry");
+    event(&svc, "evidence");
+    fake(&svc).fail("temporary failure");
+    assert!(cycle(&svc, true).await.is_err());
+    assert_eq!(svc.store.lock().unwrap().state.cursor("reflection"), 0);
+    assert!(svc.store.lock().unwrap().state.snapshots.is_empty());
+    assert!(
+        svc.store
+            .lock()
+            .unwrap()
+            .state
+            .events
             .iter()
-            .filter(|p| p["agent"] == "memory")
-            .count(),
-        1
+            .any(|e| e["type"] == "runtime_failure")
     );
+    cycle(&svc, true).await.unwrap();
+    assert_eq!(svc.store.lock().unwrap().state.cursor("reflection"), 2);
+    assert_eq!(svc.store.lock().unwrap().state.snapshots.len(), 1);
+    let calls = fake(&svc).calls_for("Reflection");
+    assert!(calls.last().unwrap().contains("temporary failure"));
+    cycle(&svc, false).await.unwrap();
+    assert_eq!(fake(&svc).calls_for("Reflection").len(), calls.len());
 }
 
 #[tokio::test]
-async fn reflection_verifies_due_predictions_and_snapshots() {
-    let svc = services("predict");
-    let eid = event(&svc, "It will rain tomorrow");
-    let deadline = iso(&(now() - Duration::days(1)));
+async fn due_predictions_trigger_after_event_cursor_is_caught_up() {
+    let svc = services("idle-prediction");
+    let eid = event(&svc, "rain observation");
+    cycle(&svc, true).await.unwrap();
     let p = Proposal::new(
         "reflection",
         "create_prediction",
-        json!({"prediction": "rain", "probability": 0.7, "deadline": deadline}),
+        json!({"prediction":"rain","probability":0.7,"deadline":iso(&(now()-Duration::days(1)))}),
     )
     .evidence(vec![eid.clone()]);
-    let pid = commit(&svc.store, &svc.llm, &[p], None).await.unwrap()[0].object_ids[0].clone();
+    let id = commit(&svc.store, &svc.llm, &[p], None).await.unwrap()[0].object_ids[0].clone();
     fake(&svc).queue(
         "Reflection",
         Reflection {
             verifications: vec![Verification {
-                prediction_id: pid.clone(),
+                prediction_id: id.clone(),
                 verified: true,
                 evidence_ids: vec![eid],
             }],
             ..Default::default()
         },
     );
-    let stats = cycle(&svc, true).await.unwrap();
-    assert_eq!(stats["snapshot"], json!(1));
-    let st = svc.store.lock().unwrap();
-    let row = st.state.get("predictions", &pid).unwrap();
-    assert_eq!(row["verified"], json!(true));
-    assert!(row["verified_at"].is_string());
-    assert_eq!(row["version"], json!(2));
-    assert_eq!(st.snapshots(5).unwrap().len(), 1);
+    let stats = cycle(&svc, false).await.unwrap();
+    assert_eq!(stats["snapshot"], 2);
+    assert_eq!(
+        svc.store
+            .lock()
+            .unwrap()
+            .state
+            .get("predictions", &id)
+            .unwrap()["verified"],
+        true
+    );
+    let count = fake(&svc).calls_for("Reflection").len();
+    cycle(&svc, false).await.unwrap();
+    assert_eq!(fake(&svc).calls_for("Reflection").len(), count);
+}
+
+fn respond(system: &str, _user: &str, _schema: &str) -> Value {
+    json!({"response":if system.contains("weather_uncertainty_observed") {"I need a fresh observation before answering."} else {"It will rain."},"changes":[]})
 }
 
 #[tokio::test]
-async fn context_stays_within_budget() {
-    let svc = services("budget");
-    let eid = event(&svc, "start");
-    let proposals: Vec<Proposal> = (0..40)
+async fn idle_self_revision_causally_changes_next_response_and_is_single_flight() {
+    let svc = services("causal");
+    *fake(&svc).respond.lock().unwrap() = Some(respond);
+    let before = interact(&svc, "Will it rain?", None).await.unwrap();
+    fake(&svc).queue(
+        "Reflection",
+        Reflection {
+            self_model: Some(SelfPatch {
+                uncertainties: vec!["weather_uncertainty_observed".into()],
+                ..Default::default()
+            }),
+            ..Default::default()
+        },
+    );
+    fake(&svc)
+        .delay_ms
+        .store(20, std::sync::atomic::Ordering::Relaxed);
+    let (a, b) = tokio::join!(cycle(&svc, true), cycle(&svc, true));
+    a.unwrap();
+    b.unwrap();
+    assert_eq!(fake(&svc).calls_for("Reflection").len(), 1);
+    let after = interact(&svc, "Will it rain?", None).await.unwrap();
+    assert_eq!(before["response"], "It will rain.");
+    assert_eq!(
+        after["response"],
+        "I need a fresh observation before answering."
+    );
+    assert_eq!(svc.store.lock().unwrap().state.self_state["version"], 2);
+}
+
+#[tokio::test]
+async fn excess_proposals_are_retained_and_background_budget_is_durable() {
+    let svc = services("retention");
+    let eid = event(&svc, "explicit requests");
+    let proposals = (0..51)
         .map(|i| {
-            Proposal::new("memory", "create_memory", json!({"summary": format!("Fact number {i} about the user's long and detailed life story")}))
-                .evidence(vec![eid.clone()])
+            Proposal::new(
+                "interaction",
+                "create_goal",
+                json!({"description":format!("request {i}")}),
+            )
+            .evidence(vec![eid.clone()])
         })
         .collect();
-    commit(&svc.store, &svc.llm, &proposals, None)
+    let stats = commit_all(&svc, proposals, None).await.unwrap();
+    assert_eq!(stats["accepted"], 51);
+    assert_eq!(svc.store.lock().unwrap().state.proposals.len(), 51);
+    let key = format!("maintenance_tokens:{}", now().format("%Y-%m-%d"));
+    svc.store
+        .lock()
+        .unwrap()
+        .set_metadata(&key, "100000")
+        .unwrap();
+    assert_eq!(
+        cycle(&svc, true).await.unwrap()["maintenance"],
+        "daily token budget exhausted"
+    );
+    assert!(fake(&svc).calls_for("Reflection").is_empty());
+}
+
+#[tokio::test]
+async fn context_manifest_tracks_skipped_long_rows() {
+    let svc = services("context-manifest");
+    let eid = event(&svc, "reference");
+    let long = Proposal::new(
+        "interaction",
+        "create_memory",
+        json!({"summary":"reference ".repeat(600),"importance":1.0}),
+    )
+    .evidence(vec![eid.clone()]);
+    let short = Proposal::new(
+        "interaction",
+        "create_memory",
+        json!({"summary":"reference short","importance":0.1}),
+    )
+    .evidence(vec![eid]);
+    let ids = commit(&svc.store, &svc.llm, &[long, short], None)
         .await
         .unwrap();
-    for i in 0..15 {
-        event(&svc, &format!("{i} {}", "long message ".repeat(40)));
+    let (text, manifest) = compose_text(&svc, "reference", Some(400)).await.unwrap();
+    assert!(!text.contains(&ids[0].object_ids[0]));
+    assert!(text.contains(&ids[1].object_ids[0]));
+    assert_eq!(manifest["memories"][0]["id"], ids[1].object_ids[0]);
+    assert!(manifest["tokens"].as_u64().unwrap() <= 400);
+}
+
+#[tokio::test]
+async fn paused_input_does_not_block_idle_learning_or_leak_queued_text() {
+    let svc = services("paused-maintenance");
+    morpho::interact::enqueue(&svc, "unconsumed secret", None, "alice", Some("paused")).unwrap();
+    fake(&svc).fail("observed provider failure");
+    assert!(morpho::interact::process_next(&svc).await.is_err());
+    {
+        let st = svc.store.lock().unwrap();
+        futures_executor::block_on(st.db.execute("UPDATE inbox SET attempts=3", ())).unwrap();
     }
-    let (_, manifest) = compose_text(&svc, "life story", Some(600)).await.unwrap();
-    assert!(manifest["tokens"].as_u64().unwrap() <= 600);
-    assert!(
-        manifest["sections"]["memories"]["dropped"]
-            .as_u64()
-            .unwrap()
-            > 0
+    cycle(&svc, true).await.unwrap();
+    let prompt = &fake(&svc).calls_for("Reflection")[0];
+    assert!(prompt.contains("observed provider failure"));
+    assert!(!prompt.contains("unconsumed secret"));
+    assert_eq!(
+        morpho::interact::request(&svc, "paused").unwrap()["status"],
+        "paused"
     );
-    assert!(manifest["sections"]["recent"]["included"].as_u64().unwrap() > 0);
 }

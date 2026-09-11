@@ -192,25 +192,27 @@ impl State {
         q: &[f32],
         k: usize,
         statuses: Option<&[&str]>,
-    ) -> Vec<Row> {
+    ) -> anyhow::Result<Vec<Row>> {
         let t = self.table(table);
+        let distances = vectors.distances(q)?;
         let mut hits: Vec<(usize, f64)> = t
             .rows
             .iter()
             .enumerate()
             .filter(|(_, r)| has_status(r, statuses))
             .filter_map(|(i, r)| self.slots.get(s(&r["id"])).map(|&slot| (i, slot)))
-            .map(|(i, slot)| (i, 1.0 - vectors.similarity(slot, q)))
+            .map(|(i, slot)| (i, distances[&slot]))
             .collect();
         hits.sort_by(|a, b| a.1.total_cmp(&b.1).then(a.0.cmp(&b.0)));
-        hits.into_iter()
+        Ok(hits
+            .into_iter()
             .take(k)
             .map(|(i, dist)| {
                 let mut r = t.rows[i].clone();
                 r.insert("relevance".into(), json!(relevance(1.0 - dist)));
                 r
             })
-            .collect()
+            .collect())
     }
 
     pub fn singleton(&self, name: &str) -> &Row {

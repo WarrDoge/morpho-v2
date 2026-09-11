@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use std::sync::{LazyLock, Mutex};
 use std::time::Duration;
 
-use anyhow::{Result, anyhow, bail};
+use anyhow::{Result, anyhow, bail, ensure};
 use regex::Regex;
 use serde::{Serialize, de::DeserializeOwned};
 use serde_json::{Value, json};
@@ -27,11 +27,7 @@ macro_rules! schema {
         };
     };
 }
-schema!(INTERPRETATION, "Interpretation");
-schema!(MEMORY_DECISION, "MemoryDecision");
-schema!(BELIEF_DECISION, "BeliefDecision");
-schema!(GOAL_REVIEW, "GoalReview");
-schema!(SELF_PATCH, "SelfPatch");
+schema!(TURN, "Turn");
 schema!(CONSOLIDATION, "Consolidation");
 schema!(REFLECTION, "Reflection");
 
@@ -72,6 +68,7 @@ pub struct DeepInfra {
     key: String,
     model: String,
     embed_model: String,
+    counts: Mutex<Counts>,
 }
 
 impl Default for DeepInfra {
@@ -85,37 +82,29 @@ impl DeepInfra {
         let s = settings();
         DeepInfra {
             http: reqwest::Client::builder()
-                .timeout(Duration::from_secs(600))
+                .timeout(Duration::from_secs(120))
                 .build()
                 .unwrap(),
             base: s.llm_base_url.clone(),
             key: s.deepinfra_api_key.clone(),
             model: s.llm_model.clone(),
             embed_model: s.embed_model.clone(),
+            counts: Mutex::new(Counts::default()),
         }
     }
 
     async fn post(&self, path: &str, body: &Value) -> Result<Value> {
-        let mut last = anyhow!("no attempts");
-        for attempt in 0..3u32 {
-            let req = self
-                .http
-                .post(format!("{}{path}", self.base))
-                .bearer_auth(&self.key);
-            match req.json(body).send().await {
-                Ok(r) if r.status().is_success() => return Ok(r.json().await?),
-                Ok(r)
-                    if r.status().is_server_error()
-                        || [408, 409, 429].contains(&r.status().as_u16()) =>
-                {
-                    last = anyhow!("{} {}", r.status(), r.text().await.unwrap_or_default());
-                }
-                Ok(r) => bail!("{} {}", r.status(), r.text().await.unwrap_or_default()),
-                Err(e) => last = e.into(),
-            }
-            tokio::time::sleep(Duration::from_secs(1 << attempt)).await;
-        }
-        Err(last)
+        // Durable inbox/maintenance retries own recovery; do not repeat billable calls invisibly.
+        Ok(self
+            .http
+            .post(format!("{}{path}", self.base))
+            .bearer_auth(&self.key)
+            .json(body)
+            .send()
+            .await?
+            .error_for_status()?
+            .json()
+            .await?)
     }
 
     pub async fn chat(&self, system: &str, user: &str, schema: Option<&Schema>) -> Result<String> {
@@ -123,6 +112,7 @@ impl DeepInfra {
             "model": self.model,
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
             "reasoning_effort": "low",
+            "max_tokens": settings().max_completion_tokens,
         });
         if let Some(s) = schema {
             body["response_format"] = json!({
@@ -134,20 +124,61 @@ impl DeepInfra {
                 },
             });
         }
+        self.counts.lock().unwrap().llm_calls += 1;
         let v = self.post("/chat/completions", &body).await?;
-        Ok(v["choices"][0]["message"]["content"]
+        {
+            let mut c = self.counts.lock().unwrap();
+            let reported = v["usage"]["prompt_tokens"].as_u64();
+            c.prompt_tokens += reported.unwrap_or_else(|| {
+                prompt_tokens(system, user) + schema.map_or(0, |s| s.json.len() as u64 / 4)
+            });
+            c.completion_tokens += v["usage"]["completion_tokens"].as_u64().unwrap_or(0);
+            c.usage_reported_calls += u64::from(reported.is_some());
+            c.provider_prompt_tokens += reported.unwrap_or(0);
+            c.provider_completion_tokens += v["usage"]["completion_tokens"].as_u64().unwrap_or(0);
+        }
+        ensure!(
+            v["choices"][0]["finish_reason"] != "length",
+            "completion reached MAX_COMPLETION_TOKENS; increase the limit or request fewer changes"
+        );
+        v["choices"][0]["message"]["content"]
             .as_str()
-            .unwrap_or("")
-            .to_string())
+            .filter(|s| !s.is_empty())
+            .map(String::from)
+            .ok_or_else(|| anyhow!("missing or empty completion content"))
     }
 
     pub async fn embed(&self, texts: &[String]) -> Result<Vec<Vec<f32>>> {
+        self.counts.lock().unwrap().embed_calls += 1;
         let body = json!({"model": self.embed_model, "input": texts});
         let v = self.post("/embeddings", &body).await?;
         let data = v["data"]
             .as_array()
             .ok_or_else(|| anyhow!("bad embeddings response"))?;
-        Ok(data.iter().map(|d| floats(&d["embedding"])).collect())
+        ensure!(
+            data.len() == texts.len(),
+            "embedding response count mismatch"
+        );
+        let mut ordered: Vec<Option<Vec<f32>>> = vec![None; texts.len()];
+        for item in data {
+            let index = item["index"]
+                .as_u64()
+                .ok_or_else(|| anyhow!("missing embedding index"))?
+                as usize;
+            ensure!(
+                index < texts.len() && ordered[index].is_none(),
+                "invalid or duplicate embedding index"
+            );
+            ordered[index] = Some(floats(&item["embedding"]));
+        }
+        let vectors: Vec<Vec<f32>> = ordered.into_iter().map(Option::unwrap).collect();
+        ensure!(
+            vectors
+                .iter()
+                .all(|v| v.len() == settings().embed_dim && v.iter().all(|x| x.is_finite())),
+            "invalid embedding dimensions or values"
+        );
+        Ok(vectors)
     }
 }
 
@@ -165,6 +196,10 @@ pub struct Counts {
     pub llm_calls: u64,
     pub embed_calls: u64,
     pub prompt_tokens: u64,
+    pub completion_tokens: u64,
+    pub usage_reported_calls: u64,
+    pub provider_prompt_tokens: u64,
+    pub provider_completion_tokens: u64,
     pub cache_misses: u64,
 }
 
@@ -178,11 +213,17 @@ pub struct Recording {
     inner: Option<DeepInfra>,
     path: PathBuf,
     strict: bool,
+    legacy_control: bool,
     rec: Mutex<RecInner>,
 }
 
 impl Recording {
-    pub fn new(inner: Option<DeepInfra>, path: PathBuf, strict: bool) -> Result<Self> {
+    pub fn new(
+        inner: Option<DeepInfra>,
+        path: PathBuf,
+        strict: bool,
+        legacy_control: bool,
+    ) -> Result<Self> {
         let cache = if path.exists() {
             serde_json::from_str(&std::fs::read_to_string(&path)?)?
         } else {
@@ -197,12 +238,44 @@ impl Recording {
             inner,
             path,
             strict,
+            legacy_control,
             rec,
         })
     }
 
     pub fn counts(&self) -> Counts {
-        self.rec.lock().unwrap().counts
+        let mut counts = self.rec.lock().unwrap().counts;
+        if let Some(inner) = &self.inner {
+            let measured = inner.counts.lock().unwrap();
+            counts.usage_reported_calls = measured.usage_reported_calls;
+            counts.provider_prompt_tokens = measured.provider_prompt_tokens;
+            counts.provider_completion_tokens = measured.provider_completion_tokens;
+        }
+        counts
+    }
+
+    fn cache_key(&self, parts: &[&str]) -> String {
+        if self.legacy_control {
+            return key(parts);
+        }
+        let cfg = settings();
+        let model = if parts[0] == "embed" {
+            &cfg.embed_model
+        } else {
+            &cfg.llm_model
+        };
+        let mut hash = Sha256::new();
+        hash.update(
+            serde_json::to_vec(&(
+                model,
+                cfg.embed_dim,
+                cfg.max_completion_tokens,
+                "low",
+                parts,
+            ))
+            .unwrap(),
+        );
+        hex::encode(hash.finalize())
     }
 
     async fn get<F>(&self, key: String, what: impl FnOnce() -> String, fetch: F) -> Result<Value>
@@ -238,7 +311,8 @@ impl Recording {
             r.counts.llm_calls += 1;
             r.counts.prompt_tokens += prompt_tokens(system, user);
         }
-        let k = key(&["json", system, user, schema.json]);
+        self.rec.lock().unwrap().counts.prompt_tokens += schema.json.len() as u64 / 4;
+        let k = self.cache_key(&["json", system, user, schema.json]);
         let fetch = async {
             let content = self
                 .inner
@@ -252,6 +326,7 @@ impl Recording {
         let v = self
             .get(k, || format!("json/{}:\n{user}", schema.name), fetch)
             .await?;
+        self.rec.lock().unwrap().counts.completion_tokens += v.to_string().len() as u64 / 4 + 1;
         Ok(serde_json::from_value(v)?)
     }
 
@@ -261,7 +336,7 @@ impl Recording {
             r.counts.llm_calls += 1;
             r.counts.prompt_tokens += prompt_tokens(system, user);
         }
-        let k = key(&["text", system, user]);
+        let k = self.cache_key(&["text", system, user]);
         let fetch = async {
             Ok(Value::String(
                 self.inner
@@ -274,12 +349,17 @@ impl Recording {
         let v = self
             .get(k, || format!("text:\n{system}\n---\n{user}"), fetch)
             .await?;
+        self.rec.lock().unwrap().counts.completion_tokens +=
+            v.as_str().unwrap_or("").len() as u64 / 4 + 1;
         Ok(v.as_str().unwrap_or("").to_string())
     }
 
     pub async fn embed(&self, texts: &[String]) -> Result<Vec<Vec<f32>>> {
         self.rec.lock().unwrap().counts.embed_calls += 1;
-        let keys: Vec<String> = texts.iter().map(|t| key(&["embed", t])).collect();
+        let keys: Vec<String> = texts
+            .iter()
+            .map(|t| self.cache_key(&["embed", t]))
+            .collect();
         let missing: Vec<String> = {
             let r = self.rec.lock().unwrap();
             texts
@@ -300,7 +380,8 @@ impl Recording {
             let mut r = self.rec.lock().unwrap();
             for (t, v) in missing.iter().zip(vecs) {
                 let rounded: Vec<f64> = v.iter().map(|x| (*x as f64 * 1e6).round() / 1e6).collect();
-                r.cache.insert(key(&["embed", t]), json!(rounded));
+                r.cache
+                    .insert(self.cache_key(&["embed", t]), json!(rounded));
             }
             r.dirty = true;
             drop(r);
@@ -323,6 +404,8 @@ impl Recording {
     }
 }
 
+pub type Responder = fn(&str, &str, &str) -> Value;
+
 /// Queue-driven stand-in for tests: unqueued JSON calls return the schema's default value.
 #[derive(Default)]
 pub struct Fake {
@@ -330,6 +413,8 @@ pub struct Fake {
     pub text: Mutex<VecDeque<String>>,
     pub errors: Mutex<VecDeque<String>>,
     pub calls: Mutex<Vec<(String, String)>>,
+    pub delay_ms: std::sync::atomic::AtomicU64,
+    pub respond: Mutex<Option<Responder>>,
 }
 
 impl Fake {
@@ -382,6 +467,11 @@ impl Llm {
         user: &str,
         schema: &Schema,
     ) -> Result<T> {
+        ensure!(
+            prompt_tokens(system, user) + schema.json.len() as u64 / 4
+                <= settings().max_prompt_tokens,
+            "prompt exceeds MAX_PROMPT_TOKENS"
+        );
         match self {
             Llm::Live(l) => {
                 let content = l.chat(system, user, Some(schema)).await?;
@@ -396,7 +486,11 @@ impl Llm {
                 f.calls
                     .lock()
                     .unwrap()
-                    .push((schema.name.into(), user.into()));
+                    .push((schema.name.into(), format!("{system}\n{user}")));
+                let delay = f.delay_ms.load(std::sync::atomic::Ordering::Relaxed);
+                if delay > 0 {
+                    tokio::time::sleep(Duration::from_millis(delay)).await;
+                }
                 if let Some(e) = f.errors.lock().unwrap().pop_front() {
                     bail!("{e}");
                 }
@@ -408,13 +502,22 @@ impl Llm {
                     .and_then(VecDeque::pop_front);
                 Ok(match queued {
                     Some(v) => serde_json::from_value(v)?,
-                    None => T::default(),
+                    None => match *f.respond.lock().unwrap() {
+                        Some(respond) => {
+                            serde_json::from_value(respond(system, user, schema.name))?
+                        }
+                        None => T::default(),
+                    },
                 })
             }
         }
     }
 
     pub async fn complete_text(&self, system: &str, user: &str) -> Result<String> {
+        ensure!(
+            prompt_tokens(system, user) <= settings().max_prompt_tokens,
+            "prompt exceeds MAX_PROMPT_TOKENS"
+        );
         match self {
             Llm::Live(l) => l.chat(system, user, None).await,
             Llm::Recording(r) => r.complete_text(system, user).await,
@@ -433,20 +536,36 @@ impl Llm {
     }
 
     pub async fn embed(&self, texts: &[String]) -> Result<Vec<Vec<f32>>> {
-        match self {
+        let vectors = match self {
             Llm::Live(l) => l.embed(texts).await,
             Llm::Recording(r) => r.embed(texts).await,
             Llm::Fake(_) => Ok(texts
                 .iter()
                 .map(|t| hash_embedding(t, settings().embed_dim))
                 .collect()),
-        }
+        }?;
+        ensure!(
+            vectors.len() == texts.len()
+                && vectors
+                    .iter()
+                    .all(|v| v.len() == settings().embed_dim && v.iter().all(|x| x.is_finite())),
+            "invalid embedding response count, dimensions or values"
+        );
+        Ok(vectors)
     }
 
     pub fn counts(&self) -> Counts {
         match self {
             Llm::Recording(r) => r.counts(),
-            _ => Counts::default(),
+            Llm::Live(l) => *l.counts.lock().unwrap(),
+            Llm::Fake(f) => {
+                let calls = f.calls.lock().unwrap();
+                Counts {
+                    llm_calls: calls.len() as u64,
+                    prompt_tokens: calls.iter().map(|(_, p)| p.len() as u64 / 4 + 1).sum(),
+                    ..Counts::default()
+                }
+            }
         }
     }
 
@@ -461,6 +580,19 @@ impl Llm {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn modern_cache_preserves_dates_and_namespaces_models() {
+        let path =
+            std::env::temp_dir().join(format!("morpho-key-test-{}.json", std::process::id()));
+        let modern = Recording::new(None, path.clone(), true, false).unwrap();
+        let legacy = Recording::new(None, path, true, true).unwrap();
+        let first = ["embed", "deadline 2026-09-11T12:00:00Z"];
+        let second = ["embed", "deadline 2026-09-12T12:00:00Z"];
+        assert_ne!(modern.cache_key(&first), modern.cache_key(&second));
+        assert_ne!(modern.cache_key(&first), key(&first));
+        assert_eq!(legacy.cache_key(&first), key(&first));
+    }
 
     #[test]
     fn key_vectors() {

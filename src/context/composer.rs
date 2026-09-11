@@ -50,8 +50,8 @@ fn ranked(
     k: usize,
     statuses: &[&str],
     now: &DateTime<Utc>,
-) -> Vec<Row> {
-    let mut rows = st.similar(table, emb, k, Some(statuses));
+) -> Result<Vec<Row>> {
+    let mut rows = st.similar(table, emb, k, Some(statuses))?;
     for r in rows.iter_mut() {
         let sc = score(
             r,
@@ -62,7 +62,7 @@ fn ranked(
         r.insert("score".into(), json!(sc));
     }
     rows.sort_by(|a, b| f(b, "score").total_cmp(&f(a, "score")));
-    rows
+    Ok(rows)
 }
 
 fn data(row: &Row) -> Row {
@@ -87,8 +87,8 @@ pub fn compose(svc: &Services, emb: &[f32], budget: Option<usize>) -> Result<(St
     let st = svc.store.lock().unwrap();
     let working = data(&st.state.working);
     let self_data = data(&st.state.self_state);
-    let mems = ranked(&st, "memories", emb, 20, LIVE_MEMORY, &now);
-    let beliefs = ranked(&st, "beliefs", emb, 10, LIVE_BELIEF, &now);
+    let mems = ranked(&st, "memories", emb, 20, LIVE_MEMORY, &now)?;
+    let beliefs = ranked(&st, "beliefs", emb, 10, LIVE_BELIEF, &now)?;
     let ents: Vec<Row> = working
         .get("active_entities")
         .and_then(Value::as_array)
@@ -194,27 +194,37 @@ pub fn compose(svc: &Services, emb: &[f32], budget: Option<usize>) -> Result<(St
 
     let mut out: Vec<String> = Vec::new();
     let mut manifest = json!({"budget": budget, "sections": {}});
+    let header_tokens: i64 = SECTIONS
+        .iter()
+        .map(|(_, title, _)| tokens(&format!("## {title}\n\n")) as i64)
+        .sum();
+    let content_budget = (budget - header_tokens).max(0);
     let mut carry = 0i64;
+    let mut kept_lines = std::collections::HashMap::new();
     for ((name, title, share), lines) in SECTIONS.iter().zip(&sections) {
-        let section_budget = (budget as f64 * share) as i64 + carry;
+        let section_budget = (content_budget as f64 * share) as i64 + carry;
         let (kept, used, dropped) = fill(lines, section_budget);
         carry = section_budget - used;
         manifest["sections"][*name] =
             json!({"included": kept.len(), "dropped": dropped, "tokens": used});
+        kept_lines.insert(*name, kept.clone());
         if !kept.is_empty() {
             out.push(format!("## {title}\n{}", kept.join("\n")));
         }
     }
     for (name, rows) in [("memories", &mems), ("beliefs", &beliefs)] {
-        let included = manifest["sections"][name]["included"].as_u64().unwrap_or(0) as usize;
         manifest[name] = rows
             .iter()
-            .take(included)
+            .filter(|r| {
+                kept_lines[name]
+                    .iter()
+                    .any(|line| line.starts_with(&format!("[{}]", s(r, "id"))))
+            })
             .map(|r| json!({"id": s(r, "id"), "score": round4(f(r, "score"))}))
             .collect();
     }
     let text = out.join("\n\n");
-    manifest["tokens"] = json!(tokens(&text));
+    manifest["tokens"] = json!(if text.is_empty() { 0 } else { tokens(&text) });
     Ok((text, manifest))
 }
 

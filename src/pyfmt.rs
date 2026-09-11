@@ -149,8 +149,17 @@ fn dump_str(s: &str, out: &mut String) {
     out.push('"');
 }
 
+static EVAL_CLOCK: std::sync::OnceLock<DateTime<Utc>> = std::sync::OnceLock::new();
+
+/// Fix the clock in the standalone scenario runner so recorded state and deadlines replay exactly.
+pub fn set_eval_clock(time: DateTime<Utc>) -> anyhow::Result<()> {
+    EVAL_CLOCK
+        .set(time)
+        .map_err(|_| anyhow::anyhow!("evaluation clock already set"))
+}
+
 pub fn now() -> DateTime<Utc> {
-    let t = Utc::now();
+    let t = EVAL_CLOCK.get().copied().unwrap_or_else(Utc::now);
     t.with_nanosecond(t.timestamp_subsec_micros() * 1000)
         .unwrap_or(t)
 }

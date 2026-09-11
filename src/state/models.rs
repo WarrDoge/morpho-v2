@@ -40,6 +40,8 @@ pub const MESSAGE_TYPES: &[&str] = &["user_message", "assistant_message"];
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Proposal {
+    #[serde(default)]
+    pub reason: Option<String>,
     pub agent: String,
     pub operation: String,
     #[serde(default)]
@@ -55,6 +57,7 @@ pub struct Proposal {
 impl Proposal {
     pub fn new(agent: &str, operation: &str, payload: Value) -> Proposal {
         Proposal {
+            reason: None,
             agent: agent.into(),
             operation: operation.into(),
             target: None,
@@ -62,6 +65,11 @@ impl Proposal {
             evidence: Vec::new(),
             confidence: 0.5,
         }
+    }
+
+    pub fn reason(mut self, reason: &str) -> Self {
+        self.reason = Some(reason.into());
+        self
     }
 
     pub fn target(mut self, t: &str) -> Self {
@@ -297,7 +305,17 @@ fn datetime_opt(name: &str, s: Option<&str>) -> Result<(), String> {
     }
 }
 
-/// pydantic's `PAYLOADS[op].model_validate(payload)`.
+fn parse_patch(payload: &Row) -> Result<StatePatch, String> {
+    if payload.contains_key("patch") {
+        return parse(payload);
+    }
+    // A flat state update is already a patch; keep version guards out of the state data.
+    let mut patch = payload.clone();
+    let version = patch.remove("expected_version").unwrap_or(Value::Null);
+    parse(&obj(json!({"patch":patch,"expected_version":version})))
+}
+
+/// Validate operation fields at the shared proposal boundary.
 pub fn parse_payload(op: &str, payload: &Row) -> Result<Payload, String> {
     Ok(match op {
         "create_memory" => {
@@ -374,8 +392,8 @@ pub fn parse_payload(op: &str, payload: &Row) -> Result<Payload, String> {
             unit("confidence", p.confidence)?;
             Payload::AddRelationship(p)
         }
-        "set_working_state" => Payload::SetWorkingState(parse(payload)?),
-        "update_self_state" => Payload::UpdateSelfState(parse(payload)?),
+        "set_working_state" => Payload::SetWorkingState(parse_patch(payload)?),
+        "update_self_state" => Payload::UpdateSelfState(parse_patch(payload)?),
         other => return Err(format!("unknown operation {other}")),
     })
 }

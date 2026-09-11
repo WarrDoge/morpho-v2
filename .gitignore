@@ -2,3 +2,5 @@
 /data
 .env
 evals/cache/
+/SPEC.md
+/CONVERSATION.md

@@ -21,7 +21,7 @@ pub fn services(name: &str) -> Services {
 }
 
 pub fn fake(svc: &Services) -> &Fake {
-    match &svc.llm {
+    match svc.llm.as_ref() {
         Llm::Fake(f) => f,
         _ => unreachable!(),
     }

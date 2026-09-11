@@ -11,7 +11,7 @@ use serde_json::{Map, Value, json};
 use morpho::Services;
 use morpho::config::settings;
 use morpho::ids::IdGen;
-use morpho::interact::interact;
+use morpho::interact::interact_as;
 use morpho::llm::{DeepInfra, Llm, Recording, is_miss};
 use morpho::pyfmt::{Row, py_str, round4, tokens};
 use morpho::state::models::{LIVE_BELIEF, LIVE_GOAL, LIVE_MEMORY};
@@ -107,7 +107,7 @@ async fn run_harness(
 ) -> Result<(Vec<String>, Vec<Value>, Vec<String>)> {
     let (mut replies, mut manifests, mut event_ids) = (Vec::new(), Vec::new(), Vec::new());
     for (i, t) in turns.iter().enumerate() {
-        let body = interact(svc, text(t), None).await?;
+        let body = interact_as(svc, text(t), None, "user", Some(&format!("eval-{i}"))).await?;
         replies.push(body["response"].as_str().unwrap_or_default().to_string());
         manifests.push(body["context"].clone());
         event_ids.push(body["event_id"].as_str().unwrap_or_default().to_string());
@@ -179,7 +179,7 @@ fn state_metrics(
     replies: &[String],
     manifests: &[Value],
     ids: &[String],
-) -> Map<String, Value> {
+) -> Result<Map<String, Value>> {
     let st = svc.store.lock().unwrap();
     let s = &st.state;
     let mut hits: Vec<f64> = Vec::new();
@@ -227,7 +227,7 @@ fn state_metrics(
     let mut dup: Option<f64> = None;
     for (i, a) in slots.iter().enumerate() {
         for b in &slots[i + 1..] {
-            let cos = morpho::store::vectors::relevance(st.vectors.similarity_between(*a, *b));
+            let cos = morpho::store::vectors::relevance(st.vectors.similarity_between(*a, *b)?);
             dup = Some(dup.map_or(cos, |d| d.max(cos)));
         }
     }
@@ -297,7 +297,7 @@ fn state_metrics(
         )),
     );
     m.insert("ctx_tokens".into(), mean(&ctx));
-    m
+    Ok(m)
 }
 
 fn compare(metrics: &Map<String, Value>, baseline: Option<&Map<String, Value>>) -> Vec<String> {
@@ -349,16 +349,26 @@ async fn run_scenario(
     control: bool,
 ) -> Result<i32> {
     let data: Value = serde_json::from_str(&std::fs::read_to_string(scenario)?)?;
+    if !control {
+        let time = data["start_time"]
+            .as_str()
+            .unwrap_or("2026-09-11T12:00:00Z");
+        morpho::pyfmt::set_eval_clock(
+            morpho::pyfmt::parse_dt(time).context("invalid scenario start_time")?,
+        )?;
+    }
     let turns = data["turns"].as_array().context("scenario has no turns")?;
     let stem = scenario.file_stem().unwrap().to_string_lossy().to_string();
     let name = format!("{stem}{}", if control { ".control" } else { "" });
-    let cache = root().join("cache").join(format!("{name}.json"));
+    let cache = root()
+        .join("cache")
+        .join(format!("{name}{}.json", if control { "" } else { ".v2" }));
     let inner = if !settings().deepinfra_api_key.is_empty() && !strict {
         Some(DeepInfra::new())
     } else {
         None
     };
-    let llm = Llm::Recording(Recording::new(inner, cache, strict)?);
+    let llm = Llm::Recording(Recording::new(inner, cache, strict, control)?);
     let base: Option<Map<String, Value>> = match baseline {
         Some(p) => serde_json::from_str::<Value>(&std::fs::read_to_string(p)?)?["metrics"]
             .as_object()
@@ -379,7 +389,7 @@ async fn run_scenario(
             let cycle_every = data["cycle_every"].as_u64().unwrap_or(3) as usize;
             let (replies, manifests, ids) = run_harness(&svc, turns, cycle_every).await?;
             metrics.extend(behaviour(turns, &replies));
-            metrics.extend(state_metrics(&svc, turns, &replies, &manifests, &ids));
+            metrics.extend(state_metrics(&svc, turns, &replies, &manifests, &ids)?);
             Ok(replies)
         }
     }
@@ -402,6 +412,16 @@ async fn run_scenario(
     if c.embed_calls > 0 {
         metrics.insert("embed_calls".into(), json!(c.embed_calls));
     }
+    metrics.insert("completion_tokens".into(), json!(c.completion_tokens));
+    metrics.insert(
+        "provider_prompt_tokens".into(),
+        json!(c.provider_prompt_tokens),
+    );
+    metrics.insert(
+        "provider_completion_tokens".into(),
+        json!(c.provider_completion_tokens),
+    );
+    metrics.insert("usage_reported_calls".into(), json!(c.usage_reported_calls));
     metrics.insert("cache_misses".into(), json!(c.cache_misses));
     metrics.insert(
         "seconds".into(),
@@ -428,8 +448,7 @@ async fn run_scenario(
                 json!({"text": text(t), "reply": r, "ok": ok})
             })
             .collect();
-        let doc =
-            json!({"scenario": stem, "control": control, "metrics": metrics, "replies": replies});
+        let doc = json!({"scenario": stem, "harness_version": 2, "control": control, "metrics": metrics, "replies": replies});
         let mut buf = Vec::new();
         let fmt = serde_json::ser::PrettyFormatter::with_indent(b" ");
         serde::Serialize::serialize(

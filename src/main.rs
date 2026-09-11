@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
         store.state.transitions.len()
     );
     let svc = Arc::new(Services::new(store, Llm::Live(DeepInfra::new())));
-    if s.worker_inprocess {
+    {
         let worker = svc.clone();
         tokio::spawn(async move { run_forever(&worker).await });
     }

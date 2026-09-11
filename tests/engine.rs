@@ -192,3 +192,54 @@ fn decay_is_episodic_only_and_age_based() {
     assert_eq!(out[0].target.as_deref(), Some("mem_episodic"));
     assert_eq!(out[0].payload["status"], "archived");
 }
+
+#[tokio::test]
+async fn similar_vectors_do_not_merge_distinct_claims_and_unknown_evidence_is_rejected() {
+    let svc = services("distinct-claims");
+    let eid = event(&svc, "Alice and Bob");
+    let p = |text: &str, evidence: &str| {
+        Proposal::new("interaction", "create_belief", json!({"proposition":text}))
+            .evidence(vec![evidence.into()])
+    };
+    // Same bag of words / identical fake embeddings, but different subject and object.
+    assert!(one(&svc, p("Alice trusts Bob", &eid)).await.accepted);
+    assert!(one(&svc, p("Bob trusts Alice", &eid)).await.accepted);
+    assert_eq!(
+        svc.store.lock().unwrap().state.table("beliefs").rows.len(),
+        2
+    );
+    let result = one(&svc, p("unfounded claim", "evt_missing")).await;
+    assert!(!result.accepted);
+    assert_eq!(
+        result.reason.as_deref(),
+        Some("unknown evidence: evt_missing")
+    );
+}
+
+#[tokio::test]
+async fn flat_state_patches_preserve_version_and_permission_guards() {
+    let svc = services("flat-patch");
+    let p = Proposal::new(
+        "interaction",
+        "set_working_state",
+        json!({"current_topic":"flat input","expected_version":1}),
+    );
+    assert!(one(&svc, p.clone()).await.accepted);
+    assert!(!one(&svc, p).await.accepted);
+    assert_eq!(
+        svc.store.lock().unwrap().state.working["data"]["current_topic"],
+        "flat input"
+    );
+    assert!(
+        !svc.store.lock().unwrap().state.working["data"]
+            .as_object()
+            .unwrap()
+            .contains_key("expected_version")
+    );
+    let p = Proposal::new(
+        "interaction",
+        "update_self_state",
+        json!({"capabilities":["root"]}),
+    );
+    assert!(!one(&svc, p).await.accepted);
+}

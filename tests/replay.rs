@@ -9,7 +9,9 @@ fn baselines_replay_strictly() {
     let mut names: Vec<_> = std::fs::read_dir(root.join("evals/results"))
         .unwrap()
         .map(|e| e.unwrap().path())
-        .filter(|p| p.to_string_lossy().ends_with(".base.json"))
+        .filter(|p| {
+            p.to_string_lossy().ends_with(".base.json") || p.to_string_lossy().ends_with(".v2.json")
+        })
         .collect();
     names.sort();
     let mut ran = 0;
@@ -18,9 +20,16 @@ fn baselines_replay_strictly() {
             serde_json::from_str(&std::fs::read_to_string(&baseline).unwrap()).unwrap();
         let scenario = doc["scenario"].as_str().unwrap();
         let control = doc["control"].as_bool().unwrap_or(false);
+        if !control && doc["harness_version"] != 2 {
+            eprintln!(
+                "historical v1 harness baseline {}: prompts intentionally replaced; use v2 recordings",
+                baseline.display()
+            );
+            continue;
+        }
         let cache = root.join("evals/cache").join(format!(
             "{scenario}{}.json",
-            if control { ".control" } else { "" }
+            if control { ".control" } else { ".v2" }
         ));
         if !cache.exists() {
             eprintln!("skip {}: no cache", baseline.display());

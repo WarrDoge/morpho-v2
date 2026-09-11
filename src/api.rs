@@ -12,7 +12,7 @@ use serde_json::{Value, json};
 
 use crate::Services;
 use crate::context::composer::compose_text;
-use crate::interact::interact;
+use crate::interact::{await_reply, enqueue, request};
 use crate::state::models::table_for;
 use crate::worker::cycle;
 
@@ -39,6 +39,8 @@ fn table_of(name: &str) -> Option<&'static str> {
 pub struct Interact {
     pub text: String,
     pub session_id: Option<String>,
+    pub request_id: Option<String>,
+    pub speaker: Option<String>,
 }
 
 #[derive(Deserialize, Default)]
@@ -54,6 +56,8 @@ pub struct ListQuery {
 pub fn router(svc: App) -> Router {
     Router::new()
         .route("/interact", post(interact_h))
+        .route("/requests/{id}", get(request_h))
+        .route("/usage", get(usage_h))
         .route("/health", get(|| async { Json(json!({"status": "ok"})) }))
         .route("/state", get(state_h))
         .route("/events", get(events_h))
@@ -67,11 +71,42 @@ pub fn router(svc: App) -> Router {
         .with_state(svc)
 }
 
-async fn interact_h(State(svc): State<App>, Json(body): Json<Interact>) -> Reply {
-    interact(&svc, &body.text, body.session_id.as_deref())
-        .await
-        .map(Json)
-        .map_err(internal)
+async fn interact_h(
+    State(svc): State<App>,
+    Json(body): Json<Interact>,
+) -> Result<(StatusCode, Json<Value>), (StatusCode, String)> {
+    let id = enqueue(
+        &svc,
+        &body.text,
+        body.session_id.as_deref(),
+        body.speaker.as_deref().unwrap_or("user"),
+        body.request_id.as_deref(),
+    )
+    .map_err(|e| {
+        let message = e.to_string();
+        let status = if message == "request id conflict" {
+            StatusCode::CONFLICT
+        } else if message.starts_with("invalid ")
+            || message.starts_with("text ")
+            || message == "session id too long"
+        {
+            StatusCode::BAD_REQUEST
+        } else {
+            StatusCode::INTERNAL_SERVER_ERROR
+        };
+        (status, message)
+    })?;
+    match await_reply(&svc, &id).await {
+        Ok(reply) => Ok((StatusCode::OK, Json(reply))),
+        Err(_) => Ok((
+            StatusCode::ACCEPTED,
+            Json(request(&svc, &id).map_err(internal)?),
+        )),
+    }
+}
+
+async fn usage_h(State(svc): State<App>) -> Json<Value> {
+    Json(json!(svc.llm.counts()))
 }
 
 async fn state_h(State(svc): State<App>) -> Json<Value> {
@@ -188,4 +223,14 @@ async fn list_h(
         statuses.as_deref(),
         q.limit.unwrap_or(100)
     ))))
+}
+
+async fn request_h(State(svc): State<App>, Path(id): Path<String>) -> Reply {
+    request(&svc, &id).map(Json).map_err(|e| {
+        if e.to_string() == "request not found" {
+            (StatusCode::NOT_FOUND, e.to_string())
+        } else {
+            internal(e)
+        }
+    })
 }

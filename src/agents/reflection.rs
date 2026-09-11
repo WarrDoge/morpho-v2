@@ -18,8 +18,10 @@ memories (with a revised confidence/status); recurring patterns worth storing as
 (cite memory or event ids as evidence); unresolved questions; a few concrete falsifiable
 predictions with a horizon in days; and verdicts for predictions whose deadline has passed
 (verified = true if the prediction came true according to the evidence). Cite the specific
-event or memory ids each item rests on. Every statement must be about the user or the world in
-plain language; never write statements about memories, beliefs, ids, or the state itself.
+event or memory ids each item rests on. Also inspect prior state transitions and observed failures.
+Revise the operational self model when observed outcomes warrant a change, so future reasoning
+can improve. Do not invent actions, outcomes, capabilities, or permissions. Self-model lists must
+contain at most eight items each. Return self_model=null when no operational revision is needed.
 Be conservative. Return only the JSON object.";
 
 #[derive(Debug, Default, Serialize, Deserialize)]
@@ -60,6 +62,8 @@ pub struct Verification {
 #[derive(Debug, Default, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Reflection {
+    #[serde(default)]
+    pub self_model: Option<super::self_model::SelfPatch>,
     pub inconsistencies: Vec<BeliefRevision>,
     pub patterns: Vec<Pattern>,
     pub open_questions: Vec<String>,
@@ -84,7 +88,7 @@ fn data(row: &Row) -> Row {
 
 pub async fn run(svc: &Services) -> Result<Vec<Proposal>> {
     let now = now();
-    let (beliefs, memories, goals, recent, self_data, working, due) = {
+    let (beliefs, memories, goals, recent, self_data, working, due, transitions) = {
         let st = svc.store.lock().unwrap();
         let s = &st.state;
         let due: Vec<Row> = s
@@ -105,12 +109,23 @@ pub async fn run(svc: &Services) -> Result<Vec<Proposal>> {
             data(&s.self_state),
             data(&s.working),
             due,
+            s.transitions
+                .iter()
+                .rev()
+                .take(10)
+                .cloned()
+                .collect::<Vec<_>>(),
         )
     };
-    if beliefs.is_empty() && memories.is_empty() && recent.is_empty() {
+    if beliefs.is_empty()
+        && memories.is_empty()
+        && recent.is_empty()
+        && due.is_empty()
+        && transitions.is_empty()
+    {
         return Ok(Vec::new());
     }
-    let user = format!(
+    let mut user = format!(
         "BELIEFS:\n{}\n\nMEMORIES:\n{}\n\nGOALS:\n{}\n\nPREDICTIONS PAST DEADLINE:\n{}\n\n\
          SELF MODEL:\n{}\n\nWORKING STATE:\n{}\n\nRECENT EVENTS:\n{}",
         fmt_rows(&beliefs, &["proposition", "confidence", "status"]),
@@ -121,13 +136,34 @@ pub async fn run(svc: &Services) -> Result<Vec<Proposal>> {
         crate::pyfmt::py_dumps(&Value::Object(working.clone())),
         fmt_events(&recent)
     );
+    user.push_str(&format!(
+        "\n\nOBSERVED TRANSITIONS:\n{}",
+        serde_json::to_string(&transitions)?
+    ));
     let out: Reflection = svc.llm.complete_json(SYSTEM, &user, &REFLECTION).await?;
     let mut evidence = event_ids(&recent);
     if evidence.is_empty() {
-        evidence = vec!["reflection".into()];
+        evidence = memories
+            .iter()
+            .chain(due.iter())
+            .filter_map(|r| r["id"].as_str().map(String::from))
+            .collect();
     }
     let known_b: Vec<&str> = beliefs.iter().filter_map(|b| b["id"].as_str()).collect();
     let mut proposals = Vec::new();
+    if let Some(patch) = out.self_model {
+        let mut patch = serde_json::to_value(patch)?;
+        for list in patch.as_object_mut().unwrap().values_mut() {
+            if let Some(list) = list.as_array_mut() {
+                list.truncate(8);
+            }
+        }
+        proposals.push(
+            Proposal::new("reflection", "update_self_state", json!({"patch":patch}))
+                .evidence(evidence.clone())
+                .reason("Operational revision from observed events and transitions"),
+        );
+    }
     for r in out
         .inconsistencies
         .iter()
@@ -137,6 +173,7 @@ pub async fn run(svc: &Services) -> Result<Vec<Proposal>> {
         proposals.push(
             Proposal::new("reflection", "update_belief", payload)
                 .target(&r.belief_id)
+                .reason(&r.reason)
                 .evidence(or_default(&r.evidence_ids, &evidence))
                 .confidence(clamp(r.confidence)),
         );

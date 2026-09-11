@@ -3,6 +3,7 @@
 use rand_mt::Mt;
 use sha2::{Digest, Sha512};
 
+#[derive(Clone)]
 pub struct IdGen(Mt);
 
 impl IdGen {
