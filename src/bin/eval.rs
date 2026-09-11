@@ -430,7 +430,13 @@ async fn run_scenario(
             .collect();
         let doc =
             json!({"scenario": stem, "control": control, "metrics": metrics, "replies": replies});
-        std::fs::write(&out, serde_json::to_string_pretty(&doc)?)?;
+        let mut buf = Vec::new();
+        let fmt = serde_json::ser::PrettyFormatter::with_indent(b" ");
+        serde::Serialize::serialize(
+            &doc,
+            &mut serde_json::Serializer::with_formatter(&mut buf, fmt),
+        )?;
+        std::fs::write(&out, buf)?;
         println!("wrote {}", out.display());
     }
     Ok(if !bad.is_empty() || (strict && c.cache_misses > 0) {

@@ -120,8 +120,11 @@ impl State {
     pub fn apply(&mut self, offset: u64, record: &Record) {
         match record {
             Record::Event(row) => {
-                self.event_index
-                    .insert(s(&row["event_id"]).to_string(), self.events.len());
+                let event_id = s(&row["event_id"]).to_string();
+                if let Some(slot) = row.get("vector").and_then(Value::as_u64) {
+                    self.slots.insert(event_id.clone(), slot as usize);
+                }
+                self.event_index.insert(event_id, self.events.len());
                 self.events.push(row.clone());
             }
             Record::Commit(c) => {

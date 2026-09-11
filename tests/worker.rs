@@ -6,7 +6,7 @@ use chrono::Duration;
 use common::{event, fake, services};
 use morpho::agents::memory::{MemoryDecision, NewMemory};
 use morpho::agents::reflection::{Reflection, Verification};
-use morpho::context::composer::compose;
+use morpho::context::composer::compose_text;
 use morpho::pyfmt::{iso, now};
 use morpho::state::engine::commit;
 use morpho::state::models::Proposal;
@@ -131,7 +131,7 @@ async fn context_stays_within_budget() {
     for i in 0..15 {
         event(&svc, &format!("{i} {}", "long message ".repeat(40)));
     }
-    let (_, manifest) = compose(&svc, "life story", Some(600)).await.unwrap();
+    let (_, manifest) = compose_text(&svc, "life story", Some(600)).await.unwrap();
     assert!(manifest["tokens"].as_u64().unwrap() <= 600);
     assert!(
         manifest["sections"]["memories"]["dropped"]

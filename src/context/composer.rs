@@ -72,19 +72,23 @@ fn data(row: &Row) -> Row {
         .unwrap_or_default()
 }
 
-pub async fn compose(
+pub async fn compose_text(
     svc: &Services,
     input: &str,
     budget: Option<usize>,
 ) -> Result<(String, Value)> {
+    let emb = svc.llm.embed(&[input.to_string()]).await?.remove(0);
+    compose(svc, &emb, budget)
+}
+
+pub fn compose(svc: &Services, emb: &[f32], budget: Option<usize>) -> Result<(String, Value)> {
     let budget = budget.unwrap_or(settings().context_token_budget) as i64;
     let now = now();
-    let emb = svc.llm.embed(&[input.to_string()]).await?.remove(0);
     let st = svc.store.lock().unwrap();
     let working = data(&st.state.working);
     let self_data = data(&st.state.self_state);
-    let mems = ranked(&st, "memories", &emb, 20, LIVE_MEMORY, &now);
-    let beliefs = ranked(&st, "beliefs", &emb, 10, LIVE_BELIEF, &now);
+    let mems = ranked(&st, "memories", emb, 20, LIVE_MEMORY, &now);
+    let beliefs = ranked(&st, "beliefs", emb, 10, LIVE_BELIEF, &now);
     let ents: Vec<Row> = working
         .get("active_entities")
         .and_then(Value::as_array)

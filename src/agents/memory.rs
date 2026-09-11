@@ -4,7 +4,7 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use super::base::{clamp, event_text, fmt_rows, message_events};
+use super::base::{clamp, event_text, event_vector, fmt_rows, message_events};
 use crate::Services;
 use crate::llm::MEMORY_DECISION;
 use crate::pyfmt::Row;
@@ -51,7 +51,7 @@ async fn one(svc: &Services, e: &Row) -> Result<Vec<Proposal>> {
     let mut proposals = Vec::new();
     let text = event_text(e);
     let eid = e["event_id"].as_str().unwrap_or_default().to_string();
-    let emb = svc.llm.embed(std::slice::from_ref(&text)).await?.remove(0);
+    let emb = event_vector(svc, e).await?;
     let similar = svc
         .store
         .lock()

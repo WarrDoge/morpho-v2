@@ -14,9 +14,9 @@
   "ctx_tokens": 3145.011,
   "llm_calls": 622,
   "prompt_tokens": 797889,
-  "embed_calls": 530,
-  "cache_misses": 543,
-  "seconds": 3799.4,
+  "embed_calls": 257,
+  "cache_misses": 0,
+  "seconds": 0.2,
   "turns": 91
  },
  "replies": [

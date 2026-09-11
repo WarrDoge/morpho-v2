@@ -3,6 +3,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+use crate::Services;
 use crate::pyfmt::{Row, py_dumps, py_str};
 use crate::state::models::{MESSAGE_TYPES, strings, union};
 
@@ -11,6 +12,19 @@ pub fn event_text(e: &Row) -> String {
         Some(Value::Object(p)) if p.contains_key("text") => py_str(&p["text"]),
         Some(p) => py_dumps(p),
         None => "None".into(),
+    }
+}
+
+/// The event's stored embedding, or a fresh one for events appended without a vector.
+pub async fn event_vector(svc: &Services, e: &Row) -> anyhow::Result<Vec<f32>> {
+    let eid = e["event_id"].as_str().unwrap_or_default();
+    let stored = {
+        let st = svc.store.lock().unwrap();
+        st.state.slots.get(eid).map(|&slot| st.vectors.get(slot))
+    };
+    match stored {
+        Some(v) => Ok(v),
+        None => Ok(svc.llm.embed(&[event_text(e)]).await?.remove(0)),
     }
 }
 

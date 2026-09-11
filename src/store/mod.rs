@@ -59,6 +59,7 @@ impl Store {
         source: &str,
         payload: Value,
         session_id: Option<&str>,
+        vector: Option<usize>,
     ) -> Result<Row> {
         let row = obj(json!({
             "id": self.state.last_event_id() + 1,
@@ -68,6 +69,7 @@ impl Store {
             "source": source,
             "session_id": session_id,
             "payload": payload,
+            "vector": vector,
         }));
         self.append(Record::Event(row.clone()))?;
         Ok(row)
@@ -144,7 +146,7 @@ mod tests {
         let dir = temp_dir("store");
         let dim = settings().embed_dim;
         let mut st = Store::open(&dir, IdGen::seeded("t")).unwrap();
-        st.append_event("user_message", "user", json!({"text": "hi"}), None)
+        st.append_event("user_message", "user", json!({"text": "hi"}), None, None)
             .unwrap();
         let slot = st.vectors.append(&vec![0.5; dim]).unwrap();
         let after = obj(json!({"id": "mem_1", "summary": "x", "status": "active",

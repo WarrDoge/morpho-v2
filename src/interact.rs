@@ -15,12 +15,28 @@ projection of what you currently remember, believe, and are working on; it is yo
 continuity. Treat it as a fallible model, not ground truth, and say when you are uncertain.
 Answer the user's message helpfully and concisely.";
 
+fn append(
+    svc: &Services,
+    kind: &str,
+    source: &str,
+    payload: Value,
+    session: Option<&str>,
+    emb: &[f32],
+) -> Result<serde_json::Map<String, Value>> {
+    let mut st = svc.store.lock().unwrap();
+    let slot = st.vectors.append(emb)?;
+    st.append_event(kind, source, payload, session, Some(slot))
+}
+
 pub async fn interact(svc: &Services, text: &str, session_id: Option<&str>) -> Result<Value> {
-    let event = svc.store.lock().unwrap().append_event(
+    let emb = svc.llm.embed(&[text.to_string()]).await?.remove(0);
+    let event = append(
+        svc,
         "user_message",
         "user",
         json!({"text": text}),
         session_id,
+        &emb,
     )?;
     let eid = event["event_id"].as_str().unwrap_or_default().to_string();
     let interpreted = match interaction::run(svc, &event).await {
@@ -35,14 +51,18 @@ pub async fn interact(svc: &Services, text: &str, session_id: Option<&str>) -> R
         }
         tracing::error!("interaction agent failed; responding from existing state: {e:#}");
     }
-    let (context, manifest) = compose(svc, text, None).await?;
+    let (context, manifest) = compose(svc, &emb, None)?;
     let system = format!("{RESPONSE_SYSTEM}\n\n# STATE\n{context}");
     let reply = svc.llm.complete_text(&system, text).await?;
-    let reply_event = svc.store.lock().unwrap().append_event(
+    let reply_emb = svc.llm.embed(std::slice::from_ref(&reply)).await?.remove(0);
+    let payload = json!({"text": reply, "in_reply_to": eid});
+    let reply_event = append(
+        svc,
         "assistant_message",
         "assistant",
-        json!({"text": reply, "in_reply_to": eid}),
+        payload,
         session_id,
+        &reply_emb,
     )?;
     Ok(json!({
         "response": reply,

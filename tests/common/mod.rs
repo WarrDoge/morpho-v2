@@ -32,7 +32,7 @@ pub fn event(svc: &Services, text: &str) -> String {
         .store
         .lock()
         .unwrap()
-        .append_event("user_message", "user", json!({"text": text}), None)
+        .append_event("user_message", "user", json!({"text": text}), None, None)
         .unwrap();
     row["event_id"].as_str().unwrap().to_string()
 }

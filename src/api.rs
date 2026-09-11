@@ -11,7 +11,7 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 
 use crate::Services;
-use crate::context::composer::compose;
+use crate::context::composer::compose_text;
 use crate::interact::interact;
 use crate::state::models::table_for;
 use crate::worker::cycle;
@@ -162,7 +162,7 @@ async fn why_h(State(svc): State<App>, Path(object_id): Path<String>) -> Reply {
 }
 
 async fn preview_h(State(svc): State<App>, Query(q): Query<ListQuery>) -> Reply {
-    let (context, manifest) = compose(&svc, q.text.as_deref().unwrap_or(""), None)
+    let (context, manifest) = compose_text(&svc, q.text.as_deref().unwrap_or(""), None)
         .await
         .map_err(internal)?;
     Ok(Json(json!({"context": context, "manifest": manifest})))
