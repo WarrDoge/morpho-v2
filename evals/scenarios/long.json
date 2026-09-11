@@ -1,0 +1,675 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "I'm Noor, a freelance architect based in Rotterdam.",
+   "tag": "fact"
+  },
+  {
+   "text": "My studio is called Kade Studio and it's in the Katendrecht district.",
+   "tag": "fact"
+  },
+  {
+   "text": "What's the difference between cement and concrete?",
+   "tag": "distractor"
+  },
+  {
+   "text": "My partner Elif is a pediatric nurse at Erasmus MC.",
+   "tag": "fact"
+  },
+  {
+   "text": "We have a cat named Miso who is deaf.",
+   "tag": "fact"
+  },
+  {
+   "text": "Any good podcast about urban planning?",
+   "tag": "distractor"
+  },
+  {
+   "text": "My biggest client right now is the housing corporation Woonstad.",
+   "tag": "fact"
+  },
+  {
+   "text": "I cycle to the studio; it takes 25 minutes.",
+   "tag": "fact"
+  },
+  {
+   "text": "How do I get red wine out of a wool rug?",
+   "tag": "distractor"
+  },
+  {
+   "text": "I'm allergic to shellfish.",
+   "tag": "fact"
+  },
+  {
+   "text": "Help me keep a list of things to do before the Hout Hof hearing.",
+   "tag": "goal"
+  },
+  {
+   "text": "My accountant is Bram; taxes are due at the end of April.",
+   "tag": "fact"
+  },
+  {
+   "text": "Is it going to rain in Rotterdam this weekend, do you think?",
+   "tag": "distractor"
+  },
+  {
+   "text": "I play in a five-a-side football team on Thursday nights.",
+   "tag": "fact"
+  },
+  {
+   "text": "My mother lives in Ankara and I visit twice a year.",
+   "tag": "fact"
+  },
+  {
+   "text": "What's the tallest building in the Netherlands?",
+   "tag": "distractor"
+  },
+  {
+   "text": "I use Rhino and Revit for modelling, never SketchUp.",
+   "tag": "fact"
+  },
+  {
+   "text": "The Woonstad project is a 120-unit timber housing block called Hout Hof.",
+   "tag": "fact"
+  },
+  {
+   "text": "Explain cross-laminated timber in two sentences.",
+   "tag": "distractor"
+  },
+  {
+   "text": "My studio assistant is Daan; he's part-time, three days a week.",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm training for the Rotterdam half marathon in October.",
+   "tag": "fact"
+  },
+  {
+   "text": "How many calories are in a stroopwafel?",
+   "tag": "distractor"
+  },
+  {
+   "text": "My car is an old red Volvo that I only use for site visits.",
+   "tag": "fact"
+  },
+  {
+   "text": "The Hout Hof planning permission hearing is on 14 September.",
+   "tag": "fact"
+  },
+  {
+   "text": "Who designed the Erasmus Bridge?",
+   "tag": "distractor"
+  },
+  {
+   "text": "I speak Dutch, Turkish and English; my French is terrible.",
+   "tag": "fact"
+  },
+  {
+   "text": "I bill Woonstad at 95 euros an hour.",
+   "tag": "fact"
+  },
+  {
+   "text": "What's a good stretch for tight hamstrings?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Elif and I are getting married next June in Izmir.",
+   "tag": "fact"
+  },
+  {
+   "text": "My favourite building is the Van Nelle factory.",
+   "tag": "fact"
+  },
+  {
+   "text": "Translate 'planning permission' into Dutch.",
+   "tag": "distractor"
+  },
+  {
+   "text": "I have a second, smaller client: a bakery called Brood & Zo that wants a new shopfront.",
+   "tag": "fact"
+  },
+  {
+   "text": "I take Fridays off to sketch; no client calls on Fridays.",
+   "tag": "fact"
+  },
+  {
+   "text": "Why do my ears pop on the train through a tunnel?",
+   "tag": "distractor"
+  },
+  {
+   "text": "My laptop is a ThinkPad and I refuse to use a Mac.",
+   "tag": "fact"
+  },
+  {
+   "text": "Daan is studying for his architecture master's at TU Delft.",
+   "tag": "fact"
+  },
+  {
+   "text": "Recommend a sci-fi novel.",
+   "tag": "distractor"
+  },
+  {
+   "text": "I bank with Bunq for the business account.",
+   "tag": "fact"
+  },
+  {
+   "text": "Update: I moved the studio to the Delfshaven district, so the cycle is now 40 minutes.",
+   "tag": "update",
+   "contradicts": [
+    "25"
+   ],
+   "asserts": [
+    "40"
+   ]
+  },
+  {
+   "text": "Where am I based?",
+   "tag": "probe",
+   "expect": [
+    [
+     "rotterdam"
+    ]
+   ],
+   "refs": [
+    0
+   ]
+  },
+  {
+   "text": "What's the etymology of the word 'architect'?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Woonstad agreed to a rate increase: I now bill them 110 euros an hour.",
+   "tag": "update",
+   "contradicts": [
+    "95"
+   ],
+   "asserts": [
+    "110"
+   ]
+  },
+  {
+   "text": "What's my studio called?",
+   "tag": "probe",
+   "expect": [
+    [
+     "kade"
+    ]
+   ],
+   "refs": [
+    1
+   ]
+  },
+  {
+   "text": "How long should I boil an egg for a soft yolk?",
+   "tag": "distractor"
+  },
+  {
+   "text": "The Hout Hof hearing got postponed to 2 October.",
+   "tag": "update",
+   "contradicts": [
+    "september"
+   ],
+   "asserts": [
+    "october"
+   ]
+  },
+  {
+   "text": "Where does Elif work?",
+   "tag": "probe",
+   "expect": [
+    [
+     "erasmus"
+    ]
+   ],
+   "refs": [
+    3
+   ]
+  },
+  {
+   "text": "Is Brutalism making a comeback?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Daan is now full-time, five days a week.",
+   "tag": "update",
+   "contradicts": [
+    "three"
+   ],
+   "asserts": [
+    "five"
+   ]
+  },
+  {
+   "text": "What's special about our cat Miso?",
+   "tag": "probe",
+   "expect": [
+    [
+     "deaf"
+    ]
+   ],
+   "refs": [
+    4
+   ]
+  },
+  {
+   "text": "What's the capital of Kazakhstan these days?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Football moved to Monday nights.",
+   "tag": "update",
+   "contradicts": [
+    "thursday"
+   ],
+   "asserts": [
+    "monday"
+   ]
+  },
+  {
+   "text": "Who is my biggest client?",
+   "tag": "probe",
+   "expect": [
+    [
+     "woonstad"
+    ]
+   ],
+   "refs": [
+    6
+   ]
+  },
+  {
+   "text": "Give me a mnemonic for the planets.",
+   "tag": "distractor"
+  },
+  {
+   "text": "Which bank is my business account with?",
+   "tag": "probe",
+   "expect": [
+    [
+     "bunq"
+    ]
+   ],
+   "refs": [
+    37
+   ]
+  },
+  {
+   "text": "What's the best way to clean a chain on a bike?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Is there any food I must avoid?",
+   "tag": "probe",
+   "expect": [
+    [
+     "shellfish"
+    ]
+   ],
+   "refs": [
+    9
+   ]
+  },
+  {
+   "text": "What are my open to-dos?",
+   "tag": "probe",
+   "expect": [
+    [
+     "hearing",
+     "hout hof"
+    ],
+    [
+     "invoice",
+     "bram"
+    ]
+   ],
+   "refs": []
+  },
+  {
+   "text": "How do passive houses stay warm?",
+   "tag": "distractor"
+  },
+  {
+   "text": "How many days a week does Daan work now?",
+   "tag": "probe",
+   "expect": [
+    [
+     "five",
+     "5"
+    ]
+   ],
+   "reject": [
+    "three"
+   ],
+   "refs": [
+    47
+   ]
+  },
+  {
+   "text": "What car do I drive?",
+   "tag": "probe",
+   "expect": [
+    [
+     "volvo"
+    ]
+   ],
+   "refs": [
+    22
+   ]
+  },
+  {
+   "text": "Any tips for a stiff neck from drawing all day?",
+   "tag": "distractor"
+  },
+  {
+   "text": "What race am I training for?",
+   "tag": "probe",
+   "expect": [
+    [
+     "half marathon",
+     "half-marathon"
+    ]
+   ],
+   "refs": [
+    20
+   ]
+  },
+  {
+   "text": "Which languages do I speak?",
+   "tag": "probe",
+   "expect": [
+    [
+     "dutch"
+    ],
+    [
+     "turkish"
+    ]
+   ],
+   "refs": [
+    25
+   ]
+  },
+  {
+   "text": "What year did the Van Nelle factory become a UNESCO site?",
+   "tag": "distractor"
+  },
+  {
+   "text": "What does Brood & Zo want from me?",
+   "tag": "probe",
+   "expect": [
+    [
+     "shopfront",
+     "storefront",
+     "front"
+    ]
+   ],
+   "refs": [
+    31
+   ]
+  },
+  {
+   "text": "Who are the people you know about in my life and what do they do?",
+   "tag": "probe",
+   "expect": [
+    [
+     "elif"
+    ],
+    [
+     "daan"
+    ]
+   ],
+   "refs": []
+  },
+  {
+   "text": "Is it 'less' or 'fewer' with countable nouns?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Summarise what you know about my work in a few sentences.",
+   "tag": "probe",
+   "expect": [
+    [
+     "woonstad"
+    ],
+    [
+     "hout hof"
+    ]
+   ],
+   "refs": []
+  },
+  {
+   "text": "What is the Woonstad project?",
+   "tag": "probe",
+   "expect": [
+    [
+     "hout hof",
+     "timber"
+    ]
+   ],
+   "refs": [
+    17
+   ]
+  },
+  {
+   "text": "What's a good warm-up before a run?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Where does my mother live?",
+   "tag": "probe",
+   "expect": [
+    [
+     "ankara"
+    ]
+   ],
+   "refs": [
+    14
+   ]
+  },
+  {
+   "text": "Summarise what you know about my personal life.",
+   "tag": "probe",
+   "expect": [
+    [
+     "elif"
+    ],
+    [
+     "rotterdam"
+    ]
+   ],
+   "refs": []
+  },
+  {
+   "text": "How does a heat pump work, briefly?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Which modelling tools do I use?",
+   "tag": "probe",
+   "expect": [
+    [
+     "rhino"
+    ],
+    [
+     "revit"
+    ]
+   ],
+   "refs": [
+    16
+   ]
+  },
+  {
+   "text": "When is the Hout Hof hearing now?",
+   "tag": "probe",
+   "expect": [
+    [
+     "october"
+    ]
+   ],
+   "reject": [
+    "september"
+   ],
+   "refs": [
+    44
+   ]
+  },
+  {
+   "text": "What's the Dutch word for a cat?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Which day do I keep free of client calls?",
+   "tag": "probe",
+   "expect": [
+    [
+     "friday"
+    ]
+   ],
+   "refs": [
+    32
+   ]
+  },
+  {
+   "text": "Which night is football now?",
+   "tag": "probe",
+   "expect": [
+    [
+     "monday"
+    ]
+   ],
+   "reject": [
+    "thursday"
+   ],
+   "refs": [
+    50
+   ]
+  },
+  {
+   "text": "How do I convert square feet to square metres?",
+   "tag": "distractor"
+  },
+  {
+   "text": "What's my favourite building?",
+   "tag": "probe",
+   "expect": [
+    [
+     "van nelle"
+    ]
+   ],
+   "refs": [
+    29
+   ]
+  },
+  {
+   "text": "Give me a one-paragraph profile of me.",
+   "tag": "probe",
+   "expect": [
+    [
+     "architect"
+    ],
+    [
+     "rotterdam"
+    ]
+   ],
+   "refs": []
+  },
+  {
+   "text": "Which is heavier, a litre of water or a litre of oil?",
+   "tag": "distractor"
+  },
+  {
+   "text": "How long is my cycle to the studio now?",
+   "tag": "probe",
+   "expect": [
+    [
+     "40"
+    ]
+   ],
+   "reject": [
+    "25"
+   ],
+   "refs": [
+    38
+   ]
+  },
+  {
+   "text": "What's my current hourly rate for Woonstad?",
+   "tag": "probe",
+   "expect": [
+    [
+     "110"
+    ]
+   ],
+   "reject": [
+    "95"
+   ],
+   "refs": [
+    41
+   ]
+  },
+  {
+   "text": "Explain what an acoustic rating for a wall means.",
+   "tag": "distractor"
+  },
+  {
+   "text": "Where and when is the wedding?",
+   "tag": "probe",
+   "expect": [
+    [
+     "izmir"
+    ],
+    [
+     "june"
+    ]
+   ],
+   "refs": [
+    28
+   ]
+  },
+  {
+   "text": "Who does my taxes?",
+   "tag": "probe",
+   "expect": [
+    [
+     "bram"
+    ]
+   ],
+   "refs": [
+    11
+   ]
+  },
+  {
+   "text": "What's the plural of 'moose'?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Where is Daan studying?",
+   "tag": "probe",
+   "expect": [
+    [
+     "delft"
+    ]
+   ],
+   "refs": [
+    35
+   ]
+  },
+  {
+   "text": "What laptop do I use?",
+   "tag": "probe",
+   "expect": [
+    [
+     "thinkpad"
+    ]
+   ],
+   "refs": [
+    34
+   ]
+  },
+  {
+   "text": "Any idea why my sourdough is so dense?",
+   "tag": "distractor"
+  }
+ ]
+}

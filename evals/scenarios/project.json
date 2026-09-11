@@ -1,0 +1,225 @@
+{
+ "cycle_every": 3,
+ "turns": [
+  {
+   "text": "I'm Tomas, engineering lead at Helix. We're migrating our data pipeline, codename Atlas, from Airflow to Dagster.",
+   "tag": "fact"
+  },
+  {
+   "text": "Main goal: finish the Atlas migration by the end of Q3. Help me keep track of blockers.",
+   "tag": "goal"
+  },
+  {
+   "text": "Team: Mei owns ingestion, Jonas owns the warehouse models, and Sara is our SRE.",
+   "tag": "fact"
+  },
+  {
+   "text": "Coffee machine on our floor broke again, morale is low, haha.",
+   "tag": "distractor"
+  },
+  {
+   "text": "Blocker: the Snowflake connector for Dagster doesn't support our key-pair auth yet. Jonas is on it.",
+   "tag": "fact"
+  },
+  {
+   "text": "Secondary goal: cut pipeline run cost by 30% as part of the migration.",
+   "tag": "goal"
+  },
+  {
+   "text": "We use Snowflake as the warehouse and dbt for transformations; dbt runs are the expensive part.",
+   "tag": "fact"
+  },
+  {
+   "text": "What's a good book on management for first-time leads?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Who owns ingestion on my team?",
+   "tag": "probe",
+   "expect": [
+    [
+     "mei"
+    ]
+   ],
+   "refs": [
+    2
+   ]
+  },
+  {
+   "text": "Jonas got the key-pair auth working with a custom resource, so that blocker is gone.",
+   "tag": "update",
+   "contradicts": [
+    "key-pair"
+   ],
+   "asserts": [
+    "working",
+    "resolved",
+    "custom"
+   ]
+  },
+  {
+   "text": "New blocker: Sara says the Dagster deployment on our Kubernetes cluster needs a bigger node pool, approval pending from finance.",
+   "tag": "fact"
+  },
+  {
+   "text": "Do you have a recipe for a quick weeknight pasta?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Mei finished porting the ingestion DAGs; 40 of 40 done.",
+   "tag": "fact"
+  },
+  {
+   "text": "What's currently blocking Atlas?",
+   "tag": "probe",
+   "expect": [
+    [
+     "node pool",
+     "kubernetes",
+     "finance",
+     "cluster"
+    ]
+   ],
+   "reject": [
+    "key-pair"
+   ],
+   "refs": [
+    10
+   ]
+  },
+  {
+   "text": "Finance approved the node pool budget. Sara will provision it next week.",
+   "tag": "fact"
+  },
+  {
+   "text": "Add a goal: write a runbook for on-call before we switch over.",
+   "tag": "goal"
+  },
+  {
+   "text": "Is Dagster a public company?",
+   "tag": "distractor"
+  },
+  {
+   "text": "We found that 60% of dbt cost comes from full refreshes of the orders model; Jonas is making it incremental.",
+   "tag": "fact"
+  },
+  {
+   "text": "Actually, scratch the Q3 deadline; leadership moved the Atlas cutover to mid-October.",
+   "tag": "update",
+   "contradicts": [
+    "q3"
+   ],
+   "asserts": [
+    "october"
+   ]
+  },
+  {
+   "text": "When is the Atlas cutover now?",
+   "tag": "probe",
+   "expect": [
+    [
+     "october"
+    ]
+   ],
+   "reject": [
+    "q3",
+    "september"
+   ],
+   "refs": [
+    18
+   ]
+  },
+  {
+   "text": "Any idea why my standing desk keeps drifting down?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Sara finished the node pool; Dagster is deployed to staging.",
+   "tag": "fact"
+  },
+  {
+   "text": "Jonas's incremental orders model cut dbt cost by 35%, so the cost goal is met.",
+   "tag": "fact"
+  },
+  {
+   "text": "Did we hit the cost reduction goal? Give me the number.",
+   "tag": "probe",
+   "expect": [
+    [
+     "35"
+    ]
+   ],
+   "refs": [
+    5,
+    22
+   ]
+  },
+  {
+   "text": "Remind me how to pronounce 'Dagster', is it dag-ster?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Mei is going on parental leave from next month; her ingestion work will be picked up by a new hire, Leo.",
+   "tag": "fact"
+  },
+  {
+   "text": "Who will own ingestion after next month?",
+   "tag": "probe",
+   "expect": [
+    [
+     "leo"
+    ]
+   ],
+   "refs": [
+    25
+   ]
+  },
+  {
+   "text": "What goals are still open for Atlas?",
+   "tag": "probe",
+   "expect": [
+    [
+     "runbook"
+    ]
+   ],
+   "refs": [
+    15
+   ]
+  },
+  {
+   "text": "Who is our SRE and what did she deliver?",
+   "tag": "probe",
+   "expect": [
+    [
+     "sara"
+    ],
+    [
+     "node pool",
+     "kubernetes",
+     "staging",
+     "deploy"
+    ]
+   ],
+   "refs": [
+    2,
+    21
+   ]
+  },
+  {
+   "text": "Summarise the Atlas project status in a few sentences.",
+   "tag": "probe",
+   "expect": [
+    [
+     "dagster"
+    ],
+    [
+     "october"
+    ]
+   ],
+   "refs": [
+    0,
+    18
+   ]
+  }
+ ]
+}

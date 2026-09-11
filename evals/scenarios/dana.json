@@ -1,0 +1,255 @@
+{
+ "cycle_every": 3,
+ "turns": [
+  {
+   "text": "Hi, I'm Dana. I just moved from Lisbon to Berlin for a new job at a startup called Nimbus.",
+   "tag": "fact"
+  },
+  {
+   "text": "I have a dog named Rex, a beagle. I need to find a vet near Prenzlauer Berg.",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm vegetarian and I'm learning German; classes are on Tuesday evenings.",
+   "tag": "fact"
+  },
+  {
+   "text": "Help me make a short checklist for registering my address (Anmeldung).",
+   "tag": "goal"
+  },
+  {
+   "text": "Ha, the weather here is so grey compared to Lisbon.",
+   "tag": "distractor"
+  },
+  {
+   "text": "The Anmeldung appointment is booked for next Thursday at 9am.",
+   "tag": "fact"
+  },
+  {
+   "text": "Correction: Rex is not a beagle, he is a basset hound.",
+   "tag": "update",
+   "contradicts": [
+    "beagle"
+   ],
+   "asserts": [
+    "basset"
+   ]
+  },
+  {
+   "text": "Nimbus wants me to start on the 1st. I'm nervous about the commute; the office is in Kreuzberg.",
+   "tag": "fact"
+  },
+  {
+   "text": "Do you know any good podcasts about history?",
+   "tag": "distractor"
+  },
+  {
+   "text": "What kind of restaurants should I look for near the office?",
+   "tag": "probe",
+   "expect": [
+    [
+     "vegetarian",
+     "vegan",
+     "meat-free",
+     "plant"
+    ]
+   ],
+   "refs": [
+    2
+   ]
+  },
+  {
+   "text": "Remind me, what breed is Rex?",
+   "tag": "probe",
+   "expect": [
+    [
+     "basset"
+    ]
+   ],
+   "reject": [
+    "beagle"
+   ],
+   "refs": [
+    6
+   ]
+  },
+  {
+   "text": "My sister Inês is visiting in two weeks; she's allergic to dogs, so Rex will stay with a neighbour.",
+   "tag": "fact"
+  },
+  {
+   "text": "I also need to open a German bank account before my first salary.",
+   "tag": "goal"
+  },
+  {
+   "text": "What's the tallest building in Berlin?",
+   "tag": "distractor"
+  },
+  {
+   "text": "I got the Anmeldung done today, the appointment went fine.",
+   "tag": "fact"
+  },
+  {
+   "text": "My manager at Nimbus is called Priya; she leads the platform team.",
+   "tag": "fact"
+  },
+  {
+   "text": "Any tips for sleeping better? The sun rises so early here.",
+   "tag": "distractor"
+  },
+  {
+   "text": "What do you remember about where I moved from and where I work?",
+   "tag": "probe",
+   "expect": [
+    [
+     "lisbon"
+    ],
+    [
+     "nimbus"
+    ]
+   ],
+   "refs": [
+    0
+   ]
+  },
+  {
+   "text": "German class moved to Wednesday evenings, starting this week.",
+   "tag": "update",
+   "contradicts": [
+    "tuesday"
+   ],
+   "asserts": [
+    "wednesday"
+   ]
+  },
+  {
+   "text": "I'm thinking of trying a pottery class for fun, no commitments though.",
+   "tag": "distractor"
+  },
+  {
+   "text": "I opened an account at N26 this morning, so the bank thing is sorted.",
+   "tag": "fact"
+  },
+  {
+   "text": "Which day are my German classes now?",
+   "tag": "probe",
+   "expect": [
+    [
+     "wednesday"
+    ]
+   ],
+   "reject": [
+    "tuesday"
+   ],
+   "refs": [
+    18
+   ]
+  },
+  {
+   "text": "Rex's vet is Dr. Weber on Schönhauser Allee; first appointment next Monday.",
+   "tag": "fact"
+  },
+  {
+   "text": "Is it normal for shops to be closed on Sundays here?",
+   "tag": "distractor"
+  },
+  {
+   "text": "Who is my manager and what team does she lead?",
+   "tag": "probe",
+   "expect": [
+    [
+     "priya"
+    ],
+    [
+     "platform"
+    ]
+   ],
+   "refs": [
+    15
+   ]
+  },
+  {
+   "text": "Can my sister stay at my place when she visits? Anything I should keep in mind?",
+   "tag": "probe",
+   "expect": [
+    [
+     "allerg"
+    ]
+   ],
+   "refs": [
+    11
+   ]
+  },
+  {
+   "text": "Do you remember what my favourite football team is?",
+   "tag": "probe",
+   "expect": [
+    [
+     "don't",
+     "do not",
+     "not sure",
+     "haven't",
+     "never",
+     "no record",
+     "didn't",
+     "unknown",
+     "not mention"
+    ]
+   ],
+   "refs": []
+  },
+  {
+   "text": "What still needs doing from my to-do list, and what's already done?",
+   "tag": "probe",
+   "expect": [
+    [
+     "anmeldung"
+    ],
+    [
+     "bank",
+     "n26"
+    ]
+   ],
+   "refs": [
+    3,
+    12
+   ]
+  },
+  {
+   "text": "Where is Rex's vet and when is the appointment?",
+   "tag": "probe",
+   "expect": [
+    [
+     "weber",
+     "schönhauser",
+     "schonhauser"
+    ],
+    [
+     "monday"
+    ]
+   ],
+   "refs": [
+    22
+   ]
+  },
+  {
+   "text": "Summarise what you know about me in three sentences.",
+   "tag": "probe",
+   "expect": [
+    [
+     "berlin"
+    ],
+    [
+     "rex"
+    ],
+    [
+     "nimbus"
+    ]
+   ],
+   "refs": [
+    0,
+    1
+   ]
+  }
+ ]
+}
