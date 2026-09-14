@@ -31,8 +31,8 @@ async fn fifo_is_private_and_duplicate_reply_survives_restart() {
     assert!(!fake(&svc).calls_for("Turn")[0].contains("Bob's input"));
     assert!(process_next(&svc).await.unwrap());
     let calls = fake(&svc).calls_for("Turn");
-    assert!(calls[1].contains("alice/user_message"));
-    assert!(calls[1].contains("Speaker: bob"));
+    assert!(calls[1].contains("alice"));
+    assert!(calls[1].contains("\"speaker\":\"bob\""));
     assert_eq!(calls.len(), 2); // one model call per turn
     let reply = request(&svc, "a1").unwrap()["reply"].clone();
     drop(lock);
@@ -126,10 +126,8 @@ async fn concurrent_callers_share_one_fifo_and_do_not_skip_paused_input() {
 }
 
 fn native_change(_system: &str, user: &str, _schema: &str) -> serde_json::Value {
-    let eid = user
-        .lines()
-        .find_map(|line| line.strip_prefix("Input evidence id: "))
-        .unwrap();
+    let request: serde_json::Value = serde_json::from_str(user).unwrap();
+    let eid = &request["request"]["event_id"];
     json!({"response":"saved","changes":[
         {"operation":"create_memory","target":null,"payload":{"summary":"Alice moved to Berlin"},"evidence_ids":[eid],"confidence":0.9,"reason":"Alice explicitly said so"},
         {"operation":"set_working_state","target":null,"payload":{"patch":{"current_topic":"Alice's move"}},"evidence_ids":[eid],"confidence":0.9,"reason":"current subject"}

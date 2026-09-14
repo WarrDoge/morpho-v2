@@ -1,0 +1,2032 @@
+{
+  "revision": "1a6e021d454b30d80bf4f0c75766223d6d72004d",
+  "scope": "current working tree, including pre-existing product changes",
+  "scenarios": {
+    "dana": {
+      "status": "failed",
+      "completed_turns": 21,
+      "total_turns": 30,
+      "error": "completion reached MAX_COMPLETION_TOKENS; increase the limit or request fewer changes",
+      "seconds": 341.454,
+      "usage": {
+        "llm_calls": 35,
+        "embed_calls": 48,
+        "prompt_tokens": 95356,
+        "completion_tokens": 13027,
+        "usage_reported_calls": 11,
+        "provider_prompt_tokens": 41083,
+        "provider_completion_tokens": 7410,
+        "cache_misses": 25
+      },
+      "cost_by_stage": {
+        "foreground": {
+          "llm_calls": 21,
+          "embed_calls": 36,
+          "prompt_tokens": 48628,
+          "completion_tokens": 5885,
+          "usage_reported_calls": 6,
+          "provider_prompt_tokens": 17263,
+          "provider_completion_tokens": 1656,
+          "cache_misses": 16,
+          "seconds": 93.674
+        },
+        "maintenance": {
+          "llm_calls": 14,
+          "embed_calls": 12,
+          "prompt_tokens": 46728,
+          "completion_tokens": 7142,
+          "usage_reported_calls": 5,
+          "provider_prompt_tokens": 23820,
+          "provider_completion_tokens": 5754,
+          "cache_misses": 9,
+          "seconds": 246.344
+        }
+      },
+      "max_context_estimated_tokens": 2505,
+      "completed_probe_passes": 3,
+      "completed_probes": 3,
+      "total_probes": 10,
+      "probes": [
+        {
+          "turn": 10,
+          "text": "What kind of restaurants should I look for near the office?",
+          "reply": "Kreuzberg is one of Berlin's best food areas, Dana — and very vegetarian-friendly. Look for:\n\n- **Kötti/Kreuzberg so 36** area: Turkish spots (kebabs, falafel halls) — Markthalle Neun on Tuesdays is mostly Turkish eateries.\n- **Bergmannstraße / Bergmannkiez**: cafés, vegetarian and vegan restaurants, brunch spots.\n- **Markthalle Neun** (Eisenbahnstraße): food hall with rotating stalls — great veggie options, especially on Turkish Market days (Tue & Fri).\n- **Oranienstraße**: trendy mixed spots, many with solid vegetarian menus.\n- **Falafel/Lebanese** around Kottbusser Tor: cheap, fast, and mostly vegetarian-friendly.\n\nSince it's an U8 commute, Kottbusser Tor or Schönleinstraße exits put you right in the thick of it. Plenty of quick options for lunch breaks near Nimbus!",
+          "keyword_pass": true
+        },
+        {
+          "turn": 11,
+          "text": "Remind me, what breed is Rex?",
+          "reply": "Rex is a basset hound, Dana! Anything else about settling in, or lunch plans near the office?",
+          "keyword_pass": true
+        },
+        {
+          "turn": 18,
+          "text": "What do you remember about where I moved from and where I work?",
+          "reply": "You moved **from Lisbon to Berlin** for your job at **Nimbus**, a startup — you started on the 1st of the month, and their office is in **Kreuzberg**. Your manager there is **Priya**, who leads the platform team.",
+          "keyword_pass": true
+        }
+      ],
+      "sizes": {
+        "all_state_json_bytes": 42045,
+        "active_state_json_bytes": 20386,
+        "transcript_utf8_bytes": 8733,
+        "active_state_to_transcript": 2.3344,
+        "all_objects": {
+          "beliefs": 0,
+          "entities": 4,
+          "entity_relationships": 2,
+          "goals": 2,
+          "memories": 43,
+          "predictions": 17
+        },
+        "active_objects": {
+          "beliefs": 0,
+          "entities": 4,
+          "entity_relationships": 2,
+          "goals": 1,
+          "memories": 13,
+          "predictions": 17
+        }
+      },
+      "cycles": [
+        {
+          "turn": 3,
+          "stats": {
+            "consolidation": {
+              "accepted": 0,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 5,
+              "rejected": 0
+            },
+            "snapshot": 1
+          },
+          "before": {
+            "all_state_json_bytes": 3344,
+            "active_state_json_bytes": 3344,
+            "transcript_utf8_bytes": 974,
+            "active_state_to_transcript": 3.4333,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 3,
+              "predictions": 0
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 3,
+              "predictions": 0
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 4965,
+            "active_state_json_bytes": 4965,
+            "transcript_utf8_bytes": 974,
+            "active_state_to_transcript": 5.0975,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 4,
+              "predictions": 2
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 4,
+              "predictions": 2
+            }
+          },
+          "seconds": 0.034
+        },
+        {
+          "turn": 6,
+          "stats": {
+            "consolidation": {
+              "accepted": 1,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 7,
+              "rejected": 0
+            },
+            "snapshot": 2
+          },
+          "before": {
+            "all_state_json_bytes": 6043,
+            "active_state_json_bytes": 6043,
+            "transcript_utf8_bytes": 2574,
+            "active_state_to_transcript": 2.3477,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 6,
+              "predictions": 2
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 6,
+              "predictions": 2
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 10575,
+            "active_state_json_bytes": 9400,
+            "transcript_utf8_bytes": 2574,
+            "active_state_to_transcript": 3.6519,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 9,
+              "predictions": 5
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 7,
+              "predictions": 5
+            }
+          },
+          "seconds": 0.044
+        },
+        {
+          "turn": 9,
+          "stats": {
+            "consolidation": {
+              "accepted": 4,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 9,
+              "rejected": 0
+            },
+            "snapshot": 3
+          },
+          "before": {
+            "all_state_json_bytes": 11030,
+            "active_state_json_bytes": 9855,
+            "transcript_utf8_bytes": 4081,
+            "active_state_to_transcript": 2.4148,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 10,
+              "predictions": 5
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 8,
+              "predictions": 5
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 17686,
+            "active_state_json_bytes": 15169,
+            "transcript_utf8_bytes": 4081,
+            "active_state_to_transcript": 3.717,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 17,
+              "predictions": 9
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 13,
+              "predictions": 9
+            }
+          },
+          "seconds": 0.061
+        },
+        {
+          "turn": 12,
+          "stats": {
+            "consolidation": {
+              "accepted": 8,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 7,
+              "rejected": 0
+            },
+            "snapshot": 4
+          },
+          "before": {
+            "all_state_json_bytes": 18314,
+            "active_state_json_bytes": 15797,
+            "transcript_utf8_bytes": 5534,
+            "active_state_to_transcript": 2.8545,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 18,
+              "predictions": 9
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 14,
+              "predictions": 9
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 27963,
+            "active_state_json_bytes": 18373,
+            "transcript_utf8_bytes": 5534,
+            "active_state_to_transcript": 3.32,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 28,
+              "predictions": 12
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 1,
+              "memories": 13,
+              "predictions": 12
+            }
+          },
+          "seconds": 0.085
+        },
+        {
+          "turn": 15,
+          "stats": {
+            "consolidation": {
+              "accepted": 5,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 9,
+              "rejected": 0
+            },
+            "snapshot": 5
+          },
+          "before": {
+            "all_state_json_bytes": 28149,
+            "active_state_json_bytes": 18559,
+            "transcript_utf8_bytes": 7099,
+            "active_state_to_transcript": 2.6143,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 2,
+              "memories": 29,
+              "predictions": 13
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 2,
+              "memories": 14,
+              "predictions": 13
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 36882,
+            "active_state_json_bytes": 18185,
+            "transcript_utf8_bytes": 7099,
+            "active_state_to_transcript": 2.5616,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 2,
+              "memories": 37,
+              "predictions": 17
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 1,
+              "goals": 2,
+              "memories": 10,
+              "predictions": 17
+            }
+          },
+          "seconds": 43.177
+        },
+        {
+          "turn": 18,
+          "stats": {
+            "consolidation": {
+              "accepted": 1,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 2,
+              "rejected": 5
+            },
+            "snapshot": 6
+          },
+          "before": {
+            "all_state_json_bytes": 38006,
+            "active_state_json_bytes": 19309,
+            "transcript_utf8_bytes": 7989,
+            "active_state_to_transcript": 2.4169,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 2,
+              "goals": 2,
+              "memories": 38,
+              "predictions": 17
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 2,
+              "goals": 2,
+              "memories": 11,
+              "predictions": 17
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 40266,
+            "active_state_json_bytes": 19040,
+            "transcript_utf8_bytes": 7989,
+            "active_state_to_transcript": 2.3833,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 2,
+              "goals": 2,
+              "memories": 40,
+              "predictions": 17
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 2,
+              "goals": 2,
+              "memories": 10,
+              "predictions": 17
+            }
+          },
+          "seconds": 83.183
+        }
+      ],
+      "accepted_proposals": 96,
+      "rejected_proposals": [
+        {
+          "operation": "upsert_entity",
+          "reason": "unknown entity: Inês"
+        },
+        {
+          "operation": "add_relationship",
+          "reason": "missing field `dst`"
+        },
+        {
+          "operation": "create_memory",
+          "reason": "unknown evidence: mem_4b3322a9c409"
+        },
+        {
+          "operation": "create_prediction",
+          "reason": "unknown evidence: evt_2897258b7f3d"
+        },
+        {
+          "operation": "create_prediction",
+          "reason": "unknown evidence: goal_40760efc11bc"
+        },
+        {
+          "operation": "create_prediction",
+          "reason": "unknown evidence: goal_40760efc11bc"
+        },
+        {
+          "operation": "create_prediction",
+          "reason": "unknown evidence: evt_2897258b7f3d"
+        }
+      ],
+      "accepted_missing_evidence": [],
+      "database_bytes": 765952,
+      "failed_maintenance_preserved_cognitive_state": true,
+      "inbox_total": 21,
+      "inbox_completed": 21,
+      "reserved_or_spent_maintenance_tokens": 73270,
+      "strict_replay_stop": "cache miss (prompts changed; re-record without --strict): call #35 json/Reflection:"
+    },
+    "project": {
+      "status": "failed",
+      "completed_turns": 12,
+      "total_turns": 30,
+      "error": "completion reached MAX_COMPLETION_TOKENS; increase the limit or request fewer changes",
+      "seconds": 302.75,
+      "usage": {
+        "llm_calls": 19,
+        "embed_calls": 24,
+        "prompt_tokens": 44727,
+        "completion_tokens": 5915,
+        "usage_reported_calls": 6,
+        "provider_prompt_tokens": 21723,
+        "provider_completion_tokens": 4905,
+        "cache_misses": 12
+      },
+      "cost_by_stage": {
+        "foreground": {
+          "llm_calls": 12,
+          "embed_calls": 20,
+          "prompt_tokens": 23135,
+          "completion_tokens": 3196,
+          "usage_reported_calls": 3,
+          "provider_prompt_tokens": 7667,
+          "provider_completion_tokens": 1115,
+          "cache_misses": 8,
+          "seconds": 92.829
+        },
+        "maintenance": {
+          "llm_calls": 7,
+          "embed_calls": 4,
+          "prompt_tokens": 21592,
+          "completion_tokens": 2719,
+          "usage_reported_calls": 3,
+          "provider_prompt_tokens": 14056,
+          "provider_completion_tokens": 3790,
+          "cache_misses": 4,
+          "seconds": 209.562
+        }
+      },
+      "max_context_estimated_tokens": 1908,
+      "completed_probe_passes": 1,
+      "completed_probes": 1,
+      "total_probes": 8,
+      "probes": [
+        {
+          "turn": 9,
+          "text": "Who owns ingestion on my team?",
+          "reply": "Mei owns ingestion on your team, per what you told me earlier (you assigned mei/ingestion, Jonas/warehouse, Sara/SRE). Anything blocking Mei on the ingestion side for the migration?",
+          "keyword_pass": true
+        }
+      ],
+      "sizes": {
+        "all_state_json_bytes": 13910,
+        "active_state_json_bytes": 12460,
+        "transcript_utf8_bytes": 4171,
+        "active_state_to_transcript": 2.9873,
+        "all_objects": {
+          "beliefs": 0,
+          "entities": 0,
+          "entity_relationships": 0,
+          "goals": 2,
+          "memories": 11,
+          "predictions": 9
+        },
+        "active_objects": {
+          "beliefs": 0,
+          "entities": 0,
+          "entity_relationships": 0,
+          "goals": 2,
+          "memories": 9,
+          "predictions": 9
+        }
+      },
+      "cycles": [
+        {
+          "turn": 3,
+          "stats": {
+            "consolidation": {
+              "accepted": 0,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 6,
+              "rejected": 0
+            },
+            "snapshot": 1
+          },
+          "before": {
+            "all_state_json_bytes": 1742,
+            "active_state_json_bytes": 1742,
+            "transcript_utf8_bytes": 735,
+            "active_state_to_transcript": 2.3701,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 1,
+              "predictions": 0
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 1,
+              "predictions": 0
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 4782,
+            "active_state_json_bytes": 4782,
+            "transcript_utf8_bytes": 735,
+            "active_state_to_transcript": 6.5061,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 2,
+              "predictions": 3
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 2,
+              "predictions": 3
+            }
+          },
+          "seconds": 0.03
+        },
+        {
+          "turn": 6,
+          "stats": {
+            "consolidation": {
+              "accepted": 0,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 6,
+              "rejected": 0
+            },
+            "snapshot": 2
+          },
+          "before": {
+            "all_state_json_bytes": 6352,
+            "active_state_json_bytes": 6352,
+            "transcript_utf8_bytes": 1643,
+            "active_state_to_transcript": 3.8661,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 5,
+              "predictions": 3
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 5,
+              "predictions": 3
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 9641,
+            "active_state_json_bytes": 9641,
+            "transcript_utf8_bytes": 1643,
+            "active_state_to_transcript": 5.8679,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 6,
+              "predictions": 6
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 6,
+              "predictions": 6
+            }
+          },
+          "seconds": 0.046
+        },
+        {
+          "turn": 9,
+          "stats": {
+            "consolidation": {
+              "accepted": 1,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 6,
+              "rejected": 0
+            },
+            "snapshot": 3
+          },
+          "before": {
+            "all_state_json_bytes": 10866,
+            "active_state_json_bytes": 10866,
+            "transcript_utf8_bytes": 2818,
+            "active_state_to_transcript": 3.8559,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 8,
+              "predictions": 6
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 8,
+              "predictions": 6
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 14050,
+            "active_state_json_bytes": 12600,
+            "transcript_utf8_bytes": 2818,
+            "active_state_to_transcript": 4.4713,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 10,
+              "predictions": 9
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 0,
+              "entity_relationships": 0,
+              "goals": 2,
+              "memories": 8,
+              "predictions": 9
+            }
+          },
+          "seconds": 103.441
+        }
+      ],
+      "accepted_proposals": 36,
+      "rejected_proposals": [
+        {
+          "operation": "create_memory",
+          "reason": "invalid type: string \"high\", expected f64"
+        },
+        {
+          "operation": "upsert_entity",
+          "reason": "unknown entity: Mei"
+        },
+        {
+          "operation": "upsert_entity",
+          "reason": "unknown entity: Jonas"
+        },
+        {
+          "operation": "upsert_entity",
+          "reason": "unknown entity: Sara"
+        },
+        {
+          "operation": "add_relationship",
+          "reason": "unknown entity: Mei"
+        },
+        {
+          "operation": "add_relationship",
+          "reason": "unknown entity: Jonas"
+        },
+        {
+          "operation": "add_relationship",
+          "reason": "unknown entity: Sara"
+        }
+      ],
+      "accepted_missing_evidence": [],
+      "database_bytes": 278528,
+      "failed_maintenance_preserved_cognitive_state": true,
+      "inbox_total": 12,
+      "inbox_completed": 12,
+      "reserved_or_spent_maintenance_tokens": 44574,
+      "strict_replay_stop": "cache miss (prompts changed; re-record without --strict): call #19 json/Reflection:"
+    },
+    "long": {
+      "status": "failed",
+      "completed_turns": 35,
+      "total_turns": 91,
+      "error": "completion reached MAX_COMPLETION_TOKENS; increase the limit or request fewer changes",
+      "seconds": 1201.465,
+      "usage": {
+        "llm_calls": 48,
+        "embed_calls": 69,
+        "prompt_tokens": 117082,
+        "completion_tokens": 16888,
+        "usage_reported_calls": 29,
+        "provider_prompt_tokens": 87948,
+        "provider_completion_tokens": 19501,
+        "cache_misses": 72
+      },
+      "cost_by_stage": {
+        "foreground": {
+          "llm_calls": 35,
+          "embed_calls": 60,
+          "prompt_tokens": 72597,
+          "completion_tokens": 10507,
+          "usage_reported_calls": 20,
+          "provider_prompt_tokens": 50163,
+          "provider_completion_tokens": 9425,
+          "cache_misses": 55,
+          "seconds": 615.493
+        },
+        "maintenance": {
+          "llm_calls": 13,
+          "embed_calls": 9,
+          "prompt_tokens": 44485,
+          "completion_tokens": 6381,
+          "usage_reported_calls": 9,
+          "provider_prompt_tokens": 37785,
+          "provider_completion_tokens": 10076,
+          "cache_misses": 17,
+          "seconds": 583.806
+        }
+      },
+      "max_context_estimated_tokens": 2164,
+      "completed_probe_passes": 0,
+      "completed_probes": 0,
+      "total_probes": 30,
+      "probes": [],
+      "sizes": {
+        "all_state_json_bytes": 36416,
+        "active_state_json_bytes": 19747,
+        "transcript_utf8_bytes": 10699,
+        "active_state_to_transcript": 1.8457,
+        "all_objects": {
+          "beliefs": 0,
+          "entities": 5,
+          "entity_relationships": 0,
+          "goals": 1,
+          "memories": 36,
+          "predictions": 15
+        },
+        "active_objects": {
+          "beliefs": 0,
+          "entities": 5,
+          "entity_relationships": 0,
+          "goals": 1,
+          "memories": 13,
+          "predictions": 15
+        }
+      },
+      "cycles": [
+        {
+          "turn": 5,
+          "stats": {
+            "consolidation": {
+              "accepted": 0,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 2,
+              "rejected": 0
+            },
+            "snapshot": 1
+          },
+          "before": {
+            "all_state_json_bytes": 2896,
+            "active_state_json_bytes": 1824,
+            "transcript_utf8_bytes": 1027,
+            "active_state_to_transcript": 1.776,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 2,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 3,
+              "predictions": 0
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 2,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 1,
+              "predictions": 0
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 3407,
+            "active_state_json_bytes": 2335,
+            "transcript_utf8_bytes": 1027,
+            "active_state_to_transcript": 2.2736,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 2,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 3,
+              "predictions": 1
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 2,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 1,
+              "predictions": 1
+            }
+          },
+          "seconds": 0.034
+        },
+        {
+          "turn": 10,
+          "stats": {
+            "consolidation": {
+              "accepted": 0,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 5,
+              "rejected": 1
+            },
+            "snapshot": 2
+          },
+          "before": {
+            "all_state_json_bytes": 4706,
+            "active_state_json_bytes": 3634,
+            "transcript_utf8_bytes": 2575,
+            "active_state_to_transcript": 1.4113,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 5,
+              "predictions": 1
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 3,
+              "predictions": 1
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 7285,
+            "active_state_json_bytes": 6213,
+            "transcript_utf8_bytes": 2575,
+            "active_state_to_transcript": 2.4128,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 7,
+              "predictions": 3
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 3,
+              "entity_relationships": 0,
+              "goals": 0,
+              "memories": 5,
+              "predictions": 3
+            }
+          },
+          "seconds": 0.044
+        },
+        {
+          "turn": 15,
+          "stats": {
+            "consolidation": {
+              "accepted": 0,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 6,
+              "rejected": 0
+            },
+            "snapshot": 3
+          },
+          "before": {
+            "all_state_json_bytes": 9475,
+            "active_state_json_bytes": 8403,
+            "transcript_utf8_bytes": 4005,
+            "active_state_to_transcript": 2.0981,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 11,
+              "predictions": 3
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 9,
+              "predictions": 3
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 13063,
+            "active_state_json_bytes": 11991,
+            "transcript_utf8_bytes": 4005,
+            "active_state_to_transcript": 2.994,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 12,
+              "predictions": 6
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 10,
+              "predictions": 6
+            }
+          },
+          "seconds": 74.76
+        },
+        {
+          "turn": 20,
+          "stats": {
+            "consolidation": {
+              "accepted": 3,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 7,
+              "rejected": 0
+            },
+            "snapshot": 4
+          },
+          "before": {
+            "all_state_json_bytes": 16282,
+            "active_state_json_bytes": 10605,
+            "transcript_utf8_bytes": 5888,
+            "active_state_to_transcript": 1.8011,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 16,
+              "predictions": 6
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 6,
+              "predictions": 6
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 22769,
+            "active_state_json_bytes": 15058,
+            "transcript_utf8_bytes": 5888,
+            "active_state_to_transcript": 2.5574,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 21,
+              "predictions": 9
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 9,
+              "predictions": 9
+            }
+          },
+          "seconds": 107.687
+        },
+        {
+          "turn": 25,
+          "stats": {
+            "consolidation": {
+              "accepted": 5,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 6,
+              "rejected": 1
+            },
+            "snapshot": 5
+          },
+          "before": {
+            "all_state_json_bytes": 22990,
+            "active_state_json_bytes": 15279,
+            "transcript_utf8_bytes": 7251,
+            "active_state_to_transcript": 2.1072,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 22,
+              "predictions": 9
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 10,
+              "predictions": 9
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 29833,
+            "active_state_json_bytes": 13675,
+            "transcript_utf8_bytes": 7251,
+            "active_state_to_transcript": 1.8859,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 26,
+              "predictions": 12
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 4,
+              "predictions": 12
+            }
+          },
+          "seconds": 156.466
+        },
+        {
+          "turn": 30,
+          "stats": {
+            "consolidation": {
+              "accepted": 1,
+              "rejected": 0
+            },
+            "reflection": {
+              "accepted": 7,
+              "rejected": 1
+            },
+            "snapshot": 6
+          },
+          "before": {
+            "all_state_json_bytes": 30908,
+            "active_state_json_bytes": 14750,
+            "transcript_utf8_bytes": 8953,
+            "active_state_to_transcript": 1.6475,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 28,
+              "predictions": 12
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 6,
+              "predictions": 12
+            }
+          },
+          "after": {
+            "all_state_json_bytes": 35760,
+            "active_state_json_bytes": 19602,
+            "transcript_utf8_bytes": 8953,
+            "active_state_to_transcript": 2.1894,
+            "all_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 31,
+              "predictions": 15
+            },
+            "active_objects": {
+              "beliefs": 0,
+              "entities": 4,
+              "entity_relationships": 0,
+              "goals": 1,
+              "memories": 9,
+              "predictions": 15
+            }
+          },
+          "seconds": 122.173
+        }
+      ],
+      "accepted_proposals": 96,
+      "rejected_proposals": [
+        {
+          "operation": "add_relationship",
+          "reason": "unknown entity: Noor"
+        },
+        {
+          "operation": "add_relationship",
+          "reason": "invalid type: null, expected a string"
+        },
+        {
+          "operation": "create_memory",
+          "reason": "missing field `summary`"
+        },
+        {
+          "operation": "create_memory",
+          "reason": "missing field `summary`"
+        },
+        {
+          "operation": "create_memory",
+          "reason": "missing field `summary`"
+        },
+        {
+          "operation": "create_prediction",
+          "reason": "unknown evidence: evt_c6a8b92a11d4"
+        },
+        {
+          "operation": "upsert_entity",
+          "reason": "unknown entity: Daan"
+        },
+        {
+          "operation": "upsert_entity",
+          "reason": "unknown entity: Noor's car"
+        },
+        {
+          "operation": "create_memory",
+          "reason": "unknown evidence: evt_96b97d386d3c"
+        },
+        {
+          "operation": "create_prediction",
+          "reason": "unknown evidence: evt_e8a11676c54f_placeholder"
+        }
+      ],
+      "accepted_missing_evidence": [],
+      "database_bytes": 782336,
+      "failed_maintenance_preserved_cognitive_state": true,
+      "inbox_total": 35,
+      "inbox_completed": 35,
+      "reserved_or_spent_maintenance_tokens": 70455,
+      "strict_replay_stop": "cache miss (prompts changed; re-record without --strict): call #48 json/Reflection:"
+    }
+  },
+  "supplemental": {
+    "continuity": {
+      "finished": true,
+      "error": null,
+      "seconds": 138.39,
+      "usage": {
+        "llm_calls": 9,
+        "embed_calls": 9,
+        "prompt_tokens": 8795,
+        "completion_tokens": 2299,
+        "usage_reported_calls": 9,
+        "provider_prompt_tokens": 8795,
+        "provider_completion_tokens": 2299,
+        "cache_misses": 0
+      },
+      "reopened_identically": true,
+      "idle_completed": true,
+      "idle_quiet": true,
+      "replies": [
+        {
+          "turn": 1,
+          "reply": {
+            "response": "Nice to meet you, Alice! Noted — you live in Berlin and have a beagle named Rex. Anything you'd like help with today?",
+            "event_id": "evt_219fa2761e02",
+            "response_event_id": "evt_ab8bcc9c7d53",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 1,
+                  "dropped": 0,
+                  "tokens": 33
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 37
+            },
+            "request_id": "audit-0",
+            "sequence": 1,
+            "state_version": 3
+          }
+        },
+        {
+          "turn": 2,
+          "reply": {
+            "response": "Nice to meet you, Bob! Noted — you live in Madrid and have a poodle named Rex. What can I help you with today?",
+            "event_id": "evt_4aee0615c458",
+            "response_event_id": "evt_d8f673bfa9c7",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 3,
+                  "dropped": 0,
+                  "tokens": 120
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 124
+            },
+            "request_id": "audit-1",
+            "sequence": 2,
+            "state_version": 7
+          }
+        },
+        {
+          "turn": 3,
+          "reply": {
+            "response": "Got it, Alice — Rex is a basset hound, not a beagle. Noted!\n\n```json\n[\n  {\"op\": \"create_memory\", \"summary\": \"Alice: lives in Berlin; her dog Rex is a basset hound (corrected from beagle)\", \"kind\": \"semantic\", \"importance\": 3, \"confidence\": 0.95},\n  {\"op\": \"upsert_entity\", \"name\": \"Rex (Alice's dog)\", \"kind\": \"pet\", \"attributes\": {\"breed\": \"basset hound\", \"owner\": \"alice\"}, \"evidence\": [\"evt_e2ec7fdc50f7\", \"evt_219fa2761e02\"], \"confidence\": 0.95}\n]\n```",
+            "event_id": "evt_e2ec7fdc50f7",
+            "response_event_id": "evt_a23ae1ec984e",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 5,
+                  "dropped": 0,
+                  "tokens": 209
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 211
+            },
+            "request_id": "audit-2",
+            "sequence": 3,
+            "state_version": 11
+          }
+        },
+        {
+          "turn": 4,
+          "reply": {
+            "response": "Sure, Alice — I'll track booking a vet appointment for Rex (your basset hound). Do you have a preferred clinic or a target date?",
+            "event_id": "evt_f80c4046282c",
+            "response_event_id": "evt_a96c44dd8169",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 7,
+                  "dropped": 0,
+                  "tokens": 332
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 333
+            },
+            "request_id": "audit-3",
+            "sequence": 4,
+            "state_version": 15
+          }
+        },
+        {
+          "turn": 5,
+          "reply": {
+            "response": "You live in Madrid, and your dog Rex is a poodle — all noted from what you told me, Bob.",
+            "event_id": "evt_529a745c3fb6",
+            "response_event_id": "evt_e4d779970331",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 3,
+                  "dropped": 0,
+                  "tokens": 37
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 1,
+                  "dropped": 0,
+                  "tokens": 12
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 9,
+                  "dropped": 0,
+                  "tokens": 422
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 479
+            },
+            "request_id": "audit-4",
+            "sequence": 5,
+            "state_version": 17
+          }
+        },
+        {
+          "turn": 6,
+          "reply": {
+            "response": "You live in Berlin, and your dog Rex is a basset hound — as you told me, Alice.",
+            "event_id": "evt_d3172ee205f1",
+            "response_event_id": "evt_3c2a3dbb13e0",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 3,
+                  "dropped": 0,
+                  "tokens": 37
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 1,
+                  "dropped": 0,
+                  "tokens": 12
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 10,
+                  "dropped": 0,
+                  "tokens": 469
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 526
+            },
+            "request_id": "audit-5",
+            "sequence": 6,
+            "state_version": 19
+          }
+        },
+        {
+          "turn": 7,
+          "reply": {
+            "response": "Great news, Alice — marking the vet appointment for Rex (your basset hound) as done! 🎉",
+            "event_id": "evt_b50ad349675f",
+            "response_event_id": "evt_366cb6f89be2",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 3,
+                  "dropped": 0,
+                  "tokens": 37
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 1,
+                  "dropped": 0,
+                  "tokens": 12
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 10,
+                  "dropped": 0,
+                  "tokens": 462
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 519
+            },
+            "request_id": "audit-6",
+            "sequence": 7,
+            "state_version": 24
+          }
+        },
+        {
+          "turn": 8,
+          "reply": {
+            "response": "From what I've tracked for you, Alice, your list is empty — the vet appointment for Rex was marked done. 🎉 Nothing else is outstanding!",
+            "event_id": "evt_291c9607541f",
+            "response_event_id": "evt_379c3bda2ade",
+            "context": {
+              "budget": 4000,
+              "sections": {
+                "working": {
+                  "included": 1,
+                  "dropped": 0,
+                  "tokens": 9
+                },
+                "memories": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "beliefs": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "world": {
+                  "included": 1,
+                  "dropped": 0,
+                  "tokens": 12
+                },
+                "self": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "goals": {
+                  "included": 0,
+                  "dropped": 0,
+                  "tokens": 0
+                },
+                "recent": {
+                  "included": 10,
+                  "dropped": 0,
+                  "tokens": 456
+                }
+              },
+              "memories": [],
+              "beliefs": [],
+              "tokens": 487
+            },
+            "request_id": "audit-7",
+            "sequence": 8,
+            "state_version": 28
+          }
+        }
+      ],
+      "assessment": {
+        "speaker_recall": "2/2 correct",
+        "reopen_and_idempotency": "passed",
+        "goal_creation_and_completion": "failed: both proposals rejected; goals table empty",
+        "user_facing_internal_json": "present at turn 3",
+        "idle_self_revision": "identified missing structured task records",
+        "idle_no_repeat": "passed, four-second observation"
+      }
+    },
+    "causal": {
+      "finished": true,
+      "error": null,
+      "seconds": 192.979,
+      "usage": {
+        "llm_calls": 12,
+        "embed_calls": 2,
+        "prompt_tokens": 22734,
+        "completion_tokens": 3107,
+        "usage_reported_calls": 12,
+        "provider_prompt_tokens": 22734,
+        "provider_completion_tokens": 3107,
+        "cache_misses": 0
+      },
+      "reopened_identically": false,
+      "idle_completed": false,
+      "idle_quiet": false,
+      "replies": [
+        {
+          "probe": "What should I focus on next?",
+          "trial": 1,
+          "condition": "before",
+          "response": {
+            "response": "You're in good shape on the big one, Dana — Anmeldung is booked for next Thursday, so the main open threads are:\n\n1. **Vet for Rex** — you haven't settled on one yet from the two options I suggested (Tierarztpraxis Helmholtzplatz or Kleintierpraxis am Kollwitzplatz). Calling ahead to check new-patient availability would be the quickest win.\n2. **Pre-Anmeldung prep** — make sure you have the Wohnungsgeberbestätigung signed by your landlord before Thursday; that's the document people most often miss.\n3. **Post-Anmeldung follow-ups** — registering at the Bürgeramt is usually what unlocks your tax ID and bank paperwork, so keep an eye out for what comes next.\n\nIf I had to pick one: book that vet call today — it's the smallest effort, and Rex's healthcare waits for no grey Berlin morning. 🐾",
+            "changes": [
+              {
+                "operation": "update_memory",
+                "target": "mem_e2555920c152",
+                "payload": {
+                  "summary": "Dana booked an Anmeldung appointment for next Thursday at 9am; she has the checklist (passport, Anmeldeformular, signed Wohnungsgeberbestätigung)."
+                },
+                "evidence_ids": [
+                  "evt_664868c4aa03"
+                ],
+                "confidence": 0.9,
+                "reason": "Fold the confirmed booking into the existing checklist memory to reduce duplication and reflect new evidence."
+              },
+              {
+                "operation": "set_working_state",
+                "target": null,
+                "payload": {
+                  "current_topic": "Prioritizing Dana's next steps: vet for Rex, Anmeldung prep, post-registration follow-ups",
+                  "open_questions": [
+                    "Which vet did Dana choose from Tierarztpraxis Helmholtzplatz / Kleintierpraxis am Kollwitzplatz?",
+                    "Will the Anmeldung on next Thursday at 9am succeed and yield the Anmeldebestätigung?"
+                  ],
+                  "active_system_keys": [
+                    "Dana",
+                    "Rex",
+                    "Nimbus",
+                    "Berliner Bürgeramt"
+                  ]
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da",
+                  "evt_664868c4aa03"
+                ],
+                "confidence": 0.9,
+                "reason": "Working state had stale/overlapping open questions (e.g., vet and German class items already answered); trimmed to reflect the current focus."
+              },
+              {
+                "operation": "update_self_state",
+                "target": null,
+                "payload": {
+                  "recent_actions": [
+                    "Consolidated Anmeldung checklist memory with confirmed booking; cleaned up overlapping open questions in working state."
+                  ]
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.9,
+                "reason": "Record that duplicate/answerable open items were actively cleaned up, to inform future housekeeping."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 1,
+          "condition": "after",
+          "response": {
+            "response": "A few things worth prioritizing, Dana:\n\n1. **Anmeldung next Thursday 9am** — confirm you have passport, completed Anmeldeformular, and the signed Wohnungsgeberbestätigung. This is your biggest one; it unlocks bank accounts, contracts, etc.\n2. **After Anmeldung**: get your tax ID (comes automatically), then consider registering with a GP doctor.\n3. **Rex's vet** — if you haven't picked one yet, Tierarztpraxis Helmholtzplatz or Kleintierpraxis am Kollwitzplatz are good Prenzlauer Berg options; a first check-up visit is worth booking.\n4. Bonus: evening light for the grey days — a good walk routine with Rex helps the adjustment.\n\nThe Anmeldung is the clear #1 — want a quick pre-appointment double-check list?",
+            "changes": []
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 2,
+          "condition": "after",
+          "response": {
+            "response": "Biggest priorities right now, Dana:\n\n1. **Anmeldung prep (next Thursday, 9am)** — top focus. Make sure you have: passport, completed Anmeldeformular, Wohnungsgeberbestätigung signed by your landlord. Arrive early.\n2. **After Anmeldung:** you'll get the Anmeldebestätigung — you'll need it to open a bank account, sign up for health insurance, and later get a tax ID (automatically mailed once registered).\n3. **If work visa/registration at the Landesamt für Einwanderung is required** for your job at Nimbus, book that termin early — waits are long.\n4. **Vet for Rex** — Tierarztpraxis Helmholtzplatz or Kleintierpraxis am Kollwitzplatz are close by; new-patient slots fill up, so call ahead.\n\nAnmeldung is the keystone — once done, the rest gets easier.\n",
+            "changes": []
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 2,
+          "condition": "before",
+          "response": {
+            "response": "Great question, Dana! Based on where things stand:\n\n1. **Anmeldung prep (top priority):** Your appointment is next Thursday at 9am — make sure you have passport, completed Anmeldeformular, and the signed Wohnungsgeberbestätigung ready.\n2. **Vet for Rex:** Still open — Tierarztpraxis Helmholtzplatz and Kleintierpraxis am Kollwitzplatz are good Prenzlauer Berg options; worth calling soon so Rex has a vet lined up.\n3. **After Anmeldung:** Once you have your Anmeldebestätigung, you can tackle follow-ons like opening a bank account, getting a tax ID ( Steuer-ID arrives automatically), and health insurance setup.\n\nWant help with any of these — e.g., drafting questions to ask the vet's office?",
+            "changes": []
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 3,
+          "condition": "before",
+          "response": {
+            "response": "Here's what I'd prioritize next, Dana:\n\n1. **Promoveerd waiting — your Anmeldung Thursday 9am**: Make sure the Wohnungsgeberbestätigung is signed and all docs are ready.\n2. **Bank account / health insurance**: Registration unlocks opening a local bank account and finalizing German health insurance — both important for a new job at Nimbus.\n3. **Vet for Rex**: Call Tierarzpraxis Helmholtzplatz or Kleintierpraxis am Kollwitzplatz to book a first check-up.\n4. **Beat the grey**: Vitamin D lamp and a standing plan (your Tuesday German class is a good anchor).",
+            "changes": [
+              {
+                "operation": "create_memory",
+                "target": "mem_fc93a06543da",
+                "payload": {
+                  "summary": "Assistant gave Dana a prioritized focus list: prep for Anmeldung Thursday 9am, bank/health insurance setup, book vet first visit, adjust to grey weather.",
+                  "content": "Assistant advised Dana on next priorities: prepare Anmeldung docs (passport, Anmeldeformular, signed Wohnungsgeberbestätigung) for Thursday 9am appointment; then handle bank account and health insurance; call vet options for Rex; tips for grey weather adjustment.",
+                  "reason": "New advice given following Dana's question about next steps",
+                  "confidence": 0.9,
+                  "importance": 0.5,
+                  "kind": "episodic"
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.9,
+                "reason": "Advice given re next steps after Anmeldung booking"
+              }
+            ]
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 3,
+          "condition": "after",
+          "response": {
+            "response": "Right now, the Anmeldung is the big one, Dana. Before next Thursday at 9am: confirm you have your passport, completed Anmeldeformular, and signed Wohnungsgeberbestätigung. After that, a few follow-ups:\n\n1. **Post-Registration:** Once registered, you can get your tax ID (steuerliche Identifikationsnummer) and open a local bank account — bring your Anmeldebestätigung everywhere.\n2. **Health insurance:** If you're employed at Nimbus, make sure your registration triggers enrollment with a German health insurer.\n3. **Rex:** Book a vet — Tierarztpraxis Helmholtzplatz or Kleintierpraxis am Kollwitzplatz are near you; call ahead since new-patient slots fill up.\n4. **Grey-weather self-care:** The vitamin D / light lamp idea is worth acting on early in autumn.\n\nAnmeldung is the gateway item — most other German paperwork flows from it.",
+            "changes": []
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 1,
+          "condition": "before",
+          "response": {
+            "response": " ",
+            "changes": []
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 1,
+          "condition": "after",
+          "response": {
+            "response": "Not yet as far as I know, Dana! What I have is that your Anmeldung appointment is booked for next Thursday at 9am — but I haven't heard whether you attended or received the Anmeldebestätigung. If the appointment has already happened, let me know how it went; if it's still coming up, make sure to bring your passport, Anmeldeformular, and the signed Wohnungsgeberbestätigung.",
+            "changes": [
+              {
+                "operation": "create_prediction",
+                "target": "",
+                "payload": {
+                  "prediction": "Dana reports attending the Anmeldung appointment and receiving the Anmeldebestätigung (or reasons why not) within ~2 weeks",
+                  "probability": 0.75,
+                  "deadline": "2026-09-25T23:59:00Z"
+                },
+                "evidence_ids": [
+                  "mem_e2555920c152",
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.8,
+                "reason": "Open question about the appointment outcome; prediction prompts memory refresh about it."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 2,
+          "condition": "after",
+          "response": {
+            "response": "Based on what you've told me, Dana: not yet. You booked an Anmeldung appointment for next Thursday at 9am, but I don't have any update from you that it already happened. Your checklist for Thursday: passport, completed Anmeldeformular, and the signed Wohnungsgeberbestätigung. You're finished once the Bürgeramt issues your Anmeldebestätigung — let me know how it goes!",
+            "changes": [
+              {
+                "operation": "set_working_state",
+                "target": null,
+                "payload": {
+                  "patch": {
+                    "current_topic": "Anmeldung appointment upcoming next Thursday 9am — Dana asking whether registration is finished (not yet)"
+                  }
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.9,
+                "reason": "Current turn refocuses conversation on Anmeldung completion status."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 2,
+          "condition": "before",
+          "response": {
+            "response": "Based on what you've told me: not yet — you booked the appointment for next Thursday at 9am, but you haven't said the meeting happened or that you got the Anmeldebestätigung. Before then, make sure you have your passport, completed Anmeldeformular, and the signed Wohnungsgeberbestätigung. Let me know how it goes!",
+            "changes": [
+              {
+                "operation": "update_memory",
+                "target": "mem_e2555920c152",
+                "payload": {
+                  "summary": "Dana booked an Anmeldung appointment for next Thursday at 9am; as of this check-in, registration not yet completed."
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.9,
+                "reason": "Dana's question implies registration status is being tracked; no evidence it's finished."
+              },
+              {
+                "operation": "create_prediction",
+                "target": null,
+                "payload": {
+                  "prediction": "Dana completes the Anmeldung at the Bürgeramt appointment next Thursday at 9am and receives the Anmeldebestätigung",
+                  "probability": 0.75,
+                  "deadline": "2026-09-18T23:59:59+02:00"
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.7,
+                "reason": "Appointment is booked; outcome unverified until after Thursday."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 3,
+          "condition": "before",
+          "response": {
+            "response": "Not that I know of, Dana — as far as I can see, you've booked the appointment for next Thursday at 9am, but the registration itself hasn't happened yet (I don't have confirmation of the Anmeldebestätigung). Once you've attended, let me know how it went and you'll be all set.",
+            "changes": []
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 3,
+          "condition": "after",
+          "response": {
+            "response": "Sorry to hear that, Dana — the appointment didn't work out then. Do you know what went wrong (missing document, slot issue, something else)? That'll help us fix it and get you a new termin, ideally one that doesn't clash with your Tuesday-evening German class.",
+            "changes": [
+              {
+                "operation": "create_memory",
+                "target": null,
+                "payload": {},
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.95,
+                "reason": "Dana states Anmeldung could not be completed, revising prior state that only the outcome was pending"
+              },
+              {
+                "operation": "update_goal",
+                "target": "goal_8b43772e347b",
+                "payload": {
+                  "status": "blocked"
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.9,
+                "reason": "Unable to attend the booked appointment blocks completing the Anmeldung"
+              },
+              {
+                "operation": "set_working_state",
+                "target": null,
+                "payload": {
+                  "current_topic": "Anmeldung rebooking after failed appointment",
+                  "open_questions": [
+                    "Why couldn't Dana attend/complete the Anmeldung appointment on Thursday at 9am?",
+                    "Which vet did Dana choose from the suggested options?"
+                  ],
+                  "active_entities": [
+                    "Dana",
+                    "Berliner Bürgeramt"
+                  ]
+                },
+                "evidence_ids": [
+                  "evt_fc93a06543da"
+                ],
+                "confidence": 0.9,
+                "reason": "Appointment failed; unknown cause becomes the key open question"
+              }
+            ]
+          }
+        }
+      ],
+      "assessment": {
+        "checkpoint": "Dana after turn 6 reflection",
+        "repetitions": 3,
+        "status_probe_correct_before": 2,
+        "status_probe_correct_after": 2,
+        "before_failure": "whitespace-only response in trial 1; production turn handler would reject it",
+        "after_failure": "invented failed appointment in trial 3",
+        "priority_probe": "Anmeldung prioritized first in 2/3 before and 3/3 after responses; other suggestions varied",
+        "conclusion": "No consistent quality improvement demonstrated; small descriptive experiment"
+      },
+      "only_self_section_changed": true
+    }
+  },
+  "overall_verdict": "partially achieved",
+  "offline_checks": {
+    "tests_passed": 32,
+    "formatting": "passed",
+    "clippy_warnings_denied": "passed",
+    "historical_controls_replayed": 3,
+    "full_v2_recordings_completed": 0,
+    "three_turn_capture_smoke": "identical replies and deterministic metrics with zero live calls"
+  }
+}

@@ -1,6 +1,9 @@
 //! Scenario runner: metrics for one scenario, optional strict replay and baseline comparison.
 //!
-//! Usage: eval evals/scenarios/dana.json [--label L] [--strict] [--baseline FILE] [--control]
+//! Usage: eval evals/scenarios/dana.json [--label L] [--strict] [--baseline FILE] [--control] [--audit-dir DIR]
+
+#[path = "support/audit.rs"]
+mod audit;
 
 use std::path::{Path, PathBuf};
 use std::time::Instant;
@@ -104,26 +107,64 @@ async fn run_harness(
     svc: &Services,
     turns: &[Value],
     cycle_every: usize,
+    audit: Option<&audit::Audit>,
 ) -> Result<(Vec<String>, Vec<Value>, Vec<String>)> {
     let (mut replies, mut manifests, mut event_ids) = (Vec::new(), Vec::new(), Vec::new());
     for (i, t) in turns.iter().enumerate() {
+        if let Some(a) = audit {
+            a.record(svc, "turn_start", json!({"turn": i + 1, "input": t}))?;
+        }
         let body = interact_as(svc, text(t), None, "user", Some(&format!("eval-{i}"))).await?;
         replies.push(body["response"].as_str().unwrap_or_default().to_string());
         manifests.push(body["context"].clone());
         event_ids.push(body["event_id"].as_str().unwrap_or_default().to_string());
+        if let Some(a) = audit {
+            a.record(svc, "turn", json!({"turn": i + 1, "reply": body}))?;
+        }
         if (i + 1) % cycle_every == 0 {
-            cycle(svc, true).await?;
+            let stats = cycle(svc, true).await?;
+            if let Some(a) = audit {
+                a.record(svc, "cycle", json!({"turn": i + 1, "stats": stats}))?;
+            }
         }
     }
-    cycle(svc, true).await?;
+    // Drain bounded pages, stopping at the durable spending/retry limits.
+    for _ in 0..64 {
+        let stats = cycle(svc, true).await?;
+        if let Some(a) = audit {
+            a.record(svc, "final_cycle", stats.clone())?;
+        }
+        let failed = svc
+            .store
+            .lock()
+            .unwrap()
+            .state
+            .cursors
+            .get("reflection")
+            .and_then(|r| r["failures"].as_i64())
+            .unwrap_or(0);
+        if stats["pending"] != true
+            || !stats["maintenance"].is_null()
+            || failed >= settings().consumer_max_failures
+        {
+            break;
+        }
+    }
     Ok((replies, manifests, event_ids))
 }
 
-async fn run_control(llm: &Llm, turns: &[Value]) -> Result<Vec<String>> {
+async fn run_control(
+    svc: &Services,
+    turns: &[Value],
+    audit: Option<&audit::Audit>,
+) -> Result<Vec<String>> {
     let budget = settings().context_token_budget;
     let mut replies = Vec::new();
     let mut transcript: Vec<String> = Vec::new();
-    for t in turns {
+    for (i, t) in turns.iter().enumerate() {
+        if let Some(a) = audit {
+            a.record(svc, "turn_start", json!({"turn":i+1,"input":t}))?;
+        }
         let mut tail: Vec<&str> = Vec::new();
         let mut used = 0;
         for line in transcript.iter().rev() {
@@ -134,7 +175,10 @@ async fn run_control(llm: &Llm, turns: &[Value]) -> Result<Vec<String>> {
             used += tokens(line);
         }
         let prompt = format!("{CONTROL_SYSTEM}\n\n# TRANSCRIPT\n{}", tail.join("\n"));
-        let reply = llm.complete_text(&prompt, text(t)).await?;
+        let reply = svc.llm.complete_text(&prompt, text(t)).await?;
+        if let Some(a) = audit {
+            a.record(svc, "turn", json!({"turn":i+1,"reply":{"response":reply}}))?;
+        }
         transcript.push(format!("user: {}", text(t)));
         transcript.push(format!("assistant: {reply}"));
         replies.push(reply);
@@ -347,6 +391,7 @@ async fn run_scenario(
     strict: bool,
     baseline: Option<&Path>,
     control: bool,
+    audit_dir: Option<PathBuf>,
 ) -> Result<i32> {
     let data: Value = serde_json::from_str(&std::fs::read_to_string(scenario)?)?;
     if !control {
@@ -362,7 +407,7 @@ async fn run_scenario(
     let name = format!("{stem}{}", if control { ".control" } else { "" });
     let cache = root()
         .join("cache")
-        .join(format!("{name}{}.json", if control { "" } else { ".v2" }));
+        .join(format!("{name}{}.json", if control { "" } else { ".v3" }));
     let inner = if !settings().deepinfra_api_key.is_empty() && !strict {
         Some(DeepInfra::new())
     } else {
@@ -375,19 +420,35 @@ async fn run_scenario(
             .cloned(),
         None => None,
     };
-    let dir = std::env::temp_dir().join(format!("morpho-eval-{name}-{}", std::process::id()));
-    let _ = std::fs::remove_dir_all(&dir);
+    let audit = audit_dir.map(audit::Audit::new).transpose()?;
+    let dir = audit
+        .as_ref()
+        .map(|a| a.dir.join("database"))
+        .unwrap_or_else(|| {
+            std::env::temp_dir().join(format!("morpho-eval-{name}-{}", std::process::id()))
+        });
+    if audit.is_none() {
+        let _ = std::fs::remove_dir_all(&dir);
+    }
     let svc = Services::new(Store::open(&dir, IdGen::seeded(&name))?, llm);
+    if let Some(a) = &audit {
+        a.record(
+            &svc,
+            "start",
+            json!({"scenario": scenario, "strict": strict, "control": control}),
+        )?;
+    }
     let t0 = Instant::now();
     let mut metrics = Map::new();
     let outcome: Result<Vec<String>> = async {
         if control {
-            let replies = run_control(&svc.llm, turns).await?;
+            let replies = run_control(&svc, turns, audit.as_ref()).await?;
             metrics.extend(behaviour(turns, &replies));
             Ok(replies)
         } else {
             let cycle_every = data["cycle_every"].as_u64().unwrap_or(3) as usize;
-            let (replies, manifests, ids) = run_harness(&svc, turns, cycle_every).await?;
+            let (replies, manifests, ids) =
+                run_harness(&svc, turns, cycle_every, audit.as_ref()).await?;
             metrics.extend(behaviour(turns, &replies));
             metrics.extend(state_metrics(&svc, turns, &replies, &manifests, &ids)?);
             Ok(replies)
@@ -395,7 +456,16 @@ async fn run_scenario(
     }
     .await;
     svc.llm.save()?;
-    let _ = std::fs::remove_dir_all(&dir);
+    if let Some(a) = &audit {
+        a.record(
+            &svc,
+            "end",
+            json!({"error": outcome.as_ref().err().map(|e| format!("{e:#}"))}),
+        )?;
+    }
+    if audit.is_none() {
+        let _ = std::fs::remove_dir_all(&dir);
+    }
     let replies = match outcome {
         Ok(r) => r,
         Err(e) if is_miss(&e) => {
@@ -429,6 +499,12 @@ async fn run_scenario(
     );
     metrics.insert("turns".into(), json!(turns.len()));
 
+    if let Some(a) = &audit {
+        std::fs::write(
+            a.dir.join("result.json"),
+            serde_json::to_vec_pretty(&json!({"metrics": metrics, "replies": replies}))?,
+        )?;
+    }
     print_table(&metrics, base.as_ref());
     let bad = compare(&metrics, base.as_ref());
     for line in &bad {
@@ -448,7 +524,7 @@ async fn run_scenario(
                 json!({"text": text(t), "reply": r, "ok": ok})
             })
             .collect();
-        let doc = json!({"scenario": stem, "harness_version": 2, "control": control, "metrics": metrics, "replies": replies});
+        let doc = json!({"scenario": stem, "harness_version": 3, "control": control, "metrics": metrics, "replies": replies});
         let mut buf = Vec::new();
         let fmt = serde_json::ser::PrettyFormatter::with_indent(b" ");
         serde::Serialize::serialize(
@@ -476,10 +552,15 @@ async fn main() -> Result<()> {
         .with_writer(std::io::stderr)
         .init();
     let mut args = std::env::args().skip(1);
-    let (mut scenario, mut label, mut strict, mut baseline, mut control) =
-        (None, None, false, None, false);
+    let (mut scenario, mut label, mut strict, mut baseline, mut control, mut audit_dir) =
+        (None, None, false, None, false, None);
     while let Some(a) = args.next() {
         match a.as_str() {
+            "--audit-dir" => {
+                audit_dir = Some(PathBuf::from(
+                    args.next().context("--audit-dir requires a directory")?,
+                ))
+            }
             "--label" => label = args.next(),
             "--strict" => strict = true,
             "--baseline" => baseline = args.next().map(PathBuf::from),
@@ -488,13 +569,14 @@ async fn main() -> Result<()> {
         }
     }
     let scenario = scenario
-        .context("usage: eval SCENARIO [--label L] [--strict] [--baseline FILE] [--control]")?;
+        .context("usage: eval SCENARIO [--label L] [--strict] [--baseline FILE] [--control] [--audit-dir DIR]")?;
     let code = run_scenario(
         &scenario,
         label.as_deref(),
         strict,
         baseline.as_deref(),
         control,
+        audit_dir,
     )
     .await?;
     std::process::exit(code)

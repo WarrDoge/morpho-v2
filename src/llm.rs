@@ -15,7 +15,7 @@ use crate::config::settings;
 
 pub struct Schema {
     pub name: &'static str,
-    /// Exact pydantic `json.dumps(model_json_schema(), sort_keys=True)`; part of the cache key.
+    /// JSON schema text; part of the record/replay cache key.
     pub json: &'static str,
 }
 
@@ -28,6 +28,7 @@ macro_rules! schema {
     };
 }
 schema!(TURN, "Turn");
+schema!(REPLY, "Reply");
 schema!(CONSOLIDATION, "Consolidation");
 schema!(REFLECTION, "Reflection");
 

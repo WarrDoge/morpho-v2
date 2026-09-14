@@ -11,7 +11,7 @@ use crate::pyfmt::{Row, iso, now};
 use crate::state::models::{self as m, Payload, Proposal, strings, union};
 use crate::store::{Commit, Record, Shared, Store, obj};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, serde::Serialize)]
 pub struct CommitResult {
     pub proposal_id: String,
     pub accepted: bool,
@@ -238,6 +238,23 @@ fn commit_locked(
 fn validate(p: &Proposal) -> Result<Payload, String> {
     let mut payload = m::parse_payload(&p.operation, &p.payload)?;
     let op = p.operation.as_str();
+    if p.agent == "reflection"
+        && !matches!(
+            op,
+            "update_belief"
+                | "create_memory"
+                | "set_working_state"
+                | "update_self_state"
+                | "create_prediction"
+                | "verify_prediction"
+        )
+    {
+        return Err("operation not allowed during reflection".into());
+    }
+    if p.agent != "harness" && p.evidence.is_empty() {
+        return Err("evidence required".into());
+    }
+
     if (op.starts_with("create_")
         || op.starts_with("merge_")
         || op.starts_with("upsert_")
@@ -263,6 +280,55 @@ fn validate(p: &Proposal) -> Result<Payload, String> {
         && (sp.patch.contains_key("capabilities") || sp.patch.contains_key("permissions"))
     {
         return Err("self-model may not grant capabilities or permissions".into());
+    }
+    if p.agent != "harness" {
+        if let Payload::UpdateSelfState(patch) = &payload {
+            for (key, value) in &patch.patch {
+                if ![
+                    "limitations",
+                    "commitments",
+                    "recent_actions",
+                    "known_failures",
+                    "uncertainties",
+                    "current_objectives",
+                ]
+                .contains(&key.as_str())
+                {
+                    return Err(format!("unknown self-model field: {key}"));
+                }
+                if !value
+                    .as_array()
+                    .is_some_and(|a| a.len() <= 8 && a.iter().all(Value::is_string))
+                {
+                    return Err(format!("{key}: expected at most eight strings"));
+                }
+            }
+        }
+        if let Payload::SetWorkingState(patch) = &payload {
+            for (key, value) in &patch.patch {
+                let valid = match key.as_str() {
+                    "current_topic" | "current_task" => value.is_string() || value.is_null(),
+                    "active_entities" | "open_questions" | "current_constraints" => value
+                        .as_array()
+                        .is_some_and(|a| a.len() <= 10 && a.iter().all(Value::is_string)),
+                    _ => false,
+                };
+                if !valid {
+                    return Err(format!("invalid working-state field: {key}"));
+                }
+            }
+        }
+        if p.agent == "reflection"
+            && serde_json::to_string(&p.payload)
+                .unwrap_or_default()
+                .chars()
+                .count()
+                > 1200
+        {
+            return Err(
+                "reflection payload exceeds 1200 characters; use a smaller partial update".into(),
+            );
+        }
     }
     Ok(payload)
 }
@@ -324,6 +390,22 @@ fn fold_duplicate<'a>(
         q.payload = obj(fields);
         let parsed = m::parse_payload(op, &q.payload)?;
         return Ok((Cow::Owned(q), parsed, Some(format!("folded into {hid}"))));
+    }
+    if let Payload::CreatePrediction(cp) = &payload {
+        let normalized = |s: &str| {
+            s.split_whitespace()
+                .collect::<Vec<_>>()
+                .join(" ")
+                .to_lowercase()
+        };
+        let deadline = cp.deadline.as_deref().and_then(crate::pyfmt::parse_dt);
+        if let Some(r) = st.state.table("predictions").rows.iter().find(|r| {
+            r["verified"].is_null()
+                && normalized(s(r, "prediction")) == normalized(&cp.prediction)
+                && crate::pyfmt::dt_of(r.get("deadline")) == deadline
+        }) {
+            return Err(format!("duplicate unresolved prediction {}", s(r, "id")));
+        }
     }
     if let Payload::CreateGoal(cg) = &payload {
         let lower = cg.description.to_lowercase();
@@ -498,6 +580,17 @@ fn apply_op(
         }
         Payload::UpdateGoal(ug) => {
             let before = load(st, "goals", target, ug.expected_version)?;
+            if ug.status.as_deref() == Some("completed")
+                && p.agent != "harness"
+                && !p.evidence.iter().any(|id| {
+                    st.state.event(id).is_some_and(|e| {
+                        e["type"] == "user_message" && !list(&before, "evidence").contains(id)
+                    })
+                })
+            {
+                return Err("goal completion requires a new observed outcome event".into());
+            }
+
             let mut fields = bump(&before, p, ts);
             if let Some(status) = &ug.status {
                 fields.insert("status".into(), json!(status));
@@ -520,6 +613,14 @@ fn apply_op(
         }
         Payload::VerifyPrediction(vp) => {
             let before = load(st, "predictions", target, None)?;
+            if !p.evidence.iter().any(|id| {
+                st.state.event(id).is_some_and(|e| {
+                    e["type"] == "user_message" && !list(&before, "evidence").contains(id)
+                })
+            }) {
+                return Err("prediction verification requires a new observed outcome event".into());
+            }
+
             let fields = obj(json!({
                 "verified": vp.verified, "verified_at": ts, "version": int(&before, "version") + 1,
                 "evidence": union(&list(&before, "evidence"), &p.evidence),
@@ -529,12 +630,31 @@ fn apply_op(
             vec![t("predictions", &id, Some(before), after, false)]
         }
         Payload::UpsertEntity(ue) => {
-            let before = st.state.find_entity(&ue.name, Some(&ue.kind));
+            let before = if let Some(target) = target {
+                let row = st
+                    .state
+                    .find_entity(target, ue.kind.as_deref())
+                    .ok_or_else(|| format!("unknown entity: {target}"))?;
+                if ue
+                    .name
+                    .as_deref()
+                    .is_some_and(|name| !name.eq_ignore_ascii_case(s(&row, "name")))
+                {
+                    return Err("entity name conflicts with target".into());
+                }
+                Some(row)
+            } else {
+                let name = ue
+                    .name
+                    .as_deref()
+                    .ok_or("name required for entity creation")?;
+                st.state.find_entity(name, ue.kind.as_deref())
+            };
             let (before, after) = match before {
                 None => {
                     let id = st.ids.next("ent");
                     let after = obj(json!({
-                        "id": id, "name": ue.name, "kind": ue.kind, "attributes": ue.attributes,
+                        "id": id, "name": ue.name, "kind": ue.kind.as_deref().unwrap_or("thing"), "attributes": ue.attributes,
                         "evidence": p.evidence, "created_at": ts, "updated_at": ts, "version": 1,
                     }));
                     (None, after)

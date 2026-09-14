@@ -109,9 +109,6 @@ fn d_hypothesis() -> String {
 fn d_inferred() -> String {
     "inferred".into()
 }
-fn d_thing() -> String {
-    "thing".into()
-}
 
 #[derive(Debug, Deserialize)]
 pub struct CreateMemory {
@@ -211,9 +208,8 @@ pub struct VerifyPrediction {
 
 #[derive(Debug, Deserialize)]
 pub struct UpsertEntity {
-    pub name: String,
-    #[serde(default = "d_thing")]
-    pub kind: String,
+    pub name: Option<String>,
+    pub kind: Option<String>,
     #[serde(default)]
     pub attributes: Row,
 }
@@ -383,7 +379,9 @@ pub fn parse_payload(op: &str, payload: &Row) -> Result<Payload, String> {
         "verify_prediction" => Payload::VerifyPrediction(parse(payload)?),
         "upsert_entity" => {
             let p: UpsertEntity = parse(payload)?;
-            nonempty("name", &p.name)?;
+            if let Some(name) = &p.name {
+                nonempty("name", name)?;
+            }
             Payload::UpsertEntity(p)
         }
         "add_relationship" => {
@@ -432,4 +430,26 @@ pub fn strings(v: &Value) -> Vec<String> {
 
 pub fn strings_json(v: &[String]) -> Value {
     json!(v)
+}
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Change {
+    pub operation: String,
+    pub target: Option<String>,
+    pub payload: serde_json::Map<String, Value>,
+    pub evidence_ids: Vec<String>,
+    pub confidence: f64,
+    pub reason: String,
+}
+
+impl Change {
+    pub fn proposal(self, agent: &str) -> Proposal {
+        let mut p = Proposal::new(agent, &self.operation, Value::Object(self.payload));
+        p.target = self.target;
+        p.evidence = self.evidence_ids;
+        p.confidence = self.confidence;
+        p.reason = Some(self.reason);
+        p
+    }
 }

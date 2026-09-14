@@ -219,11 +219,13 @@ async fn similar_vectors_do_not_merge_distinct_claims_and_unknown_evidence_is_re
 #[tokio::test]
 async fn flat_state_patches_preserve_version_and_permission_guards() {
     let svc = services("flat-patch");
+    let eid = event(&svc, "flat input");
     let p = Proposal::new(
         "interaction",
         "set_working_state",
         json!({"current_topic":"flat input","expected_version":1}),
-    );
+    )
+    .evidence(vec![eid.clone()]);
     assert!(one(&svc, p.clone()).await.accepted);
     assert!(!one(&svc, p).await.accepted);
     assert_eq!(
@@ -240,6 +242,52 @@ async fn flat_state_patches_preserve_version_and_permission_guards() {
         "interaction",
         "update_self_state",
         json!({"capabilities":["root"]}),
-    );
+    )
+    .evidence(vec![eid]);
     assert!(!one(&svc, p).await.accepted);
+}
+
+#[tokio::test]
+async fn entity_attribute_updates_resolve_existing_targets() {
+    let svc = services("entity-update");
+    let eid = event(&svc, "Nimbus has an office in Berlin");
+    let proposal = |payload| {
+        Proposal::new("interaction", "upsert_entity", payload).evidence(vec![eid.clone()])
+    };
+    let id = one(
+        &svc,
+        proposal(json!({"name":"Nimbus", "kind":"organization", "attributes":{"sector":"cloud"}})),
+    )
+    .await
+    .object_ids
+    .remove(0);
+    for target in ["Nimbus", id.as_str()] {
+        assert!(
+            one(
+                &svc,
+                proposal(json!({"attributes":{"office_location":"Berlin"}})).target(target)
+            )
+            .await
+            .accepted
+        );
+    }
+    assert!(!one(&svc, proposal(json!({"attributes":{}}))).await.accepted);
+    assert!(
+        !one(&svc, proposal(json!({"attributes":{}})).target("unknown"))
+            .await
+            .accepted
+    );
+    assert!(
+        !one(&svc, proposal(json!({"name":"Other"})).target(&id))
+            .await
+            .accepted
+    );
+    let st = svc.store.lock().unwrap();
+    let entity = st.state.get("entities", &id).unwrap();
+    assert_eq!(entity["kind"], "organization");
+    assert_eq!(
+        entity["attributes"],
+        json!({"sector":"cloud","office_location":"Berlin"})
+    );
+    assert_eq!(st.state.list_rows("entities", None, 100).len(), 1);
 }

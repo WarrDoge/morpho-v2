@@ -11,7 +11,7 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 
 use crate::Services;
-use crate::context::composer::compose_text;
+use crate::context::composer::compose_text_as;
 use crate::interact::{await_reply, enqueue, request};
 use crate::state::models::table_for;
 use crate::worker::cycle;
@@ -50,6 +50,7 @@ pub struct ListQuery {
     pub decision: Option<String>,
     pub status: Option<String>,
     pub text: Option<String>,
+    pub speaker: Option<String>,
     pub reflect: Option<bool>,
 }
 
@@ -197,9 +198,14 @@ async fn why_h(State(svc): State<App>, Path(object_id): Path<String>) -> Reply {
 }
 
 async fn preview_h(State(svc): State<App>, Query(q): Query<ListQuery>) -> Reply {
-    let (context, manifest) = compose_text(&svc, q.text.as_deref().unwrap_or(""), None)
-        .await
-        .map_err(internal)?;
+    let (context, manifest) = compose_text_as(
+        &svc,
+        q.text.as_deref().unwrap_or(""),
+        q.speaker.as_deref().unwrap_or("user"),
+        None,
+    )
+    .await
+    .map_err(internal)?;
     Ok(Json(json!({"context": context, "manifest": manifest})))
 }
 

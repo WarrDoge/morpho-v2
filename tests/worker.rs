@@ -2,10 +2,7 @@ mod common;
 use chrono::Duration;
 use common::{event, fake, services};
 use morpho::{
-    agents::{
-        reflection::{Reflection, Verification},
-        self_model::SelfPatch,
-    },
+    agents::reflection::Reflection,
     context::composer::compose_text,
     interact::interact,
     pyfmt::{iso, now},
@@ -52,17 +49,10 @@ async fn due_predictions_trigger_after_event_cursor_is_caught_up() {
     )
     .evidence(vec![eid.clone()]);
     let id = commit(&svc.store, &svc.llm, &[p], None).await.unwrap()[0].object_ids[0].clone();
-    fake(&svc).queue(
-        "Reflection",
-        Reflection {
-            verifications: vec![Verification {
-                prediction_id: id.clone(),
-                verified: true,
-                evidence_ids: vec![eid],
-            }],
-            ..Default::default()
-        },
-    );
+    let outcome = event(&svc, "It rained, as observed today.");
+    fake(&svc).queue("Reflection", Reflection {changes:vec![serde_json::from_value(json!({
+        "operation":"verify_prediction","target":id,"payload":{"verified":true},"evidence_ids":[outcome],"confidence":0.9,"reason":"observed rain"
+    })).unwrap()],more:false});
     let stats = cycle(&svc, false).await.unwrap();
     assert_eq!(stats["snapshot"], 2);
     assert_eq!(
@@ -79,8 +69,8 @@ async fn due_predictions_trigger_after_event_cursor_is_caught_up() {
     assert_eq!(fake(&svc).calls_for("Reflection").len(), count);
 }
 
-fn respond(system: &str, _user: &str, _schema: &str) -> Value {
-    json!({"response":if system.contains("weather_uncertainty_observed") {"I need a fresh observation before answering."} else {"It will rain."},"changes":[]})
+fn respond(_system: &str, user: &str, _schema: &str) -> Value {
+    json!({"response":if user.contains("weather_uncertainty_observed") {"I need a fresh observation before answering."} else {"It will rain."},"changes":[]})
 }
 
 #[tokio::test]
@@ -88,16 +78,10 @@ async fn idle_self_revision_causally_changes_next_response_and_is_single_flight(
     let svc = services("causal");
     *fake(&svc).respond.lock().unwrap() = Some(respond);
     let before = interact(&svc, "Will it rain?", None).await.unwrap();
-    fake(&svc).queue(
-        "Reflection",
-        Reflection {
-            self_model: Some(SelfPatch {
-                uncertainties: vec!["weather_uncertainty_observed".into()],
-                ..Default::default()
-            }),
-            ..Default::default()
-        },
-    );
+    fake(&svc).queue("Reflection", Reflection {changes:vec![serde_json::from_value(json!({
+        "operation":"update_self_state","target":null,"payload":{"patch":{"uncertainties":["weather_uncertainty_observed"]}},
+        "evidence_ids":[before["event_id"]],"confidence":0.9,"reason":"observed unanswered question"
+    })).unwrap()],more:false});
     fake(&svc)
         .delay_ms
         .store(20, std::sync::atomic::Ordering::Relaxed);

@@ -10,7 +10,7 @@ fn baselines_replay_strictly() {
         .unwrap()
         .map(|e| e.unwrap().path())
         .filter(|p| {
-            p.to_string_lossy().ends_with(".base.json") || p.to_string_lossy().ends_with(".v2.json")
+            p.to_string_lossy().ends_with(".base.json") || p.to_string_lossy().ends_with(".v3.json")
         })
         .collect();
     names.sort();
@@ -20,16 +20,16 @@ fn baselines_replay_strictly() {
             serde_json::from_str(&std::fs::read_to_string(&baseline).unwrap()).unwrap();
         let scenario = doc["scenario"].as_str().unwrap();
         let control = doc["control"].as_bool().unwrap_or(false);
-        if !control && doc["harness_version"] != 2 {
+        if !control && doc["harness_version"] != 3 {
             eprintln!(
-                "historical v1 harness baseline {}: prompts intentionally replaced; use v2 recordings",
+                "historical harness baseline {}: prompts intentionally replaced; use v3 recordings",
                 baseline.display()
             );
             continue;
         }
         let cache = root.join("evals/cache").join(format!(
             "{scenario}{}.json",
-            if control { ".control" } else { ".v2" }
+            if control { ".control" } else { ".v3" }
         ));
         if !cache.exists() {
             eprintln!("skip {}: no cache", baseline.display());
@@ -46,6 +46,10 @@ fn baselines_replay_strictly() {
         if control {
             cmd.arg("--control");
         }
+        let audit = std::env::temp_dir().join(morpho::ids::IdGen::random().next("morpho-replay"));
+        if !control {
+            cmd.arg("--audit-dir").arg(&audit);
+        }
         let out = cmd.output().unwrap();
         assert!(
             out.status.success(),
@@ -54,6 +58,41 @@ fn baselines_replay_strictly() {
             String::from_utf8_lossy(&out.stdout),
             String::from_utf8_lossy(&out.stderr)
         );
+        if !control {
+            let replay: serde_json::Value =
+                serde_json::from_str(&std::fs::read_to_string(audit.join("result.json")).unwrap())
+                    .unwrap();
+            assert_eq!(replay["metrics"]["cache_misses"], 0);
+            let replies: Vec<_> = doc["replies"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|r| r["reply"].clone())
+                .collect();
+            assert_eq!(
+                replay["replies"],
+                serde_json::json!(replies),
+                "reply mismatch: {scenario}"
+            );
+            for (key, expected) in doc["metrics"].as_object().unwrap() {
+                if [
+                    "seconds",
+                    "cache_misses",
+                    "provider_prompt_tokens",
+                    "provider_completion_tokens",
+                    "usage_reported_calls",
+                ]
+                .contains(&key.as_str())
+                {
+                    continue;
+                }
+                assert_eq!(
+                    &replay["metrics"][key], expected,
+                    "metric {key}: {scenario}"
+                );
+            }
+            std::fs::remove_dir_all(audit).unwrap();
+        }
         ran += 1;
     }
     eprintln!("replayed {ran} baselines");

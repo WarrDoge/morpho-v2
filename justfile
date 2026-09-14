@@ -23,13 +23,13 @@ eval scenario *args:
     cargo run --release --bin eval -- evals/scenarios/{{scenario}}.json {{args}}
 
 replay scenario:
-    just eval {{scenario}} --strict --baseline evals/results/{{scenario}}.v2.json
+    just eval {{scenario}} --strict --baseline evals/results/{{scenario}}.v3.json
 
 replay-control scenario:
     just eval {{scenario}} --control --strict --baseline evals/results/{{scenario}}.control.base.json
 
 record scenario:
-    just eval {{scenario}} --label v2
+    just eval {{scenario}} --label v3
 
 gate:
     cargo test --release --test replay -- --nocapture

@@ -22,8 +22,9 @@ use a stable request ID when retrying. Reusing an ID with different contents ret
 
 Inputs enter a libSQL inbox before any model call. One coordinator consumes them in arrival order,
 one message per turn. A turn stages its state privately, generates the reply and state proposals
-in one structured model call, validates the proposals, then commits the records, vectors, reply,
-and completion together. Readers see committed state; future queued input never leaks into prompts.
+in one structured model call, validates the proposals, and records their outcomes. Rejections or empty drafts trigger one extra reply-only call;
+if that call fails, a deterministic response reports saved and failed updates. The records, vectors,
+outcomes, reply, and completion commit together. Interaction results include `state_changes`. Readers see committed state; future queued input never leaks into prompts.
 
 A duplicate request returns its stored reply. A disconnected client does not remove its input;
 the coordinator resumes pending work. Crashes may repeat model calls, but cannot publish half a
@@ -48,16 +49,36 @@ final journal/vector tail is ignored; malformed complete records or missing refe
 abort the import. Subsequent starts use the database. The embedding model and dimensions are
 recorded and must match configuration; changing models requires explicit re-embedding.
 
+## Memory streams
+
+Each request receives a fresh projection of observations, memories, beliefs, world knowledge,
+goals, predictions, operational self state, and working state. Observations are immutable;
+derived objects retain versions and provenance. Goals persist through completion, while working
+fields can be replaced. System instructions stay constant; the serialized user message carries
+`request` and fallible `recalled_state` data.
+
+Selection uses input relevance, speaker attribution, active entities, and recent outcomes. The
+context manifest explains selected IDs, versions, evidence, scores, and budget omissions in every
+stream. Predictions receive 5% of the context budget; unused shares are redistributed, with goals
+first. `GET /context/preview?text=...&speaker=alice` uses the same selector without appending input.
+
 ## Idle revision and limits
 
 Reflection reads state, observed transitions, and runtime failures. It can revise beliefs,
 predictions, open questions, and the operational self-model. Consolidation merges actual redundancy
 and archives stale memories. Both run through the same coordinator, behind ready input, when
 new evidence, internal state changes, or due predictions justify work. Unchanged work is not
-repeated automatically. Failed maintenance preserves its progress for retry. Paused input does not
+repeated automatically. Reflection reads at most ten events and ten transitions per batch, sends compact changes rather
+than full historical rows, and returns at most three proposals plus a continuation flag. Batch
+selection is persisted before inference and resumes after restart. Consolidation checkpoints
+separately, so a reflection failure preserves completed consolidation. Failed maintenance retains
+its batch for retry; rejections and continuations without progress obey the same retry limits. Paused input does not
 block revision of already committed state; its unconsumed text remains outside the context.
 
-Self-revision cannot grant capabilities or permissions. Evidence IDs must exist. Text-identical
+Self-revision cannot grant capabilities or permissions. Non-harness updates require existing
+evidence IDs. Goal completion and prediction verification require a new user observation beyond
+the original intent/forecast; this structural check does not establish semantic truth. A passed
+deadline alone leaves predictions unknown. Exact unresolved forecast duplicates are rejected. Text-identical
 memories/beliefs can reinforce existing objects; vector similarity alone never establishes that two
 claims are equivalent. Every proposal records its decision and any supplied rationale.
 
@@ -80,19 +101,37 @@ and its daily budget. External actions are deferred.
 
 ```sh
 just check
-just record dana                    # paid/live v2 recording
-just eval dana --label v2
+just record dana                    # paid/live v3 recording
+just eval dana --label v3
 just eval dana --control --label base
 ```
+
+For diagnostics, pass `--audit-dir evals/audit/dana-run` to the evaluator. The directory must
+be new; it retains the database, per-turn/cycle state, context manifests, usage, and any failure.
+Capture does not modify prompts or state. Raw audit directories are ignored by Git.
+Completed v3 recordings also require identical replies and deterministic metrics in the replay gate.
+
+Opt-in live probes (billable; never run by `cargo test`):
+
+```sh
+IDLE_REFLECT_SECONDS=1 cargo run --release --example audit -- continuity evals/audit/continuity-run
+cargo run --release --example audit -- causal evals/audit/causal-run evals/audit/dana-run
+```
+
+The continuity probe reopens its database, checks duplicate replies, and observes automatic idle
+maintenance. The causal probe uses the first captured Dana operational self revision,
+changes only the self-model section of paired prompts, and makes twelve fresh completion calls.
+Continuity caps completion calls at 32 (including correction calls and multiple idle batches); the
+causal probe caps them at twelve. Both stop on provider failure.
 
 Tests cover FIFO/concurrent callers, cancellation and restart, duplicate replies, atomic rollback,
 legacy migration, historical replay, context manifests, maintenance limits, and a deterministic
 causal test: changing only the self-model changes the next response to the same input.
 The causal fixture tests the harness, not live-model reasoning quality.
 
-The three historical transcript-control baselines retain their strict replay gate. The old v1
+The three historical transcript-control baselines retain their strict replay gate. The old v1/v2
 harness baselines and caches remain historical comparisons; their extraction prompts were replaced.
-New harness caches use `.v2.json`, include model/settings in their keys, and preserve literal
+New harness caches use `.v3.json`, include model/settings in their keys, and preserve literal
 dates. The scenario runner uses fixed request IDs and a fixed `start_time` (default
-`2026-09-11T12:00:00Z`) so state and deadlines replay exactly. Live re-recording is required to compare v2 answer quality and
+`2026-09-11T12:00:00Z`) so state and deadlines replay exactly. Live re-recording is required to compare v3 answer quality and
 billed token cost against those baselines. `cargo test` never makes paid model calls.
