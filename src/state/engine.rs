@@ -680,9 +680,9 @@ fn apply_op(
             let old = before["confidence"].as_f64().unwrap_or(0.0);
             let mut confidence = ut.confidence.unwrap_or(old);
             let observed = p.evidence.iter().any(|id| {
-                st.state.event(id).is_some_and(|e| {
-                    e["type"] == "user_message" && !list(&before, "evidence").contains(id)
-                })
+                st.state
+                    .event(id)
+                    .is_some_and(|e| m::is_outcome(e) && !list(&before, "evidence").contains(id))
             });
             if p.agent != "harness" && confidence < old {
                 if !observed {
@@ -753,7 +753,7 @@ fn apply_op(
                 && p.agent != "harness"
                 && !p.evidence.iter().any(|id| {
                     st.state.event(id).is_some_and(|e| {
-                        e["type"] == "user_message" && !list(&before, "evidence").contains(id)
+                        m::is_outcome(e) && !list(&before, "evidence").contains(id)
                     })
                 })
             {
@@ -786,9 +786,9 @@ fn apply_op(
         Payload::VerifyPrediction(vp) => {
             let before = load(st, "predictions", target, None)?;
             if !p.evidence.iter().any(|id| {
-                st.state.event(id).is_some_and(|e| {
-                    e["type"] == "user_message" && !list(&before, "evidence").contains(id)
-                })
+                st.state
+                    .event(id)
+                    .is_some_and(|e| m::is_outcome(e) && !list(&before, "evidence").contains(id))
             }) {
                 return Err("prediction verification requires a new observed outcome event".into());
             }

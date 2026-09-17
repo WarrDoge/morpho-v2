@@ -122,8 +122,8 @@ its batch for retry; rejections and continuations without progress obey the same
 block revision of already committed state; its unconsumed text remains outside the context.
 
 Self-revision cannot grant capabilities or permissions. Non-harness updates require existing
-evidence IDs. Goal completion and prediction verification require a new user observation beyond
-the original intent/forecast; this structural check does not establish semantic truth. A passed
+evidence IDs. Goal completion, prediction verification and lowering a trait require a new user
+message or workspace observation beyond the original intent/forecast; this structural check does not establish semantic truth. A passed
 deadline alone leaves predictions unknown. Exact unresolved forecast duplicates are rejected. Text-identical
 memories/beliefs can reinforce existing objects; vector similarity alone never establishes that two
 claims are equivalent. Every proposal records its decision and any supplied rationale.
@@ -138,7 +138,26 @@ separately from estimates. Embedding usage is represented by call count, not inc
 
 `WORKER_INPROCESS=false` disables automatic maintenance; durable inbox processing still runs.
 `POST /admin/cycle?reflect=true` requests maintenance immediately, subject to coordinator ownership
-and its daily budget. External actions are deferred.
+and its daily budget. The only external actions are the workshop's sandboxed tools.
+
+## Workshop
+
+`just workshop <arm> <trial>` gives the morphling six small Python tasks in a workspace
+(`evals/scenarios/workshop.json`, `evals/workshop/`). Every list, read, write and command runs
+inside bubblewrap: the workspace at `/work`, read-only `/usr`, no network, an empty
+environment, a 20 second limit, and output normalized so a recording replays exactly. Each step
+is one `Act` call; every command carries an expected exit status and a confidence, and a
+confident miss is a surprise. A `Think` call pauses acting and returns a plan. Actions,
+observations and thoughts are journal events that reflection turns into memories, beliefs,
+traits and goals; after the last task, idle ticks run only while the morphling has open goals or
+questions of its own.
+
+Arms: `transcript` is a conventional agent (the task's own transcript, no memory or identity),
+`nothink` adds state across tasks, `self` lets the actor choose to think, `surprise` also thinks
+after a confident miss. Hidden tests the agent never sees grade each task on a copy of the
+workspace; habits, surprises, calibration, style and tokens are counted from the action log, with
+no model judge. Results go to `evals/results/workshop.<arm>.t<n>.json`;
+`just replay-workshop <arm> <trial>` and the replay gate reproduce them from the cache.
 
 ## Observability
 

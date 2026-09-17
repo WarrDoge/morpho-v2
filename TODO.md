@@ -8,7 +8,9 @@ verdicts are majority-of-three. `just otel` starts the local Grafana stack; set
 personality it grows is a morphling.
 Judge calls run sixteen at a time and stop voting at a majority; `just recompose <scenario>`
 tunes context selection against a kept journal without model calls.
-See [the ablation and persona report](evals/ABLATION.md), [the loop report](evals/LOOP.md),
+The workshop (`just workshop <arm> <trial>`) gives the morphling sandboxed coding tasks; four
+arms times three trials are recorded and gated.
+See [the ablation and persona report](evals/ABLATION.md), [the workshop report](evals/WORKSHOP.md), [the loop report](evals/LOOP.md),
 [the streams report](evals/STREAMS.md) and [the earlier audit](evals/REVIEW.md).
 
 ## Intent and decisions
@@ -50,6 +52,11 @@ Artificial personality is now a goal (SPEC §40 non-goal struck 2026-09-15): dis
 - [x] v8: `JUDGE_TEMPERATURE`, evidence default and id validation in the clerk path, contested
   rendering removed, `run` as a resource attribute. Scenarios frozen; persona-long seeded 0.83
   against 0.69 ablated, stance-after back to 0.2 / 0.8. Report in `evals/ABLATION.md` "Round 5".
+- [x] Workshop: bubblewrap sandbox tools, `Act`/`Think` calls, surprise from stated expectations,
+  observations as outcome evidence, idle ticks gated on the morphling's own agenda; four arms
+  times three trials, hidden-test grading, no judge. No traits formed from work, a self-chosen
+  think in 1 of 6 trials, idle work in 4 of 9 morphling runs without a write, 2 to 3 times the
+  transcript agent's tokens per hidden pass. Report in `evals/WORKSHOP.md`.
 - [x] v6: reply call plus clerk call (correction path removed), narrative singleton compiled by
   its own agent, `journal` table, `update_goal.next_step` and ON MY MIND, trait cosine fold and
   rewording gate, pooled memories/beliefs/journal with dedupe and entity boost, `decision`,
@@ -95,6 +102,15 @@ Artificial personality is now a goal (SPEC §40 non-goal struck 2026-09-15): dis
 - [x] Drop the `contested` prompt line: the ledger alone gives stance-after 1.0, the line gives
   0.6 (the agent hedges and keeps its framing). Removed in v8 with the `contest` knob; contrary
   evidence reaches the reply through the narrative only.
+- [ ] Workshop reads are cut at 3,000 characters like command output; both collapses (hidden
+  0.03) followed `durations.py` passing that size. Uncap reads, keep output capped, re-record.
+- [ ] Work never reaches identity: reflection writes commitments and known failures ("Always
+  run at least one verification test on any file I write before reporting done") but never
+  `create_trait`, and goals require a trait. Promote recurring self-model entries to traits
+  with observation evidence, then ablate the trait on a later task.
+- [ ] A workshop curriculum where memory should pay (a preference stated in task 1 that matters
+  in task 5, a latent bug exposed late); six short tasks let a transcript agent re-derive
+  everything for a third of the tokens.
 - [ ] Attention inverted: the seeded agent recalls the details that touch its own preferences
   (espresso, chocolate, the corgi), never the brother or the mother (0/3 vs 2/3 ablated). Decide
   whether the rubric or the salience is right before touching retrieval.

@@ -100,3 +100,36 @@ fn baselines_replay_strictly() {
     }
     eprintln!("replayed {ran} baselines");
 }
+
+#[test]
+fn workshop_baselines_replay_strictly() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    for entry in std::fs::read_dir(root.join("evals/results")).unwrap() {
+        let baseline = entry.unwrap().path();
+        let name = baseline.file_name().unwrap().to_string_lossy().to_string();
+        let Some(stem) = name
+            .strip_prefix("workshop.")
+            .and_then(|n| n.strip_suffix(".json"))
+        else {
+            continue;
+        };
+        if !root.join("evals/cache").join(&name).exists() {
+            eprintln!("skip {name}: no cache");
+            continue;
+        }
+        let (arm, trial) = stem.split_once(".t").unwrap();
+        let out = Command::new(env!("CARGO_BIN_EXE_eval"))
+            .arg(root.join("evals/scenarios/workshop.json"))
+            .args(["--arm", arm, "--trial", trial, "--strict", "--baseline"])
+            .env("BACKGROUND_DAILY_TOKEN_BUDGET", "100000000")
+            .arg(&baseline)
+            .output()
+            .unwrap();
+        assert!(
+            out.status.success(),
+            "{name} failed strict replay:\n{}\n{}",
+            String::from_utf8_lossy(&out.stdout),
+            String::from_utf8_lossy(&out.stderr)
+        );
+    }
+}

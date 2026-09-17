@@ -11,6 +11,7 @@ pub mod state;
 pub mod store;
 pub mod telemetry;
 pub mod worker;
+pub mod workshop;
 
 use llm::Llm;
 use store::{Shared, Store};

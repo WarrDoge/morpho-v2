@@ -1,9 +1,11 @@
 //! Scenario runner: metrics for one scenario, optional strict replay and baseline comparison.
 //!
-//! Usage: eval evals/scenarios/dana.json [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--recompose DB] [--db DIR] [--audit-dir DIR]
+//! Usage: eval evals/scenarios/dana.json [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--recompose DB] [--db DIR] [--audit-dir DIR] [--arm ARM]
 
 #[path = "support/audit.rs"]
 mod audit;
+#[path = "support/workshop.rs"]
+mod workshop;
 
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -215,12 +217,22 @@ async fn run_harness(
             }
         }
     }
-    // Drain bounded pages, stopping at the durable spending/retry limits.
+    drain(svc, audit).await?;
+    Ok((replies, manifests, event_ids))
+}
+
+/// Drain bounded pages, stopping at the durable spending/retry limits.
+async fn drain(svc: &Services, audit: Option<&audit::Audit>) -> Result<Vec<Value>> {
+    let mut all = Vec::new();
     for _ in 0..64 {
-        let stats = cycle(svc, true).await?;
+        let stats = match cycle(svc, true).await {
+            Err(e) if !is_miss(&e) => json!({"error": format!("{e:#}")}),
+            other => other?,
+        };
         if let Some(a) = audit {
             a.record(svc, "final_cycle", stats.clone())?;
         }
+        all.push(stats.clone());
         let failed = svc
             .store
             .lock()
@@ -237,7 +249,7 @@ async fn run_harness(
             break;
         }
     }
-    Ok((replies, manifests, event_ids))
+    Ok(all)
 }
 
 async fn run_control(
@@ -998,7 +1010,7 @@ async fn main() -> Result<()> {
     let mut args = std::env::args().skip(1);
     let (mut scenario, mut label, mut strict, mut baseline, mut control, mut trial, mut audit_dir) =
         (None, None, false, None, false, None, None);
-    let (mut rejudge_path, mut recompose_db, mut db) = (None, None, None);
+    let (mut rejudge_path, mut recompose_db, mut db, mut arm) = (None, None, None, None);
     while let Some(a) = args.next() {
         match a.as_str() {
             "--audit-dir" => {
@@ -1014,18 +1026,31 @@ async fn main() -> Result<()> {
             "--control" => control = true,
             "--trial" => trial = args.next().and_then(|n| n.parse().ok()),
             "--rejudge" => rejudge_path = args.next().map(PathBuf::from),
+            "--arm" => arm = Some(args.next().context("--arm requires a name")?.parse()?),
             _ => scenario = Some(PathBuf::from(a)),
         }
     }
     let scenario = scenario
-        .context("usage: eval SCENARIO [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--recompose DB] [--db DIR] [--audit-dir DIR]")?;
-    let run = run_name(
-        &scenario,
-        label.as_deref(),
-        baseline.as_deref(),
-        control,
-        trial,
-    );
+        .context("usage: eval SCENARIO [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--recompose DB] [--db DIR] [--audit-dir DIR] [--arm ARM]")?;
+    let tasks = std::fs::read_to_string(&scenario)
+        .ok()
+        .and_then(|s| serde_json::from_str::<Value>(&s).ok())
+        .is_some_and(|d| d.get("tasks").is_some());
+    let arm: Option<morpho::agents::act::Arm> = arm;
+    let run = match arm {
+        Some(a) => format!(
+            "workshop.{}{}",
+            a.name(),
+            trial.map(|n| format!(".t{n}")).unwrap_or_default()
+        ),
+        None => run_name(
+            &scenario,
+            label.as_deref(),
+            baseline.as_deref(),
+            control,
+            trial,
+        ),
+    };
     morpho::telemetry::init(
         "morpho-eval",
         tracing::level_filters::LevelFilter::WARN,
@@ -1033,6 +1058,13 @@ async fn main() -> Result<()> {
     )?;
     if let Some(result) = rejudge_path {
         let code = rejudge(&scenario, &result, strict).await?;
+        morpho::telemetry::shutdown();
+        std::process::exit(code)
+    }
+    if tasks {
+        let arm =
+            arm.context("a workshop scenario needs --arm transcript|nothink|self|surprise")?;
+        let code = workshop::run(&scenario, arm, trial, strict, baseline.as_deref()).await?;
         morpho::telemetry::shutdown();
         std::process::exit(code)
     }

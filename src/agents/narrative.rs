@@ -23,7 +23,7 @@ fn contradictions(state: &State, row: &crate::pyfmt::Row, n: usize) -> Vec<Strin
         .flatten()
         .filter_map(Value::as_str)
         .filter_map(|id| state.event_index.get(id).copied())
-        .filter(|&i| state.events[i]["type"] == "user_message")
+        .filter(|&i| crate::state::models::is_outcome(&state.events[i]))
         .collect();
     hits.sort_by_key(|&i| std::cmp::Reverse(i));
     hits.iter()

@@ -41,6 +41,14 @@ pub const TRAIT_KIND: &[&str] = &["value", "preference", "stance", "style", "rel
 pub const TRAIT_STATUS: &[&str] = &["active", "uncertain", "retired"];
 pub const MESSAGE_TYPES: &[&str] = &["user_message", "assistant_message"];
 
+/// What can prove an outcome: something a speaker said or something the workspace returned.
+pub fn is_outcome(event: &Row) -> bool {
+    matches!(
+        event.get("type").and_then(Value::as_str),
+        Some("user_message" | "observation")
+    )
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Proposal {
     #[serde(default)]
