@@ -2,7 +2,7 @@ mod common;
 use chrono::Duration;
 use common::{event, fake, services};
 use morpho::{
-    agents::reflection::Reflection,
+    agents::reflection::{self, Batch, Reflection},
     context::composer::compose_text,
     interact::interact,
     pyfmt::{iso, now},
@@ -69,8 +69,15 @@ async fn due_predictions_trigger_after_event_cursor_is_caught_up() {
     assert_eq!(fake(&svc).calls_for("Reflection").len(), count);
 }
 
-fn respond(_system: &str, user: &str, _schema: &str) -> Value {
-    json!({"response":if user.contains("weather_uncertainty_observed") {"I need a fresh observation before answering."} else {"It will rain."},"changes":[]})
+fn respond(_system: &str, user: &str, schema: &str) -> Value {
+    if schema != "text" {
+        return json!({"changes":[]});
+    }
+    json!(if user.contains("weather_uncertainty_observed") {
+        "I need a fresh observation before answering."
+    } else {
+        "It will rain."
+    })
 }
 
 #[tokio::test]
@@ -172,4 +179,35 @@ async fn paused_input_does_not_block_idle_learning_or_leak_queued_text() {
         morpho::interact::request(&svc, "paused").unwrap()["status"],
         "paused"
     );
+}
+
+#[tokio::test]
+async fn the_journal_entry_sits_outside_reflections_change_cap() {
+    let svc = services("reflection-cap");
+    let e = event(&svc, "notes");
+    let change = |op: &str, payload: serde_json::Value| json!({"operation":op,"target":null,"payload":payload,"evidence_ids":[e],"confidence":0.8,"reason":"test"});
+    let memory = |i: usize| {
+        change(
+            "create_memory",
+            json!({"summary":format!("fact {i}"),"kind":"semantic"}),
+        )
+    };
+    let batch = Batch {
+        event_start: 0,
+        event_end: 1,
+        transition_start: 0,
+        transition_end: 0,
+    };
+    fake(&svc).queue(
+        "Reflection",
+        json!({"changes":[memory(1),memory(2),memory(3),
+        change("create_journal", json!({"entry":"a full batch","mood":"steady"}))],"more":false}),
+    );
+    let (proposals, _) = reflection::run(&svc, &batch).await.unwrap();
+    assert_eq!(proposals.len(), 4);
+    fake(&svc).queue(
+        "Reflection",
+        json!({"changes":[memory(1),memory(2),memory(3),memory(4)],"more":false}),
+    );
+    assert!(reflection::run(&svc, &batch).await.is_err());
 }

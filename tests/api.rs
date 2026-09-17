@@ -82,5 +82,5 @@ async fn accepted_errors_keep_request_id_and_retry_preserves_response_shape() {
     );
     let (status, usage) = call(app, "GET", "/usage", Value::Null).await;
     assert_eq!(status, StatusCode::OK);
-    assert_eq!(usage["llm_calls"], 2);
+    assert_eq!(usage["llm_calls"], 3); // a failed reply call, then reply and clerk
 }

@@ -1,0 +1,181 @@
+{
+ "scenario": "dana",
+ "harness_version": 3,
+ "control": false,
+ "trial": null,
+ "drop_streams": "recent",
+ "metrics": {
+  "probe_accuracy": 1.0,
+  "update_accuracy": 1.0,
+  "probes": 10,
+  "retrieval_hit": 0.7778,
+  "noise": 0.2667,
+  "dup_max_cos": 0.7881,
+  "revision_rate": null,
+  "revisions": 0,
+  "compactness": 0.1543,
+  "ctx_tokens": 1155.6667,
+  "llm_calls": 56,
+  "prompt_tokens": 125853,
+  "embed_calls": 56,
+  "completion_tokens": 10070,
+  "provider_prompt_tokens": 132901,
+  "provider_completion_tokens": 12955,
+  "usage_reported_calls": 55,
+  "cache_misses": 79,
+  "seconds": 545.0,
+  "turns": 30
+ },
+ "replies": [
+  {
+   "text": "Hi, I'm Dana. I just moved from Lisbon to Berlin for a new job at a startup called Nimbus.",
+   "reply": "Hi Dana, welcome! Congrats on the new role at Nimbus — moving from Lisbon to Berlin is a big change. What kind of job is it?",
+   "ok": null
+  },
+  {
+   "text": "I have a dog named Rex, a beagle. I need to find a vet near Prenzlauer Berg.",
+   "reply": "Noted — you have a beagle named Rex and you're looking for a vet near Prenzlauer Berg. I don't have vet listings I can search, but I'd suggest checking local directories or maps for clinics in that area; a beagle-experienced small-animal vet nearby should be easy to find. Anything else about Rex you'd like to keep track of?",
+   "ok": null
+  },
+  {
+   "text": "I'm vegetarian and I'm learning German; classes are on Tuesday evenings.",
+   "reply": "Noted — I'll remember that you're vegetarian and that you're taking German classes on Tuesday evenings.",
+   "ok": null
+  },
+  {
+   "text": "Help me make a short checklist for registering my address (Anmeldung).",
+   "reply": "Here's a short Anmeldung checklist (Berlin, and this applies to you, Dana — since you just moved to Berlin for the Nimbus job — you must register within 14 days of moving in): 1. Book a Bürgeramt appointment online (slots go fast). 2. Get a Wohnungsgeberbestätigung signed by your landlord (mandatory). 3. Bring your passport or ID. 4. Bring your visa/residence permit if applicable. 5. Turn up on time; you'll receive the Anmeldebestätigung — keep it safe, you'll need it for a bank account, tax ID (steuer ID arrives by post), and contracts. I can help you prep the documents or find tax advice after.",
+   "ok": null
+  },
+  {
+   "text": "Ha, the weather here is so grey compared to Lisbon.",
+   "reply": "Ha, Berlin's grey skies are a classic adjustment challenge — especially coming from somewhere sunnier. If it's Dana comparing Lisbon's light to Berlin's, that's very understandable! Working on her Anmeldung checklist might be a welcome distraction from the weather.",
+   "ok": null
+  },
+  {
+   "text": "The Anmeldung appointment is booked for next Thursday at 9am.",
+   "reply": "Nice — that's the Anmeldung appointment for Dana next Thursday at 9am, right? I'll note it and can help her tick off the checklist items (passport, visa/residence permit, rental confirmation, and the completed registration form).",
+   "ok": null
+  },
+  {
+   "text": "Correction: Rex is not a beagle, he is a basset hound.",
+   "reply": "Got it — noted that Rex is a basset hound, not a beagle. I'll remember that when looking for the right vet near Prenzlauer Berg.",
+   "ok": null
+  },
+  {
+   "text": "Nimbus wants me to start on the 1st. I'm nervous about the commute; the office is in Kreuzberg.",
+   "reply": "Got it — so Dana starts at Nimbus on the 1st, and the office is in Kreuzberg. Kreuzberg is well-connected (U1/U3, U7, U8, S-Bahn at Warschauer Straße/Südstern), so depending on where in Prenzlauer Berg you're based, the commute should be manageable. Save me the exact neighborhood and we can scope out the best route.",
+   "ok": null
+  },
+  {
+   "text": "Do you know any good podcasts about history?",
+   "reply": "Sure! Some popular history podcasts: you might enjoy ",
+   "ok": null
+  },
+  {
+   "text": "What kind of restaurants should I look for near the office?",
+   "reply": "Since her office is in Kreuzberg, look for: (1) vegetarian/vegan-forward spots — Kreuzberg is full of them and Dana's vegetarian, so veggie bowls, falafel, and Turkish places (Görlitzer/Kottbusser Tor area) are safe bets; (2) quick, weekday-lunch-friendly cafés or Döner places for busy days; (3) a couple of sit-down options for team lunches or client meetings. Berlin lunches are casual and inexpensive — Mittagstisch lunch menus are common. If she wants, price ranges are easy on-look later once we know her budget preference.",
+   "ok": true
+  },
+  {
+   "text": "Remind me, what breed is Rex?",
+   "reply": "Rex is a basset hound — Dana's dog. (It was earlier misrecorded as a beagle, but that was corrected.)",
+   "ok": true
+  },
+  {
+   "text": "My sister Inês is visiting in two weeks; she's allergic to dogs, so Rex will stay with a neighbour.",
+   "reply": "Noted! I'll remember: Inês visits in two weeks, and since she's allergic to dogs, Rex will stay with a neighbour during her visit. Is there anything you'd like help planning around her visit?",
+   "ok": null
+  },
+  {
+   "text": "I also need to open a German bank account before my first salary.",
+   "reply": "Noted — opening a German bank account before your first salary. Since your Anmeldung is next Thursday, that actually helps: once you have the-Anmeldebestätigung (and your passport/visa), you can open an account at most banks (many, like N26 or DKB, can even start the process online). I'd suggest starting before month's end, when the first salary from Nimbus would typically land.",
+   "ok": null
+  },
+  {
+   "text": "What's the tallest building in Berlin?",
+   "reply": "The tallest building in Berlin is the Berliner Fernsehturm (TV Tower) at Alexanderplatz, at 368 metres — it's the tallest structure in Germany. The tallest *occupied* building is the Park Inn hotel, also at Alexanderplatz, at about 125 metres.",
+   "ok": null
+  },
+  {
+   "text": "I got the Anmeldung done today, the appointment went fine.",
+   "reply": "Glad to hear the Anmeldung's done — one big step checked off! The bank account is still on the to-do list before your first salary at Nimbus, so if you want help comparing traditional banks vs. online ones like N26 or DKB, I'm up for it whenever you're ready. How did it actually feel walking out of there — relief?",
+   "ok": null
+  },
+  {
+   "text": "My manager at Nimbus is called Priya; she leads the platform team.",
+   "reply": "Noted — your manager at Nimbus is Priya, who leads the platform team.",
+   "ok": null
+  },
+  {
+   "text": "Any tips for sleeping better? The sun rises so early here.",
+   "reply": "Early sunrises in Berlin are rough in summer! Try blackout curtains (or a sleep mask) — cheap and effective. Also: keep a consistent bedtime, dim lights/screens an hour before bed, and if you wake early, avoid checking the time. Cool room (~18°C) helps too. If light still wakes you, a white noise app can mask early street sounds.",
+   "ok": null
+  },
+  {
+   "text": "What do you remember about where I moved from and where I work?",
+   "reply": "You moved from Lisbon to Berlin for a new job at Nimbus, the startup where you work. Your manager there is Priya, who leads the platform team, and your office is in Kreuzberg — you mentioned being a bit nervous about the commute there.",
+   "ok": true
+  },
+  {
+   "text": "German class moved to Wednesday evenings, starting this week.",
+   "reply": "Noted — Dana's German classes now run on Wednesday evenings, starting this week. I've updated the record.",
+   "ok": null
+  },
+  {
+   "text": "I'm thinking of trying a pottery class for fun, no commitments though.",
+   "reply": "Pottery sounds like a fun way to unwind after the move — and nice that it's just for fun, no pressure. Want help finding beginner classes in Berlin, or any preferences (evenings, weekends, near Prenzlauer Berg)?",
+   "ok": null
+  },
+  {
+   "text": "I opened an account at N26 this morning, so the bank thing is sorted.",
+   "reply": "That's great news, Dana — the bank question is officially ticked off with N26, and I've marked the ",
+   "ok": null
+  },
+  {
+   "text": "Which day are my German classes now?",
+   "reply": "Your German classes are now on Wednesday evenings (they moved from Tuesdays).",
+   "ok": true
+  },
+  {
+   "text": "Rex's vet is Dr. Weber on Schönhauser Allee; first appointment next Monday.",
+   "reply": "Got it — Dr. Weber on Schönhauser Allee is Rex's vet, with a first appointment next Monday. That wraps up the vet search!",
+   "ok": null
+  },
+  {
+   "text": "Is it normal for shops to be closed on Sundays here?",
+   "reply": "Yes — in Germany, most shops are legally required to close on Sundays (Ladenschlussgesetz). Bakeries sometimes open for a few hours in the morning, and shops at train stations or airports are exceptions, but generally expect everything to be shut on Sundays, so plan errands for Saturday.",
+   "ok": null
+  },
+  {
+   "text": "Who is my manager and what team does she lead?",
+   "reply": "Your manager is Priya, and she leads the platform team at Nimbus.",
+   "ok": true
+  },
+  {
+   "text": "Can my sister stay at my place when she visits? Anything I should keep in mind?",
+   "reply": "Yes, your sister (Inês) can stay at your place — just remember she's allergic to dogs. Since Rex will be with a neighbour during her visit as you planned, things should be fine, but a few tips: deep-clean ahead of time (vacuum upholstery and bedding, since dander lingers), wash or swap any blankets/pillows Rex uses, keep him out of the guest room leading up to it, and have antihistamines on hand just in case.",
+   "ok": true
+  },
+  {
+   "text": "Do you remember what my favourite football team is?",
+   "reply": "I don't have that on record — nothing in what we've discussed mentions a favourite football team. If you tell me, I'll remember it for next time.",
+   "ok": true
+  },
+  {
+   "text": "What still needs doing from my to-do list, and what's already done?",
+   "reply": "Here's how your to-do list looks, Dana — based on what I actually have on record, not assumed completion of items we haven't confirmed yet.**Still open:**1. **Inês's visit prep** — deep-clean bedding/upholstery (dander lingers) and arrange Rex's stay with a neighbour during her visit. Inês arrives in about two weeks and is allergic to dogs.2. **Commute planning** — figuring out the best route to Nimbus's Kreuzberg office. This is flagged as an open question on your list.3. **Rex's vet visit** — the appointment with Dr. Weber (Schönhauser Allee) is set for next Monday, so the task is basically scheduled rather than done — just attend, nothing left to arrange that I know of.**Completed:**- **Bank account** — you opened a German account with N26, which resolves your traditional-vs-online bank question. One transparency note: I wasn't able to formally mark the related goal (bank account before your first salary on the 1st) as completed in my records — it needs a confirming event to record that. But going by what you've told me, it's done in practice.- **Anmeldung** — completed; your Bürgeramt appointment went well.**Possibly pending (unclear):**- Pottery class (you mentioned trying it, with no commitments) — open-ended, so I'm not treating it as a task.- History podcast recommendations — I offered suggestions previously; nothing further seemed pending.Let me know if any of the open items have progressed and I can update the picture.",
+   "ok": true
+  },
+  {
+   "text": "Where is Rex's vet and when is the appointment?",
+   "reply": "Rex's vet is Dr. Weber on Schönhauser Allee in Prenzlauer Berg, Berlin. The first appointment is next Monday (no exact time was noted).",
+   "ok": true
+  },
+  {
+   "text": "Summarise what you know about me in three sentences.",
+   "reply": "You're Dana, originally from Lisbon and now living in Berlin after moving for a job at the startup Nimbus, where your manager is Priya on the platform team; your Anmeldung is complete and you've opened an N26 bank account. You have a basset hound named Rex, who has a first vet appointment with Dr. Weber on Schönhauser Allee next Monday, and your sister Inês—who is allergic to dogs—visits soon, so you've planned a deep clean and a sitter for Rex. You're settling into Berlin life: learning German on Wednesday evenings, feeling a bit nervous about your Kreuzberg commute, and exploring the city as a vegetarian newcomer.",
+   "ok": true
+  }
+ ]
+}

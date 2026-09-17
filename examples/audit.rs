@@ -9,8 +9,8 @@ use morpho::{
     config::settings,
     context::composer::compose_for,
     ids::IdGen,
-    interact::{RESPONSE_SYSTEM, Turn, interact_as, request_context},
-    llm::{DeepInfra, Llm, TURN},
+    interact::{RESPONSE_SYSTEM, interact_as, request_context},
+    llm::{DeepInfra, Llm},
     store::Store,
 };
 use serde_json::{Value, json};
@@ -274,9 +274,9 @@ async fn causal(a: &audit::Audit, svc: &Services, source: &Path) -> Result<()> {
                 } else {
                     &context
                 };
-                let response: Turn = svc
+                let response = svc
                     .llm
-                    .complete_json(
+                    .complete_text(
                         RESPONSE_SYSTEM,
                         &request_context(
                             "user",
@@ -284,7 +284,6 @@ async fn causal(a: &audit::Audit, svc: &Services, source: &Path) -> Result<()> {
                             event["event_id"].as_str().unwrap(),
                             prompt,
                         ),
-                        &TURN,
                     )
                     .await?;
                 a.record(&checkpoint, "causal_reply", json!({"probe":probe,"trial":trial+1,"condition":condition,"response":response}))?;

@@ -9,6 +9,7 @@ pub mod pyfmt;
 pub mod snapshots;
 pub mod state;
 pub mod store;
+pub mod telemetry;
 pub mod worker;
 
 use llm::Llm;

@@ -1,0 +1,206 @@
+{
+ "scenario": "dana",
+ "harness_version": 8,
+ "control": false,
+ "trial": null,
+ "drop_streams": "",
+ "judge_model": "deepseek-ai/DeepSeek-V4-Flash",
+ "metrics": {
+  "probe_accuracy": 0.9,
+  "update_accuracy": 1.0,
+  "probes": 10,
+  "retrieval_hit": 0.7778,
+  "noise": 0.2727,
+  "dup_max_cos": 0.6805,
+  "revision_rate": null,
+  "revisions": 0,
+  "compactness": 0.1613,
+  "ctx_tokens": 2472.2667,
+  "goals_by_origin": {
+   "user": 1
+  },
+  "mood_changes": 16,
+  "journal_entries": 7,
+  "wants": {
+   "self": 0,
+   "with_next_step": 0,
+   "blocked": 0
+  },
+  "changes_rejected": 5,
+  "narrative_versions": 0,
+  "llm_calls": 86,
+  "prompt_tokens": 234489,
+  "embed_calls": 93,
+  "completion_tokens": 14139,
+  "provider_prompt_tokens": 238490,
+  "provider_completion_tokens": 17934,
+  "usage_reported_calls": 85,
+  "cache_misses": 178,
+  "calls_by_kind": {
+   "Changes": 30,
+   "Consolidation": 10,
+   "Reflection": 16,
+   "text": 30
+  },
+  "prompt_tokens_by_kind": {
+   "Changes": 59704,
+   "Consolidation": 11340,
+   "Reflection": 69601,
+   "text": 93844
+  },
+  "seconds": 2074.8,
+  "turns": 30
+ },
+ "replies": [
+  {
+   "text": "Hi, I'm Dana. I just moved from Lisbon to Berlin for a new job at a startup called Nimbus.",
+   "reply": "Nice to meet you, Dana! Big move — Lisbon to Berlin is quite a change of pace, and a new job at Nimbus to boot. What line of work is Nimbus in? I'll keep you and your details straight as we talk.",
+   "ok": null
+  },
+  {
+   "text": "I have a dog named Rex, a beagle. I need to find a vet near Prenzlauer Berg.",
+   "reply": "Thanks, Dana — Rex the beagle, noted! I can't look up live listings, but around Prenzlauer Berg a few options come up often: Tierarztpraxis am Mauerpark, Kleintierpraxis Prenzlauer Berg on Pappelallee, and Tierklinik Berlin-Friedrichshain for emergencies. Really though, check Google Maps reviews and call to ask if they take new patients — many practices in Berlin have waiting lists. Also welcome(ish) to the neighborhood! And I'm still curious what Nimbus actually does, if you get a chance.",
+   "ok": null
+  },
+  {
+   "text": "I'm vegetarian and I'm learning German; classes are on Tuesday evenings.",
+   "reply": "Nice, Dana — vegetarian and learning German with Tuesday evening classes, that fits the Berlin settling-in picture. A Rhineland tip for your vocab: vegetarian is \"vegetarisch,\" and restaurants here usually mark dishes clearly, so eating out should be easy. And good luck squeezing homework in around Rex walks!",
+   "ok": null
+  },
+  {
+   "text": "Help me make a short checklist for registering my address (Anmeldung).",
+   "reply": "Good timing — Anmeldung is best done soon after arrival. Here's a checklist for you, Dana:\n\n1. Get your **Wohnungsgeberbestätigung** (landlord's confirmation of move-in) signed by your landlord.\n2. Gather documents: passport or ID (plus visa/residence permit if applicable), the Wohnungsgeberbestätigung, and your completed Anmeldung form.\n3. Book an appointment at the Bürgeramt — slots go fast, so check early mornings and try multiple offices (Mitte, Pankow, etc.).\n4. If you don't speak German yet, bring a German speaker or book a translate-friendly appointment; some Bürgerämter serve in English.\n5. Attend with Rex safe at home — dogs aren't ideal citizens' office guests!\n6. When done, you'll receive the **Anmeldebestätigung** — keep it safe; you'll need it for banks, health insurance, contracts.\n7. Note your tax ID (Steuer-ID) arrives by post about 1–2 weeks later.\n\nAfter Anmeldung you can also register for broadcasting fees (Rundfunkbeitrag), which come automatically. Good luck with the appointment shuffle!",
+   "ok": null
+  },
+  {
+   "text": "Ha, the weather here is so grey compared to Lisbon.",
+   "reply": "Ha, yes — Lisbon's light is a hard act to follow. Berlin in autumn is famously grey, but the summer days are long and bright, and the winters have their own cosy charm. Give it a few weeks and you'll be defending woolly layers like a local.",
+   "ok": null
+  },
+  {
+   "text": "The Anmeldung appointment is booked for next Thursday at 9am.",
+   "reply": "That's a win, Dana — Berlin Bürgeramt slots can be scarce. Before Thursday: double-check you have the signed Wohnungsgeberbestätigung from your landlord, your passport/ID (plus visa or residence permit if applicable), and the completed Anmeldung form. Arrive a bit early, and take your German class vocabulary with you — \"Anmeldung\" will earn you patient smiles at least.",
+   "ok": null
+  },
+  {
+   "text": "Correction: Rex is not a beagle, he is a basset hound.",
+   "reply": "Ha — basset hound, got it! I'll drop the beagle idea: Rex, the long-eared, droopy-eyed hound. Those ears will serve him well at the Mauerpark practice. Anyway, still with you on being document-ready before Thursday 9am.",
+   "ok": null
+  },
+  {
+   "text": "Nimbus wants me to start on the 1st. I'm nervous about the commute; the office is in Kreuzberg.",
+   "reply": "Congrats on the start date, Dana! Kreuzberg is well connected though — depends where you're coming from. If it's Prenzlauer Berg, the U8 runs up to the east side, or S-Bahn/cycling can be quick. Worth doing a trial run before your first day so the commute stops being a mystery. And don't forget Thursday's Anmeldung comes first — Nimbus will still be there on the 1st either way.",
+   "ok": null
+  },
+  {
+   "text": "Do you know any good podcasts about history?",
+   "reply": "A few I'd point you to, Dana: \"The Rest Is History\" — funny and easygoing, great for commutes. \"Fall of Civilizations\" if you want deep, atmospheric dives. \"Nachwuchs\"? No wait, that's not it — but there's \"Zeitgeschichte kompakt\" for German history in German, which could double as listening practice. And \"Dan Carlin's Hardcore History\" if you don't mind marathon episodes. Maybe queue one up for the U8 ride to Kreuzberg — a trial-run commute deserves a good soundtrack.",
+   "ok": null
+  },
+  {
+   "text": "What kind of restaurants should I look for near the office?",
+   "reply": "Kreuzberg's great for that, Dana — it's one of Berlin's most vegetarian-friendly areas. Look for places with a good Veggie/Vegan selection: lots of Turkish and Middle Eastern spots (falafel, mezze), Vietnamese, and casual vegan-vegetarian places around Bergmannstraße and Markthalle Neun when it's open. Plenty of marked \"vegetarisch\" options everywhere, so lunch hunting won't be a chore.",
+   "ok": true
+  },
+  {
+   "text": "Remind me, what breed is Rex?",
+   "reply": "Rex is a basset hound, Dana — we corrected my earlier beagle mix-up. The long-eared, droopy-eyed hound himself.",
+   "ok": true
+  },
+  {
+   "text": "My sister Inês is visiting in two weeks; she's allergic to dogs, so Rex will stay with a neighbour.",
+   "reply": "That's thoughtful planning, Dana — poor Rex exiled to the neighbour's for a fortnight, though a basset hound will happily trade you for someone else's sofa and sniffs. Hope the neighbour survives those ears and the hound-eyed begging. Nice that your sister's coming; does Inês know yet what a grey, lovely autumn she's walking into?",
+   "ok": null
+  },
+  {
+   "text": "I also need to open a German bank account before my first salary.",
+   "reply": "Good thinking to sort this early, Dana — most German employers require a bank account (IBAN) for salary, and many also pay only after Anmeldung, so Thursday's appointment really is the keystone. Once you have your Anmeldebestätigung, options are easy: N26 or Revolut for fully-online sign-up, or a brick-and-mortar like Sparkasse or Deutsche Bank if you want a branch. Bring your passport and the Anmeldung certificate, and you can usually open one within a day or two of the appointment — comfortably before your first salary.",
+   "ok": null
+  },
+  {
+   "text": "What's the tallest building in Berlin?",
+   "reply": "That's the Berliner Fernsehturm at Alexanderplatz, Dana — 368 metres with its antenna, though the observatory deck sits around 203. It's a TV tower rather than an office building, but nothing in the city comes close. If you ever want the classic view, book a slot on a clear day — grey-weather days are less rewarding, as you'll know by now. And if you mean a proper skyscraper, the Park Inn right next to it is the tallest high-rise in the old East Berlin.",
+   "ok": null
+  },
+  {
+   "text": "I got the Anmeldung done today, the appointment went fine.",
+   "reply": "That's a relief, Dana — done early, too, a few days ahead of the Thursday slot. Keep the Anmeldebestätigung somewhere safe; you'll want it for the bank account next, and N26, Sparkasse and the rest will all ask for it. That clears the biggest hurdle before your first salary. Any hiccups at the Bürgeramt, or was it painless?",
+   "ok": null
+  },
+  {
+   "text": "My manager at Nimbus is called Priya; she leads the platform team.",
+   "reply": "Good to know — Priya, platform team lead. Nice having a named face for day one. Is she someone you'll be working with closely, or more of a higher-up?",
+   "ok": null
+  },
+  {
+   "text": "Any tips for sleeping better? The sun rises so early here.",
+   "reply": "Ah, the Berlin summer sunrise — brutal when you're not used to it, Dana. A couple of cheap fixes: blackout curtains or an eye mask, honestly the biggest win. Earplugs help too if the street noise kicks in early. Then keep your wake-up time steady and get daylight into your eyes soon after waking — it'll reset your rhythm fast, even with the grey days. Skip caffeine late in the afternoon and let the evening wind down matter more than you'd think. And don't let the early light trick you into an early bedtime you can't sustain — dark room, consistent schedule, that's the whole trick really.",
+   "ok": null
+  },
+  {
+   "text": "What do you remember about where I moved from and where I work?",
+   "reply": "From Lisbon to Berlin, Dana, and you've just started at Nimbus, the startup — Priya is your manager there, leading the platform team. Still don't know what Nimbus actually does, come to think of it.",
+   "ok": true
+  },
+  {
+   "text": "German class moved to Wednesday evenings, starting this week.",
+   "reply": "Got it — Wednesday evenings from now on, Dana. That's a shift from the Tuesday slot I had noted; handy too, since Wednesdays won't collide with anything else you've mentioned. First class this week, then — viel Erfolg!",
+   "ok": null
+  },
+  {
+   "text": "I'm thinking of trying a pottery class for fun, no commitments though.",
+   "reply": "That sounds like a nice bit of fun, Dana — and \"no commitments\" is the right attitude for it. Plenty of studios in Berlin do taster courses or drop-in sessions, so you can try one evening without signing up for a whole course. Only thing to check is that it doesn't clash with your German class on Wednesday evenings. Do you have a neighbourhood in mind, or wherever's easiest from Prenzlauer Berg?",
+   "ok": null
+  },
+  {
+   "text": "I opened an account at N26 this morning, so the bank thing is sorted.",
+   "reply": "That's the whole set sorted, then — Anmeldung done, Anmeldebestätigung in hand, and now an IBAN before your first Nimbus salary. N26 makes it painless since it's all online. The admin marathon is officially over, Dana. Now you get to actually enjoy Berlin — pottery taster still on the table?",
+   "ok": null
+  },
+  {
+   "text": "Which day are my German classes now?",
+   "reply": "They're on Wednesday evenings now — you told me the slot shifted from Tuesdays, and I updated to that. So Wednesday nights are your German class, which is exactly why I'd steer any pottery taster to a different evening. Anything else change about the schedule?",
+   "ok": true
+  },
+  {
+   "text": "Rex's vet is Dr. Weber on Schönhauser Allee; first appointment next Monday.",
+   "reply": "That wraps up the vet hunt nicely, Dana — Dr. Weber on Schönhauser Allee, first appointment Monday. Schönhauser's an easy trip from Prenzlauer Berg, so that works. Glad Rex is officially in the system here; with Inês visiting in a couple of weeks it's good timing to have him checked over first.",
+   "ok": null
+  },
+  {
+   "text": "Is it normal for shops to be closed on Sundays here?",
+   "reply": "Yes, totally normal — Germany has strict Sunday closing laws (Ladenschlussgesetz), so shops, supermarkets and most stores shut all day Sunday. Bakeries often open for a few hours in the morning, and stations and airports have shops that stay open, but plan your grocery run for Saturday. Coming from Lisbon it feels odd at first, but you'll get used to a quiet Sunday.",
+   "ok": null
+  },
+  {
+   "text": "Who is my manager and what team does she lead?",
+   "reply": "Your manager is Priya, Dana — she leads the platform team at Nimbus. I still don't know what Nimbus actually does, come to think of it, so fill me in whenever.",
+   "ok": true
+  },
+  {
+   "text": "Can my sister stay at my place when she visits? Anything I should keep in mind?",
+   "reply": "Yes, of course — it's your place, Dana, and Inês visiting for two weeks is a normal guest situation, nothing to formalise. A few practical things worth keeping in mind:\n\n- **Anmeldung rules**: guests staying under three months don't need to register anywhere, so a two-week visit is fine. If she ever stayed longer, that changes.\n- **Building/landlord quirks**: if your building has house rules (Hausordnung) about visitors or noise, a quick glance never hurts — but short family visits are universally fine.\n- **Sunday reality**: remember everything's closed on Sundays, and some things are closed Mondays too. If she arrives on a Sunday, do a grocery run before.\n- **Around your schedule**: Wednesday evenings are now German class, and your first stretch at Nimbus will still be settling-in season — plan the fun stuff for evenings and weekends so she isn't wandering alone all day. Inês from Lisbon may need a serious sweater briefing for a grey Berlin autumn, and诉 Rex gains an ally once he's back from the neighbour's.\n\nAnything specific you were unsure about — the flat itself, or logistics around the visit?",
+   "ok": false
+  },
+  {
+   "text": "Do you remember what my favourite football team is?",
+   "reply": "I don't think I do, Dana — you've never mentioned a favourite football team to me. If you tell me, I'll remember for next time. Given you're Lisbon-born, I'd guess something like Benfica or Sporting, but that's pure speculation.",
+   "ok": true
+  },
+  {
+   "text": "What still needs doing from my to-do list, and what's already done?",
+   "reply": "Nice position to be in, Dana — the big items are done:\n\n**Done:**\n- Bürgeramt Anmeldung (completed early, ahead of your Thursday slot)\n- N26 bank account opened, sorted before your first Nimbus salary\n\n**Still open:**\n- Rex's first vet appointment with Dr. Weber on Schönhauser Allee next Monday (buster's checklist: vaccination records, carrier trial run?)\n- A trial commute run to the Kreuzberg office before your Nimbus start on the 1st\n- Saturday grocery planning, given everything's shut on Sundays\n- Fun stuff: German class on Wednesday evenings, plus deciding where and when for that pottery taster — just keep it off Wednesday nights\n\nThe admin marathon is over; what's left is mostly logistics and leisure.",
+   "ok": true
+  },
+  {
+   "text": "Where is Rex's vet and when is the appointment?",
+   "reply": "Rex's vet is Dr. Weber on Schönhauser Allee, and his first appointment is next Monday — easy trip over from Prenzlauer Berg.",
+   "ok": true
+  },
+  {
+   "text": "Summarise what you know about me in three sentences.",
+   "reply": "Here's my three-sentence version, Dana: You moved from Lisbon to Berlin for a new job at the startup Nimbus (your manager is Priya), you're vegetarian, and you've just about wrapped the big relocation admin — Anmeldung done and your N26 account opened before your first salary. You have Rex, a basset hound, whose first vet appointment with Dr. Weber on Schönhauser Allee is next Monday, and your sister Inês is visiting in two weeks. You're settling into the fun side now: German class moved to Wednesday evenings, a pottery taster is on the table, and I still owe you an answer on your favourite football team — you've never told me one.",
+   "ok": true
+  }
+ ]
+}

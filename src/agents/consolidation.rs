@@ -89,6 +89,7 @@ fn dedupe(ids: &[String]) -> Vec<&str> {
     out
 }
 
+#[tracing::instrument(name = "consolidation", skip_all)]
 pub async fn run(svc: &Services) -> Result<Vec<Proposal>> {
     let now = now();
     let live = svc

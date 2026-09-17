@@ -1,7 +1,7 @@
 //! Bounded idle revision through the same coordinator that consumes the durable inbox.
 use crate::{
     Services,
-    agents::{consolidation, reflection},
+    agents::{consolidation, narrative, reflection},
     config::settings,
     interact,
     pyfmt::{Row, dt_of, iso, now},
@@ -97,6 +97,7 @@ fn index(row: &Row, key: &str) -> usize {
     row.get(key).and_then(Value::as_u64).unwrap_or(0) as usize
 }
 
+#[tracing::instrument(name = "cycle", skip_all, fields(stats = tracing::field::Empty))]
 pub async fn cycle(svc: &Services, force: bool) -> Result<Value> {
     let Ok(_guard) = svc.cycle_lock.try_lock() else {
         return Ok(json!({}));
@@ -141,6 +142,9 @@ pub async fn cycle(svc: &Services, force: bool) -> Result<Value> {
         return Ok(json!({}));
     }
     let result = maintenance(svc).await;
+    if let Ok(stats) = &result {
+        tracing::Span::current().record("stats", stats.to_string());
+    }
     if let Err(e) = &result {
         let mut row = cursor(svc);
         let mut st = svc.store.lock().unwrap();
@@ -269,12 +273,27 @@ async fn maintenance(svc: &Services) -> Result<Value> {
         row.remove("failed_transition");
     }
     save_cursor(&staged, row)?;
+    if narrative::stale(&staged.store.lock().unwrap().state) {
+        stats["narrative"] = compile_narrative(&staged).await?;
+    }
     let snapshot = take_snapshot(&staged)?;
     stats["snapshot"] = snapshot["id"].clone();
     stats["pending"] = json!(pending);
     svc.publish(staged, None)?;
     settle(svc, reservation)?;
     Ok(stats)
+}
+
+/// Recompile the self-description from the current traits when it is stale.
+#[tracing::instrument(name = "compile_narrative", skip_all)]
+pub async fn compile_narrative(svc: &Services) -> Result<Value> {
+    if !narrative::stale(&svc.store.lock().unwrap().state) {
+        return Ok(json!({}));
+    }
+    match narrative::run(svc).await? {
+        Some(p) => commit_all(svc, vec![p], None).await,
+        None => Ok(json!({})),
+    }
 }
 
 pub async fn run_forever(svc: &Services) {

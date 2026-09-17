@@ -217,6 +217,35 @@ async fn similar_vectors_do_not_merge_distinct_claims_and_unknown_evidence_is_re
 }
 
 #[tokio::test]
+async fn cited_supporting_and_contradicting_ids_must_exist() {
+    let svc = services("cited-ids");
+    let eid = event(&svc, "Trains beat planes for short trips.");
+    let create = Proposal::new(
+        "interaction",
+        "create_trait",
+        json!({"kind":"stance","statement":"Trains beat planes.","confidence":0.8}),
+    )
+    .evidence(vec![eid.clone()]);
+    let id = one(&svc, create).await.object_ids.remove(0);
+    let cite = |payload: serde_json::Value| {
+        Proposal::new("interaction", "update_trait", payload)
+            .target(&id)
+            .evidence(vec![eid.clone()])
+    };
+    let result = one(&svc, cite(json!({"add_contradicting":["evt_missing"]}))).await;
+    assert!(!result.accepted);
+    assert_eq!(
+        result.reason.as_deref(),
+        Some("unknown evidence: evt_missing")
+    );
+    assert!(
+        one(&svc, cite(json!({"add_contradicting":[eid.clone()]})))
+            .await
+            .accepted
+    );
+}
+
+#[tokio::test]
 async fn flat_state_patches_preserve_version_and_permission_guards() {
     let svc = services("flat-patch");
     let eid = event(&svc, "flat input");

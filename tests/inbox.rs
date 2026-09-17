@@ -28,12 +28,25 @@ async fn fifo_is_private_and_duplicate_reply_survives_restart() {
     };
     let (done, _) = tokio::join!(work, inspection);
     assert!(done.unwrap());
-    assert!(!fake(&svc).calls_for("Turn")[0].contains("Bob's input"));
+    assert!(!fake(&svc).calls_for("text")[0].contains("Bob's input"));
     assert!(process_next(&svc).await.unwrap());
-    let calls = fake(&svc).calls_for("Turn");
-    assert!(calls[1].contains("alice"));
+    let calls = fake(&svc).calls_for("text");
+    assert!(!calls[1].contains("Alice's input")); // other session: no raw transcript
     assert!(calls[1].contains("\"speaker\":\"bob\""));
-    assert_eq!(calls.len(), 2); // one model call per turn
+    assert_eq!(calls.len(), 2); // one reply call per turn
+    let clerk = fake(&svc).calls_for("Changes");
+    assert_eq!(clerk.len(), 2); // and one clerk call
+    let index: serde_json::Value =
+        serde_json::from_str(clerk[1].rsplit_once('\n').unwrap().1).unwrap();
+    assert!(index["targets"]["items"].is_object());
+    assert!(
+        index["targets"]["items"]
+            .as_object()
+            .unwrap()
+            .keys()
+            .any(|k| k.starts_with("evt_"))
+    );
+    assert!(index["recalled_state"].is_null());
     let reply = request(&svc, "a1").unwrap()["reply"].clone();
     drop(lock);
     assert_eq!(
@@ -42,7 +55,7 @@ async fn fifo_is_private_and_duplicate_reply_survives_restart() {
             .unwrap(),
         reply
     );
-    assert_eq!(fake(&svc).calls_for("Turn").len(), 2);
+    assert_eq!(fake(&svc).calls_for("text").len(), 2);
     drop(svc);
     let svc = Services::new(
         Store::open(&temp_dir("inbox-fifo"), IdGen::random()).unwrap(),
@@ -54,7 +67,7 @@ async fn fifo_is_private_and_duplicate_reply_survives_restart() {
             .unwrap(),
         reply
     );
-    assert!(fake(&svc).calls_for("Turn").is_empty());
+    assert!(fake(&svc).calls_for("text").is_empty());
     assert_eq!(svc.store.lock().unwrap().state.events.len(), 4);
 }
 
@@ -62,7 +75,7 @@ async fn fifo_is_private_and_duplicate_reply_survives_restart() {
 async fn failed_or_cancelled_turn_keeps_input_and_retries_once() {
     let svc = services("inbox-failure");
     enqueue(&svc, "remember this", None, "alice", Some("retry")).unwrap();
-    fake(&svc).queue("Turn",json!({"response":"draft", "changes":[{"operation":"create_memory","target":null,"payload":"not json","evidence_ids":[],"confidence":0.8,"reason":"test"}]}));
+    fake(&svc).queue("Changes",json!({"changes":[{"operation":"create_memory","target":null,"payload":"not json","evidence_ids":[],"confidence":0.8,"reason":"test"}]}));
     assert!(process_next(&svc).await.is_err());
     assert_eq!(request(&svc, "retry").unwrap()["attempts"], 1);
     assert_eq!(svc.store.lock().unwrap().state.events.len(), 1); // observed failure only
@@ -83,7 +96,7 @@ async fn failed_or_cancelled_turn_keeps_input_and_retries_once() {
         Llm::Fake(Fake::default()),
     );
     assert!(process_next(&svc).await.unwrap());
-    assert_eq!(request(&svc, "retry").unwrap()["reply"]["response"], "ok");
+    assert_eq!(request(&svc, "retry").unwrap()["reply"]["response"], "ok.");
     assert!(!process_next(&svc).await.unwrap());
     assert_eq!(
         svc.store
@@ -128,9 +141,10 @@ async fn concurrent_callers_share_one_fifo_and_do_not_skip_paused_input() {
 fn native_change(_system: &str, user: &str, _schema: &str) -> serde_json::Value {
     let request: serde_json::Value = serde_json::from_str(user).unwrap();
     let eid = &request["request"]["event_id"];
-    json!({"response":"saved","changes":[
+    json!({"changes":[
         {"operation":"create_memory","target":null,"payload":{"summary":"Alice moved to Berlin"},"evidence_ids":[eid],"confidence":0.9,"reason":"Alice explicitly said so"},
-        {"operation":"set_working_state","target":null,"payload":{"patch":{"current_topic":"Alice's move"}},"evidence_ids":[eid],"confidence":0.9,"reason":"current subject"}
+        {"operation":"set_working_state","target":null,"payload":{"patch":{"current_topic":"Alice's move"}},"evidence_ids":[eid],"confidence":0.9,"reason":"current subject"},
+        {"operation":"create_memory","target":null,"payload":{"summary":"Alice is new to Berlin"},"evidence_ids":[],"confidence":0.7,"reason":"implied"}
     ]})
 }
 
@@ -141,11 +155,24 @@ async fn native_json_changes_and_reply_publish_together() {
     let reply = interact_as(&svc, "I moved to Berlin", None, "alice", Some("native"))
         .await
         .unwrap();
-    assert_eq!(reply["response"], "saved");
+    assert_eq!(reply["response"], "ok.");
     let live = svc.store.lock().unwrap().state.clone();
-    assert_eq!(live.table("memories").rows.len(), 1);
+    assert_eq!(live.table("memories").rows.len(), 2);
     assert_eq!(live.working["data"]["current_topic"], "Alice's move");
     assert_eq!(live.proposals[0]["rationale"], "Alice explicitly said so");
+    // A change sent without evidence ids cites the request event.
+    let eid = live
+        .events
+        .iter()
+        .find(|e| e["type"] == "user_message")
+        .unwrap()["event_id"]
+        .as_str()
+        .unwrap();
+    assert!(
+        serde_json::to_string(&live.proposals[2])
+            .unwrap()
+            .contains(eid)
+    );
     drop(svc);
     let svc = Services::new(
         Store::open(&temp_dir("native-turn"), IdGen::random()).unwrap(),

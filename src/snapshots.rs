@@ -15,7 +15,7 @@ pub fn take_snapshot(svc: &Services) -> Result<Row> {
     let mut st = svc.store.lock().unwrap();
     let s = &st.state;
     let data = json!({
-        "working_state": s.working, "self_state": s.self_state,
+        "working_state": s.working, "self_state": s.self_state, "narrative": s.narrative,
         "tables": s.tables.iter().map(|(k,t)| (k, &t.rows)).collect::<std::collections::BTreeMap<_,_>>(),
         "cursors": s.cursors, "slots": s.slots,
         "last_transition_id": s.transitions.len(),

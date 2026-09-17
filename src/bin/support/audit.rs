@@ -27,6 +27,7 @@ impl Audit {
                 "background_daily_token_budget": s.background_daily_token_budget,
                 "idle_reflect_seconds": s.idle_reflect_seconds,
                 "reflect_every_n_events": s.reflect_every_n_events,
+                "drop_streams": s.drop_streams,
             }))?,
         )?;
         Ok(Self {
@@ -38,7 +39,7 @@ impl Audit {
     pub fn record(&self, svc: &Services, phase: &str, details: Value) -> Result<()> {
         let st = svc.store.lock().unwrap();
         let s = &st.state;
-        let state = json!({"working": s.working, "self_state": s.self_state,
+        let state = json!({"working": s.working, "self_state": s.self_state, "narrative": s.narrative,
             "tables": s.tables.iter().map(|(k,t)| (k, &t.rows)).collect::<BTreeMap<_,_>>()});
         // ponytail: full snapshots grow quadratically with turns; stream deltas if artifacts get large.
         let row = json!({"phase": phase, "seconds": self.started.elapsed().as_secs_f64(),
@@ -67,6 +68,8 @@ mod tests {
 
     #[test]
     fn capture_is_observational_and_refuses_existing_output() {
+        // Settings are process-wide; the judge test in this binary needs a single vote.
+        unsafe { std::env::set_var("JUDGE_VOTES", "1") };
         let dir = std::env::temp_dir().join(IdGen::random().next("morpho-audit"));
         let a = Audit::new(dir.clone()).unwrap();
         let svc = Services::new(

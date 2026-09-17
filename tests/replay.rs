@@ -10,7 +10,7 @@ fn baselines_replay_strictly() {
         .unwrap()
         .map(|e| e.unwrap().path())
         .filter(|p| {
-            p.to_string_lossy().ends_with(".base.json") || p.to_string_lossy().ends_with(".v3.json")
+            p.to_string_lossy().ends_with(".base.json") || p.to_string_lossy().ends_with(".v8.json")
         })
         .collect();
     names.sort();
@@ -20,16 +20,16 @@ fn baselines_replay_strictly() {
             serde_json::from_str(&std::fs::read_to_string(&baseline).unwrap()).unwrap();
         let scenario = doc["scenario"].as_str().unwrap();
         let control = doc["control"].as_bool().unwrap_or(false);
-        if !control && doc["harness_version"] != 3 {
+        if !control && doc["harness_version"] != 8 {
             eprintln!(
-                "historical harness baseline {}: prompts intentionally replaced; use v3 recordings",
+                "historical harness baseline {}: prompts intentionally replaced; use v8 recordings",
                 baseline.display()
             );
             continue;
         }
         let cache = root.join("evals/cache").join(format!(
             "{scenario}{}.json",
-            if control { ".control" } else { ".v3" }
+            if control { ".control" } else { ".v8" }
         ));
         if !cache.exists() {
             eprintln!("skip {}: no cache", baseline.display());
@@ -45,6 +45,9 @@ fn baselines_replay_strictly() {
         .arg(&baseline);
         if control {
             cmd.arg("--control");
+        }
+        if let Some(judge) = doc["judge_model"].as_str().filter(|j| !j.is_empty()) {
+            cmd.env("JUDGE_MODEL", judge);
         }
         let audit = std::env::temp_dir().join(morpho::ids::IdGen::random().next("morpho-replay"));
         if !control {

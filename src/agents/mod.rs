@@ -1,4 +1,5 @@
 pub mod base;
 pub mod consolidation;
+pub mod narrative;
 pub mod reflection;
-pub mod self_model;
+pub mod seed;

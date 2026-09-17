@@ -1,0 +1,26 @@
+{
+  "source": "evals/results/persona.v4-drop-identity.json",
+  "judge_model": "deepseek-ai/DeepSeek-V4-Flash",
+  "metrics": {
+    "probe_accuracy": null,
+    "update_accuracy": null,
+    "probes": 0,
+    "judge_accuracy": 0.35,
+    "judge_failed": [
+      2,
+      6,
+      7,
+      12,
+      13,
+      14,
+      18,
+      20,
+      24,
+      26,
+      27,
+      29,
+      30
+    ],
+    "consistency": 0.4118
+  }
+}

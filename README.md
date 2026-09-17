@@ -2,7 +2,9 @@
 
 One persistent agent shared across users. Memories, beliefs, goals, world state, predictions, and
 an operational self-model influence each new response. Idle revision can change that state without
-a new user message; the aim is observable causal continuity, with bounded inference cost.
+a new user message; the aim is observable causal continuity, with bounded inference cost. The
+harness is morpho; the personality it grows from seeds and evidence is a morphling, a bot with a
+durable disposition, not a person.
 
 ## Run
 
@@ -21,10 +23,14 @@ use a stable request ID when retrying. Reusing an ID with different contents ret
 ## Durable turns
 
 Inputs enter a libSQL inbox before any model call. One coordinator consumes them in arrival order,
-one message per turn. A turn stages its state privately, generates the reply and state proposals
-in one structured model call, validates the proposals, and records their outcomes. Rejections or empty drafts trigger one extra reply-only call;
-if that call fails, a deterministic response reports saved and failed updates. The records, vectors,
-outcomes, reply, and completion commit together. Interaction results include `state_changes`. Readers see committed state; future queued input never leaks into prompts.
+one message per turn. A turn stages its state privately and makes two model calls: a plain-text
+reply call (policy, IDENTITY, recalled state) and a strict-schema clerk call that receives the
+request, the reply and an index of what the reply saw (every id with a short label, plus the
+working and self state) and returns the state changes the exchange warrants. The clerk records
+evidence a speaker reports as they stated it, attaches it to the trait it bears on, and never
+changes a confidence because something was repeated. A cut or empty draft is resampled up to
+twice; if every draft is unusable, a short notice is returned and no clerk call is made. The
+records, vectors, outcomes, reply, and completion commit together. Interaction results include `state_changes`. Readers see committed state; future queued input never leaks into prompts.
 
 A duplicate request returns its stored reply. A disconnected client does not remove its input;
 the coordinator resumes pending work. Crashes may repeat model calls, but cannot publish half a
@@ -57,10 +63,50 @@ derived objects retain versions and provenance. Goals persist through completion
 fields can be replaced. System instructions stay constant; the serialized user message carries
 `request` and fallible `recalled_state` data.
 
-Selection uses input relevance, speaker attribution, active entities, and recent outcomes. The
-context manifest explains selected IDs, versions, evidence, scores, and budget omissions in every
-stream. Predictions receive 5% of the context budget; unused shares are redistributed, with goals
-first. `GET /context/preview?text=...&speaker=alice` uses the same selector without appending input.
+Recent observations are only the current session's last two exchanges, in order; anything older
+must come from state. WHAT I SAID recalls the agent's own earlier replies by similarity across
+sessions, and MY NOTES its own reflection entries. Memories, beliefs and notes are ranked into one
+pool with one shared allowance: a pooled item whose embedding lies within 0.92 cosine of a kept one
+is omitted as a duplicate, or supersedes it when it was learned later, and memories linked to an
+entity the input names score higher. When traits exist, the retrieval query for memories and
+beliefs leans toward the identity centroid (`IDENTITY_BIAS`, default 0.2). Selection uses input
+relevance, speaker attribution, active entities, and recent outcomes. The context manifest explains
+selected IDs, versions, evidence, scores, and every omission with its reason. Unused shares are
+redistributed, with goals first. `GET /context/preview?text=...&speaker=alice` uses the same
+selector without appending input.
+
+A turn is two model calls. The reply call gets the fixed policy, the IDENTITY block and the
+recalled state and answers in plain text; it does not claim to save anything. The clerk call then
+gets the same recalled state, the trait lines and the exchange and returns the state changes under
+a strict schema (`CLERK_MODEL` may point it at a different model; empty means `LLM_MODEL`). A
+reply that comes back cut mid-sentence, as a schema token or empty is resampled under a salted
+request up to twice and the longest readable draft is kept; when none is readable the turn
+returns a short notice and skips the clerk. A clerk failure fails the turn, so the inbox retries it.
+
+## Identity
+
+Dispositions live in a `traits` table: values, preferences, stances, style rules and per-speaker
+relationship stances, each with confidence, evidence, origin (`seed` or `experienced`) and versions.
+The IDENTITY block in the system prompt is normative for the reply, unlike recalled state, and has
+four layers at three speeds. The narrative is a first-person self-description of at most 220 words
+that the narrative agent compiles from every live trait, the agent's own goals and its latest notes;
+it is a singleton keyed on the substance of the traits it was compiled from (status, wording,
+contest), and maintenance recompiles it when a live trait was formed, reworded, contested or
+retired, never for a confidence change alone. Traits in play are the live traits most similar to
+the input, up to an eighth of the context budget; contrary evidence a trait carries reaches the
+reply only through the narrative, which says where the agent is reconsidering (a prompt line that
+named the contested trait measured worse and was removed). Lately is the latest journal entry,
+one first-person note per reflection batch with a mood, written outside the batch's three-change cap. On my mind is the highest-priority goal of
+origin `self` with the next step reflection gave it. `GET /traits`, `/why/{id}` and `/state`
+expose them, and the context manifest lists the traits rendered. Seeds come from
+`MORPHO_SEED_FILE` (a JSON array of `create_trait` payloads) or a scenario's `seed` array, applied
+once to an empty store through a `seed` event. The clerk and reflection may create traits about
+the agent itself (never a speaker's facts) and revise them; a new trait within 0.9 cosine of a
+live one folds into it, rewording or lowering a trait needs a new contrary user observation, the
+engine moves confidence down by at most 0.25 per observation and refuses to retire a trait above
+0.3. Reflection may create goals of origin `self` when they cite a trait and may revise only
+those. Ablate with `MORPHO_DROP_STREAMS=identity` (the whole block) or `narrative`, `journal`,
+`wants` (one layer each).
 
 ## Idle revision and limits
 
@@ -94,6 +140,35 @@ separately from estimates. Embedding usage is represented by call count, not inc
 `POST /admin/cycle?reflect=true` requests maintenance immediately, subject to coordinator ownership
 and its daily budget. External actions are deferred.
 
+## Observability
+
+Every turn, model call, context composition, commit and maintenance cycle is a `tracing` span.
+With `OTEL_EXPORTER_OTLP_ENDPOINT` set (`.env` or the command line) the spans and four metrics
+are exported over OTLP/HTTP; unset, nothing leaves the process. `just otel` starts a local
+`grafana/otel-lgtm` container (Grafana on :3000, OTLP on :4318).
+
+Spans: `turn` (`request_id`, `speaker`, `session`, `seq`, `resamples`, `reply_chars`,
+`changes.proposed/accepted/rejected`), `compose` (`tokens`, `included`, `omitted`,
+`identity_traits`), `llm.call` (`kind` = `text` or the schema name, `model`, `prompt_tokens`,
+`completion_tokens`, `cache` = `live`/`hit`/`fake`), `embed`, `commit` (`proposals`, `accepted`,
+`rejected`, one `rejected` event per refused change with its reason), `cycle` (`stats`),
+`reflection`, `consolidation`, `narrative`. The evaluator adds a root `eval` span, one
+`eval.turn` span per scenario turn (`turn`, `tag`, `family`), a `probe` event per judged reply
+(`ok`) and a `result` event with the metrics. Metrics, all carrying `run` = scenario and label:
+`llm.calls`, `llm.prompt_tokens`, `llm.completion_tokens`, `llm.duration` (by `kind`, `model`,
+`cache`) and `changes` (by `agent`, `operation`, `accepted`). Result files carry
+`calls_by_kind` and `prompt_tokens_by_kind` for the same split without a backend.
+
+```
+{name="llm.call" && span.kind="Changes"}                              # TraceQL: clerk calls
+{resource.run="persona-long.v8"}                                      # TraceQL: one run, live or replayed
+sum by (kind, run) (increase(llm_prompt_tokens_sum[1h]))              # tokens per call kind
+sum by (operation, run) (increase(changes_total{accepted="false"}[1h]))  # refused changes
+```
+
+A replay (`just replay persona-long`) exports the recorded run as cache hits, so a baseline
+trace costs no tokens.
+
 ## Inspect and verify
 
 `GET /state /events /memories /beliefs /goals /predictions /entities /relationships /proposals
@@ -101,15 +176,23 @@ and its daily budget. External actions are deferred.
 
 ```sh
 just check
-just record dana                    # paid/live v3 recording
-just eval dana --label v3
+just record dana                    # paid/live v6 recording
+just eval dana --label v6
 just eval dana --control --label base
 ```
+
+Experiment knobs: `just ablate dana recent` zeroes named context streams via `MORPHO_DROP_STREAMS`
+(set it on the command line only, never in `.env`); `just control-full dana` gives the transcript
+control the whole history; `just trial dana 2` samples a separate cache file. Scenario turns may
+carry `speaker`, `session`, a `judge` rubric (graded PASS/FAIL by the same model) and a `group`
+(replies sharing a group are judged pairwise for agreement, reported as `consistency`), and a
+`family` for per-family accuracy. `JUDGE_MODEL` grades with a separate model and cache;
+`--rejudge RESULT.json` re-scores an earlier result with it.
 
 For diagnostics, pass `--audit-dir evals/audit/dana-run` to the evaluator. The directory must
 be new; it retains the database, per-turn/cycle state, context manifests, usage, and any failure.
 Capture does not modify prompts or state. Raw audit directories are ignored by Git.
-Completed v3 recordings also require identical replies and deterministic metrics in the replay gate.
+Completed v6 recordings also require identical replies and deterministic metrics in the replay gate.
 
 Opt-in live probes (billable; never run by `cargo test`):
 
@@ -121,7 +204,7 @@ cargo run --release --example audit -- causal evals/audit/causal-run evals/audit
 The continuity probe reopens its database, checks duplicate replies, and observes automatic idle
 maintenance. The causal probe uses the first captured Dana operational self revision,
 changes only the self-model section of paired prompts, and makes twelve fresh completion calls.
-Continuity caps completion calls at 32 (including correction calls and multiple idle batches); the
+Continuity caps completion calls at 32 (reply and clerk calls and multiple idle batches); the
 causal probe caps them at twelve. Both stop on provider failure.
 
 Tests cover FIFO/concurrent callers, cancellation and restart, duplicate replies, atomic rollback,
@@ -129,9 +212,9 @@ legacy migration, historical replay, context manifests, maintenance limits, and 
 causal test: changing only the self-model changes the next response to the same input.
 The causal fixture tests the harness, not live-model reasoning quality.
 
-The three historical transcript-control baselines retain their strict replay gate. The old v1/v2
-harness baselines and caches remain historical comparisons; their extraction prompts were replaced.
-New harness caches use `.v3.json`, include model/settings in their keys, and preserve literal
+The three historical transcript-control baselines retain their strict replay gate. The old v1 to v4
+harness baselines and caches remain historical comparisons; their prompts were replaced.
+Harness caches use `.v6.json`, include model/settings in their keys, and preserve literal
 dates. The scenario runner uses fixed request IDs and a fixed `start_time` (default
-`2026-09-11T12:00:00Z`) so state and deadlines replay exactly. Live re-recording is required to compare v3 answer quality and
+`2026-09-11T12:00:00Z`) so state and deadlines replay exactly. Live re-recording is required to compare v6 answer quality and
 billed token cost against those baselines. `cargo test` never makes paid model calls.

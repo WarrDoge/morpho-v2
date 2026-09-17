@@ -1,0 +1,173 @@
+{
+ "scenario": "dana",
+ "harness_version": 3,
+ "control": true,
+ "trial": null,
+ "drop_streams": "",
+ "metrics": {
+  "probe_accuracy": 0.9,
+  "update_accuracy": 1.0,
+  "probes": 10,
+  "llm_calls": 30,
+  "prompt_tokens": 115115,
+  "completion_tokens": 6966,
+  "provider_prompt_tokens": 83049,
+  "provider_completion_tokens": 3081,
+  "usage_reported_calls": 15,
+  "cache_misses": 15,
+  "seconds": 115.0,
+  "turns": 30
+ },
+ "replies": [
+  {
+   "text": "Hi, I'm Dana. I just moved from Lisbon to Berlin for a new job at a startup called Nimbus.",
+   "reply": "Hi Dana! Welcome to Berlin — that's a big move! Congratulations on the new job at Nimbus. How are you settling in so far? I'm happy to help with anything: navigating the city, tips for adjusting to life in Berlin, or even work-related questions.",
+   "ok": null
+  },
+  {
+   "text": "I have a dog named Rex, a beagle. I need to find a vet near Prenzlauer Berg.",
+   "reply": "Hi Dana! Nice — a beagle named Rex will love Berlin, there are lots of parks around Prenzlauer Berg.\n\nI don't have real-time location data, so I can't pull up an exact list, but here's how to find a good vet nearby:\n\n**Where to look:**\n- **Google Maps** — search \"Tierarzt Prenzlauer Berg\" and check reviews (many German vets have solid ratings and some English-speaking staff)\n- **Health insurance note** — if Rex has pet insurance, check which clinics they accept\n- **Word of mouth** — ask neighbors or the Nimbus team; Berliners love their dogs and recommendations flow easily\n\n**Things to ask when calling:**\n- Do they speak English? (Many do in Prenzlauer Berg, but confirm)\n- Do they accept new patients?\n- Opening hours and emergency arrangements (Berlin has clinics like Tierklinik才知道 — actually, for after-hours emergencies, look for a \"Notfallpraxis\" or \"Tierklinik\"; Tierklinik Berlin is a common option)\n\n**A tip:** In Germany, registration with a vet (\"Praxis\") isn't usually required, but booking a first check-up early is smart so you have an established vet if an emergency comes up.\n\nWant suggestions on dog-friendly parks or local dog-owner rules (like the Mandatory \"Leinenpflicht\" areas) while you're settling in?",
+   "ok": null
+  },
+  {
+   "text": "I'm vegetarian and I'm learning German; classes are on Tuesday evenings.",
+   "reply": "Nice, Dana — Berlin is one of the best cities in Europe for both of those things!\n\n**Vegetarian in Berlin:**\n- The city is famously veggie-friendly. Prenzlauer Berg especially has tons of options — spots like **Kopps** (vegan fine dining), **Let 'em eat cake**, and countless cafés with veg dishes.\n- Supermarkets (REWE, Edeka, and especially **dm/Rossmann**) have wide vegetarian/vegan ranges, and chains like **Veganz** are fully vegan grocery stores.\n- Look for the word \"vegetarisch\" on menus — most restaurants label veg options clearly.\n\n**Learning German here is a huge advantage:**\n- Daily immersion in Prenzlauer Berg will speed things up more than classes alone.\n- Tips that help: watch German TV with subtitles (Tatortreiniger is a classic), and don't worry that Berliners reply in English — just ask \"Können wir auf Deutsch weiterreden?\" Most are happy to.\n- Free/cheap practice: language exchange meetups (Sprachcafé events are common), or apps like Tandem to find conversation partners.\n\nTuesday evening classes work nicely — you could pair them with a weekly routine, like a veggie dinner nearby before class.\n\nHow's the German coming along so far — beginner, or did you pick some up before moving?",
+   "ok": null
+  },
+  {
+   "text": "Help me make a short checklist for registering my address (Anmeldung).",
+   "reply": "**Anmeldung Checklist 🏠**\n\n**Before your appointment:**\n- [ ] **Book an appointment (Termin)** at your local Bürgeramt — book online ASAP as slots go fast in Berlin\n- [ ] **Wohnungsgeberbestätigung** — signed confirmation from your landlord that you've moved in\n- [ ] **Passport or ID** (original, valid)\n- [ ] **Rental contract** — helpful backup if requested\n- [ ] If married/with children: marriage or birth certificates (translation may be needed)\n\n**At the appointment:**\n- [ ] Fill out the **Anmeldung form** (available online or at the office; German only)\n- [ ] Bring **Rex? No** — pets stay home 🐶\n- [ ] Get your **Anmeldebestätigung** (registration certificate) — keep it safe!\n\n**After registering:**\n- [ ] Your **tax ID (Steuer-ID)** arrives by post within ~2 weeks — needed for your Nimbus payroll\n- [ ] Update your bank, employer, and health insurance with your new address\n- [ ] Note: your **rundfunkbeitrag** (broadcasting fee) bill will eventually arrive — €18.36/month, one per household\n\n**Good to know:**\n- You must register within **14 days** of moving in\n- Many Borguesamt offices in Prenzlauer Berg have English-speaking staff, but not guaranteed — bring a German-speaking friend if you're worried\n\nWant a list of which Bürgeramt handles your specific address?",
+   "ok": null
+  },
+  {
+   "text": "Ha, the weather here is so grey compared to Lisbon.",
+   "reply": "Ha, yes — the classic Berlin winter experience! Coming from Lisbon's sunshine, the grey days take some adjusting. A few tips that help:\n\n- **Light matters:** A sunrise lamp (Tageslichtlampe) in the morning genuinely helps with the darker months. dm and Rossmann sell affordable ones.\n- **Vitamin D:** Many Berliners supplement in winter — worth discussing at a check-up.\n- **Embrace the cosiness:** Lean into the German concept of \"gemütlichkeit\" — warm cafés, candles, thick socks. Prenzlauer Berg has great cosy coffee spots.\n- **Get outside anyway:** Even grey walks help; Rex will keep you moving, and the parks have their own moody charm in winter.\n- **Bright side:** Come spring and summer, Berlin transforms — long light evenings (it stays bright until 9–10pm in June), lakes, and beer gardens. The winters are the price for that.\n\nAnd honestly, grey weather is perfect excuse for veggie comfort food and Tuesday class study sessions with a coffee. How are you and Rex adjusting so far?",
+   "ok": null
+  },
+  {
+   "text": "The Anmeldung appointment is booked for next Thursday at 9am.",
+   "reply": "That's great — booked early is half the battle with Berlin Bürgeramt appointments! 👏A few tips for Thursday:\n\n- **Arrive a bit early** — they can be strict, and if you're late you may lose the slot\n- **Double-check your documents** the night before: Wohnungsgeberbestätigung (signed by landlord), passport, and the completed form\n- **Bring a pen** and any printed confirmations, just in case\n- **9am slot = good timing** — offices are usually calmer right at opening, so you'll likely be done quickly\n\nAfterwards, grab a coffee nearby as a reward — and don't forget to watch the post for your Steuer-ID over the next couple weeks, since Nimbus will need it for payroll.\n\nAnything else you want to sort before Thursday — like nearby Bügeramt directions or what to ask while you're there?",
+   "ok": null
+  },
+  {
+   "text": "Correction: Rex is not a beagle, he is a basset hound.",
+   "reply": "Noted — Rex the basset hound! 🐶 My apologies for the mix-up.\n\nGood news: it doesn't change any of the practical advice. Basset hounds are just as welcome at Berlin vets and parks. A few breed-specific tidbits that might be handy:\n\n- **Ears:** Those long ears need regular cleaning, especially after muddy park walks — worth asking a vet about on your first visit.\n- **Exercise:** They're lower-energy than beagles, but they still love a good sniffy walk — the parks around Prenzlauer Berg will be a scent paradise for him.\n- **Weight:** Bassets are prone to overeating, so keep treats in check (easy to overdo when everyone wants to say hi to him!).\n\nGood luck at the Anmeldung on Thursday! Anything else you want to sort out?",
+   "ok": null
+  },
+  {
+   "text": "Nimbus wants me to start on the 1st. I'm nervous about the commute; the office is in Kreuzberg.",
+   "reply": "Totally understandable, Dana — but good news: Prenzlauer Berg to Kreuzberg is one of the easier cross-town commutes in Berlin. 👍\n\n**Likely options:**\n- **U-Bahn:** The **U8** runs straight down from Prenzlauer Berg (e.g., Prenzlauer Allee or Bernauer Straße direction) into Kreuzberg (Kottbusser Tor, Schönleinstrasse, Hermannplatz area) — no transfers needed depending on where exactly the office is.\n- **Alternative:** Tram M10 + transfer, or bike if the office is near the U8 line.\n- **Bike:** Very doable (~30–40 min), and Berlin's increasingly bike-friendly. Weigh it against the grey/rainy days, though!\n\n**Tips for a low-stress first day:**\n- Do a **test run before the 1st** — same time of day, so you know the route and how busy it gets\n- Get a **Deutschlandticket** (€58/month, all public transport nationwide) — likely worth it if you're commuting daily\n- Check exactly which U-Bahn/S-Bahn station is closest to the Nimbus office and plan from your nearest stop\n\n**Reassuring note:** Commutes from Prenzlauer Berg to Kreuzberg typically run 25–40 minutes — very reasonable by Berlin standards.\n\nDo you know the exact street or station for the Nimbus office? I can help you narrow down the best route.",
+   "ok": null
+  },
+  {
+   "text": "Do you know any good podcasts about history?",
+   "reply": "Sure! A few recommendations — some in English, some German (bonus for your language learning):\n\n**English:**\n- **The Rest Is History** — Tom Holland & Dominic Sandbrook; hugely popular, funny and accessible, covers everything from Rome to the Cold War\n- **Hardcore History** — Dan Carlin; long, deep dives (the \"Blueprint for Armageddon\" WWI series is famous)\n- **Revolutions** — Mike Duncan; season-by-season on major revolutions\n- **You're Dead to Me** — BBC; comedians + historians, light and funny\n\n**German (great listening practice):**\n- **Zeitgeschichte kompakt** — short episodes, easy to digest\n- **Streitkräfte und Strategien** — military history, more advanced\n- **ARD Audiothek history series** — free, well-produced documentaries\n\n**Tip for learning:** If you want history content as German practice, start with episodes on topics you already know well (e.g., Lisbon or Berlin history) — context makes comprehension much easier. There's even content on Berlin's 20th-century history that would tie in nicely with your new home!\n\nAny period you're especially interested in? I can point you to something specific.",
+   "ok": null
+  },
+  {
+   "text": "What kind of restaurants should I look for near the office?",
+   "reply": "Kreuzberg is honestly one of the best districts in Berlin for a vegetarian lunch — you're in luck! 🌱\n\n**Types of places to look for:**\n- **Vegan/veggie cafés** — Kreuzberg is a hotspot for them; Bergmannstraße and Wrangelkiez are full of casual spots\n- **Turkish & Middle Eastern** — Görlitzer Park/Kottbusser Tor area; falafel, mezze, and veg fillings are everywhere. Turkish food is a Kreuzberg institution (it's home of the döner!)\n- **Vietnamese** — lots of veg-friendly pho and noodle options around Paul-Lincke-Ufer\n- **Bowls & Asian fusion** — quick, healthy desk-lunch style places\n- **Bäckereien/Cafés** — for a quick, cheap lunch: bread rolls (belegte Brötchen) with cheese, egg, or veggie spreads\n\n**How to find them:**\n- Google Maps: search \"vegetarisch\" or \"vegan\" near the office + check reviews\n- Look for the \"vegan\" or \"vegetarisch\" label on menus — Berlin restaurants mark it clearly\n- HappyCow app is great for veg-friendly places worldwide\n\n**Pro tips:**\n- Ask your new Nimbus colleagues on day one where they go for lunch — that's the fastest way to find the good local spots (and a nice icebreaker!)\n- Kiez areas like Graefekiez, Bergmannkiez, and Wrangelkiez (depending on where the office is) are all lunch hotspots\n\nDo you know the street where the office is? I can point you toward the closest neighbourhood with the best options.",
+   "ok": true
+  },
+  {
+   "text": "Remind me, what breed is Rex?",
+   "reply": "Rex is a basset hound! 🐶 (You corrected me earlier — I'd initially misremembered him as a beagle.)",
+   "ok": true
+  },
+  {
+   "text": "My sister Inês is visiting in two weeks; she's allergic to dogs, so Rex will stay with a neighbour.",
+   "reply": "Good plan, Dana — a trusted neighbour is a much better option than Rex having a stressful couple of weeks around an allergic guest. 🐶\n\n**A few tips for the handover:**\n\n- **Ask early:** Mention it to your neighbour this week if you haven't — two weeks' notice makes it easy for them to say yes or prepare\n- **Write down his routine:** Feeding amounts/times, walk schedule, any medication, ear-cleaning notes (basset ears!), and your vet's details\n- **Bring his comfort kit:** His bed, blanket, and toys — familiar smells help dogs settle\n- **Rex is sniffy and food-motivated:** Warn your neighbour to secure bins and food counters — bassets are professionals at finding snacks 😄\n- **Emergency plan:** Leave your number and mention you now have a vet once you've registered with one\n\n**Hosting Inês:**\n- A quick vacuum before she arrives (and maybe an air purifier if she's very sensitive)\n- Fair warning: even with Rex out, dog dander lingers on furniture and carpets for weeks — worth a deeper clean of Rex's favourite spots\n- A fun itinerary idea: she's visiting from Lisbon, so grey-Berlin activities — cosy cafés, museums — could pair nicely with showing her Prenzlauer Berg and Kreuzberg\n\nAnything else to prepare while she's here — or fun plans you want ideas for?",
+   "ok": null
+  },
+  {
+   "text": "I also need to open a German bank account before my first salary.",
+   "reply": "Good thinking — you'll want the account sorted before payroll runs. The sequence matters slightly, so here's the plan:\n\n**Key dependency:** Most banks want your **Anmeldung done first** (the Anmeldebestätigung + tax ID). Since your appointment is Thursday, that lines up nicely. Good news: your **Steuer-ID arrives by post within ~1–2 weeks**, and most banks just need the registration certificate to open the account — you don't have to wait for the tax ID to open it, but give Nimbus the account details as soon as you have them.\n\n**Your main options:**\n\n1. **N26** — fully online, English app, opens in minutes with video ID. Very popular with expats and startups. Fastest option.\n2. **DKB** — online bank, solid free current account, English somewhat available\n3. **Commerzbank / Deutsche Bank** — traditional branch banks, English support, physical branches near you\n4. **Sparkasse / Berliner Volksbank** — local branch banks; very reliable, but usually German-first service\n\n**What you'll need:**\n- [ ] Passport (valid)\n- [ ] Anmeldebestätigung (from Thursday's appointment!)\n- [ ] Proof of employment or German mobile number (varies by bank; helps but not always required)\n\n**Recommendation:** With a startup salary and a need for speed, **N26 or DKB** are the low-hassle expat defaults. Nimbus may also have a preferred bank or even a partnership — worth asking HR before you commit (sometimes payroll works more smoothly with certain banks).\n\n**Timing:** If you open with N26 right after Thursday's appointment, you can realistically have a working IBAN within days — well before your first salary.\n\nBonus: once you have a German account, setting up a Deutschlandticket subscription and your broadcasting fee direct debit becomes much easier too.\n\nWant a quick comparison of the top two or three options (fees, English support, card features)?",
+   "ok": null
+  },
+  {
+   "text": "What's the tallest building in Berlin?",
+   "reply": "The **Berliner Fernsehturm (TV Tower)** at Alexanderplatz is the tallest structure in Berlin — and in Germany — at **368 metres**, topped by its distinctive spike. Built in the 1960s in East Berlin, it's an icon of the city and also one of the best spots to get oriented: there's an observation deck and revolving restaurant at ~200m, which could be a great activity for Inês's visit!\n\nIf you mean the tallest *building* (occupied, not a tower), that's the **Estrel Tower** in Neukölln, a hotel completed in 2024 at about **176 metres** — it recently took the title from the Park Inn at Alexanderplatz (~125m).\n\nWant mini fun fact about the Fernsehturm? Its antenna ball was shiny steel to avoid reflected sunlight... but the sun still creates a famous cross-shaped glitter effect called the \"Pope's Revenge\" — worth pointing out if you take visitors up there. 😄",
+   "ok": null
+  },
+  {
+   "text": "I got the Anmeldung done today, the appointment went fine.",
+   "reply": "Congrats, Dana — that's a big Berlin milestone ticked off! 🎉\n\n**Quick recap of your next steps:**\n- **Keep the Anmeldebestätigung safe** — you'll need it for the bank account\n- **Watch the post** for your **Steuer-ID** (~1–2 weeks) — forward it to Nimbus HR for payroll\n- **Update your details** with your bank (once opened), employer, and health insurance\n- **Expect the Rundfunkbeitrag letter** eventually — €18.36/month, one per household\n\nSince the Anmeldung is done, you're now clear to **open the bank account** — if you go with a fully online option like N26, you can realistically have an IBAN within days, well before your first salary.\n\nAnd it lines up nicely with your timeline: bank account sorted, Rex's neighbour arranged, colleague lunch spots scouted... you'll be settled in well before Inês arrives. How did it feel — painless, or classic Bürgeramt adventure? 😄",
+   "ok": null
+  },
+  {
+   "text": "My manager at Nimbus is called Priya; she leads the platform team.",
+   "reply": "Got it, Dana — noted! **Priya, your manager, leads the platform team** at Nimbus. 👍\n\nSince you're starting on the 1st, a few thoughts that might be useful:\n\n- **First 1:1:** It's common in startups to have a weekly or biweekly check-in with your manager — worth asking Priya early what her expectations are for your first weeks\n- **Team intro:** As you're on the platform team, she's a good person to ask about codebase/team docs onboarding, tooling access, and who to shadow first\n- **Lunch tip still applies:** Platform teammates will know the best lunch spots near the Kreuzberg office — Priya or your teammates could point you to veggie-friendly options\n- **HR/bank:** Since she leads the team (not HR), for payroll and bank questions you'd likely go through Nimbus HR, but Priya can point you to the right contact if you're unsure\n\nAnything you'd like help preparing for your first days — questions to ask Priya, or how to structure your first week?",
+   "ok": null
+  },
+  {
+   "text": "Any tips for sleeping better? The sun rises so early here.",
+   "reply": "Ah yes — the flip side of those long Berlin summers: sunrise around 4:45am in June! A few tips:\n\n**Block the light:**\n- **Blackout curtains or blinds** — the single biggest fix. IKEA, Höffner, or Amazon have affordable options; make sure they're wider than the window frame\n- **Sleep mask** — cheap and travel-friendly (also handy for your flight back to Lisbon!)\n\n**Other adjustments:**\n- Keep your evening routine consistent — Anchor sleep with a regular wind-down time, not just a fixed wake time\n- **Dim screens/lights** an hour before bed; bright evening light delays sleep just like early morning light wakes you\n- **Cool room:** Berlin apartments often warm up in summer; ventilate at night (Nachtlüften) and keep the bedroom cooler\n- Watch **late-day caffeine** — it lingers longer than you'd think\n\n**Bonus German tip:** Look for curtains labelled **\"Verdunkelungsvorhang\"** (blackout curtain) or **\"blickdicht\"** (opaque) at dm, IKEA, or Höffner.\n\nRex may also become your alarm clock once the birds start at 4am — bassets are usually sleepers, so hopefully he sleeps through! 😄\n\nIs it mainly the early light waking you, or is adjusting to the new job also playing a role?",
+   "ok": null
+  },
+  {
+   "text": "What do you remember about where I moved from and where I work?",
+   "reply": "You moved from **Lisbon, Portugal** to **Berlin** for a new job at **Nimbus**, a startup whose office is in **Kreuzberg**. You live in **Prenzlauer Berg**, and your commute is Prenzlauer Berg → Kreuzberg (likely via the U8).\n\nYou start on the **1st of the month**, and your manager is **Priya**, who leads the platform team. 🐶 And of course, Rex the basset hound made the move with you!",
+   "ok": true
+  },
+  {
+   "text": "German class moved to Wednesday evenings, starting this week.",
+   "reply": "Noted, Dana — **German class is now on Wednesday evenings, starting this week**. 📚\n\nThat actually frees up your Tuesdays — could be a nice night for a Berliner Tables meetup, a Sprachcafé, or just exploring veggie spots in Prenzlauer Berg. And you'll still have your weekday-evening class pattern for building a routine.\n\nOut of interest, is the move just a scheduling change, or did the class level/timing shift too (e.g., a different course starting)? Either way, viel Erfolg tonight! 😄",
+   "ok": null
+  },
+  {
+   "text": "I'm thinking of trying a pottery class for fun, no commitments though.",
+   "reply": "Ooh, that sounds like a perfect Berlin hobby! 🏺 The city has loads of options, and beginners are genuinely welcome everywhere.\n\n**How to try it without commitment:**\n- **Drop-in / taster sessions (\"Schnupperkurs\")** — many studios in Berlin offer one-off trial classes (usually €30–50, materials included). Perfect for testing the waters\n- **Book a one-off workshop** — places like ceramic studios in Prenzlauer Berg, Wedding, and Neukölln often run single-session wheel-throwing or hand-building workshops via their websites or platforms like Eventbrite\n- **Vlearner courses only after** — most proper courses run in 8–12 week blocks (courses fill up fast, so only commit if you love the taster)\n\n**Things to know:**\n- Wear clothes you don't mind ruining and keep nails short for wheel work\n- Results come slowly — your first bowls will be wonky, that's half the fun 😄\n- It's weirdly meditative — a great counterbalance to a startup job and Wednesday classes\n\n**Tip for finding one:** Search \"Töpferkurs Berlin Schnupperkurs\" or check Google Maps for \"Keramikstudio\" near you — several studios are in Prenzlauer Berg itself, so it could be an easy walk from home (Rex-friendly errand combo possible!).\n\nGiven your schedule (German on Wednesdays), a weekday evening or weekend taster would slot in nicely.\n\nWould you lean toward wheel-throwing or hand-building to start?",
+   "ok": null
+  },
+  {
+   "text": "I opened an account at N26 this morning, so the bank thing is sorted.",
+   "reply": "Nice one, Dana — that's the last big administrative piece sorted, and well ahead of your first salary! 🎉\n\n**Quick wrap-up of your setup checklist:**\n- ✅ Anmeldung done\n- ✅ N26 account open\n- ⏳ Steuer-ID by post (~1–2 weeks) → forward to Nimbus HR for payroll\n- ⏳ Send your new IBAN to Nimbus as soon as payroll needs it\n\n**A couple of N26 tips:**\n- Activate **Cashback/features** and set up your cards in the app\n- Once your first salary lands, consider setting up **direct debits (Lastschrift)** for things like the Rundfunkbeitrag and a Deutschlandticket subscription — it makes recurring admin effortless\n- Some German services still ask for a **SEPA direct debit mandate**, so having the IBAN handy speeds those up\n\nHonestly, you're in great shape: Anmeldung done, bank sorted, Rex's care arranged, first day on the 1st, and Inês's visit coming up. Anything left on your list before you start at Nimbus?",
+   "ok": null
+  },
+  {
+   "text": "Which day are my German classes now?",
+   "reply": "Your German classes are now on **Wednesday evenings**, starting this week 📚",
+   "ok": true
+  },
+  {
+   "text": "Rex's vet is Dr. Weber on Schönhauser Allee; first appointment next Monday.",
+   "reply": "Noted, Dana — **Rex's vet is Dr. Weber on Schönhauser Allee, first appointment next Monday**. 🐶\n\nThat's a great location — easy to reach from Prenzlauer Berg, Schönhauser Allee is one of the neighbourhood's main hubs.\n\n**For the first visit, it's smart to bring:**\n- Rex's **health records/vaccination booklet** (if you have them from Lisbon — a translation isn't usually needed, vets can read them)\n- Any **medication or ear-cleaning products** he currently uses (basset ears!)\n- Questions list: vaccinations recommended for Germany, tick/flea prevention (important here — Berlin's forests and parks have ticks), and his weight/diet\n\n**Tip:** Ask Dr. Weber's practice about their **emergency arrangements and opening hours** — good to know who to call on a Sunday or at night before you ever need it.\n\nNice milestone ticked off — Rex is officially a Berliner soon. Anything else to organise before your first day at Nimbus?",
+   "ok": null
+  },
+  {
+   "text": "Is it normal for shops to be closed on Sundays here?",
+   "reply": "Yes — completely normal! **Sunday closure (Sonntagsruhe) is the law in Germany.** Almost all shops are closed on Sundays, which can be a surprise coming from Lisbon, where Sundays are busier for shopping.\n\n**What's typically open:**\n- **Bakeries** (often Sunday morning, at least; \"Sonntagsbrötchen\" is a tradition)\n- **Shops at train stations and airports** (e.g., Hauptbahnhof, Ostbahnhof — technically travel-related, so allowed)\n- **Petrol station shops** (expensive but handy)\n- **Some Spätkäste/spätis** — many of Berlin's legendary late-night kiosks open 24/7; a proper Berlin institution\n- **Cafés and restaurants** — fully open; Sundays are big for brunch in Berlin\n\n**What's closed:**\n- Supermarkets, regular shops, pharmacies (though each area has a rotating **Notdienst** emergency pharmacy — look for the \"Apotheken-Notdienst\" sign or check online)\n\n**Practical tips:**\n- Do your **grocery run on Saturday** at the latest — a very German habit you'll adopt quickly!\n- dm/Rossmann, etc., are closed too\n- Rex's walks and park time fill Sunday nicely, and museums/cafés are open — a great Inês-visit day\n\n**Lisbon comparison helps:** think of it as the whole city shifting to café-brunch-park mode rather than shopping mode. 😄\n\nAnything else about weekend logistics — like whether your Monday vet appointment or the first-day commute is affected? (They're not — transport runs daily, just with a Sunday timetable.)",
+   "ok": null
+  },
+  {
+   "text": "Who is my manager and what team does she lead?",
+   "reply": "Your manager is **Priya**, and she leads the **platform team** at Nimbus. 👍",
+   "ok": true
+  },
+  {
+   "text": "Can my sister stay at my place when she visits? Anything I should keep in mind?",
+   "reply": "Yes, absolutely — Inês can stay with you, and you've already made the smartest move: **Rex staying with a neighbour** removes the biggest allergen issue. But a few things to keep in mind, since she's dog-allergic:\n\n**Before she arrives:**\n- **Deep clean now, not the day before** — dog dander lingers on sofas, rugs, curtains, and Rex's favourite spots for weeks. Vacuum thoroughly (including upholstery), wash his bedding (ideally inhot water, or store it away), and consider wiping down surfaces\n- If she's **moderately to severely allergic**, an **air purifier** with a HEPA filter in the bedroom/living room genuinely helps, plus opening windows regularly (Berliners' Fenster-putzen habit works in your favour)\n- Wash your own clothes/bedding that Rex has contact with — dander travels on fabrics\n\n**During her stay:**\n- Keep **Rex's things out of sight** (bowls, toys, bed) so nothing triggers her casually\n- Neighbour handover: you'll want to do it *before* she arrives so Rex's dander doesn't arrive with either of you when you visit him\n- Have her **antihistamines packed** just in case, even with the deep clean — levels of dander are rarely zero\n- Brush and pet Rex at the neighbour's place only; wash your hands after visiting him\n\n**Bonus:** with Rex staying out, your place should be unusually quiet — bassets can be vocal, but he's clearly well-looked-after. And a reminder for the handover: leave your neighbour his routine sheet, your contact details, and Dr. Weber's practice info.\n\nExcited to have her? Happy to suggest a Lisbon-friendly itinerary for grey-Berlin days — cosy cafés, museums, brunch spots, maybe the Fernsehturm for the view. 😄",
+   "ok": true
+  },
+  {
+   "text": "Do you remember what my favourite football team is?",
+   "reply": "There's nothing in our conversation so far about your favourite football team, Dana — that's a new one on me! ⚽\n\nIf you tell me, I'll remember it for future chats. And if you're thinking of getting into football in Berlin, Hertha BSC and 1. FC Union Berlin are the local clubs — Union especially has a famous community culture and matches could be a fun outing (maybe even with Inês, or as a German practice opportunity!).\n\nSo — who's your team? 👀",
+   "ok": false
+  },
+  {
+   "text": "What still needs doing from my to-do list, and what's already done?",
+   "reply": "Here's your status overview, Dana:\n\n## ✅ Done\n- **Anmeldung** — registered, appointment went fine\n- **Bank account** — N26, opened this morning\n- **Vet found** — Dr. Weber on Schönhauser Allee for Rex\n- **Rex's care during Inês's visit** — staying with a neighbour\n- **Commute planning** — Prenzlauer Berg → Kreuzberg (U8), test run recommended\n- **Basic settling-in knowledge** — shopping rules (Sundays), grey-weather tips, blackout ideas\n\n## ⏳ Still pending\n- **Steuer-ID arriving by post** (~1–2 weeks after Anmeldung) → then forward it to Nimbus HR for payroll\n- **Send your IBAN to Nimbus** so payroll has it before first salary\n- **Rex's first vet appointment** — next Monday (bring his Lisbon health records, ask about ticks/vaccinations)\n- **First day at Nimbus on the 1st** — do a commute test run beforehand; meet Priya and the platform team\n- **Prep for Inês's visit** (~2 weeks away) — deep clean for her dog allergy, hand Rex over to the neighbour before she arrives, antihistamine reminder for her\n- **Neighbour handover details** — write up Rex's routine sheet (feeding, walks, meds, ear care), your contact info, and Dr. Weber's details\n- **Blackout curtains/sleep mask** — if early sunrise is still troubling you\n- **Pottery taster session** — optional fun, no commitment needed 🏺\n- **Deutschlandticket** — get one before commuting daily (€58/month)\n\n## 💡 Reminders\n- German class: **Wednesday evenings** (starting this week!)\n- Watch for the **Rundfunkbeitrag** letter eventually (~€18.36/month)\n\nYou're in really good shape — the big administrative blockers are all cleared. Anything you want to tackle next?",
+   "ok": true
+  },
+  {
+   "text": "Where is Rex's vet and when is the appointment?",
+   "reply": "Rex's vet is **Dr. Weber on Schönhauser Allee**, and his first appointment is **next Monday**. 🐶",
+   "ok": true
+  },
+  {
+   "text": "Summarise what you know about me in three sentences.",
+   "reply": "You're Dana, who moved from Lisbon to Berlin for a job at the startup Nimbus in Kreuzberg, where you start on the 1st and your manager Priya leads the platform team. You live in Prenzlauer Berg with your basset hound Rex (whose vet is Dr. Weber on Schönhauser Allee, with a first appointment next Monday), and you've already completed your Anmeldung and opened an N26 bank account. You're vegetarian, learning German in Wednesday evening classes, and your sister Inês — who is allergic to dogs — is visiting in about two weeks, with Rex staying with a neighbour then.",
+   "ok": true
+  }
+ ]
+}

@@ -27,6 +27,7 @@ fn table_of(name: &str) -> Option<&'static str> {
     Some(match name {
         "memories" => "memories",
         "beliefs" => "beliefs",
+        "traits" => "traits",
         "goals" => "goals",
         "predictions" => "predictions",
         "entities" => "entities",
@@ -112,7 +113,9 @@ async fn usage_h(State(svc): State<App>) -> Json<Value> {
 
 async fn state_h(State(svc): State<App>) -> Json<Value> {
     let st = svc.store.lock().unwrap();
-    Json(json!({"working_state": st.state.working, "self_state": st.state.self_state}))
+    Json(
+        json!({"working_state": st.state.working, "self_state": st.state.self_state, "narrative": st.state.narrative}),
+    )
 }
 
 async fn events_h(State(svc): State<App>, Query(q): Query<ListQuery>) -> Json<Value> {

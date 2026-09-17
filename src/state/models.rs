@@ -9,6 +9,7 @@ use crate::store::obj;
 pub const LIVE_MEMORY: &[&str] = &["candidate", "active", "reinforced", "consolidated"];
 pub const LIVE_BELIEF: &[&str] = &["hypothesis", "active", "uncertain", "contradicted"];
 pub const LIVE_GOAL: &[&str] = &["proposed", "active", "blocked"];
+pub const LIVE_TRAIT: &[&str] = &["active", "uncertain"];
 pub const TERMINAL_MEMORY: &[&str] = &["deprecated", "archived"];
 pub const TERMINAL_BELIEF: &[&str] = &["contradicted", "deprecated"];
 pub const MEMORY_KIND: &[&str] = &["episodic", "semantic"];
@@ -35,7 +36,9 @@ pub const GOAL_STATUS: &[&str] = &[
     "abandoned",
     "superseded",
 ];
-pub const GOAL_ORIGIN: &[&str] = &["user", "system", "inferred"];
+pub const GOAL_ORIGIN: &[&str] = &["user", "system", "inferred", "self"];
+pub const TRAIT_KIND: &[&str] = &["value", "preference", "stance", "style", "relationship"];
+pub const TRAIT_STATUS: &[&str] = &["active", "uncertain", "retired"];
 pub const MESSAGE_TYPES: &[&str] = &["user_message", "assistant_message"];
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -96,6 +99,9 @@ fn d_08() -> f64 {
 }
 fn d_07() -> f64 {
     0.7
+}
+fn d_06() -> f64 {
+    0.6
 }
 fn d_episodic() -> String {
     "episodic".into()
@@ -175,6 +181,27 @@ pub struct UpdateBelief {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct CreateTrait {
+    pub kind: String,
+    pub statement: String,
+    #[serde(default = "d_06")]
+    pub confidence: f64,
+    pub speaker: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct UpdateTrait {
+    pub statement: Option<String>,
+    pub confidence: Option<f64>,
+    pub status: Option<String>,
+    #[serde(default)]
+    pub add_supporting: Vec<String>,
+    #[serde(default)]
+    pub add_contradicting: Vec<String>,
+    pub expected_version: Option<i64>,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct CreateGoal {
     pub description: String,
     #[serde(default = "d_half")]
@@ -191,7 +218,21 @@ pub struct CreateGoal {
 pub struct UpdateGoal {
     pub status: Option<String>,
     pub priority: Option<f64>,
+    pub next_step: Option<String>,
     pub expected_version: Option<i64>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct CreateJournal {
+    pub entry: String,
+    pub mood: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SetNarrative {
+    pub text: String,
+    #[serde(default)]
+    pub sources: std::collections::BTreeMap<String, i64>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -236,6 +277,8 @@ pub enum Payload {
     MergeMemories(MergeMemories),
     CreateBelief(CreateBelief),
     UpdateBelief(UpdateBelief),
+    CreateTrait(CreateTrait),
+    UpdateTrait(UpdateTrait),
     CreateGoal(CreateGoal),
     UpdateGoal(UpdateGoal),
     CreatePrediction(CreatePrediction),
@@ -244,6 +287,8 @@ pub enum Payload {
     AddRelationship(AddRelationship),
     SetWorkingState(StatePatch),
     UpdateSelfState(StatePatch),
+    CreateJournal(CreateJournal),
+    SetNarrative(SetNarrative),
 }
 
 impl Payload {
@@ -251,6 +296,7 @@ impl Payload {
         match self {
             Payload::UpdateMemory(p) => p.expected_version,
             Payload::UpdateBelief(p) => p.expected_version,
+            Payload::UpdateTrait(p) => p.expected_version,
             Payload::UpdateGoal(p) => p.expected_version,
             Payload::SetWorkingState(p) | Payload::UpdateSelfState(p) => p.expected_version,
             _ => None,
@@ -354,6 +400,25 @@ pub fn parse_payload(op: &str, payload: &Row) -> Result<Payload, String> {
             one_of_opt("status", p.status.as_deref(), BELIEF_STATUS)?;
             Payload::UpdateBelief(p)
         }
+        "create_trait" => {
+            let p: CreateTrait = parse(payload)?;
+            one_of("kind", &p.kind, TRAIT_KIND)?;
+            nonempty("statement", &p.statement)?;
+            unit("confidence", p.confidence)?;
+            if p.kind == "relationship" && p.speaker.as_deref().unwrap_or("").is_empty() {
+                return Err("speaker: required for relationship traits".into());
+            }
+            Payload::CreateTrait(p)
+        }
+        "update_trait" => {
+            let p: UpdateTrait = parse(payload)?;
+            unit_opt("confidence", p.confidence)?;
+            one_of_opt("status", p.status.as_deref(), TRAIT_STATUS)?;
+            if let Some(st) = &p.statement {
+                nonempty("statement", st)?;
+            }
+            Payload::UpdateTrait(p)
+        }
         "create_goal" => {
             let p: CreateGoal = parse(payload)?;
             nonempty("description", &p.description)?;
@@ -392,6 +457,16 @@ pub fn parse_payload(op: &str, payload: &Row) -> Result<Payload, String> {
         }
         "set_working_state" => Payload::SetWorkingState(parse_patch(payload)?),
         "update_self_state" => Payload::UpdateSelfState(parse_patch(payload)?),
+        "create_journal" => {
+            let p: CreateJournal = parse(payload)?;
+            nonempty("entry", &p.entry)?;
+            Payload::CreateJournal(p)
+        }
+        "set_narrative" => {
+            let p: SetNarrative = parse(payload)?;
+            nonempty("text", &p.text)?;
+            Payload::SetNarrative(p)
+        }
         other => return Err(format!("unknown operation {other}")),
     })
 }
@@ -411,10 +486,12 @@ pub fn table_for(object_id: &str) -> Option<&'static str> {
     Some(match object_id.split('_').next().unwrap_or("") {
         "mem" => "memories",
         "belief" => "beliefs",
+        "trait" => "traits",
         "goal" => "goals",
         "pred" => "predictions",
         "ent" => "entities",
         "rel" => "entity_relationships",
+        "journal" => "journal",
         _ => return None,
     })
 }
