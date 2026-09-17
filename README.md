@@ -142,22 +142,36 @@ and its daily budget. The only external actions are the workshop's sandboxed too
 
 ## Workshop
 
-`just workshop <arm> <trial>` gives the morphling six small Python tasks in a workspace
-(`evals/scenarios/workshop.json`, `evals/workshop/`). Every list, read, write and command runs
-inside bubblewrap: the workspace at `/work`, read-only `/usr`, no network, an empty
-environment, a 20 second limit, and output normalized so a recording replays exactly. Each step
-is one `Act` call; every command carries an expected exit status and a confidence, and a
-confident miss is a surprise. A `Think` call pauses acting and returns a plan. Actions,
-observations and thoughts are journal events that reflection turns into memories, beliefs,
-traits and goals; after the last task, idle ticks run only while the morphling has open goals or
-questions of its own.
+`just workshop <scenario> <arm> <trial>` gives the morphling small Python tasks in a workspace:
+`workshop` (six tasks on one module) and `workshop-memory` (a `src/` layout whose README gives
+the wrong test command, and a CSV convention stated in task 1 that only task 5 needs). Every
+list, read, write and command runs inside bubblewrap: the workspace at `/work`, read-only `/usr`,
+no network, an empty environment, a 20 second limit, and output normalized so a recording replays
+exactly. Command output is cut at 3,000 characters; a file read comes back whole.
 
-Arms: `transcript` is a conventional agent (the task's own transcript, no memory or identity),
-`nothink` adds state across tasks, `self` lets the actor choose to think, `surprise` also thinks
-after a confident miss. Hidden tests the agent never sees grade each task on a copy of the
-workspace; habits, surprises, calibration, style and tokens are counted from the action log, with
-no model judge. Results go to `evals/results/workshop.<arm>.t<n>.json`;
-`just replay-workshop <arm> <trial>` and the replay gate reproduce them from the cache.
+Each step is one `Act` call that sees the task's steps and their raw results. Every command
+carries an expected exit status and a confidence; a confident miss is a surprise. The morphling
+also gets its identity on every call and refreshes recalled memory only at the start of an
+episode, after a surprise, when it stalls (three failing runs, or the same failure twice) and when
+it thinks; the block it recalled stays in the prompt until the next refresh, since each call is a
+fresh call that never read the last one's memory. A
+`Think` call pauses acting; a stall think sees every failing attempt since the last pass.
+
+What an episode leaves is written by code (`src/agents/episode.rs`):
+- a digest event that reflection reads instead of the raw action, observation and thought events;
+- open loops, goals of its own: a surprise until a check passes, unverified work until a later
+  check, fading when left open. Idle ticks after the last task work from the top loop;
+- a practice, a `practice` trait from a `Lesson` call when a failure gets fixed, shown as "How I
+  work" and entering the narrative once it held across episodes;
+- credit: memories recalled gain or lose weight by their closeness to the digest when the episode
+  ends verified or not, and a practice moves only when an action named it.
+
+Arms: `transcript` is a conventional agent (the task's own transcript, no memory, identity or
+thinking); `morphling` has everything above. Ablate with streams on the command line, e.g.
+`MORPHO_DROP_STREAMS=practices`. Hidden tests the agent never sees grade each task on a copy of
+the workspace; habits, loops, practices, calibration and tokens are counted from the action log,
+with no model judge. Results go to `evals/results/<scenario>.<arm>[-drop-<streams>].t<n>.json`;
+`just replay-workshop <scenario> <arm> <trial>` and the replay gate reproduce them from the cache.
 
 ## Observability
 

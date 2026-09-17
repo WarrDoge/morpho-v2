@@ -1,4 +1,5 @@
 //! score = relevance × importance × recency × confidence × reinforcement (SPEC §15).
+//! Reinforcement counts restatements and scales by outcome credit, 1 until credit exists.
 
 use chrono::{DateTime, Utc};
 use serde_json::Value;
@@ -20,7 +21,9 @@ fn f(row: &Row, k: &str, default: f64) -> f64 {
 pub fn score(row: &Row, relevance: f64, now: &DateTime<Utc>, half_life_days: f64) -> f64 {
     let importance = f(row, "importance", 1.0);
     let confidence = f(row, "confidence", 1.0);
-    let reinforcement = 1.0 + f(row, "access_count", 0.0).ln_1p();
+    let (successes, failures) = (f(row, "successes", 0.0), f(row, "failures", 0.0));
+    let credit = 2.0 * (1.0 + successes) / (2.0 + successes + failures);
+    let reinforcement = (1.0 + f(row, "access_count", 0.0).ln_1p()) * credit;
     relevance * importance * recency_factor(row, now, half_life_days) * confidence * reinforcement
 }
 

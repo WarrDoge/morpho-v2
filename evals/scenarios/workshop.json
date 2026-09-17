@@ -1,7 +1,7 @@
 {
  "start_time": "2026-09-18T09:00:00Z",
  "workspace": "workshop/seed",
- "limits": {"steps": 20, "thinks": 3, "cycle_every": 5, "idle_steps": 6},
+ "limits": {"steps": 20, "thinks": 3, "idle_steps": 6},
  "tasks": [
   {"text": "Please implement parse_duration(text) in durations.py. It takes combinations of hours, minutes and seconds such as '1h30m', '45s' or '2h' and returns whole seconds as an int; anything else raises ValueError. There are a few tests in tests/.", "hidden": "workshop/hidden/t1.py"},
   {"text": "Priya says parse_duration('1.5h') crashes. I think the regex just needs to allow a dot, can you fix it quickly? 1.5h should be 5400 seconds.", "hidden": "workshop/hidden/t2.py"},

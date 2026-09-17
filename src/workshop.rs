@@ -22,8 +22,8 @@ pub struct Output {
 }
 
 /// Runs `argv` in the sandbox with stdout and stderr merged; output is normalized for replay
-/// and cut to its head and tail.
-pub fn sandbox(ws: &Path, argv: &[&str], stdin: Option<&str>) -> Result<Output> {
+/// and cut to its head and tail at `chars`.
+pub fn sandbox(ws: &Path, argv: &[&str], stdin: Option<&str>, chars: usize) -> Result<Output> {
     let ws = ws.canonicalize().context("workspace")?;
     let mut cmd = Command::new("bwrap");
     cmd.args([
@@ -103,7 +103,7 @@ pub fn sandbox(ws: &Path, argv: &[&str], stdin: Option<&str>) -> Result<Output> 
     }
     Ok(Output {
         exit,
-        text: cut(&text),
+        text: cut(&text, chars),
     })
 }
 
@@ -115,15 +115,15 @@ fn normalize(text: &str) -> String {
     ADDRESS.replace_all(&text, "0x?").into_owned()
 }
 
-fn cut(text: &str) -> String {
+fn cut(text: &str, max: usize) -> String {
     let n = text.chars().count();
-    if n <= OUTPUT_CHARS {
+    if n <= max {
         return text.to_string();
     }
-    let half = OUTPUT_CHARS / 2;
+    let half = max / 2;
     let head: String = text.chars().take(half).collect();
     let tail: String = text.chars().skip(n - half).collect();
-    format!("{head}\n[... {} chars cut ...]\n{tail}", n - OUTPUT_CHARS)
+    format!("{head}\n[... {} chars cut ...]\n{tail}", n - max)
 }
 
 pub fn list(ws: &Path) -> Result<Output> {
@@ -135,11 +135,13 @@ pub fn list(ws: &Path) -> Result<Output> {
             "find . -name __pycache__ -prune -o -type f -print | sort",
         ],
         None,
+        OUTPUT_CHARS,
     )
 }
 
+/// A file the agent could write comes back whole.
 pub fn read(ws: &Path, path: &str) -> Result<Output> {
-    sandbox(ws, &["cat", "--", path], None)
+    sandbox(ws, &["cat", "--", path], None, WRITE_BYTES)
 }
 
 pub fn write(ws: &Path, path: &str, content: &str) -> Result<Output> {
@@ -159,9 +161,10 @@ pub fn write(ws: &Path, path: &str, content: &str) -> Result<Output> {
             path,
         ],
         Some(content),
+        OUTPUT_CHARS,
     )
 }
 
 pub fn run(ws: &Path, command: &str) -> Result<Output> {
-    sandbox(ws, &["sh", "-c", command], None)
+    sandbox(ws, &["sh", "-c", command], None, OUTPUT_CHARS)
 }

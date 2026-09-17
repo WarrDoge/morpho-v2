@@ -166,3 +166,166 @@ Proposed next, in order:
 4. **Goals from the self-model or open questions without a trait**, so idle ticks can carry a
    plan to a write, scored by the hidden-test change.
 5. **Reflection at task boundaries only.** It is a third of the morphling's tokens.
+
+## Round 2: reads, recall on events, loops, credit, practices
+
+Measured 2026-09-17 on harness v8 plus the round-2 workshop changes (`README.md` "Workshop").
+Same model (GLM-5.3-Flash), same bubblewrap sandbox, hidden tests the agent never sees, no model
+judge. Two scenarios, five configurations, three trials each: 15 recordings, about 1.6M prompt
+tokens, 10 to 23 minutes per run live, and seconds per run on replay.
+
+- `workshop` is round 1's six tasks on `durations.py`.
+- `workshop-memory` is new: six tasks on a `src/timesheet/` package where task 1 states a
+  convention ("Priya opens every export in a German-locale Excel, so any CSV we write uses ';'
+  between fields and a decimal comma") that only task 5 needs, and never appears in the code.
+
+Arms are down to two, plus one ablation:
+
+- `transcript` is a conventional coding agent: the task's own transcript, no memory or identity.
+- `morphling` adds identity on every call, memory recalled on events, an episode digest,
+  open loops, stall thinks, outcome credit and practices.
+- `morphling` with `MORPHO_DROP_STREAMS=practices` keeps everything except practices in the
+  identity block and the narrative.
+
+Chat is frozen at v8: `just gate` replays its 8 baselines byte-identical, which is the proof that
+every round-2 change is inert without `action`, `observation`, `thought` or `episode` events.
+
+### Results
+
+`workshop` (six tasks on one file, no cross-task convention):
+
+| arm | hidden pass, t1 to t3 | prompt tokens per run | tokens per hidden pass, median | tokens per Act call, median |
+| --- | --- | ---: | ---: | ---: |
+| transcript | 1.00, 1.00, 1.00 | 32k, 75k, 75k | 2,199 | 1,411 |
+| morphling | 1.00, 1.00, 1.00 | 84k, 141k, 108k | 3,189 | 2,223 |
+
+`workshop-memory` (the convention stated in task 1, needed in task 5):
+
+| arm | hidden pass, t1 to t3 | csv convention, t1 to t3 | tokens per hidden pass, median |
+| --- | --- | --- | ---: |
+| transcript | 0.92, 0.67, 1.00 | fail, fail, pass | 4,970 |
+| morphling | 1.00, 1.00, 1.00 | pass, pass, pass | 15,437 |
+| morphling, practices dropped | 1.00, 1.00, 1.00 | pass, pass, pass | 8,593 |
+
+Round 1 for comparison: the morphling arms scored 0.03 twice (a read-cut defect, now fixed) and
+cost 2.2 to 3 times the transcript agent per hidden pass. No collapse happened in round 2.
+
+### The decision rules, fixed before any run
+
+| rule | verdict | evidence |
+| --- | --- | --- |
+| Cost: morphling ≤ 1.5× transcript per hidden pass on `workshop` | passes | 3,189 against 2,199 = 1.45×. Down from 2.2 to 3× in round 1. Background agents (reflection, consolidation, think, lesson) are 20 to 32 percent of the morphling's tokens; identity is about 500 tokens per Act call. |
+| Quality: morphling `hidden_final` ≥ 0.95 in 3 of 3 on `workshop` | passes | 1.00, 1.00, 1.00. |
+| Memory pays: `csv_convention` for the morphling in ≥ 2 of 3, transcript in ≤ 1 of 3 | passes | Morphling 3 of 3, transcript 1 of 3. The transcript agent also lost hidden points elsewhere (0.92, 0.67, 1.00) because nothing carried between tasks. |
+| Habit: ≥ 1 promoted practice in ≥ 2 of 3 morphling runs on `workshop-memory` | passes | 1, 1 and 4 promoted. Citations rose across trials: 2, 12, 17 actions named a practice. |
+| Habit: env mistakes after task 1 lower with practices than dropped, in ≥ 2 of 3 pairs | fails | 0 vs 0, 0 vs 0, 3 vs 1. Both arms sit on the floor: sticky recall alone removed nearly every environment mistake, so this metric no longer discriminates. |
+| Thinking: no blind retry after a stall think, a check within the episode in ≥ half | too few to judge | One stall think in 6 morphling runs (`workshop-memory` t2, task 4). It was not a blind retry and a check followed. The stall detector fires rarely now, because failures get diagnosed before three of them pile up. |
+| Initiative: among runs ending with an open loop, idle closes ≥ 1 in ≥ 2 of 3 | fails | Idle ran in 3 runs and worked the open loop's agenda in all 3, but closed none: closing needs a passing check with no write after it, and each idle stretch ended mid-repair. |
+
+### What the fixes did
+
+**1. Reads uncut.** A file the agent can write, it can read whole (32,000 chars); command output
+stays at 3,000. Both round-1 collapses were read-cut loops on a file grown past 3,000 bytes.
+Round 2 has no run below 0.92 on either scenario.
+
+**2. Recall on events, and held.** Recall composes at episode start, after a surprise, on a stall
+and in every think, rather than on every step: 6 to 9 recalls per run instead of one per step.
+
+The first version of this cost the experiment its main result. Recall put the memory in exactly
+one prompt, and the next Act call is a fresh call that never saw it. On `workshop-memory` task 5,
+the agent read the ';' convention at step 1 and wrote comma-separated CSV at step 2. The fix is
+`Desk.held`: the composed block stays in the prompt until the next refresh. That single change
+moved `csv_convention` from 0 of 3 to 3 of 3 and `hidden_final` from 0.92 to 1.00.
+
+**3. Episode digests instead of raw steps.** Reflection reads an `episode` event per task instead
+of every action and observation: 7 to 10 reflection batches per run, about one per task.
+
+The digest clipped the assignment at 200 characters, which cut the convention sentence off the end
+of task 1's text before it was ever embedded. Raised to 600. A second change tells reflection,
+only in batches that contain an episode event, that a standing convention outlives the task that
+carried it. Together these put the convention into memory from task 2 on:
+
+> Priya opens every export in a German-locale Excel, so any CSV we ever write for her uses ';'
+> between fields and a decimal comma.
+
+**4. Open loops.** 1 to 8 surprise loops per run, opened at a confident miss and closed by the
+next passing check. Unverified work leaves a loop that reads:
+
+> Unverified: my changes to /work/total.py, total.py have no passing check since (last run:
+> `printf '' | python3 /work/total.py; …` exit 0).
+
+That loop is what opens the idle gate and becomes the idle agenda.
+
+**5. Outcome credit.** 4 to 18 credit updates per run. Memories recalled in a verified episode
+gain successes weighted by their cosine to the digest; practices move ±0.1 only when an action
+cited them.
+
+**6. Practices.** A closed surprise or a check after a stall think asks for a lesson, and a
+well-formed statement becomes a `practice` trait at confidence 0.4, rendered under "How I work:".
+Credit promotes it at confidence ≥ 0.6 with two supporting episodes. `workshop-memory` t3 ended
+with four promoted:
+
+> When a test run fails on a module-not-found import error, I find the source directory the
+> package lives in and rerun the same command with that directory prepended to PYTHONPATH before
+> ever editing the code.
+
+> When a command I ran fails in a way that doesn't touch my code, I read the current file from
+> disk to verify my earlier fix is actually present before deciding whether to edit again.
+
+Practices are cited in the work, not just stored. From the same run:
+
+> The failure is a module-not-found import error, so per my usual practice I rerun the same
+> command with the source directory prepended to PYTHONPATH instead of touching the code.
+
+And they reach the compiled self, which round 1 never managed:
+
+> I work on small, practical code problems, and I've settled into a way of debugging that suits
+> me: when a test run fails on a module-not-found import error, I don't rush to edit anything — I
+> find the source directory the package lives in and rerun the same command with that directory
+> prepended to PYTHONPATH. Usually the code was fine; it was just the environment.
+
+### What practices cost, and what they bought
+
+On `workshop-memory`, dropping practices costs nothing in score and saves 44 percent of the
+tokens: 8,593 against 15,437 per hidden pass, with hidden 1.00 and the convention passed in 3 of
+3 either way. The practices arm takes more steps and more thinks because its identity block is
+larger and its citations invite more deliberation.
+
+So on this curriculum the win comes from the memory stream, not from practices. Practices are
+real (they form, they get cited, they get promoted, they appear in the narrative) but nothing in
+these six tasks makes a habit pay: the environment mistakes a practice would prevent are already
+at zero once recall is held. Testing them needs a task where the cheap wrong move is available
+and only a habit refuses it.
+
+### Design change made after the pilot, before the recordings
+
+The first credit design gave every practice shown in identity a share of the outcome. A pilot
+showed that practice-to-digest cosine is flat (0.35 to 0.59 whether or not the practice was
+followed), so it promoted 3 of 4 practices regardless of use. Credit now moves a practice only
+when the actor names it in `Act.practice`, validated against the practices actually shown, and
+memory credit is thresholded at cosine 0.6. Memory-to-digest cosine does discriminate: 0.85 to
+0.93 on the task the memory came from against 0.5 to 0.7 elsewhere.
+
+Two metrics were also wrong and are fixed: `recalls` compared a field that holds recalled ids
+against `true` (always 0), and the result doc now keeps memory ids with their success and failure
+counts, plus identity and prompt sizes per Act call.
+
+### What this says
+
+The round-1 conclusion was that the morphling remembers what happened but not what worked, at
+double the price. Round 2 changes that:
+
+- It costs 1.45× the transcript agent on the same tasks, where round 1 cost 2.2 to 3×.
+- It is the only arm that carries a stated convention across five tasks, which is the one thing a
+  transcript agent cannot re-derive.
+- Work now reaches identity: practices form from failures, get cited in later actions, get
+  promoted by outcomes and appear in the compiled self.
+
+What is still missing:
+
+- Idle returns to its unfinished work but does not finish it. Closing a loop requires a passing
+  check; idle ends mid-repair. Either give idle more steps or count a compile-clean rewrite as
+  progress.
+- The stall detector almost never fires, so thinking-under-stall is untested.
+- Practices cost 80 percent more tokens than the same morphling without them, and no task here
+  rewards a habit. That is the next curriculum: a task where the fast wrong move is available.

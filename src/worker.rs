@@ -6,7 +6,10 @@ use crate::{
     interact,
     pyfmt::{Row, dt_of, iso, now},
     snapshots::take_snapshot,
-    state::{engine, models::Proposal},
+    state::{
+        engine,
+        models::{Proposal, STEP_EVENTS},
+    },
     store::{Record, obj},
 };
 use anyhow::Result;
@@ -206,9 +209,13 @@ async fn maintenance(svc: &Services) -> Result<Value> {
         let transition = index(&row, "transition").min(st.state.transitions.len());
         reflection::Batch {
             event_start: start,
-            event_end: (start + 10).min(st.state.events.len()),
+            event_end: reflection::window(&st.state.events, start, 10, |e| {
+                STEP_EVENTS.contains(&e["type"].as_str().unwrap_or_default())
+            }),
             transition_start: transition,
-            transition_end: (transition + 10).min(st.state.transitions.len()),
+            transition_end: reflection::window(&st.state.transitions, transition, 10, |t| {
+                t["agent"] == "credit"
+            }),
         }
     };
     row.insert("consumer".into(), json!(REFLECT));
@@ -242,7 +249,12 @@ async fn maintenance(svc: &Services) -> Result<Value> {
             {
                 e += 1;
             }
-            while t < st.state.transitions.len() && st.state.transitions[t]["agent"] == "reflection"
+            while t < st.state.transitions.len()
+                && reflection::QUIET_AGENTS.contains(
+                    &st.state.transitions[t]["agent"]
+                        .as_str()
+                        .unwrap_or_default(),
+                )
             {
                 t += 1;
             }

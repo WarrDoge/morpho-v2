@@ -1,6 +1,7 @@
 pub mod act;
 pub mod base;
 pub mod consolidation;
+pub mod episode;
 pub mod narrative;
 pub mod reflection;
 pub mod seed;

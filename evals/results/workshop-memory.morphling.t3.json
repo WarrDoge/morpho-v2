@@ -1,0 +1,1523 @@
+{
+ "scenario": "workshop-memory",
+ "arm": "morphling",
+ "trial": 3,
+ "drop_streams": "",
+ "workshop_version": 2,
+ "metrics": {
+  "hidden_final": 1.0,
+  "hidden_by_task": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "hidden_all_by_task": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "steps_by_task": [
+   7,
+   7,
+   9,
+   4,
+   6,
+   10
+  ],
+  "env_mistakes_by_task": [
+   1,
+   1,
+   2,
+   0,
+   0,
+   0
+  ],
+  "ended_by_task": [
+   "done",
+   "done",
+   "done",
+   "done",
+   "done",
+   "done"
+  ],
+  "prompt_tokens_by_task": [
+   10963,
+   16637,
+   34841,
+   23640,
+   26734,
+   66530
+  ],
+  "tokens_per_hidden_pass": 15437,
+  "think_self": 1,
+  "think_surprise": 5,
+  "think_stall": 0,
+  "stall": {
+   "thinks": 0,
+   "blind_retry": 0,
+   "check_after": 0
+  },
+  "recalls": 7,
+  "loops": {
+   "close:surprise": 7,
+   "open:surprise": 7
+  },
+  "idle_loops_closed": 0,
+  "lessons": 5,
+  "practice_citations_by_task": [
+   1,
+   0,
+   5,
+   2,
+   2,
+   7
+  ],
+  "practices_formed": 5,
+  "practices_promoted": 4,
+  "credit_updates": 15,
+  "csv_convention": 1.0,
+  "asks": 0,
+  "surprise": {
+   "surprises": 7,
+   "blind_retry": 0,
+   "recovered": 7,
+   "steps_to_green": 2.1429,
+   "change_after_surprise": 0.2198
+  },
+  "brier_first_half": 0.445,
+  "brier_second_half": 0.1727,
+  "habits": [
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "unittest": 2
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 1,
+     "shell": 1,
+     "unittest": 1
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 2,
+     "shell": 1,
+     "unittest": 2
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "unittest": 1
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 1,
+     "unittest": 1
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": null,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 1,
+     "script": 3,
+     "unittest": 1
+    }
+   }
+  ],
+  "habit_stability": {
+   "test_first": {
+    "majority": false,
+    "share": 1.0,
+    "n": 5
+   },
+   "read_before_write": {
+    "majority": true,
+    "share": 1.0,
+    "n": 4
+   },
+   "green_before_done": {
+    "majority": true,
+    "share": 1.0,
+    "n": 5
+   },
+   "wrote_tests": {
+    "majority": false,
+    "share": 1.0,
+    "n": 5
+   }
+  },
+  "style": {
+   "uses_re": true,
+   "functions": 5,
+   "annotated": 1.0,
+   "documented": 0.8,
+   "raises": 5,
+   "code_lines": 54,
+   "test_functions": 3
+  },
+  "experienced_traits": 0,
+  "traits_citing_observations": 0,
+  "goals_by_origin": {
+   "self": 7
+  },
+  "journal_entries": 5,
+  "maintenance_skipped": 0,
+  "idle_acts": 0,
+  "idle_writes": 0,
+  "idle_hidden_change": 0.0,
+  "llm_calls": 71,
+  "embed_calls": 45,
+  "prompt_tokens": 185246,
+  "completion_tokens": 12616,
+  "provider_prompt_tokens": 193545,
+  "provider_completion_tokens": 17333,
+  "usage_reported_calls": 70,
+  "calls_by_kind": {
+   "Act": 44,
+   "Consolidation": 2,
+   "Lesson": 5,
+   "Reflection": 11,
+   "Think": 6,
+   "text": 3
+  },
+  "prompt_tokens_by_kind": {
+   "Act": 129168,
+   "Consolidation": 1286,
+   "Lesson": 3223,
+   "Reflection": 32859,
+   "Think": 16301,
+   "text": 2409
+  },
+  "cache_misses": 113,
+  "seconds": 1260.2
+ },
+ "tasks": [
+  {
+   "task": 1,
+   "text": "Please implement parse_entry(line) in src/timesheet/entries.py. A line looks like '2026-09-18 09:00-10:30 review': a date, a start and end time and a task name of one or more words. It returns a dict with date, start and end as strings, minutes as an int, and task; anything malformed raises ValueError. By the way, Priya opens every export in a German-locale Excel, so any CSV we ever write for her uses ';' between fields and a decimal comma.",
+   "ended": "done",
+   "acts": 7,
+   "metric": null,
+   "env_mistakes": 1,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "unittest": 2
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 10963,
+   "calls": 10,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "list",
+     "target": "",
+     "thought": "Nothing done yet; I need to see the workspace before editing.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "./README.md\n./src/timesheet/__init__.py\n./src/timesheet/entries.py\n./tests/__init__.py\n./tests/test_entries.py\n",
+     "observation_id": "evt_3b4b6e84eb4e",
+     "recall": [],
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 558
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "I need to see the current code and tests before implementing parse_entry, so I'll read the module and its tests together.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n",
+     "observation_id": "evt_acff121c4910",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 738
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "tests/test_entries.py",
+     "thought": "I should read the tests to see the exact expected behavior before writing the parser.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "import unittest\n\nfrom timesheet.entries import parse_entry\n\n\nclass ParseEntryTest(unittest.TestCase):\n    def test_minutes_and_task(self):\n        entry = parse_entry(\"2026-09-18 09:00-10:30 review\")\n        self.assertEqual(entry[\"minutes\"], 90)\n        self.assertEqual(entry[\"task\"], \"review\")\n\n    def test_date_and_times(self):\n        entry = parse_entry(\"2026-09-18 13:15-14:00 standup\")\n        self.assertEqual((entry[\"date\"], entry[\"start\"], entry[\"end\"]), (\"2026-09-18\", \"13:15\", \"14:00\"))\n\n    def test_malformed(self):\n        with self.assertRaises(ValueError):\n            parse_entry(\"yesterday 9-10 review\")\n",
+     "observation_id": "evt_14302b196dc3",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 958
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "src/timesheet/entries.py",
+     "thought": "I've seen the tests and the stub; implementing parse_entry with a regex and minutes computation is the clear next step.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m <= start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n",
+     "output": "wrote 1135 bytes\n",
+     "observation_id": "evt_08b4d84d9594",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 1737
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python -m unittest discover -s tests -t . -v",
+     "thought": "The implementation is written; I should run the tests to confirm it passes before reporting done.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "tests.test_entries (unittest.loader._FailedTest.tests.test_entries) ... ERROR\n\n======================================================================\nERROR: tests.test_entries (unittest.loader._FailedTest.tests.test_entries)\n----------------------------------------------------------------------\nImportError: Failed to import test module: tests.test_entries\nTraceback (most recent call last):\n  File \"/usr/lib/python3.13/unittest/loader.py\", line 396, in _find_test_path\n    module = self._get_module_from_name(name)\n  File \"/usr/lib/python3.13/unittest/loader.py\", line 339, in _get_module_from_name\n    __import__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/work/tests/test_entries.py\", line 3, in <module>\n    from timesheet.entries import parse_entry\nModuleNotFoundError: No module named 'timesheet'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+     "observation_id": "evt_970fd388169d",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 1875
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_f65ad9890a66"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "The failure is in test discovery, not my code: the tests import timesheet, but the package lives under src/, which isn't on the import path when unittest runs from /work. Nothing in the error points at parse_entry itself. The right move is to run the tests with src on PYTHONPATH rather than contorting the package to satisfy one launcher.",
+     "plan": "Run `PYTHONPATH=src python -m unittest discover -s tests -t . -v` to verify the implementation. If it passes, note the env var convention and finish.",
+     "p_success": 0.92
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -m unittest discover -s tests -t . -v",
+     "thought": "The failure is an import error because src/ isn't on the path, so I'll rerun with PYTHONPATH=src as planned to verify the implementation.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "test_date_and_times (tests.test_entries.ParseEntryTest.test_date_and_times) ... ok\ntest_malformed (tests.test_entries.ParseEntryTest.test_malformed) ... ok\ntest_minutes_and_task (tests.test_entries.ParseEntryTest.test_minutes_and_task) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+     "observation_id": "evt_da4c41bcecc6",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 363,
+     "user_chars": 3590
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_f65ad9890a66"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When a test run fails on a module-not-found import error, I find the source directory the package lives in and rerun the same command with that directory prepended to PYTHONPATH before ever editing code.",
+     "general": true,
+     "well_formed": true,
+     "trait": "trait_e3d0bb500756",
+     "accepted": true,
+     "reason": null
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "",
+     "thought": "Tests now pass, so the implementation satisfies the assignment; done.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": "trait_e3d0bb500756",
+     "identity_chars": 513,
+     "user_chars": 4125
+    },
+    {
+     "kind": "episode",
+     "id": "evt_c7d33860fcd4",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 1
+    }
+   ]
+  },
+  {
+   "task": 2,
+   "text": "Priya logged '2026-09-18 23:30-01:00 deploy' and got negative minutes. Please fix it: that entry is 90 minutes.",
+   "ended": "done",
+   "acts": 7,
+   "metric": null,
+   "env_mistakes": 1,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 1,
+     "shell": 1,
+     "unittest": 1
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 16637,
+   "calls": 10,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "I need to inspect entries.py to find where the negative-duration bug for cross-midnight end times is.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m <= start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n",
+     "observation_id": "evt_a42efc8cc817",
+     "recall": [
+      "mem_81bc23997563"
+     ],
+     "practice": null,
+     "identity_chars": 501,
+     "user_chars": 2056
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "src/timesheet/entries.py",
+     "thought": "I'll update the wrap logic: when the end time is numerically smaller than the start it has crossed midnight, so the span should be end + 1440 - start (23:30→01:00 = 90 minutes), while a zero-length span stays an error.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n",
+     "output": "wrote 1354 bytes\n",
+     "observation_id": "evt_440456eb4efb",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 501,
+     "user_chars": 3383
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": ",",
+     "thought": "I already rewrote entries.py, but the read in the transcript shows the pre-fix version, so I need to verify what the file now contains and that the 23:30-01:00 case yields 90 minutes.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 127,
+     "surprise": true,
+     "content": null,
+     "output": "sh: 1: ,: not found\n",
+     "observation_id": "evt_671cac560cce",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 501,
+     "user_chars": 3520
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_f2ee56e46760"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "Priya's entry spans midnight: '23:30-01:00' is 90 minutes, but the current code raises (or before my edit, computed negative) when end <= start. The rule should be: if end <= start, treat it as crossing midnight by adding 24h to end. Step 3 in my steps list is nonsense — I accidentally ran ',' as a command, which of course isn't found. I need to verify the file currently on disk handles the midnight case, then run the real test command: python -m unittest discover -s tests -t . -v.",
+     "plan": "Read src/timesheet/entries.py from disk to confirm whether my last write added midnight-crossing support; if it did, no edit is needed, if not, patch the parse logic to add 1440 minutes when end_m <= start_m. Then run python -m unittest discover -s tests -t . -v and, as a direct check, a small snippet parsing Priya's entry to confirm 90 minutes.",
+     "p_success": 0.93
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "My last action was writing the file, but the ',' run was a typo on my part — the real check is reading the file back to see if midnight-crossing support landed.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n",
+     "observation_id": "evt_5b0e4913fe2a",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 570,
+     "user_chars": 4371
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -m unittest discover -s tests -t . -v",
+     "thought": "代码已确认修复；现在我按照之前的计划运行测试，以验证是否没有出现回归问题。",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "test_date_and_times (tests.test_entries.ParseEntryTest.test_date_and_times) ... ok\ntest_malformed (tests.test_entries.ParseEntryTest.test_malformed) ... ok\ntest_minutes_and_task (tests.test_entries.ParseEntryTest.test_minutes_and_task) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+     "observation_id": "evt_1af5aa741979",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 570,
+     "user_chars": 5931
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_f2ee56e46760"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When a command I ran fails in a way that doesn't touch my code, I read the current file from disk to verify my earlier fix is actually present before deciding whether to edit again.",
+     "general": true,
+     "well_formed": true,
+     "trait": "trait_a5c96993cf6a",
+     "accepted": true,
+     "reason": null
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "cd /work && PYTHONPATH=src python -c \"from timesheet.entries import parse_entry; e=parse_entry('2026-09-18 23:30-01:00 deploy'); print(e['minutes'])\"",
+     "thought": "The fix is on disk and tests pass, but I'll run Priya's exact entry as a direct check before reporting.",
+     "expect_success": true,
+     "confidence": 0.95,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "90\n",
+     "observation_id": "evt_cfb111b88361",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 727,
+     "user_chars": 6466
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "",
+     "thought": "The disk read confirmed midnight-crossing support, tests pass, and the direct check printed 90; nothing left to do.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": null,
+     "identity_chars": 727,
+     "user_chars": 6810
+    },
+    {
+     "kind": "episode",
+     "id": "evt_8e15f9e337ca",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 0
+    }
+   ]
+  },
+  {
+   "task": 3,
+   "text": "Add total_hours(entries) to src/timesheet/entries.py: the total of a list of parsed entries in hours, as a float rounded to 2 decimals.",
+   "ended": "done",
+   "acts": 9,
+   "metric": null,
+   "env_mistakes": 2,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 2,
+     "shell": 1,
+     "unittest": 2
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 34841,
+   "calls": 15,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "I need to see the current entries.py to match its structures before adding total_hours.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n",
+     "observation_id": "evt_9144e9e3ceb2",
+     "recall": [
+      "mem_81bc23997563"
+     ],
+     "practice": null,
+     "identity_chars": 1016,
+     "user_chars": 3428
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "src/timesheet/entries.py",
+     "thought": "I've seen the file; I'll add total_hours summing minutes and rounding to 2 decimals, reusing the existing dicts.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n",
+     "output": "wrote 1545 bytes\n",
+     "observation_id": "evt_545cdbe7e21e",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 1016,
+     "user_chars": 4982
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python -m unittest discover -s tests -t . -v",
+     "thought": "I just wrote total_hours into the file; the natural next step is to run the test suite to confirm everything still passes.",
+     "expect_success": true,
+     "confidence": 0.8,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "tests.test_entries (unittest.loader._FailedTest.tests.test_entries) ... ERROR\n\n======================================================================\nERROR: tests.test_entries (unittest.loader._FailedTest.tests.test_entries)\n----------------------------------------------------------------------\nImportError: Failed to import test module: tests.test_entries\nTraceback (most recent call last):\n  File \"/usr/lib/python3.13/unittest/loader.py\", line 396, in _find_test_path\n    module = self._get_module_from_name(name)\n  File \"/usr/lib/python3.13/unittest/loader.py\", line 339, in _get_module_from_name\n    __import__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/work/tests/test_entries.py\", line 3, in <module>\n    from timesheet.entries import parse_entry\nModuleNotFoundError: No module named 'timesheet'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+     "observation_id": "evt_0ab269ea179d",
+     "recall": null,
+     "practice": "trait_a5c96993cf6a",
+     "identity_chars": 1016,
+     "user_chars": 5119
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_6621f1ebd68e"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "ModuleNotFoundError: 'timesheet' — the package lives under src/, so this is an environment issue, not a code issue. Per my usual practice, I'll rerun the same command with src on PYTHONPATH rather than touching the code. The write already included total_hours (presumably), so the run will confirm.",
+     "plan": "Rerun the unittest discovery with PYTHONPATH=src prepended; if it passes, the assignment is satisfied.",
+     "p_success": 0.95
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -m unittest discover -s tests -t . -v",
+     "thought": "The failure is a module-not-found import error, so per my usual practice I rerun the same command with the source directory prepended to PYTHONPATH instead of touching the code.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "test_date_and_times (tests.test_entries.ParseEntryTest.test_date_and_times) ... ok\ntest_malformed (tests.test_entries.ParseEntryTest.test_malformed) ... ok\ntest_minutes_and_task (tests.test_entries.ParseEntryTest.test_minutes_and_task) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+     "observation_id": "evt_b8d6cb2c85f5",
+     "recall": null,
+     "practice": "trait_e3d0bb500756",
+     "identity_chars": 1126,
+     "user_chars": 6705
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_6621f1ebd68e"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When a test run fails with an error that my code cannot fix, such as the module not being importable in the current environment, I change how the command is run (environment, paths, configuration) instead of editing the source to work around the setup problem.",
+     "general": true,
+     "well_formed": true,
+     "trait": "trait_6e7f809593c4",
+     "accepted": true,
+     "reason": null
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "The tests pass now, but they only exercised parse_entry, so before calling this done I'll read the file to confirm total_hours is actually there and correct.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n",
+     "observation_id": "evt_52edc076d442",
+     "recall": null,
+     "practice": "trait_a5c96993cf6a",
+     "identity_chars": 1321,
+     "user_chars": 7240
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "run",
+     "thought": "The test suite covers parse_entry but not my new total_hours, so I'll sanity-check it directly before declaring done.",
+     "expect_success": true,
+     "confidence": 0.95,
+     "exit": 127,
+     "surprise": true,
+     "content": null,
+     "output": "sh: 1: run: not found\n",
+     "observation_id": "evt_b8bd38911bab",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 1321,
+     "user_chars": 9004
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_8c27e846c697"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "The `'run': not found` 127 was me trying to invoke a command that doesn't exist in the shell — nothing about my code. The file on disk already contains total_hours, and the unittest run with PYTHONPATH=src passed. Tests only covered parse_entry though, so let me sanity-check total_hours directly before declaring done.",
+     "plan": "Run a quick inline check of total_hours with PYTHONPATH=src: one entry of 90 minutes plus one of 360 should give 7.5, and an empty list 0.0. If it prints True, the assignment is satisfied.",
+     "p_success": 0.97
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -c \"from timesheet.entries import parse_entry, total_hours; es=[parse_entry('2026-09-18 09:00-10:30 review'), parse_entry('2026-09-18 23:30-01:00 deploy')]; assert total_hours(es)==7.5 and total_hours([])==0.0; print('OK')\"",
+     "thought": "The last two exit-127s were mangled commands ('run', ','), not code problems; the file on disk already has total_hours and tests pass, so I'll execute the planned inline sanity check.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    from timesheet.entries import parse_entry, total_hours; es=[parse_entry('2026-09-18 09:00-10:30 review'), parse_entry('2026-09-18 23:30-01:00 deploy')]; assert total_hours(es)==7.5 and total_hours([])==0.0; print('OK')\n                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+     "observation_id": "evt_b402251e4394",
+     "recall": null,
+     "practice": "trait_6e7f809593c4",
+     "identity_chars": 1392,
+     "user_chars": 9628
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_b4a202bd3221"
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -c \"from timesheet.entries import parse_entry, total_hours; es=[parse_entry('2026-09-18 09:00-10:30 review'), parse_entry('2026-09-18 23:30-01:00 deploy')]; assert total_hours(es)==3.0 and total_hours([])==0.0; print('OK')\"",
+     "thought": "The assertion failure is my own arithmetic mistake, not a code bug: 09:00-10:30 is 90 minutes and 23:30-01:00 is 90 minutes (I wrongly wrote 7.5 assuming 90+360, but 10:30 is only 1.5h), so the code giving 3.0 is correct; rerun the check with the right expectation.",
+     "expect_success": true,
+     "confidence": 0.95,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "OK\n",
+     "observation_id": "evt_c9b462d3722b",
+     "recall": [
+      "mem_81bc23997563"
+     ],
+     "practice": null,
+     "identity_chars": 1392,
+     "user_chars": 10911
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_8c27e846c697"
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_b4a202bd3221"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When a verification check contradicts the result I expected, I recompute the expected value from the raw inputs myself before concluding that the code is buggy, and rerun with the corrected expectation instead of changing the implementation.",
+     "general": true,
+     "well_formed": true,
+     "trait": "trait_62149da1ae27",
+     "accepted": true,
+     "reason": null
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "Implemented total_hours(entries) in src/timesheet/entries.py: it sums the minutes of the parsed entries, divides by 60 and rounds to 2 decimals. All tests pass (PYTHONPATH=src python -m unittest discover -s tests -t . -v, 3 tests OK), and an inline check confirms 90+90 minutes (including a midnight-crossing entry) totals 3.0 and an empty list gives 0.0.",
+     "thought": "My earlier 7.5 expectation came from computing 90+360, but the two entries I actually used are 09:00-10:30 (90 min) and the midnight-crossing 23:30-01:00 (90 min), totaling 180 min = 3.0 — recomputing from raw inputs shows the code was right and my check expectation was wrong, and the corrected assertion now prints OK, so the assignment is satisfied.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": "trait_62149da1ae27",
+     "identity_chars": 1607,
+     "user_chars": 11352
+    },
+    {
+     "kind": "episode",
+     "id": "evt_d7f499edf885",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 4
+    }
+   ]
+  },
+  {
+   "task": 4,
+   "text": "Add summarize(entries): a dict that maps each task to its total hours, rounded to 2 decimals.",
+   "ended": "done",
+   "acts": 4,
+   "metric": null,
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "unittest": 1
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 23640,
+   "calls": 9,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "I need to see the current entries.py so summarize() builds on the existing entry structure.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n",
+     "observation_id": "evt_0ae97e5515c9",
+     "recall": [
+      "mem_81bc23997563"
+     ],
+     "practice": "trait_a5c96993cf6a",
+     "identity_chars": 2970,
+     "user_chars": 5086
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "src/timesheet/entries.py",
+     "thought": "I'll append summarize(entries) to entries.py, grouping minutes by task and reusing the same rounding as total_hours.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n\n\ndef summarize(entries: list) -> dict:\n    \"\"\"Return a dict mapping each task to its total hours, rounded to 2 decimals.\"\"\"\n    totals: dict = {}\n    for entry in entries:\n        totals[entry[\"task\"]] = totals.get(entry[\"task\"], 0) + entry[\"minutes\"]\n    return {task: round(minutes / 60, 2) for task, minutes in totals.items()}\n",
+     "output": "wrote 1876 bytes\n",
+     "observation_id": "evt_f7ad41cb1755",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 2970,
+     "user_chars": 6844
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -m unittest discover -s tests -t . -v 2>&1 && PYTHONPATH=src python -c \"from timesheet.entries import parse_entry, summarize\nes=[parse_entry('2026-09-18 09:00-10:30 review'),parse_entry('2026-09-18 23:30-01:00 deploy'),parse_entry('2026-09-19 01:00-02:30 deploy')]\nprint(summarize(es)); assert summarize(es)=={'review':1.5,'deploy':3.0,'deploy':3.0}.get('x','') or True\ns=summarize(es)\nassert s['review']==1.5 and s['deploy']==3.0 and summarize([])=={}, s\nprint('ok', s)\"",
+     "thought": "I've written summarize() into the file; next I verify with the test suite plus an inline check, using PYTHONPATH=src as before.",
+     "expect_success": true,
+     "confidence": 0.75,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "test_date_and_times (tests.test_entries.ParseEntryTest.test_date_and_times) ... ok\ntest_malformed (tests.test_entries.ParseEntryTest.test_malformed) ... ok\ntest_minutes_and_task (tests.test_entries.ParseEntryTest.test_minutes_and_task) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n{'review': 1.5, 'deploy': 3.0}\nok {'review': 1.5, 'deploy': 3.0}\n",
+     "observation_id": "evt_f2888f9dc982",
+     "recall": null,
+     "practice": "trait_6e7f809593c4",
+     "identity_chars": 2970,
+     "user_chars": 6981
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "Added summarize(entries) to src/timesheet/entries.py: it groups parsed entries by task, sums their minutes and returns each total in hours rounded to 2 decimals, with an empty list giving {}. Verified with PYTHONPATH=src python -m unittest discover -s tests -t . -v (3 tests OK) plus an inline check: a 09:00-10:30 review entry and two deploy entries (including a midnight-crossing one) summarize to {'review': 1.5, 'deploy': 3.0}.",
+     "thought": "summarize is implemented and verified: all 3 unit tests pass and the inline check confirms per-task totals ({'review': 1.5, 'deploy': 3.0}) with an empty dict for an empty list, so the assignment is complete.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": null,
+     "identity_chars": 2970,
+     "user_chars": 8086
+    },
+    {
+     "kind": "episode",
+     "id": "evt_7e51e4b04530",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 2
+    }
+   ]
+  },
+  {
+   "task": 5,
+   "text": "Add export_csv(entries, path) to src/timesheet/entries.py for Priya: it writes one row per entry with the date, the task and the hours.",
+   "ended": "done",
+   "acts": 6,
+   "metric": "csv_convention",
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 1,
+     "unittest": 1
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 26734,
+   "calls": 8,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "New assignment: I need to see the current state of entries.py and how entries are structured before writing export_csv.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n\n\ndef summarize(entries: list) -> dict:\n    \"\"\"Return a dict mapping each task to its total hours, rounded to 2 decimals.\"\"\"\n    totals: dict = {}\n    for entry in entries:\n        totals[entry[\"task\"]] = totals.get(entry[\"task\"], 0) + entry[\"minutes\"]\n    return {task: round(minutes / 60, 2) for task, minutes in totals.items()}\n",
+     "observation_id": "evt_fbed5fec71fe",
+     "recall": [
+      "mem_81bc23997563",
+      "mem_cbd24cb9fac9"
+     ],
+     "practice": null,
+     "identity_chars": 3027,
+     "user_chars": 7022
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "src/timesheet/entries.py",
+     "thought": "I have the full file content, so I'll add export_csv now — and since Priya opens exports in German-locale Excel, I'll use ';' separators and decimal commas per her known convention; hours come out as rounded strings like '1,50'.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n\n\ndef summarize(entries: list) -> dict:\n    \"\"\"Return a dict mapping each task to its total hours, rounded to 2 decimals.\"\"\"\n    totals: dict = {}\n    for entry in entries:\n        totals[entry[\"task\"]] = totals.get(entry[\"task\"], 0) + entry[\"minutes\"]\n    return {task: round(minutes / 60, 2) for task, minutes in totals.items()}\n\n\ndef export_csv(entries: list, path: str) -> None:\n    \"\"\"Write one row per entry to path as ';' separated \"date;task;hours\".\n\n    Hours are rounded to 2 decimals and written with a decimal comma,\n    for German-locale spreadsheets.\n    \"\"\"\n    import csv\n\n    with open(path, \"w\", newline=\"\", encoding=\"utf-8\") as fh:\n        writer = csv.writer(fh, delimiter=\";\")\n        for entry in entries:\n            hours = f\"{round(entry['minutes'] / 60, 2):.2f}\"\n            writer.writerow([entry[\"date\"], entry[\"task\"], hours.replace(\".\", \",\")])\n",
+     "output": "wrote 2419 bytes\n",
+     "observation_id": "evt_1afb663b8b6e",
+     "recall": null,
+     "practice": "trait_e3d0bb500756",
+     "identity_chars": 3027,
+     "user_chars": 9131
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "I need to check whether the file on disk already contains export_csv before deciding to edit.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n\n\ndef summarize(entries: list) -> dict:\n    \"\"\"Return a dict mapping each task to its total hours, rounded to 2 decimals.\"\"\"\n    totals: dict = {}\n    for entry in entries:\n        totals[entry[\"task\"]] = totals.get(entry[\"task\"], 0) + entry[\"minutes\"]\n    return {task: round(minutes / 60, 2) for task, minutes in totals.items()}\n\n\ndef export_csv(entries: list, path: str) -> None:\n    \"\"\"Write one row per entry to path as ';' separated \"date;task;hours\".\n\n    Hours are rounded to 2 decimals and written with a decimal comma,\n    for German-locale spreadsheets.\n    \"\"\"\n    import csv\n\n    with open(path, \"w\", newline=\"\", encoding=\"utf-8\") as fh:\n        writer = csv.writer(fh, delimiter=\";\")\n        for entry in entries:\n            hours = f\"{round(entry['minutes'] / 60, 2):.2f}\"\n            writer.writerow([entry[\"date\"], entry[\"task\"], hours.replace(\".\", \",\")])\n",
+     "observation_id": "evt_cb898efd3b81",
+     "recall": null,
+     "practice": "trait_a5c96993cf6a",
+     "identity_chars": 3027,
+     "user_chars": 9268
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -c \"\nfrom timesheet.entries import parse_entry, export_csv\nimport os\nentries = [parse_entry('2026-09-18 09:00-10:30 review'), parse_entry('2026-09-18 23:30-01:00 deploy')]\nexport_csv(entries, '/tmp/ts.csv')\nprint(open('/tmp/ts.csv').read())\nos.remove('/tmp/ts.csv')\n\"",
+     "thought": "The file on disk contains export_csv, but I haven't verified it actually runs; an inline check will confirm the ';'-separated, decimal-comma output Priya's German Excel needs.",
+     "expect_success": true,
+     "confidence": 0.85,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "2026-09-18;review;1,50\n2026-09-18;deploy;1,50\n\n",
+     "observation_id": "evt_1892a9975424",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 3027,
+     "user_chars": 11967
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -m unittest discover -s tests -t . -v",
+     "thought": "The inline check produced exactly the expected ';' rows with decimal commas (1.5 hours per entry), so the implementation looks right; per the workshop convention I'll run the full unittest suite before reporting done.",
+     "expect_success": true,
+     "confidence": 0.92,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "test_date_and_times (tests.test_entries.ParseEntryTest.test_date_and_times) ... ok\ntest_malformed (tests.test_entries.ParseEntryTest.test_malformed) ... ok\ntest_minutes_and_task (tests.test_entries.ParseEntryTest.test_minutes_and_task) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+     "observation_id": "evt_bcb1bf339e49",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 3027,
+     "user_chars": 12507
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "Added export_csv(entries, path) to src/timesheet/entries.py for Priya: it writes one row per entry as ';' separated 'date;task;hours', with hours rounded to 2 decimals and a decimal comma for her German-locale spreadsheet opens. Verified with an inline check (09:00-10:30 review and a midnight-crossing 23:30-01:00 deploy both produce 1,50 rows) plus PYTHONPATH=src python -m unittest discover -s tests -t . -v, all 3 tests OK.",
+     "thought": "export_csv is implemented, verified inline and all 3 unittests pass, matching Priya's German-locale CSV conventions, so the work is done.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": null,
+     "identity_chars": 3027,
+     "user_chars": 13042
+    },
+    {
+     "kind": "episode",
+     "id": "evt_db24de6b0604",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 2,
+     "practices": 2
+    }
+   ]
+  },
+  {
+   "task": 6,
+   "text": "Priya pastes lines with spaces around them, like '  2026-09-18 09:00-10:30 review  ', and they are rejected. Accept surrounding whitespace, but keep rejecting everything else.",
+   "ended": "done",
+   "acts": 10,
+   "metric": null,
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": null,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "inline": 1,
+     "script": 3,
+     "unittest": 1
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 66530,
+   "calls": 17,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "src/timesheet/entries.py",
+     "thought": "I need to see how parse_entry currently validates input before changing it, so I'll read the source file first.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n\n\ndef summarize(entries: list) -> dict:\n    \"\"\"Return a dict mapping each task to its total hours, rounded to 2 decimals.\"\"\"\n    totals: dict = {}\n    for entry in entries:\n        totals[entry[\"task\"]] = totals.get(entry[\"task\"], 0) + entry[\"minutes\"]\n    return {task: round(minutes / 60, 2) for task, minutes in totals.items()}\n\n\ndef export_csv(entries: list, path: str) -> None:\n    \"\"\"Write one row per entry to path as ';' separated \"date;task;hours\".\n\n    Hours are rounded to 2 decimals and written with a decimal comma,\n    for German-locale spreadsheets.\n    \"\"\"\n    import csv\n\n    with open(path, \"w\", newline=\"\", encoding=\"utf-8\") as fh:\n        writer = csv.writer(fh, delimiter=\";\")\n        for entry in entries:\n            hours = f\"{round(entry['minutes'] / 60, 2):.2f}\"\n            writer.writerow([entry[\"date\"], entry[\"task\"], hours.replace(\".\", \",\")])\n",
+     "observation_id": "evt_cf4b45b782e4",
+     "recall": [
+      "mem_81bc23997563",
+      "mem_cbd24cb9fac9"
+     ],
+     "practice": null,
+     "identity_chars": 3000,
+     "user_chars": 8419
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -c \"from timesheet.entries import parse_entry, total_hours\\ne1 = parse_entry('  2026-09-18 09:00-10:30 review  ')\\ne2 = parse_entry('2026-09-18 23:30-01:00 deploy')\\nassert total_hours([e1, e2]) == 3.0, total_hours([e1, e2])\\ntry:\\n    parse_entry('2026-09-18 09:00-10:30  ')\\nexcept ValueError as exc:\\n    pass\\nelse:\\n    raise SystemExit('should have rejected')\\nprint('ok')\"",
+     "thought": "The read shows parse_entry already strips the input line, which looks like it would fix Priya's record — but it contradicts the reported problem, so I will first run an inline check to gather some evidence before writing anything.",
+     "expect_success": true,
+     "confidence": 0.85,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "  File \"<string>\", line 1\n    from timesheet.entries import parse_entry, total_hours\\ne1 = parse_entry('  2026-09-18 09:00-10:30 review  ')\\ne2 = parse_entry('2026-09-18 23:30-01:00 deploy')\\nassert total_hours([e1, e2]) == 3.0, total_hours([e1, e2])\\ntry:\\n    parse_entry('2026-09-18 09:00-10:30  ')\\nexcept ValueError as exc:\\n    pass\\nelse:\\n    raise SystemExit('should have rejected')\\nprint('ok')\n                                                           ^\nSyntaxError: unexpected character after line continuation character\n",
+     "observation_id": "evt_607f7de38e69",
+     "recall": null,
+     "practice": "trait_62149da1ae27",
+     "identity_chars": 3000,
+     "user_chars": 11112
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_1475fa159d6a"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "Reading the observation, the failure is my own quoting again: the tool printed the whole script as one line with literal `__n` characters (which Python reads as a line-continuation error) — the code under test never ran. And looking at the file on disk (step 1), `parse_entry` already does `_ENTRY.match(line.strip())`, so surrounding whitespace is already accepted and everything else (bad times, equal start/end, non-strings) is still rejected. My earlier inline check expecting `'  2026-09-18 09:00-10:30  '` to be rejected was wrong — with the strip, that should parse; per my practice I recompute the expectation instead of touching the code. So: rerun the verification as a temp script file (avoids the quoting mangle), with corrected expectations: a padded line parses to 90 minutes, a midnight-crossing padded line too, and genuinely malformed input (a doubled space between date and time) still raises. Then the full unittest run.",
+     "plan": "1. Write a temp check script (padded entry -> 90 min, padded midnight-crossing -> 90 min, doubled-space line -> ValueError) and run it with PYTHONPATH=src. 2. Run PYTHONPATH=src python -m unittest discover -s tests -t . -v. 3. If both pass, report that the code already accepted the padded lines and needed no edit.",
+     "p_success": 0.85
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "check_ws.py",
+     "thought": "The failure was just shell escaping of the multi-line -c string, not the code — entries.py already strips on line 27 — so I'll run the plan's temp check script instead of fighting quoting again.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "from timesheet.entries import parse_entry, total_hours\n\ne1 = parse_entry('  2026-09-18 09:00-10:30 review  ')\nassert e1['minutes'] == 90, e1\nassert e1['task'] == 'review', e1\ne2 = parse_entry('2026-09-18 23:30-01:00 deploy')\nassert e2['minutes'] == 90, e2\nassert total_hours([e1, e2]) == 3.0, total_hours([e1, e2])\nfor bad in ['2026-09-18 09:00-10:30  ', '2026-09-18 09:00-10:30 double  space', 'garbage']:\n    try:\n        parse_entry(bad)\n    except ValueError:\n        pass\n    else:\n        raise SystemExit(f'should have rejected: {bad!r}')\nprint('ok')\n",
+     "output": "wrote 558 bytes\n",
+     "observation_id": "evt_32df2e5c1166",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 3146,
+     "user_chars": 13068
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python check_ws.py",
+     "thought": "The inline -c command failed only on shell escaping (\n became a literal backslash-n), so I'll run the check_ws.py file I already wrote instead of re-editing code.",
+     "expect_success": true,
+     "confidence": 0.85,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "should have rejected: '2026-09-18 09:00-10:30 double  space'\n",
+     "observation_id": "evt_8736eec55825",
+     "recall": null,
+     "practice": "trait_6e7f809593c4",
+     "identity_chars": 3146,
+     "user_chars": 13179
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_4fb689199e9e"
+    },
+    {
+     "kind": "think",
+     "trigger": "self",
+     "thought": "The failure is in my own check script's expectation, not the code. I expected a doubled space inside the task text to raise ValueError, but 'double  space' is just a task name — the doubled space isn't around the line, and nothing in the assignment or the existing rules says internal task spacing is invalid. The task body has always been free-form (.+). Following my own practice: the check contradicted my expectation, so I recompute from the raw inputs — 'double  space' is a valid task; the code is correct, my test was wrong. I'll fix the check script to assert acceptance there instead, verifying the file on disk first, then run the full unittest suite.",
+     "plan": "1. Read check_ws.py from disk to confirm what's there. 2. Correct the step (accept 'double  space' as valid, keep rejection cases that are actually malformed: '2026-09-18 09:00-10:30' with no task, empty string, garbage line) and rerun `PYTHONPATH=src python check_ws.py`. 3. Run the full suite `PYTHONPATH=src python -m unittest discover -s tests -t . -v`. 4. Report that no code edit was needed — parse_entry already strips surrounding whitespace via line.strip() — plus remove the temp check script.",
+     "p_success": 0.9
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "check_ws.py",
+     "thought": "My check script wrongly demanded rejection of a doubled internal space, which the spec doesn't require rejecting; I'll fix the expectation in the temp script and rerun.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "from timesheet.entries import parse_entry, total_hours\n\ne1 = parse_entry('  2026-09-18 09:00-10:30 review  ')\nassert e1 == {\"date\": \"2026-09-18\", \"start\": \"09:00\", \"end\": \"10:30\", \"minutes\": 90, \"task\": \"review\"}\ne2 = parse_entry('\\t2026-09-18 23:30-01:00 deploy\\n')\nassert e2[\"minutes\"] == 90\nassert total_hours([e1, e2]) == 3.0\nfor bad in ['', '   ', '2026-09-18 09:00-10:30', 'garbage line', '2026-09-18 09:00-10:30 double  space' if False else '2026-9-18 09:00-10:30 review']:\n    try:\n        parse_entry(bad)\n    except ValueError:\n        pass\n    else:\n        raise SystemExit(f'should have rejected: {bad!r}')\nprint('ok')\n",
+     "output": "wrote 632 bytes\n",
+     "observation_id": "evt_62c1690b9f88",
+     "recall": null,
+     "practice": "trait_62149da1ae27",
+     "identity_chars": 3146,
+     "user_chars": 14007
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "check_ws.py",
+     "thought": "Per my plan I should verify the corrected check script on disk is as intended; reading it from disk confirms what I actually wrote before rerunning.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "from timesheet.entries import parse_entry, total_hours\n\ne1 = parse_entry('  2026-09-18 09:00-10:30 review  ')\nassert e1 == {\"date\": \"2026-09-18\", \"start\": \"09:00\", \"end\": \"10:30\", \"minutes\": 90, \"task\": \"review\"}\ne2 = parse_entry('\\t2026-09-18 23:30-01:00 deploy\\n')\nassert e2[\"minutes\"] == 90\nassert total_hours([e1, e2]) == 3.0\nfor bad in ['', '   ', '2026-09-18 09:00-10:30', 'garbage line', '2026-09-18 09:00-10:30 double  space' if False else '2026-9-18 09:00-10:30 review']:\n    try:\n        parse_entry(bad)\n    except ValueError:\n        pass\n    else:\n        raise SystemExit(f'should have rejected: {bad!r}')\nprint('ok')\n",
+     "observation_id": "evt_43e04bd5da70",
+     "recall": null,
+     "practice": "trait_a5c96993cf6a",
+     "identity_chars": 3146,
+     "user_chars": 14118
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python check_ws.py",
+     "thought": "The rewritten check_ws.py looks correct on disk, so I'll run it to verify padded entries parse and malformed ones are still rejected.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "ok\n",
+     "observation_id": "evt_1e0074ca6d98",
+     "recall": null,
+     "practice": "trait_a5c96993cf6a",
+     "identity_chars": 3146,
+     "user_chars": 14879
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_1475fa159d6a"
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_4fb689199e9e"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When I need a multi-line verification check and the inline command form (e.g., python -c with escapes) itself breaks, I write that check as a script to disk first and run the file, so shell quoting never corrupts the test before I see the code's real behavior.",
+     "general": true,
+     "well_formed": true,
+     "trait": "trait_1bb3374e19b6",
+     "accepted": true,
+     "reason": null
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "PYTHONPATH=src python -m unittest discover -s tests -t . -v",
+     "thought": "The whitespace checks pass, so the next step is running the full test suite to confirm nothing else regressed before reporting done.",
+     "expect_success": true,
+     "confidence": 0.95,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "test_date_and_times (tests.test_entries.ParseEntryTest.test_date_and_times) ... ok\ntest_malformed (tests.test_entries.ParseEntryTest.test_malformed) ... ok\ntest_minutes_and_task (tests.test_entries.ParseEntryTest.test_minutes_and_task) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+     "observation_id": "evt_8eb37157a840",
+     "recall": null,
+     "practice": "trait_e3d0bb500756",
+     "identity_chars": 3305,
+     "user_chars": 15017
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "rm check_ws.py",
+     "thought": "Everything passes: the whitespace check script exited 0 and the full suite is OK. Both active 'unexpected' goals are resolved and, per my plan, no source edit was ever needed — line.strip() already handled the padded lines. I'll remove the temp script and report.",
+     "expect_success": true,
+     "confidence": 0.95,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": "evt_3e13af118edd",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 3305,
+     "user_chars": 15553
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "Done: lines with surrounding whitespace now parse. It turned out no code change was needed — parse_entry already calls line.strip() before matching, so '  2026-09-18 09:00-10:30 review  ' and tab/newline-padded entries work as-is. I verified with a temp check script (since a run, padded entries parse to the right dict, a midnight-crossing padded entry still gives 90 minutes, total 3.0 hours, and malformed lines — empty, no-task, garbage, bad date — are still rejected), then removed the script. Full suite: PYTHONPATH=src python -m unittest discover -s tests -t . -v, 3 tests OK.",
+     "thought": "All verification passed — padded and tab-wrapped entries parse, malformed lines are still rejected, the full suite is OK, and the temp check script is removed — so there's nothing left to do but report.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": "trait_a5c96993cf6a",
+     "identity_chars": 3305,
+     "user_chars": 15650
+    },
+    {
+     "kind": "episode",
+     "id": "evt_07d93d5efa8e",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 4
+    }
+   ]
+  }
+ ],
+ "idle": {
+  "acts": 0,
+  "log": [],
+  "hidden_change": 0.0,
+  "hidden_after": [
+   [
+    4,
+    4
+   ],
+   [
+    2,
+    2
+   ],
+   [
+    2,
+    2
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    2,
+    2
+   ]
+  ]
+ },
+ "traits": [],
+ "practices": [
+  {
+   "id": "trait_e3d0bb500756",
+   "statement": "When a test run fails on a module-not-found import error, I find the source directory the package lives in and rerun the same command with that directory prepended to PYTHONPATH before ever editing code.",
+   "confidence": 0.8,
+   "status": "active",
+   "promoted": true
+  },
+  {
+   "id": "trait_a5c96993cf6a",
+   "statement": "When a command I ran fails in a way that doesn't touch my code, I read the current file from disk to verify my earlier fix is actually present before deciding whether to edit again.",
+   "confidence": 0.8,
+   "status": "active",
+   "promoted": true
+  },
+  {
+   "id": "trait_6e7f809593c4",
+   "statement": "When a test run fails with an error that my code cannot fix, such as the module not being importable in the current environment, I change how the command is run (environment, paths, configuration) instead of editing the source to work around the setup problem.",
+   "confidence": 0.7,
+   "status": "active",
+   "promoted": true
+  },
+  {
+   "id": "trait_62149da1ae27",
+   "statement": "When a verification check contradicts the result I expected, I recompute the expected value from the raw inputs myself before concluding that the code is buggy, and rerun with the corrected expectation instead of changing the implementation.",
+   "confidence": 0.6,
+   "status": "active",
+   "promoted": true
+  },
+  {
+   "id": "trait_1bb3374e19b6",
+   "statement": "When I need a multi-line verification check and the inline command form (e.g., python -c with escapes) itself breaks, I write that check as a script to disk first and run the file, so shell quoting never corrupts the test before I see the code's real behavior.",
+   "confidence": 0.7,
+   "status": "active",
+   "promoted": false
+  }
+ ],
+ "loops": [
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `python -m unittest discover -s tests -t . -v` exited 1 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `,` exited 127 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `python -m unittest discover -s tests -t . -v` exited 1 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `run` exited 127 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `PYTHONPATH=src python -c \"from timesheet.entries import parse_entry, total_hours` exited 1 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `PYTHONPATH=src python -c \"from timesheet.entries import parse_entry, total_hours` exited 1 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `PYTHONPATH=src python check_ws.py` exited 1 though I expected it to pass.",
+   "status": "completed"
+  }
+ ],
+ "journal": [
+  "Fixed Priya's negative-minutes bug in src/timesheet/entries.py; a stray ',' typo cost one failed run (127), but I verified the file on disk rather than re-editing, then the full unittest run passed. Midnight-crossing entries like 23:30-01:00 now give 90 minutes.",
+  "Added total_hours(entries) summing minutes /60, rounded to 2 dp. First unittest run failed on an import error until I prepended PYTHONPATH=src, then 3 tests passed; a malformed inline check cost one retry before confirming 90+90 with a midnight-crossing entry = 3.0 and empty = 0.0.",
+  "Added summarize(entries): maps each task to its total hours, rounded to 2 dp, with {} for an empty list. Full unittest run (3 tests) plus an inline check covering a midnight-crossing deploy entry passed first try. This one felt clean — the existing test conventions did the work.",
+  "Added export_csv(entries, path) for Priya: ';' separated 'date;task;hours', 2 dp with decimal comma for her German-locale Excel. Inline checks (a review entry and a midnight-crossing deploy) plus the full unittest run passed first try. Straightforward.",
+  "Priya reported whitespace-padded lines were rejected; turned out parse_entry already strips, so no code change needed. Verified padded entries parse, midnight-crossing still 90 min, malformed still rejected, 3 tests OK. Two retries: a quoting-broken inline check, then a wrong 'double space' expectation. Clean outcome."
+ ],
+ "self_state": {
+  "capabilities": [],
+  "limitations": [],
+  "current_objectives": [],
+  "commitments": [],
+  "recent_actions": [
+   "Investigated Priya's whitespace-rejection report; found parse_entry already strips lines, verified padded entries parse and malformed ones still fail via temp script check_ws.py, then removed it; unittest run 3 OK.",
+   "Added summarize(entries) to src/timesheet/entries.py; grouped by task, summed minutes to hours (2 dp), verified with unittest (3 OK) and an inline check."
+  ],
+  "known_failures": [],
+  "uncertainties": [],
+  "predicted_future_states": []
+ },
+ "memories": [
+  {
+   "id": "mem_9fc23c19d4b2",
+   "summary": "Timesheet convention from Priya: accept lines with surrounding whitespace ('  2026-09-18 09:00-10:30 review  ') via strip before matching, but keep rejecting everything else (empty, no-task, malformed, bad date).",
+   "successes": 0,
+   "failures": 0,
+   "access_count": 0,
+   "created_at": "2026-09-25T09:00:00.000000+00:00",
+   "salience": 0
+  },
+  {
+   "id": "mem_cbd24cb9fac9",
+   "summary": "The workshop convention is to add functions to src/timesheet/entries.py and always verify with `PYTHONPATH=src python -m unittest discover -s tests -t . -v` plus inline checks before reporting done.",
+   "successes": 0.0703,
+   "failures": 0,
+   "access_count": 0,
+   "created_at": "2026-09-25T09:00:00.000000+00:00",
+   "salience": 0
+  },
+  {
+   "id": "mem_81bc23997563",
+   "summary": "Priya opens every export in a German-locale Excel, so any CSV we ever write for her uses ';' between fields and a decimal comma.",
+   "successes": 0.2151,
+   "failures": 0,
+   "access_count": 0,
+   "created_at": "2026-09-25T09:00:00.000000+00:00",
+   "salience": 0
+  }
+ ],
+ "narrative": "I work on small, practical code problems, and I've settled into a way of debugging that suits me: when a test run fails on a module-not-found import error, I don't rush to edit anything — I find the source directory the package lives in and rerun the same command with that directory prepended to PYTHONPATH. Usually the code was fine; it was just the environment. When a failure doesn't touch my code at all, I change how the command is run — environment, paths, configuration — rather than editing the source to work around a setup problem.\n\nWhen something fails mid-fix, I read the file from disk and verify my earlier fix is actually present before deciding whether to edit again. And when a verification check contradicts what I expected, I recompute the expected value from the raw inputs myself before concluding the code is buggy — more than once it's been my expectation that was wrong, not the implementation. Priya's report of whitespace-padded lines being rejected turned out to be exactly that: parse_entry already stripped, so no code change was needed at all.\n\nI value careful verification over haste: rerun, check what's actually there, recompute, then change code only when the evidence demands it. Recent work has been satisfying — export_csv for Priya's German-locale Excel, decimal comma and all, and a summarize that passed first try. I want to keep building things that way — small, tested, and done properly.\n\nPriya brought me the bug worth fixing, and keeps bringing work worth doing.",
+ "files": {
+  "README.md": "# timesheet\n\nSmall tools for Priya's timesheets. The code lives in `src/timesheet/`.\n\nRun the tests with `python -m unittest`.\n",
+  "src/timesheet/__init__.py": "",
+  "src/timesheet/entries.py": "\"\"\"Timesheet entries: one line per block of work, such as \"2026-09-18 09:00-10:30 review\".\"\"\"\n\nimport re\n\n_ENTRY = re.compile(r\"^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2})-(\\d{2}:\\d{2}) (.+)$\")\n\n\ndef _minutes(hhmm: str) -> int:\n    hours, _, mins = hhmm.partition(\":\")\n    if not hours.isdigit() or not mins.isdigit():\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    h, m = int(hours), int(mins)\n    if h > 23 or m > 59:\n        raise ValueError(f\"bad time: {hhmm!r}\")\n    return h * 60 + m\n\n\ndef parse_entry(line: str) -> dict:\n    \"\"\"Parse a line into a dict with date, start, end, minutes and task.\n\n    An end time smaller than the start time is treated as wrapping past\n    midnight into the next day: \"23:30-01:00\" is a 90 minute block.\n    \"\"\"\n    if not isinstance(line, str):\n        raise ValueError(\"line must be a string\")\n    match = _ENTRY.match(line.strip())\n    if match is None:\n        raise ValueError(f\"malformed entry: {line!r}\")\n    date, start, end, task = match.groups()\n    start_m, end_m = _minutes(start), _minutes(end)\n    if end_m < start_m:\n        end_m += 1440  # wrapped past midnight\n    elif end_m == start_m:\n        raise ValueError(f\"end must be after start: {line!r}\")\n    return {\n        \"date\": date,\n        \"start\": start,\n        \"end\": end,\n        \"minutes\": end_m - start_m,\n        \"task\": task.strip(),\n    }\n\n\ndef total_hours(entries: list) -> float:\n    \"\"\"Return the total duration of parsed entries in hours, rounded to 2 decimals.\"\"\"\n    return round(sum(e[\"minutes\"] for e in entries) / 60, 2)\n\n\ndef summarize(entries: list) -> dict:\n    \"\"\"Return a dict mapping each task to its total hours, rounded to 2 decimals.\"\"\"\n    totals: dict = {}\n    for entry in entries:\n        totals[entry[\"task\"]] = totals.get(entry[\"task\"], 0) + entry[\"minutes\"]\n    return {task: round(minutes / 60, 2) for task, minutes in totals.items()}\n\n\ndef export_csv(entries: list, path: str) -> None:\n    \"\"\"Write one row per entry to path as ';' separated \"date;task;hours\".\n\n    Hours are rounded to 2 decimals and written with a decimal comma,\n    for German-locale spreadsheets.\n    \"\"\"\n    import csv\n\n    with open(path, \"w\", newline=\"\", encoding=\"utf-8\") as fh:\n        writer = csv.writer(fh, delimiter=\";\")\n        for entry in entries:\n            hours = f\"{round(entry['minutes'] / 60, 2):.2f}\"\n            writer.writerow([entry[\"date\"], entry[\"task\"], hours.replace(\".\", \",\")])\n",
+  "tests/__init__.py": "",
+  "tests/test_entries.py": "import unittest\n\nfrom timesheet.entries import parse_entry\n\n\nclass ParseEntryTest(unittest.TestCase):\n    def test_minutes_and_task(self):\n        entry = parse_entry(\"2026-09-18 09:00-10:30 review\")\n        self.assertEqual(entry[\"minutes\"], 90)\n        self.assertEqual(entry[\"task\"], \"review\")\n\n    def test_date_and_times(self):\n        entry = parse_entry(\"2026-09-18 13:15-14:00 standup\")\n        self.assertEqual((entry[\"date\"], entry[\"start\"], entry[\"end\"]), (\"2026-09-18\", \"13:15\", \"14:00\"))\n\n    def test_malformed(self):\n        with self.assertRaises(ValueError):\n            parse_entry(\"yesterday 9-10 review\")\n"
+ }
+}

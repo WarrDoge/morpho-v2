@@ -2,10 +2,10 @@
 use crate::{
     Services,
     config::settings,
-    context::composer::dropped,
+    context::composer::{dropped, shown_trait},
     llm::REFLECTION,
     pyfmt::{Row, now, tokens},
-    state::models::{Change, LIVE_BELIEF, LIVE_MEMORY, LIVE_TRAIT, Proposal},
+    state::models::{Change, LIVE_BELIEF, LIVE_MEMORY, LIVE_TRAIT, Proposal, STEP_EVENTS},
 };
 use anyhow::{Result, ensure};
 use serde::{Deserialize, Serialize};
@@ -30,6 +30,26 @@ verify_prediction: existing target, verified boolean, only with an observed outc
 Reuse unresolved forecasts rather than making duplicates. Operational self changes must follow observed behavior or commitments, never invented capabilities, outcomes or permissions.
 Keep text fields under 240 characters and patch lists under three items. A patched list replaces that field, so include items to keep; omit unchanged fields. Return only changes and more.";
 
+/// Appended when the batch reports finished work: a standing instruction outlives the episode
+/// that carried it, and the transcript it arrived in is already gone.
+pub const EPISODE_NOTE: &str = "This batch reports work you did. An assignment often states a standing convention, constraint or preference that outlives the task it came with; keep any such instruction as a memory in the words it was given, since the transcript that carried it is already gone.";
+
+/// Agents whose transitions reflection neither reads nor waits for: its own and outcome credit.
+pub const QUIET_AGENTS: &[&str] = &["reflection", "credit"];
+
+/// End of a window of `n` records from `start`, not counting the ones `skip` rejects.
+pub fn window<T>(rows: &[T], start: usize, n: usize, skip: impl Fn(&T) -> bool) -> usize {
+    let mut counted = 0;
+    let mut end = start;
+    while end < rows.len() && counted < n {
+        if !skip(&rows[end]) {
+            counted += 1;
+        }
+        end += 1;
+    }
+    end
+}
+
 #[derive(Debug, Default, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Reflection {
@@ -53,8 +73,13 @@ fn brief(row: &Row, fields: &[&str]) -> Value {
         }
     }
     let text = out.to_string();
-    if text.chars().count() > 800 {
-        json!({"id":row.get("id"),"event_id":row.get("event_id"),"excerpt":text.chars().take(800).collect::<String>(),"truncated":true})
+    let cap = if row.get("type") == Some(&json!("episode")) {
+        3000
+    } else {
+        800
+    };
+    if text.chars().count() > cap {
+        json!({"id":row.get("id"),"event_id":row.get("event_id"),"excerpt":text.chars().take(cap).collect::<String>(),"truncated":true})
     } else {
         out
     }
@@ -62,16 +87,40 @@ fn brief(row: &Row, fields: &[&str]) -> Value {
 
 #[tracing::instrument(name = "reflection", skip_all)]
 pub async fn run(svc: &Services, batch: &Batch) -> Result<(Vec<Proposal>, bool)> {
+    let episode;
     let mut user = {
         let st = svc.store.lock().unwrap();
         let s = &st.state;
+        let quiet = s.events[batch.event_start..batch.event_end]
+            .iter()
+            .all(|r| STEP_EVENTS.contains(&r["type"].as_str().unwrap_or_default()))
+            && s.transitions[batch.transition_start..batch.transition_end]
+                .iter()
+                .all(|r| QUIET_AGENTS.contains(&r["agent"].as_str().unwrap_or_default()));
+        let skipped = s.events[batch.event_start..batch.event_end]
+            .iter()
+            .chain(&s.transitions[batch.transition_start..batch.transition_end])
+            .any(|r| {
+                r.get("type")
+                    .and_then(Value::as_str)
+                    .is_some_and(|t| STEP_EVENTS.contains(&t))
+                    || r.get("agent") == Some(&json!("credit"))
+            });
+        // Only raw steps and credit: nothing for reflection to read.
+        if quiet && skipped {
+            return Ok((Vec::new(), false));
+        }
+        episode = s.events[batch.event_start..batch.event_end]
+            .iter()
+            .any(|r| r["type"] == "episode");
         let events: Vec<_> = s.events[batch.event_start..batch.event_end]
             .iter()
+            .filter(|r| !STEP_EVENTS.contains(&r["type"].as_str().unwrap_or_default()))
             .map(|r| brief(r, &["event_id", "ts", "source", "type", "payload"]))
             .collect();
         let transitions: Vec<_> = s.transitions[batch.transition_start..batch.transition_end]
             .iter()
-            .filter(|r| r["agent"] != "reflection")
+            .filter(|r| !QUIET_AGENTS.contains(&r["agent"].as_str().unwrap_or_default()))
             .map(|r| {
                 let changed: serde_json::Map<_, _> = r["after"]
                     .as_object()
@@ -88,7 +137,7 @@ pub async fn run(svc: &Services, batch: &Batch) -> Result<(Vec<Proposal>, bool)>
         json!({"now":now().to_rfc3339(),"batch":batch,"observations":events,"transitions":transitions,
             "recent_failures":s.events.iter().rev().filter(|e|e["type"]=="runtime_failure" || e["type"]=="state_change_result").take(3).map(|r|brief(r,&["event_id","type","payload"])).collect::<Vec<_>>(),
             "memories":s.list_rows("memories",Some(LIVE_MEMORY),30).iter().map(|r|brief(r,&["id","kind","summary","evidence"])).collect::<Vec<_>>(),
-            "identity":if dropped("identity") { Vec::new() } else { s.list_rows("traits",Some(LIVE_TRAIT),30) }.iter().map(|r|brief(r,&["id","kind","statement","confidence","status","origin","speaker"])).collect::<Vec<_>>(),
+            "identity":if dropped("identity") { Vec::new() } else { s.list_rows("traits",Some(LIVE_TRAIT),30) }.iter().filter(|r|shown_trait(r)).map(|r|brief(r,&["id","kind","statement","confidence","status","origin","speaker"])).collect::<Vec<_>>(),
             "beliefs":s.list_rows("beliefs",Some(LIVE_BELIEF),20).iter().map(|r|brief(r,&["id","proposition","confidence","status","evidence"])).collect::<Vec<_>>(),
             "goals":s.list_rows("goals",None,20).iter().map(|r|brief(r,&["id","description","status","origin","next_step","evidence"])).collect::<Vec<_>>(),
             "journal":s.list_rows("journal",None,3).iter().map(|r|brief(r,&["id","entry","mood"])).collect::<Vec<_>>(),
@@ -96,9 +145,14 @@ pub async fn run(svc: &Services, batch: &Batch) -> Result<(Vec<Proposal>, bool)>
             "self_model":brief(&s.self_state,&["data","version"]),"working":brief(&s.working,&["data","version"]),
             "previous_results":s.proposals.iter().rev().filter(|p|p["agent"]=="reflection").take(3).map(|r|brief(r,&["operation","target","decision","reason"])).collect::<Vec<_>>()})
     };
+    let system = if episode {
+        format!("{SYSTEM}\n{EPISODE_NOTE}")
+    } else {
+        SYSTEM.to_string()
+    };
     // Trim optional historical context, never silently consume omitted batch records.
     let ceiling = (settings().max_prompt_tokens as usize)
-        .saturating_sub(tokens(SYSTEM) + REFLECTION.json.len() / 4 + 64);
+        .saturating_sub(tokens(&system) + REFLECTION.json.len() / 4 + 64);
     while tokens(&user.to_string()) > ceiling {
         let key = ["memories", "beliefs", "goals", "predictions"]
             .into_iter()
@@ -112,7 +166,7 @@ pub async fn run(svc: &Services, batch: &Batch) -> Result<(Vec<Proposal>, bool)>
     }
     let out: Reflection = svc
         .llm
-        .complete_json(SYSTEM, &user.to_string(), &REFLECTION)
+        .complete_json(&system, &user.to_string(), &REFLECTION)
         .await?;
     ensure!(
         out.changes

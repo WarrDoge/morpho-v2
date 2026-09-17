@@ -10,6 +10,7 @@ use serde_json::{Map, Value, json};
 
 use morpho::Services;
 use morpho::agents::act::{self, Arm, Assignment, Limits, SESSION};
+use morpho::agents::{episode, narrative};
 use morpho::ids::IdGen;
 use morpho::llm::{DeepInfra, Llm, Recording, is_miss};
 use morpho::pyfmt::round4;
@@ -199,6 +200,51 @@ fn surprises(log: &[Value]) -> Value {
         "steps_to_green": mean_usize(&steps), "change_after_surprise": mean(&change)})
 }
 
+/// What followed each stall think: a repeat of the step before it, and a passing check later.
+fn stalls(log: &[Value]) -> Value {
+    let (mut n, mut blind, mut checked) = (0, 0, 0);
+    for (i, r) in log.iter().enumerate() {
+        if r["kind"] != "think" || r["trigger"] != "stall" {
+            continue;
+        }
+        n += 1;
+        let before = log[..i].iter().rfind(|x| x["kind"] == "act");
+        let after = log[i + 1..].iter().find(|x| x["kind"] == "act");
+        if let (Some(b), Some(a)) = (before, after)
+            && a["tool"] == b["tool"]
+            && a["target"] == b["target"]
+        {
+            blind += 1;
+        }
+        if log[i + 1..].iter().any(|x| {
+            x["kind"] == "act"
+                && x["tool"] == "run"
+                && x["exit"] == 0
+                && x["expect_success"] == true
+                && act::is_check(x["target"].as_str().unwrap_or(""))
+        }) {
+            checked += 1;
+        }
+    }
+    json!({"thinks": n, "blind_retry": blind, "check_after": checked})
+}
+
+/// `<scenario>.<arm>[-drop-<streams>].t<n>`: the cache, result and telemetry name of a run.
+pub fn run_name(scenario: &Path, arm: Arm, trial: Option<u64>) -> String {
+    let drop = &morpho::config::settings().drop_streams;
+    format!(
+        "{}.{}{}{}",
+        scenario.file_stem().unwrap().to_string_lossy(),
+        arm.name(),
+        if drop.is_empty() {
+            String::new()
+        } else {
+            format!("-drop-{}", drop.replace(',', "-"))
+        },
+        trial.map(|n| format!(".t{n}")).unwrap_or_default()
+    )
+}
+
 fn mean(xs: &[f64]) -> Value {
     if xs.is_empty() {
         Value::Null
@@ -267,12 +313,7 @@ pub async fn run(
 ) -> Result<i32> {
     let data: Value = serde_json::from_str(&std::fs::read_to_string(scenario)?)?;
     pin_clock(&data)?;
-    let name = format!(
-        "{}.{}{}",
-        scenario.file_stem().unwrap().to_string_lossy(),
-        arm.name(),
-        trial.map(|n| format!(".t{n}")).unwrap_or_default()
-    );
+    let name = run_name(scenario, arm, trial);
     let inner =
         (!morpho::config::settings().deepinfra_api_key.is_empty() && !strict).then(DeepInfra::new);
     let cache = root().join("cache").join(format!("{name}.json"));
@@ -290,7 +331,6 @@ pub async fn run(
     let limits = Limits {
         steps: limit("steps", 20),
         thinks: limit("thinks", 3),
-        cycle_every: limit("cycle_every", 5),
     };
     let t0 = Instant::now();
     let outcome = work(&svc, &ws, arm, &data, &limits, limit("idle_steps", 6)).await;
@@ -321,10 +361,21 @@ pub async fn run(
         .filter(|e| e["type"] == "observation")
         .filter_map(|e| e["event_id"].as_str())
         .collect();
+    let practices: Vec<Value> = s
+        .table("traits")
+        .rows
+        .iter()
+        .filter(|t| episode::is_practice(t))
+        .map(|t| {
+            json!({"id": t["id"], "statement": t["statement"], "confidence": t["confidence"],
+                "status": t["status"], "promoted": narrative::promoted(s, t)})
+        })
+        .collect();
     let traits: Vec<Value> = s
         .table("traits")
         .rows
         .iter()
+        .filter(|t| !episode::is_practice(t))
         .map(|t| {
             let cites = |k: &str| {
                 t[k].as_array()
@@ -337,6 +388,13 @@ pub async fn run(
                 "status": t["status"], "observations_supporting": cites("supporting_evidence"),
                 "observations_contradicting": cites("contradicting_evidence")})
         })
+        .collect();
+    let loops: Vec<Value> = s
+        .table("goals")
+        .rows
+        .iter()
+        .filter(|g| g.contains_key("kind"))
+        .map(|g| json!({"kind": g["kind"], "description": g["description"], "status": g["status"]}))
         .collect();
     let mut goals: BTreeMap<String, usize> = BTreeMap::new();
     for g in &s.table("goals").rows {
@@ -355,7 +413,12 @@ pub async fn run(
     let memories: Vec<Value> = s
         .list_rows("memories", Some(morpho::state::models::LIVE_MEMORY), 100)
         .iter()
-        .map(|m| m["summary"].clone())
+        .map(|m| {
+            let f = |k: &str| m.get(k).cloned().unwrap_or(json!(0));
+            json!({"id": m["id"], "summary": m["summary"], "successes": f("successes"),
+                   "failures": f("failures"), "access_count": f("access_count"),
+                   "created_at": f("created_at"), "salience": f("salience")})
+        })
         .collect();
     drop(st);
 
@@ -447,6 +510,80 @@ pub async fn run(
     );
     metrics.insert("think_self".into(), json!(thinks("self")));
     metrics.insert("think_surprise".into(), json!(thinks("surprise")));
+    metrics.insert("think_stall".into(), json!(thinks("stall")));
+    metrics.insert(
+        "stall".into(),
+        stalls(
+            &tasks
+                .iter()
+                .flat_map(|t| t["log"].as_array().cloned().unwrap_or_default())
+                .collect::<Vec<_>>(),
+        ),
+    );
+    metrics.insert(
+        "recalls".into(),
+        json!(all_logs.iter().filter(|r| r["recall"].is_array()).count()),
+    );
+    let mut loop_ops: BTreeMap<String, usize> = BTreeMap::new();
+    for r in all_logs.iter().filter(|r| r["kind"] == "loop") {
+        *loop_ops
+            .entry(format!(
+                "{}:{}",
+                r["op"].as_str().unwrap_or(""),
+                r["loop"].as_str().unwrap_or("")
+            ))
+            .or_default() += 1;
+    }
+    metrics.insert("loops".into(), json!(loop_ops));
+    metrics.insert(
+        "idle_loops_closed".into(),
+        json!(
+            idle["log"]
+                .as_array()
+                .into_iter()
+                .flatten()
+                .filter(|r| r["kind"] == "loop" && r["op"] == "close")
+                .count()
+        ),
+    );
+    metrics.insert(
+        "lessons".into(),
+        json!(all_logs.iter().filter(|r| r["kind"] == "lesson").count()),
+    );
+    metrics.insert(
+        "practice_citations_by_task".into(),
+        json!(
+            tasks
+                .iter()
+                .map(|t| t["log"]
+                    .as_array()
+                    .into_iter()
+                    .flatten()
+                    .filter(|r| r["practice"].is_string())
+                    .count())
+                .collect::<Vec<_>>()
+        ),
+    );
+    metrics.insert("practices_formed".into(), json!(practices.len()));
+    metrics.insert(
+        "practices_promoted".into(),
+        json!(practices.iter().filter(|p| p["promoted"] == true).count()),
+    );
+    metrics.insert(
+        "credit_updates".into(),
+        json!(
+            all_logs
+                .iter()
+                .filter(|r| r["kind"] == "credit")
+                .map(|r| r["memories"].as_u64().unwrap_or(0) + r["practices"].as_u64().unwrap_or(0))
+                .sum::<u64>()
+        ),
+    );
+    for t in &tasks {
+        if let Some(m) = t["metric"].as_str() {
+            metrics.insert(m.into(), t["hidden_task"].clone());
+        }
+    }
     metrics.insert(
         "asks".into(),
         json!(all_logs.iter().filter(|r| r["tool"] == "ask").count()),
@@ -512,8 +649,10 @@ pub async fn run(
         json!((t0.elapsed().as_secs_f64() * 10.0).round() / 10.0),
     );
 
-    let doc = json!({"scenario": "workshop", "arm": arm.name(), "trial": trial, "harness_version": 8,
-        "metrics": metrics, "tasks": tasks, "idle": idle, "traits": traits, "journal": journal, "self_state": self_state, "memories": memories,
+    let doc = json!({"scenario": scenario.file_stem().unwrap().to_string_lossy(), "arm": arm.name(),
+        "trial": trial, "drop_streams": morpho::config::settings().drop_streams, "workshop_version": 2,
+        "metrics": metrics, "tasks": tasks, "idle": idle, "traits": traits, "practices": practices,
+        "loops": loops, "journal": journal, "self_state": self_state, "memories": memories,
         "narrative": narrative, "files": final_files});
     for (k, v) in &metrics {
         if !matches!(k.as_str(), "calls_by_kind" | "prompt_tokens_by_kind") {
@@ -602,12 +741,6 @@ async fn work(
             text,
         };
         let log = act::work(svc, ws, arm, Some(&assignment), limits).await?;
-        maintenance += skipped(
-            &log.iter()
-                .filter(|r| r["kind"] == "cycle")
-                .map(|r| r["stats"].clone())
-                .collect::<Vec<_>>(),
-        );
         if arm.stateful() {
             maintenance += skipped(&drain(svc, None).await?);
         }
@@ -622,17 +755,21 @@ async fn work(
             _ if acts.len() >= limits.steps => "limit",
             _ => "empty",
         };
-        // Commands the workspace cannot run: a missing interpreter or an absent test runner.
+        // Commands the workspace cannot run: a missing interpreter, an absent test runner or a
+        // module off the path.
         let env_mistakes = acts
             .iter()
             .filter(|r| {
                 r["tool"] == "run"
                     && (r["exit"] == 127
-                        || r["target"].as_str().is_some_and(|c| c.contains("pytest")))
+                        || r["target"].as_str().is_some_and(|c| c.contains("pytest"))
+                        || r["output"]
+                            .as_str()
+                            .is_some_and(|o| o.contains("No module named")))
             })
             .count();
         tasks.push(
-            json!({"task": i + 1, "text": text, "ended": ended, "acts": acts.len(),
+            json!({"task": i + 1, "text": text, "ended": ended, "acts": acts.len(), "metric": task["metric"],
             "env_mistakes": env_mistakes,
             "flags": flags(&log, &existing),
             "hidden_task": round4(last.0 as f64 / last.1.max(1) as f64),

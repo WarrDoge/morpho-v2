@@ -45,12 +45,13 @@ control-full scenario *args:
 trial scenario n *args:
     just eval {{scenario}} --trial {{n}} --label v8-t{{n}} {{args}}
 
-# Coding tasks in a sandbox, e.g. `just workshop surprise 1`; arms: transcript nothink self surprise.
-workshop arm trial *args:
-    BACKGROUND_DAILY_TOKEN_BUDGET=100000000 just eval workshop --arm {{arm}} --trial {{trial}} {{args}}
+# Coding tasks in a sandbox, e.g. `just workshop workshop-memory morphling 1`; arms: transcript
+# morphling. Ablate with streams on the command line: `MORPHO_DROP_STREAMS=practices just workshop ...`.
+workshop scenario arm trial *args:
+    BACKGROUND_DAILY_TOKEN_BUDGET=100000000 just eval {{scenario}} --arm {{arm}} --trial {{trial}} {{args}}
 
-replay-workshop arm trial:
-    just workshop {{arm}} {{trial}} --strict --baseline evals/results/workshop.{{arm}}.t{{trial}}.json
+replay-workshop scenario arm trial:
+    just workshop {{scenario}} {{arm}} {{trial}} --strict --baseline evals/results/{{scenario}}.{{arm}}.t{{trial}}.json
 
 gate:
     cargo test --release --test replay -- --nocapture

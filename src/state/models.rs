@@ -37,17 +37,29 @@ pub const GOAL_STATUS: &[&str] = &[
     "superseded",
 ];
 pub const GOAL_ORIGIN: &[&str] = &["user", "system", "inferred", "self"];
-pub const TRAIT_KIND: &[&str] = &["value", "preference", "stance", "style", "relationship"];
+/// `practice` is written by code from a fixed failure, never proposed by reflection or the clerk.
+pub const TRAIT_KIND: &[&str] = &[
+    "value",
+    "preference",
+    "stance",
+    "style",
+    "relationship",
+    "practice",
+];
 pub const TRAIT_STATUS: &[&str] = &["active", "uncertain", "retired"];
 pub const MESSAGE_TYPES: &[&str] = &["user_message", "assistant_message"];
 
-/// What can prove an outcome: something a speaker said or something the workspace returned.
+/// What can prove an outcome: something a speaker said, something the workspace returned, or
+/// the digest code built from those results.
 pub fn is_outcome(event: &Row) -> bool {
     matches!(
         event.get("type").and_then(Value::as_str),
-        Some("user_message" | "observation")
+        Some("user_message" | "observation" | "episode")
     )
 }
+
+/// Raw steps of work, read by reflection through the episode digest instead.
+pub const STEP_EVENTS: &[&str] = &["action", "observation", "thought"];
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Proposal {
@@ -153,6 +165,11 @@ pub struct UpdateMemory {
     pub add_source_events: Vec<String>,
     #[serde(default)]
     pub add_entity_ids: Vec<String>,
+    /// Outcome credit: how strongly the memory was in mind when work was verified or not.
+    #[serde(default)]
+    pub add_success: f64,
+    #[serde(default)]
+    pub add_failure: f64,
     pub expected_version: Option<i64>,
 }
 
@@ -220,6 +237,8 @@ pub struct CreateGoal {
     pub status: String,
     pub parent_goal: Option<String>,
     pub deadline: Option<String>,
+    /// An open loop's kind (`surprise`, `unverified`); absent on every other goal.
+    pub kind: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

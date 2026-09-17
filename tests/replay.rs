@@ -107,21 +107,32 @@ fn workshop_baselines_replay_strictly() {
     for entry in std::fs::read_dir(root.join("evals/results")).unwrap() {
         let baseline = entry.unwrap().path();
         let name = baseline.file_name().unwrap().to_string_lossy().to_string();
-        let Some(stem) = name
-            .strip_prefix("workshop.")
-            .and_then(|n| n.strip_suffix(".json"))
-        else {
+        if !name.starts_with("workshop") {
             continue;
-        };
+        }
         if !root.join("evals/cache").join(&name).exists() {
             eprintln!("skip {name}: no cache");
             continue;
         }
-        let (arm, trial) = stem.split_once(".t").unwrap();
+        let doc: serde_json::Value =
+            serde_json::from_str(&std::fs::read_to_string(&baseline).unwrap()).unwrap();
         let out = Command::new(env!("CARGO_BIN_EXE_eval"))
-            .arg(root.join("evals/scenarios/workshop.json"))
-            .args(["--arm", arm, "--trial", trial, "--strict", "--baseline"])
+            .arg(
+                root.join("evals/scenarios")
+                    .join(format!("{}.json", doc["scenario"].as_str().unwrap())),
+            )
+            .args(["--arm", doc["arm"].as_str().unwrap()])
+            .args([
+                "--trial",
+                &doc["trial"].to_string(),
+                "--strict",
+                "--baseline",
+            ])
             .env("BACKGROUND_DAILY_TOKEN_BUDGET", "100000000")
+            .env(
+                "MORPHO_DROP_STREAMS",
+                doc["drop_streams"].as_str().unwrap_or(""),
+            )
             .arg(&baseline)
             .output()
             .unwrap();

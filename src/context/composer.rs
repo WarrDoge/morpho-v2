@@ -141,8 +141,13 @@ fn live_traits(state: &State) -> Vec<&Row> {
         .table("traits")
         .rows
         .iter()
-        .filter(|r| LIVE_TRAIT.contains(&s(r, "status")))
+        .filter(|r| shown_trait(r))
         .collect()
+}
+
+/// A live trait, unless it is a practice and practices are ablated.
+pub fn shown_trait(r: &Row) -> bool {
+    LIVE_TRAIT.contains(&s(r, "status")) && !(s(r, "kind") == "practice" && dropped("practices"))
 }
 
 fn cosine(a: &[f32], b: &[f32]) -> f64 {
@@ -241,7 +246,7 @@ pub fn identity(st: &Store, q: Option<&[f32]>) -> Identity {
         "confidence"
     };
     let cap = settings().context_token_budget / 8;
-    let mut lines = Vec::new();
+    let (mut lines, mut practices) = (Vec::new(), Vec::new());
     let mut used = 0;
     for (r, sim) in traits {
         let who = r
@@ -265,7 +270,11 @@ pub fn identity(st: &Store, q: Option<&[f32]>) -> Identity {
             continue;
         }
         used += cost;
-        lines.push(line);
+        if s(r, "kind") == "practice" {
+            practices.push(line);
+        } else {
+            lines.push(line);
+        }
         out.meta.push(
             json!({"id": s(r, "id"), "version": r.get("version"), "evidence_ids": evidence(r),
             "confidence": f(r, "confidence"), "score": sim, "selection_reason": reason}),
@@ -312,6 +321,9 @@ pub fn identity(st: &Store, q: Option<&[f32]>) -> Identity {
     }
     if !out.traits.is_empty() {
         parts.push(format!("Traits in play:\n{}", out.traits));
+    }
+    if !practices.is_empty() {
+        parts.push(format!("How I work:\n{}", practices.join("\n")));
     }
     parts.extend(lately);
     parts.extend(want);

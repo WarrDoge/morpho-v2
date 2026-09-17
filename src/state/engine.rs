@@ -329,6 +329,8 @@ fn validate(p: &Proposal) -> Result<Payload, String> {
                 return Err("a goal of your own must cite the trait it follows from".into());
             }
             g.origin = "self".into();
+        } else if p.agent == "loops" {
+            g.origin = "self".into();
         } else if !matches!(p.agent.as_str(), "interaction" | "harness") {
             g.origin = "inferred".into();
         } else if g.origin == "self" && !cites_trait {
@@ -582,6 +584,12 @@ fn apply_op(
                 let u = union(&list(&before, "entity_ids"), &pu.add_entity_ids);
                 fields.insert("entity_ids".into(), json!(u));
             }
+            for (key, add) in [("successes", pu.add_success), ("failures", pu.add_failure)] {
+                if add > 0.0 {
+                    let total = before.get(key).and_then(Value::as_f64).unwrap_or(0.0) + add;
+                    fields.insert(key.into(), json!(round4(total)));
+                }
+            }
             if fields
                 .get("status")
                 .and_then(Value::as_str)
@@ -736,12 +744,15 @@ fn apply_op(
         }
         Payload::CreateGoal(pg) => {
             let id = st.ids.next("goal");
-            let after = obj(json!({
+            let mut after = obj(json!({
                 "id": id, "evidence": p.evidence, "description": pg.description,
                 "priority": pg.priority, "origin": pg.origin, "status": pg.status,
                 "parent_goal": pg.parent_goal, "deadline": pg.deadline,
                 "created_at": ts, "updated_at": ts, "version": 1,
             }));
+            if let Some(kind) = &pg.kind {
+                after.insert("kind".into(), json!(kind));
+            }
             vec![t("goals", &id, None, after, false)]
         }
         Payload::UpdateGoal(ug) => {

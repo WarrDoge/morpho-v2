@@ -1,6 +1,6 @@
 # Resume checkpoint
 
-Updated 2026-09-17. v8 (judge temperature seam, clerk changes default their evidence to the
+Updated 2026-09-17 (round 2 of the workshop). v8 (judge temperature seam, clerk changes default their evidence to the
 request event, cited evidence ids validated, contested line and `contest` knob removed, `run` on
 every span) is recorded on five scenarios plus the `identity` ablation of persona-long; judge
 verdicts are majority-of-three. `just otel` starts the local Grafana stack; set
@@ -8,8 +8,10 @@ verdicts are majority-of-three. `just otel` starts the local Grafana stack; set
 personality it grows is a morphling.
 Judge calls run sixteen at a time and stop voting at a majority; `just recompose <scenario>`
 tunes context selection against a kept journal without model calls.
-The workshop (`just workshop <arm> <trial>`) gives the morphling sandboxed coding tasks; four
-arms times three trials are recorded and gated.
+The workshop (`just workshop <scenario> <arm> <trial>`) gives the morphling sandboxed coding
+tasks. Round 2 recorded two scenarios (`workshop`, `workshop-memory`) across `transcript`,
+`morphling` and `morphling` with `MORPHO_DROP_STREAMS=practices`, three trials each: 15
+recordings, all gated. Chat stays frozen at v8 and replays byte-identical.
 See [the ablation and persona report](evals/ABLATION.md), [the workshop report](evals/WORKSHOP.md), [the loop report](evals/LOOP.md),
 [the streams report](evals/STREAMS.md) and [the earlier audit](evals/REVIEW.md).
 
@@ -102,15 +104,30 @@ Artificial personality is now a goal (SPEC §40 non-goal struck 2026-09-15): dis
 - [x] Drop the `contested` prompt line: the ledger alone gives stance-after 1.0, the line gives
   0.6 (the agent hedges and keeps its framing). Removed in v8 with the `contest` knob; contrary
   evidence reaches the reply through the narrative only.
-- [ ] Workshop reads are cut at 3,000 characters like command output; both collapses (hidden
-  0.03) followed `durations.py` passing that size. Uncap reads, keep output capped, re-record.
-- [ ] Work never reaches identity: reflection writes commitments and known failures ("Always
-  run at least one verification test on any file I write before reporting done") but never
-  `create_trait`, and goals require a trait. Promote recurring self-model entries to traits
-  with observation evidence, then ablate the trait on a later task.
-- [ ] A workshop curriculum where memory should pay (a preference stated in task 1 that matters
-  in task 5, a latent bug exposed late); six short tasks let a transcript agent re-derive
-  everything for a third of the tokens.
+- [x] Workshop reads are cut at 3,000 characters like command output; both collapses (hidden
+  0.03) followed `durations.py` passing that size. Reads now use the 32,000-char write cap and
+  output stays at 3,000; no round-2 run fell below 0.92.
+- [x] Work never reaches identity. A closed surprise or a check after a stall think asks for a
+  lesson; a well-formed statement becomes a `practice` trait at 0.4, credit promotes it at 0.6
+  with two supporting episodes, and promoted practices enter the narrative. Round 2 promoted 1,
+  1 and 4 per trial on `workshop-memory`, with 2 to 17 cited actions per run.
+- [x] A workshop curriculum where memory should pay: `workshop-memory` states a CSV convention in
+  task 1 that only task 5 needs. Morphling passes it 3 of 3, the transcript agent 1 of 3.
+- [ ] Recall is held between refreshes (`Desk.held`) because a memory shown in one Act prompt is
+  gone from the next call. That one change moved `csv_convention` from 0 of 3 to 3 of 3; the
+  round-1 "recall every step" cost is gone but the held block is still in every prompt. Measure
+  whether a shorter held block (memories only, no identity) keeps the win.
+- [ ] Practices cost 80 percent more tokens than the same morphling with them dropped (15,437
+  against 8,593 per hidden pass) and buy no score on this curriculum: the environment mistakes a
+  habit would prevent are already at zero. Write a task where the fast wrong move is available
+  and only a habit refuses it.
+- [ ] Idle returns to its open loop in 3 of 3 runs that have one, but closes none: closing needs a
+  passing check and idle ends mid-repair. Give idle more steps, or count a compile-clean rewrite
+  as progress.
+- [ ] The stall detector fires once in 6 morphling runs, so thinking-under-stall is untested.
+  Either loosen it (two failures, or a repeated command) or drop it.
+- [ ] Next round on chat: expire open questions, then re-record v9. Round 2 deliberately left
+  chat frozen, so the v8 baselines still replay byte-identical.
 - [ ] Attention inverted: the seeded agent recalls the details that touch its own preferences
   (espresso, chocolate, the corgi), never the brother or the mother (0/3 vs 2/3 ablated). Decide
   whether the rubric or the salience is right before touching retrieval.

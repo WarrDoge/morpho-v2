@@ -1038,11 +1038,7 @@ async fn main() -> Result<()> {
         .is_some_and(|d| d.get("tasks").is_some());
     let arm: Option<morpho::agents::act::Arm> = arm;
     let run = match arm {
-        Some(a) => format!(
-            "workshop.{}{}",
-            a.name(),
-            trial.map(|n| format!(".t{n}")).unwrap_or_default()
-        ),
+        Some(a) => workshop::run_name(&scenario, a, trial),
         None => run_name(
             &scenario,
             label.as_deref(),
@@ -1062,8 +1058,7 @@ async fn main() -> Result<()> {
         std::process::exit(code)
     }
     if tasks {
-        let arm =
-            arm.context("a workshop scenario needs --arm transcript|nothink|self|surprise")?;
+        let arm = arm.context("a workshop scenario needs --arm transcript|morphling")?;
         let code = workshop::run(&scenario, arm, trial, strict, baseline.as_deref()).await?;
         morpho::telemetry::shutdown();
         std::process::exit(code)

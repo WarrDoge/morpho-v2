@@ -1,0 +1,1 @@
+{"type": "object", "additionalProperties": false, "properties": {"statement": {"type": "string"}, "general": {"type": "boolean"}}, "required": ["statement", "general"]}
