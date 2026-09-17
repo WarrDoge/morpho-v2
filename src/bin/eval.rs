@@ -1,12 +1,14 @@
 //! Scenario runner: metrics for one scenario, optional strict replay and baseline comparison.
 //!
-//! Usage: eval evals/scenarios/dana.json [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--audit-dir DIR]
+//! Usage: eval evals/scenarios/dana.json [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--recompose DB] [--db DIR] [--audit-dir DIR]
 
 #[path = "support/audit.rs"]
 mod audit;
 
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 use std::time::Instant;
+use tokio::{sync::Semaphore, task::JoinSet};
 use tracing::Instrument;
 
 use anyhow::{Context, Result};
@@ -15,12 +17,15 @@ use serde_json::{Map, Value, json};
 use morpho::Services;
 use morpho::agents::seed::seed_traits;
 use morpho::config::settings;
+use morpho::context::composer::compose_for;
 use morpho::ids::IdGen;
 use morpho::interact::interact_as;
 use morpho::llm::{DeepInfra, Llm, REPLY, Recording, is_miss};
 use morpho::pyfmt::{Row, py_str, round4, tokens};
 use morpho::state::models::{LIVE_BELIEF, LIVE_GOAL, LIVE_MEMORY, LIVE_TRAIT};
 use morpho::store::Store;
+use morpho::store::journal::{Journal, Record};
+use morpho::store::state::State;
 use morpho::worker::{compile_narrative, cycle};
 
 const CONTROL_SYSTEM: &str =
@@ -117,12 +122,16 @@ fn speaker(t: &Value) -> &str {
 }
 
 /// PASS/FAIL or YES/NO by majority of `JUDGE_VOTES` calls; 1.0 when it equals `yes`. The
-/// judge is not deterministic, so borderline replies are settled by vote. Vote 1 keeps the
-/// unsalted prompt, so earlier single-vote caches still serve it.
+/// judge is not deterministic, so borderline replies are settled by vote, and voting stops
+/// once a majority is settled. Vote 1 keeps the unsalted prompt, so earlier single-vote
+/// caches still serve it.
 async fn verdict(llm: &Llm, system: &str, user: &str, yes: &str) -> Result<f64> {
     let votes = settings().judge_votes.max(1);
-    let mut agree = 0;
+    let (mut agree, mut differ) = (0, 0);
     for vote in 0..votes {
+        if agree * 2 > votes || differ * 2 > votes {
+            break;
+        }
         let salted = if vote == 0 {
             user.to_string()
         } else {
@@ -130,9 +139,38 @@ async fn verdict(llm: &Llm, system: &str, user: &str, yes: &str) -> Result<f64> 
         };
         let v: Value = llm.complete_json(system, &salted, &REPLY).await?;
         let word = v["response"].as_str().unwrap_or_default().trim();
-        agree += usize::from(word.eq_ignore_ascii_case(yes));
+        if word.eq_ignore_ascii_case(yes) {
+            agree += 1;
+        } else {
+            differ += 1;
+        }
     }
     Ok((agree * 2 > votes) as u8 as f64)
+}
+
+/// Independent judge calls, sixteen in flight; results come back in job order.
+async fn judged(
+    llm: &Arc<Llm>,
+    jobs: Vec<(&'static str, String, &'static str)>,
+) -> Result<Vec<f64>> {
+    let gate = Arc::new(Semaphore::new(16));
+    let mut out = vec![0.0; jobs.len()];
+    let mut set = JoinSet::new();
+    for (i, (system, user, yes)) in jobs.into_iter().enumerate() {
+        let (llm, gate) = (llm.clone(), gate.clone());
+        set.spawn(
+            async move {
+                let _slot = gate.acquire().await;
+                (i, verdict(&llm, system, &user, yes).await)
+            }
+            .instrument(tracing::Span::current()),
+        );
+    }
+    while let Some(done) = set.join_next().await {
+        let (i, v) = done?;
+        out[i] = v?;
+    }
+    Ok(out)
 }
 
 fn turn_span(i: usize, t: &Value) -> tracing::Span {
@@ -239,7 +277,11 @@ async fn run_control(
     Ok(replies)
 }
 
-async fn behaviour(llm: &Llm, turns: &[Value], replies: &[String]) -> Result<Map<String, Value>> {
+async fn behaviour(
+    llm: &Arc<Llm>,
+    turns: &[Value],
+    replies: &[String],
+) -> Result<Map<String, Value>> {
     let probes: Vec<(&Value, &String)> = turns
         .iter()
         .zip(replies)
@@ -258,30 +300,19 @@ async fn behaviour(llm: &Llm, turns: &[Value], replies: &[String]) -> Result<Map
     m.insert("probe_accuracy".into(), mean(&verdicts));
     m.insert("update_accuracy".into(), mean(&updates));
     m.insert("probes".into(), json!(probes.len()));
-    let mut judged = Vec::new();
-    let mut judge_failed = Vec::new();
-    let mut families: Map<String, Value> = Map::new();
-    let mut by_family: std::collections::BTreeMap<String, Vec<f64>> = Default::default();
+    let mut jobs = Vec::new();
+    let mut rubrics = Vec::new();
     let mut grouped: Vec<(&str, &Value, &String)> = Vec::new();
     for (i, (t, r)) in turns.iter().zip(replies).enumerate() {
         if let Some(rubric) = t["judge"].as_str() {
             let user = format!("RUBRIC: {rubric}\n\nQUESTION: {}\n\nREPLY: {r}", text(t));
-            let v = verdict(llm, JUDGE_SYSTEM, &user, "PASS").await?;
-            tracing::info!(target: "eval", turn = i + 1, family = t["family"].as_str().unwrap_or(""),
-                ok = v == 1.0, "probe");
-            if v == 0.0 {
-                judge_failed.push(i + 1);
-            }
-            judged.push(v);
-            if let Some(fam) = t["family"].as_str() {
-                by_family.entry(fam.into()).or_default().push(v);
-            }
+            jobs.push((JUDGE_SYSTEM, user, "PASS"));
+            rubrics.push(i);
         }
         if let Some(g) = t["group"].as_str() {
             grouped.push((g, t, r));
         }
     }
-    let mut agree = Vec::new();
     for (i, (g, ta, a)) in grouped.iter().enumerate() {
         for (h, tb, b) in &grouped[i + 1..] {
             if g != h {
@@ -292,7 +323,25 @@ async fn behaviour(llm: &Llm, turns: &[Value], replies: &[String]) -> Result<Map
                 text(ta),
                 text(tb)
             );
-            agree.push(verdict(llm, AGREE_SYSTEM, &user, "YES").await?);
+            jobs.push((AGREE_SYSTEM, user, "YES"));
+        }
+    }
+    let results = judged(llm, jobs).await?;
+    let (rubric_results, agree) = results.split_at(rubrics.len());
+    let mut judged = Vec::new();
+    let mut judge_failed = Vec::new();
+    let mut families: Map<String, Value> = Map::new();
+    let mut by_family: std::collections::BTreeMap<String, Vec<f64>> = Default::default();
+    for (&i, &v) in rubrics.iter().zip(rubric_results) {
+        let t = &turns[i];
+        tracing::info!(target: "eval", turn = i + 1, family = t["family"].as_str().unwrap_or(""),
+            ok = v == 1.0, "probe");
+        if v == 0.0 {
+            judge_failed.push(i + 1);
+        }
+        judged.push(v);
+        if let Some(fam) = t["family"].as_str() {
+            by_family.entry(fam.into()).or_default().push(v);
         }
     }
     if !judged.is_empty() {
@@ -306,7 +355,7 @@ async fn behaviour(llm: &Llm, turns: &[Value], replies: &[String]) -> Result<Map
         }
     }
     if !agree.is_empty() {
-        m.insert("consistency".into(), mean(&agree));
+        m.insert("consistency".into(), mean(agree));
     }
     Ok(m)
 }
@@ -320,16 +369,9 @@ fn strings(v: &Value) -> Vec<String> {
         .collect()
 }
 
-fn state_metrics(
-    svc: &Services,
-    turns: &[Value],
-    replies: &[String],
-    manifests: &[Value],
-    ids: &[String],
-) -> Result<Map<String, Value>> {
-    let st = svc.store.lock().unwrap();
-    let s = &st.state;
-    let mut hits: Vec<f64> = Vec::new();
+/// Per probe with `refs`: did a memory sourced from those events reach the prompt.
+fn retrieval(s: &State, turns: &[Value], manifests: &[Value], ids: &[String]) -> Vec<f64> {
+    let mut hits = Vec::new();
     for (t, m) in turns.iter().zip(manifests) {
         let refs: Vec<&str> = t["refs"]
             .as_array()
@@ -351,6 +393,19 @@ fn state_metrics(
         });
         hits.push(hit as u8 as f64);
     }
+    hits
+}
+
+fn state_metrics(
+    svc: &Services,
+    turns: &[Value],
+    replies: &[String],
+    manifests: &[Value],
+    ids: &[String],
+) -> Result<Map<String, Value>> {
+    let st = svc.store.lock().unwrap();
+    let s = &st.state;
+    let hits = retrieval(s, turns, manifests, ids);
 
     let live_mem = s.list_rows("memories", Some(LIVE_MEMORY), 10_000);
     let distractors: Vec<&str> = turns
@@ -628,7 +683,7 @@ async fn rejudge(scenario: &Path, result: &Path, strict: bool) -> Result<i32> {
         .map(|r| r["reply"].as_str().unwrap_or_default().to_string())
         .collect();
     let stem = result.file_stem().unwrap().to_string_lossy().to_string();
-    let judge = judge_llm(&stem, None, strict)?.context("--rejudge needs JUDGE_MODEL")?;
+    let judge = Arc::new(judge_llm(&stem, None, strict)?.context("--rejudge needs JUDGE_MODEL")?);
     let metrics = behaviour(&judge, turns, &replies).await?;
     judge.save()?;
     print_table(&metrics, None);
@@ -641,6 +696,104 @@ async fn rejudge(scenario: &Path, result: &Path, strict: bool) -> Result<i32> {
     )?;
     println!("wrote {}", out.display());
     Ok(0)
+}
+
+/// Recomposes every recorded turn from the journal in `db` with the current composer and
+/// scores the context alone: no model call, so context selection is tuned against a
+/// recording in seconds and only the winner is re-recorded.
+async fn recompose(scenario: &Path, db: &Path, baseline: Option<&Path>) -> Result<i32> {
+    let data: Value = serde_json::from_str(&std::fs::read_to_string(scenario)?)?;
+    pin_clock(&data)?;
+    let turns = data["turns"].as_array().context("scenario has no turns")?;
+    let svc = Services::new(
+        Store::open(db, IdGen::random())?,
+        Llm::Fake(Default::default()),
+    );
+    let entries = Journal::entries(&svc.store.lock().unwrap().db)?;
+    let mut state = State::new();
+    let (mut manifests, mut ids) = (Vec::new(), Vec::new());
+    for (offset, e) in entries {
+        state.apply(offset, &e.record);
+        let Record::Event(row) = &e.record else {
+            continue;
+        };
+        if row["type"] != json!("user_message") {
+            continue;
+        }
+        let eid = row["event_id"].as_str().unwrap_or_default();
+        let (emb, speaker) = {
+            let mut st = svc.store.lock().unwrap();
+            st.state = state.clone();
+            let slot = *state
+                .slots
+                .get(eid)
+                .context("user event without a vector")?;
+            (
+                st.vectors.get(slot)?,
+                row["source"].as_str().unwrap_or("user"),
+            )
+        };
+        let text = row["payload"]["text"].as_str().unwrap_or_default();
+        let (_, manifest) = compose_for(&svc, &emb, text, speaker, Some(eid), None)?;
+        manifests.push(manifest);
+        ids.push(eid.to_string());
+    }
+    anyhow::ensure!(
+        manifests.len() == turns.len(),
+        "{} recorded turns, scenario has {}",
+        manifests.len(),
+        turns.len()
+    );
+    let hits = retrieval(&state, turns, &manifests, &ids);
+    let ctx: Vec<f64> = manifests
+        .iter()
+        .map(|m| m["tokens"].as_f64().unwrap_or(0.0))
+        .collect();
+    let mut sections: Map<String, Value> = Map::new();
+    for name in manifests[0]["sections"]
+        .as_object()
+        .into_iter()
+        .flat_map(|s| s.keys())
+    {
+        let xs: Vec<f64> = manifests
+            .iter()
+            .map(|m| m["sections"][name]["tokens"].as_f64().unwrap_or(0.0))
+            .collect();
+        sections.insert(name.clone(), mean(&xs));
+    }
+    let missed: Vec<usize> = turns
+        .iter()
+        .enumerate()
+        .filter(|(_, t)| {
+            t["tag"] == json!("probe") && t["refs"].as_array().is_some_and(|r| !r.is_empty())
+        })
+        .zip(&hits)
+        .filter(|(_, h)| **h == 0.0)
+        .map(|((i, _), _)| i + 1)
+        .collect();
+    let mut metrics = Map::new();
+    metrics.insert("retrieval_hit".into(), mean(&hits));
+    metrics.insert("ctx_tokens".into(), mean(&ctx));
+    let base: Option<Map<String, Value>> = match baseline {
+        Some(p) => serde_json::from_str::<Value>(&std::fs::read_to_string(p)?)?["metrics"]
+            .as_object()
+            .cloned(),
+        None => None,
+    };
+    print_table(&metrics, base.as_ref());
+    println!("sections {}", Value::Object(sections));
+    println!("retrieval_missed {}", json!(missed));
+    Ok(0)
+}
+
+/// Every recorded metric reads the scenario clock, never the wall clock.
+fn pin_clock(data: &Value) -> Result<()> {
+    let time = data["start_time"]
+        .as_str()
+        .unwrap_or("2026-09-11T12:00:00Z");
+    morpho::pyfmt::set_eval_clock(
+        morpho::pyfmt::parse_dt(time).context("invalid scenario start_time")?,
+    )
 }
 
 /// Scenario, label (or the baseline's) and trial: the `run` every span and metric carries.
@@ -664,6 +817,7 @@ fn run_name(
     )
 }
 
+#[allow(clippy::too_many_arguments)]
 #[tracing::instrument(name = "eval", skip_all, fields(scenario = %scenario.display(),
     label = label.unwrap_or(""), trial = trial.unwrap_or(0), harness_version = 8,
     control, drop_streams = %settings().drop_streams))]
@@ -675,15 +829,11 @@ async fn run_scenario(
     control: bool,
     trial: Option<u64>,
     audit_dir: Option<PathBuf>,
+    db: Option<PathBuf>,
 ) -> Result<i32> {
     let data: Value = serde_json::from_str(&std::fs::read_to_string(scenario)?)?;
     if !control {
-        let time = data["start_time"]
-            .as_str()
-            .unwrap_or("2026-09-11T12:00:00Z");
-        morpho::pyfmt::set_eval_clock(
-            morpho::pyfmt::parse_dt(time).context("invalid scenario start_time")?,
-        )?;
+        pin_clock(&data)?;
     }
     let turns = data["turns"].as_array().context("scenario has no turns")?;
     let stem = scenario.file_stem().unwrap().to_string_lossy().to_string();
@@ -699,7 +849,7 @@ async fn run_scenario(
         None
     };
     let llm = Llm::Recording(Recording::new(inner, cache, strict, control)?);
-    let grader = judge_llm(&stem, trial, strict)?;
+    let grader = judge_llm(&stem, trial, strict)?.map(Arc::new);
     let base: Option<Map<String, Value>> = match baseline {
         Some(p) => serde_json::from_str::<Value>(&std::fs::read_to_string(p)?)?["metrics"]
             .as_object()
@@ -707,9 +857,10 @@ async fn run_scenario(
         None => None,
     };
     let audit = audit_dir.map(audit::Audit::new).transpose()?;
-    let dir = audit
-        .as_ref()
-        .map(|a| a.dir.join("database"))
+    // `--db` keeps the journal for `--recompose`; the audit owns its own copy.
+    let keep = db.is_some();
+    let dir = db
+        .or_else(|| audit.as_ref().map(|a| a.dir.join("database")))
         .unwrap_or_else(|| {
             std::env::temp_dir().join(format!("morpho-eval-{name}-{}", std::process::id()))
         });
@@ -756,7 +907,7 @@ async fn run_scenario(
             json!({"error": outcome.as_ref().err().map(|e| format!("{e:#}"))}),
         )?;
     }
-    if audit.is_none() {
+    if audit.is_none() && !keep {
         let _ = std::fs::remove_dir_all(&dir);
     }
     let replies = match outcome {
@@ -847,7 +998,7 @@ async fn main() -> Result<()> {
     let mut args = std::env::args().skip(1);
     let (mut scenario, mut label, mut strict, mut baseline, mut control, mut trial, mut audit_dir) =
         (None, None, false, None, false, None, None);
-    let mut rejudge_path = None;
+    let (mut rejudge_path, mut recompose_db, mut db) = (None, None, None);
     while let Some(a) = args.next() {
         match a.as_str() {
             "--audit-dir" => {
@@ -855,6 +1006,8 @@ async fn main() -> Result<()> {
                     args.next().context("--audit-dir requires a directory")?,
                 ))
             }
+            "--db" => db = args.next().map(PathBuf::from),
+            "--recompose" => recompose_db = args.next().map(PathBuf::from),
             "--label" => label = args.next(),
             "--strict" => strict = true,
             "--baseline" => baseline = args.next().map(PathBuf::from),
@@ -865,7 +1018,7 @@ async fn main() -> Result<()> {
         }
     }
     let scenario = scenario
-        .context("usage: eval SCENARIO [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--audit-dir DIR]")?;
+        .context("usage: eval SCENARIO [--label L] [--strict] [--baseline FILE] [--control] [--trial N] [--rejudge RESULT] [--recompose DB] [--db DIR] [--audit-dir DIR]")?;
     let run = run_name(
         &scenario,
         label.as_deref(),
@@ -876,10 +1029,15 @@ async fn main() -> Result<()> {
     morpho::telemetry::init(
         "morpho-eval",
         tracing::level_filters::LevelFilter::WARN,
-        rejudge_path.is_none().then_some(run.as_str()),
+        (rejudge_path.is_none() && recompose_db.is_none()).then_some(run.as_str()),
     )?;
     if let Some(result) = rejudge_path {
         let code = rejudge(&scenario, &result, strict).await?;
+        morpho::telemetry::shutdown();
+        std::process::exit(code)
+    }
+    if let Some(db) = recompose_db {
+        let code = recompose(&scenario, &db, baseline.as_deref()).await?;
         morpho::telemetry::shutdown();
         std::process::exit(code)
     }
@@ -891,6 +1049,7 @@ async fn main() -> Result<()> {
         control,
         trial,
         audit_dir,
+        db,
     )
     .await?;
     morpho::telemetry::shutdown();
@@ -909,7 +1068,7 @@ mod tests {
         for word in ["PASS", "FAIL", "YES", "NO", "YES"] {
             fake.queue("Reply", json!({"response": word}));
         }
-        let llm = Llm::Fake(fake);
+        let llm = Arc::new(Llm::Fake(fake));
         let turns = [
             json!({"text":"a","judge":"r","family":"x"}),
             json!({"text":"b","judge":"r","family":"y"}),

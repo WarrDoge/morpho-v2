@@ -23,13 +23,17 @@ eval scenario *args:
     cargo run --release --bin eval -- evals/scenarios/{{scenario}}.json {{args}}
 
 replay scenario:
-    just eval {{scenario}} --strict --baseline evals/results/{{scenario}}.v8.json
+    just eval {{scenario}} --strict --baseline evals/results/{{scenario}}.v8.json --db evals/cache/{{scenario}}.v8.db
 
 replay-control scenario:
     just eval {{scenario}} --control --strict --baseline evals/results/{{scenario}}.control.base.json
 
 record scenario:
-    just eval {{scenario}} --label v8
+    just eval {{scenario}} --label v8 --db evals/cache/{{scenario}}.v8.db
+
+# Context selection against the recorded journal, no model calls (`just replay` writes the db).
+recompose scenario *args:
+    just eval {{scenario}} --recompose evals/cache/{{scenario}}.v8.db --baseline evals/results/{{scenario}}.v8.json {{args}}
 
 # Zero named context streams, e.g. `just ablate dana recent` (env on the command line only).
 ablate scenario streams *args:

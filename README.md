@@ -187,7 +187,15 @@ control the whole history; `just trial dana 2` samples a separate cache file. Sc
 carry `speaker`, `session`, a `judge` rubric (graded PASS/FAIL by the same model) and a `group`
 (replies sharing a group are judged pairwise for agreement, reported as `consistency`), and a
 `family` for per-family accuracy. `JUDGE_MODEL` grades with a separate model and cache;
-`--rejudge RESULT.json` re-scores an earlier result with it.
+`--rejudge RESULT.json` re-scores an earlier result with it. Verdicts are a majority of
+`JUDGE_VOTES`, voting stops once the majority is settled, and judge calls run sixteen at a time.
+
+Context selection is a pure function of the recorded state, so it is tuned without the model:
+`just replay dana` keeps the run's journal in `evals/cache/dana.v8.db` (`--db DIR`), and
+`just recompose dana` (`--recompose DB`) recomposes every turn from that journal with the
+current composer and prints `retrieval_hit`, `ctx_tokens`, tokens per section and the probes
+whose memories missed the prompt, in seconds and for no tokens. Ranking, budgets, shares and
+`MORPHO_DROP_STREAMS` are compared this way; only the winner is re-recorded.
 
 For diagnostics, pass `--audit-dir evals/audit/dana-run` to the evaluator. The directory must
 be new; it retains the database, per-turn/cycle state, context manifests, usage, and any failure.

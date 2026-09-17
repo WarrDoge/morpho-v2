@@ -665,9 +665,13 @@ pub fn compose_for(
     let identity_meta = identity(&st, Some(emb)).meta;
     drop(st);
     let mut reasons = omitted.into_iter();
+    let floor = settings().context_score_floor;
     for &si in &POOL {
         for item in &mut sections[si] {
             item.omit = reasons.next().flatten();
+            if item.omit.is_none() && item.score < floor {
+                item.omit = Some("below score floor".into());
+            }
         }
     }
     let headers: usize = SECTIONS

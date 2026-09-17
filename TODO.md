@@ -6,7 +6,10 @@ every span) is recorded on five scenarios plus the `identity` ablation of person
 verdicts are majority-of-three. `just otel` starts the local Grafana stack; set
 `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318` to export. The harness is morpho; a
 personality it grows is a morphling.
-See [the ablation and persona report](evals/ABLATION.md), [the streams report](evals/STREAMS.md) and [the earlier audit](evals/REVIEW.md).
+Judge calls run sixteen at a time and stop voting at a majority; `just recompose <scenario>`
+tunes context selection against a kept journal without model calls.
+See [the ablation and persona report](evals/ABLATION.md), [the loop report](evals/LOOP.md),
+[the streams report](evals/STREAMS.md) and [the earlier audit](evals/REVIEW.md).
 
 ## Intent and decisions
 
@@ -73,8 +76,14 @@ Artificial personality is now a goal (SPEC §40 non-goal struck 2026-09-15): dis
   request event; `recent_events` is still in the index. Reflection still tries to revise user
   goals (5 to 6 refusals per run).
 - [x] The judge is not deterministic (9 of 12 failures flipped on a fresh pass; 3 of 78 at
-  temperature 0), so verdicts stay a majority of `JUDGE_VOTES`, about 480 judge calls per
-  persona-long recording.
+  temperature 0), so verdicts stay a majority of `JUDGE_VOTES`; calls run sixteen at a time
+  and stop at a majority (persona: 82 calls in 37 s, same verdicts as 120 sequential in 18 min).
+- [x] Recompose: `--db` keeps a run's journal, `--recompose DB` recomposes every turn with the
+  current composer for no tokens and reproduces the recorded `retrieval_hit` and `ctx_tokens`.
+  Sweeps in `evals/LOOP.md`: budget and score floor cost long's probes, `recent` does not.
+- [ ] v9 candidates from the loop report: drop `recent` from the reply context (context −6% to
+  −17%, retrieval unchanged, v3 live runs kept probe accuracy); hedged requests for the p90
+  tail; a clerk recall rule (long's two misses are memories the clerk never wrote).
 - [ ] Trial spread before any prompt change: two more seeded v8 persona-long recordings (about
   2.4M tokens); the round-4 "contest line net negative" and the v8 stance-after 0.2 are single
   recordings each.
