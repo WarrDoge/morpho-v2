@@ -329,3 +329,121 @@ What is still missing:
 - The stall detector almost never fires, so thinking-under-stall is untested.
 - Practices cost 80 percent more tokens than the same morphling without them, and no task here
   rewards a habit. That is the next curriculum: a task where the fast wrong move is available.
+
+## Round 3: do practices pay?
+
+Round 2 left one question open: practices form, get cited and get promoted, but dropping them
+cost nothing and saved 44 percent of the tokens, because the habit rule sat on a floor. This
+round builds the curriculum round 2 asked for — a task where the cheap wrong move is available
+and only a habit refuses it — and applies rules fixed before any run.
+
+### The curriculum
+
+`workshop-habit` is a working, tested billing module with four house rules in its docstring:
+money rounds half up to two decimals (not with `round()`, which rounds half to even), billable
+time rounds up to the next six-minute block, a `nonbillable` line is rendered but never totalled,
+and an unknown rate code raises `UnknownRate`. Six tasks each add a function that has to route
+through the existing helpers.
+
+The cheap wrong move is available at every task: write the new function with inline arithmetic,
+run `python3 -m unittest`, which is green because the suite only covers the original helpers, and
+report done. `check.py` is what catches it — an AST audit that forbids `round()`, `/ 60` and
+direct `RATES` reads outside the three helpers, plus a `SAMPLES` registry that smoke-calls every
+public function and rejects any number that came out unrounded. On a shortcut solution
+`python3 -m unittest` prints OK while `check.py` prints six complaints.
+
+The rule arrives once, in task 1's text: "we run `python3 check.py` before calling a task done."
+The half of the rule that is *not* stated — that a new function needs a `SAMPLES` entry — is what
+makes the first failure certain: at task 2 the audit fails, the agent fixes it, and that closed
+surprise is what `lesson()` turns into a practice.
+
+Two arms, `morphling` with and without `MORPHO_DROP_STREAMS=practices`, three trials each.
+
+### Results
+
+| | practices t1/t2/t3 | dropped t1/t2/t3 |
+| --- | --- | --- |
+| `hidden_final` | 1.00, 1.00, 1.00 | 1.00, 0.95, 1.00 |
+| `check_rate` | 1.00, 0.83, 1.00 | 1.00, 1.00, 1.00 |
+| `check_first_pass` of 6 | 3, 2, 4 | 2, 3, 3 |
+| `regressions` | 0, 0, 0 | 0, 1, 0 |
+| tokens per hidden pass | 13,022 / 10,194 / 9,814 | 10,068 / 10,952 / 8,956 |
+| practices formed | 2, 3, 2 | 4, 1, 1 |
+| promoted | 1, 2, 1 | 0, 0, 0 |
+| actions citing a practice | 34, 22, 29 | 0, 0, 0 |
+
+### The decision rules, fixed before any run
+
+| rule | verdict | evidence |
+| --- | --- | --- |
+| Floor guard: the dropped arm must actually miss the habit — `check_rate` < 1.0 in ≥ 2 of 3, or ≥ 1 regression in ≥ 2 of 3 | fails | `check_rate` is 1.00 in 3 of 3, and only one run regressed. The cheap move was never taken by either arm. |
+| Value: mean `check_rate` higher with practices by ≥ 0.17, and `hidden_final` not lower | fails | 0.94 against 1.00 on `check_rate`; 1.00 against 0.98 on hidden. Neither difference is outside one run's noise. |
+| Cost: practices ≤ 1.25× the dropped arm per hidden pass | passes | 1.01× on medians, 1.10× on means. Round 2 was 1.80×. |
+| Verdict | no verdict | The floor guard governs: this curriculum did not tempt, so it cannot price a habit. |
+
+### What actually happened
+
+The practices are good. They are well formed, they are about the right thing, and outcome credit
+promotes them: "When a checker enforces house rules, I read the checker's requirements first and
+rerun it after every change rather than assuming my tests passing means done" (0.8, promoted),
+"When I add a new function to a file, I update the samples/registry the checker requires for it
+in the same pass, then rerun checks before calling it done" (0.9, promoted). Between 22 and 34
+actions per run named one.
+
+They changed nothing. The arm without them ran `check.py` after every task in all three trials,
+scored the same, and formed the same lessons — four, three and two of them — which simply never
+reached identity, so none was ever promoted or cited. The ablation works exactly as designed, and
+the behaviour it ablates is invisible in the outcome.
+
+The reason is the same one round 2 hit, in a new disguise. The rule was stated once, in task 1.
+A stated rule becomes a memory, held recall puts that memory in the prompt, and a run accumulates
+six or seven memories against a 4,000-token context budget — so recall never has to choose, and
+the rule is present on every call whether or not a practice restates it. A practice is a *ranked,
+always-present* copy of something the memory stream was already delivering in full.
+
+### What this says about practices
+
+Two rounds, two curricula designed to reward a habit, no measurable value either time:
+
+- Round 2, `workshop-memory`: dropping practices cost nothing and saved 44 percent.
+- Round 3, `workshop-habit`: dropping practices cost nothing and saved 10 percent.
+
+The cost came down because the identity block is smaller and the `Lesson` call is cheap, so
+practices are no longer expensive. They are simply redundant. The one condition under which they
+could pay is the one neither curriculum creates: *recall pressure*. A practice differs from a
+memory only in being always present and first person. For the first half to matter, recall has to
+fail to surface the rule — which needs far more memories than a six-task run produces. That is a
+long-horizon experiment (twenty-plus tasks, forty-plus memories), not a habit experiment.
+
+So the finding is not "practices do not work". It is that at this scale nothing distinguishes
+them from the memory stream, and the harness has no recall pressure for them to relieve.
+
+### Harness defects the round found
+
+- The first pilot never ran `check.py` or the tests at all; it verified with inline `python3 -c`
+  asserts and shipped `totals.get(task) + billable_hours(...)`, a `TypeError` on every input, that
+  broke at task 4 and that nothing in the workspace would have reported. `check.py` gained the
+  `SAMPLES` smoke calls because of it.
+- A shape-only audit is toothless: `round(x, 2)` returns a two-decimal float, so "is it rounded"
+  passes on exactly the value the house rule forbids. The audit reads the source instead.
+- `check.py` still only covers what its samples call. The one regression in these six runs —
+  `render_invoice` losing the ability to take a pasted row — passed the audit because its sample
+  passes dicts.
+- A run that states the whole rule up front produces no failure, so no lesson and no practice.
+  Pilot 3 scored 1.00 with `check_rate` 1.0 and formed zero practices. Half the rule has to be
+  discovered.
+
+### Practices removed
+
+After this round practices came out of the harness: the `Lesson` call and `LESSON_SYSTEM`,
+`schemas/Lesson.json` and its registration, `practice` in `TRAIT_KIND`, the `practice` field on
+`Act`, the practice branch of credit, the promotion branch in `narrative::sources`, and the "How
+I work:" block in the composer. Two curricula built to reward a habit measured no value, and
+`MORPHO_DROP_STREAMS=practices` had already shown the harness runs without them.
+
+The recordings of rounds 2 and 3 stay in `evals/results/` as the evidence behind the numbers
+above, but they cannot replay: removing the `practice` field changes every workshop prompt,
+including the transcript arm's. They carry `workshop_version: 2` and the gate skips them the way
+it skips pre-v8 chat baselines. The workshop half of the replay gate is dormant until the next
+round records a `workshop_version: 3` baseline; `tests/workshop.rs` still covers the mechanics
+against a fake model and the real sandbox.

@@ -34,7 +34,6 @@ schema!(CONSOLIDATION, "Consolidation");
 schema!(REFLECTION, "Reflection");
 schema!(ACT, "Act");
 schema!(THINK, "Think");
-schema!(LESSON, "Lesson");
 
 static TIMESTAMP: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:[+-]\d{2}:\d{2}|Z)?")

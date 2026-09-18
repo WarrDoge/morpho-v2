@@ -116,6 +116,10 @@ fn workshop_baselines_replay_strictly() {
         }
         let doc: serde_json::Value =
             serde_json::from_str(&std::fs::read_to_string(&baseline).unwrap()).unwrap();
+        if doc["workshop_version"] != 3 {
+            eprintln!("historical workshop recording {name}: practices removed; re-record");
+            continue;
+        }
         let out = Command::new(env!("CARGO_BIN_EXE_eval"))
             .arg(
                 root.join("evals/scenarios")

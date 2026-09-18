@@ -37,15 +37,7 @@ pub const GOAL_STATUS: &[&str] = &[
     "superseded",
 ];
 pub const GOAL_ORIGIN: &[&str] = &["user", "system", "inferred", "self"];
-/// `practice` is written by code from a fixed failure, never proposed by reflection or the clerk.
-pub const TRAIT_KIND: &[&str] = &[
-    "value",
-    "preference",
-    "stance",
-    "style",
-    "relationship",
-    "practice",
-];
+pub const TRAIT_KIND: &[&str] = &["value", "preference", "stance", "style", "relationship"];
 pub const TRAIT_STATUS: &[&str] = &["active", "uncertain", "retired"];
 pub const MESSAGE_TYPES: &[&str] = &["user_message", "assistant_message"];
 

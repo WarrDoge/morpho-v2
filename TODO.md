@@ -1,6 +1,6 @@
 # Resume checkpoint
 
-Updated 2026-09-17 (round 2 of the workshop). v8 (judge temperature seam, clerk changes default their evidence to the
+Updated 2026-09-18 (round 3 of the workshop). v8 (judge temperature seam, clerk changes default their evidence to the
 request event, cited evidence ids validated, contested line and `contest` knob removed, `run` on
 every span) is recorded on five scenarios plus the `identity` ablation of persona-long; judge
 verdicts are majority-of-three. `just otel` starts the local Grafana stack; set
@@ -11,7 +11,11 @@ tunes context selection against a kept journal without model calls.
 The workshop (`just workshop <scenario> <arm> <trial>`) gives the morphling sandboxed coding
 tasks. Round 2 recorded two scenarios (`workshop`, `workshop-memory`) across `transcript`,
 `morphling` and `morphling` with `MORPHO_DROP_STREAMS=practices`, three trials each: 15
-recordings, all gated. Chat stays frozen at v8 and replays byte-identical.
+recordings, all gated. Round 3 added `workshop-habit`, a curriculum built to make a habit pay:
+6 more recordings, `morphling` with and without practices. Its floor guard tripped — the arm
+without practices ran the audit after every task too — so practices still have no measured
+value, at 1.10x the tokens, and were removed after it. Chat stays frozen at v8 and replays
+byte-identical.
 See [the ablation and persona report](evals/ABLATION.md), [the workshop report](evals/WORKSHOP.md), [the loop report](evals/LOOP.md),
 [the streams report](evals/STREAMS.md) and [the earlier audit](evals/REVIEW.md).
 
@@ -117,10 +121,20 @@ Artificial personality is now a goal (SPEC §40 non-goal struck 2026-09-15): dis
   gone from the next call. That one change moved `csv_convention` from 0 of 3 to 3 of 3; the
   round-1 "recall every step" cost is gone but the held block is still in every prompt. Measure
   whether a shorter held block (memories only, no identity) keeps the win.
-- [ ] Practices cost 80 percent more tokens than the same morphling with them dropped (15,437
-  against 8,593 per hidden pass) and buy no score on this curriculum: the environment mistakes a
-  habit would prevent are already at zero. Write a task where the fast wrong move is available
-  and only a habit refuses it.
+- [x] A task where the fast wrong move is available and only a habit refuses it:
+  `workshop-habit`, six tasks over a billing module whose house rules a `check.py` audit enforces
+  and whose unit tests do not. Verified: a shortcut solution passes `python3 -m unittest` and
+  fails `check.py` in six places.
+- [x] Practices removed. Two curricula built to reward a habit measured no value: round 2 cost
+  1.80x and round 3 cost 1.10x for the same score, and round 3's floor guard tripped because the
+  arm without practices ran the audit after every task in 3 of 3. A stated rule becomes a memory,
+  held recall carries it, and 6 or 7 memories never make recall choose, so a practice was a copy
+  of what the memory stream already delivered.
+- [ ] The workshop half of the replay gate is dormant: removing the `practice` field changed
+  every workshop prompt, so the 21 round-2 and round-3 recordings cannot replay. They stay as the
+  evidence behind the reports, carry `workshop_version: 2` and are skipped like pre-v8 chat
+  baselines. The next workshop round records a `workshop_version: 3` baseline and relights it;
+  until then `tests/workshop.rs` is the only cover for the workshop path.
 - [ ] Idle returns to its open loop in 3 of 3 runs that have one, but closes none: closing needs a
   passing check and idle ends mid-repair. Give idle more steps, or count a compile-clean rewrite
   as progress.

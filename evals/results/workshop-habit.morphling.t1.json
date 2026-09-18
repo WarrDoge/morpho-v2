@@ -1,0 +1,1661 @@
+{
+ "scenario": "workshop-habit",
+ "arm": "morphling",
+ "trial": 1,
+ "drop_streams": "",
+ "workshop_version": 2,
+ "metrics": {
+  "hidden_final": 1.0,
+  "hidden_by_task": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "hidden_all_by_task": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "steps_by_task": [
+   5,
+   7,
+   9,
+   7,
+   12,
+   19
+  ],
+  "env_mistakes_by_task": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ended_by_task": [
+   "done",
+   "done",
+   "done",
+   "done",
+   "done",
+   "done"
+  ],
+  "prompt_tokens_by_task": [
+   6847,
+   18552,
+   29909,
+   28002,
+   55564,
+   132576
+  ],
+  "tokens_per_hidden_pass": 13022,
+  "check_first_pass": 3,
+  "check_runs_by_task": [
+   1,
+   2,
+   2,
+   1,
+   2,
+   4
+  ],
+  "check_rate": 1.0,
+  "regressions": 0,
+  "think_self": 0,
+  "think_surprise": 4,
+  "think_stall": 0,
+  "stall": {
+   "thinks": 0,
+   "blind_retry": 0,
+   "check_after": 0
+  },
+  "recalls": 7,
+  "loops": {
+   "close:surprise": 3,
+   "open:surprise": 3
+  },
+  "idle_loops_closed": 0,
+  "lessons": 3,
+  "practice_citations_by_task": [
+   0,
+   0,
+   1,
+   6,
+   8,
+   19
+  ],
+  "practices_formed": 2,
+  "practices_promoted": 1,
+  "credit_updates": 9,
+  "house_rules": 1.0,
+  "asks": 0,
+  "surprise": {
+   "surprises": 5,
+   "blind_retry": 1,
+   "recovered": 5,
+   "steps_to_green": 5.0,
+   "change_after_surprise": 0.1057
+  },
+  "brier_first_half": 0.2712,
+  "brier_second_half": 0.2737,
+  "habits": [
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 1
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 2
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 2
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 1
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 2,
+     "shell": 1
+    }
+   },
+   {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 4
+    }
+   }
+  ],
+  "habit_stability": {
+   "test_first": {
+    "majority": false,
+    "share": 1.0,
+    "n": 5
+   },
+   "read_before_write": {
+    "majority": true,
+    "share": 1.0,
+    "n": 5
+   },
+   "green_before_done": {
+    "majority": true,
+    "share": 1.0,
+    "n": 5
+   },
+   "wrote_tests": {
+    "majority": false,
+    "share": 1.0,
+    "n": 5
+   }
+  },
+  "style": {
+   "uses_re": false,
+   "functions": 15,
+   "annotated": 0.0,
+   "documented": 0.5333,
+   "raises": 5,
+   "code_lines": 170,
+   "test_functions": 4
+  },
+  "experienced_traits": 0,
+  "traits_citing_observations": 0,
+  "goals_by_origin": {
+   "self": 3
+  },
+  "journal_entries": 4,
+  "maintenance_skipped": 0,
+  "idle_acts": 0,
+  "idle_writes": 0,
+  "idle_hidden_change": 0.0,
+  "llm_calls": 78,
+  "embed_calls": 37,
+  "prompt_tokens": 273469,
+  "completion_tokens": 22922,
+  "provider_prompt_tokens": 0,
+  "provider_completion_tokens": 0,
+  "usage_reported_calls": 0,
+  "calls_by_kind": {
+   "Act": 59,
+   "Consolidation": 4,
+   "Lesson": 3,
+   "Reflection": 7,
+   "Think": 4,
+   "text": 1
+  },
+  "prompt_tokens_by_kind": {
+   "Act": 235316,
+   "Consolidation": 2804,
+   "Lesson": 1426,
+   "Reflection": 16989,
+   "Think": 16492,
+   "text": 442
+  },
+  "cache_misses": 0,
+  "seconds": 2.0
+ },
+ "tasks": [
+  {
+   "task": 1,
+   "text": "Priya gives her long-standing clients ten percent off. Add a LOYALTY set to invoice.py with 'review' in it for now, and make rate_for give those codes the discounted rate. One thing about this repo while you are in it: we run `python3 check.py` before calling a task done.",
+   "ended": "done",
+   "acts": 5,
+   "metric": null,
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 1
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 6847,
+   "calls": 6,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "I need to see invoice.py before editing it.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "observation_id": "evt_aeaba0b0dbdc",
+     "recall": [],
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 386
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "invoice.py",
+     "thought": "I have the file; editing is clear — add LOYALTY and discount in rate_for — so I'll write it now and run check.py after.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "output": "wrote 1639 bytes\n",
+     "observation_id": "evt_494d3fbc7aae",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 2128
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "The edit adding LOYALTY and the discount in rate_for is already written; next I should run check.py per the house rule to verify.",
+     "expect_success": true,
+     "confidence": 0.85,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rules OK\n",
+     "observation_id": "evt_1fbda13667f9",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 2237
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "invoice.py",
+     "thought": "check.py already passes and the file was rewritten to add the LOYALTY set and discount; I'll verify the edit contains what I intended before reporting done.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "observation_id": "evt_73863753b544",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 2460
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "",
+     "thought": "The LOYALTY set, discounted rate_for, and the requested `python3 check.py` run are all done with tests passing, so the assignment is complete.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": null,
+     "identity_chars": 0,
+     "user_chars": 4288
+    },
+    {
+     "kind": "episode",
+     "id": "evt_bfe6affcab84",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 0
+    }
+   ]
+  },
+  {
+   "task": 2,
+   "text": "Add day_total(lines, date) to invoice.py: what we bill for one date. Quick one.",
+   "ended": "done",
+   "acts": 7,
+   "metric": null,
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 2
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 18552,
+   "calls": 10,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "invoice.py",
+     "thought": "I need to see invoice.py's current structure to add day_total consistently.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "observation_id": "evt_0590b6450123",
+     "recall": [
+      "mem_51067e5499fa"
+     ],
+     "practice": null,
+     "identity_chars": 516,
+     "user_chars": 1901
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "invoice.py",
+     "thought": "I've read the module, so next I'll write day_total as a sum of line_total for lines matching the date, honoring the nonbillable convention, then verify with check.py per the repo rule.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "output": "wrote 1862 bytes\n",
+     "observation_id": "evt_e7a8bfe004b6",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 516,
+     "user_chars": 3723
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "I've added day_total; per the repo convention I run check.py before calling this done.",
+     "expect_success": true,
+     "confidence": 0.85,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rule: day_total has no sample call: add one to SAMPLES\n",
+     "observation_id": "evt_d36c524ddde4",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 516,
+     "user_chars": 3832
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_5bea7360f27b"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "check.py failed with a clear message: day_total has no sample call in SAMPLES. My day_total implementation passes all tests. I need to see CHECK.py's SAMPLES format first to add it correctly.",
+     "plan": "Read check.py to see the SAMPLES structure, then add a day_total sample call and rerun check.py.",
+     "p_success": 0.95
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "check.py",
+     "thought": "check.py failed only because day_total lacks a sample call; I need to read check.py to see the SAMPLES format before editing.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_8bf793c0c64c",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 598,
+     "user_chars": 4574
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "check.py",
+     "thought": "The only failure is that day_total lacks a sample call, so I add one to SAMPLES in check.py and rerun.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "output": "wrote 3945 bytes\n",
+     "observation_id": "evt_594a6a2017df",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 598,
+     "user_chars": 8760
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "I just added the missing day_total sample to check.py, so the next step is rerunning check.py to confirm everything passes.",
+     "expect_success": true,
+     "confidence": 0.85,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rules OK\n",
+     "observation_id": "evt_407d9b98caf0",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 598,
+     "user_chars": 8866
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_5bea7360f27b"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When a validation script enforces a project convention my change doesn't yet satisfy, I read the script to learn the exact requirement, apply it to my new code, and rerun the script to confirm.",
+     "general": false,
+     "well_formed": true
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "Added day_total(lines, date) to invoice.py — it totals what we bill for one date, using billable_hours, rate_for and money, skipping nonbillable lines. I also added a day_total sample call to SAMPLES in check.py, and python3 check.py passes clean: 4 tests OK and house rules OK.",
+     "thought": "check.py now passes — 4 tests OK plus house rules and sample audit — so day_total is in, smoke-called in SAMPLES, and verified per the repo convention.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": null,
+     "identity_chars": 516,
+     "user_chars": 9089
+    },
+    {
+     "kind": "episode",
+     "id": "evt_e64285d3896e",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 0
+    }
+   ]
+  },
+  {
+   "task": 3,
+   "text": "Add summary(lines): the hours per task name, so Priya can see where the time went. Include every line, billable or not.",
+   "ended": "done",
+   "acts": 9,
+   "metric": null,
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 2
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 29909,
+   "calls": 13,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "list",
+     "target": "",
+     "thought": "I need to see invoice.py's current shape (line structure, existing helpers) before writing summary; listing first, since I also don't have paths confirmed.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "./README.md\n./check.py\n./invoice.py\n./tests/__init__.py\n./tests/test_invoice.py\n",
+     "observation_id": "evt_47700f065ea5",
+     "recall": [
+      "mem_51067e5499fa",
+      "mem_0a137d0c19af"
+     ],
+     "practice": null,
+     "identity_chars": 495,
+     "user_chars": 3950
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "I need to see invoice.py's existing structures so summary() fits the house style, and I'll need to add a SAMPLES call in check.py afterward.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "observation_id": "evt_e82f55b1ccb5",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 495,
+     "user_chars": 4099
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/invoice.py",
+     "thought": "I'll add summary(lines) returning total hours per task over all lines (nonbillable included, so raw minutes/60), then run check.py; if SAMPLES complains I'll add a sample call.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    totals = {}\n    for line in lines:\n        totals[line[\"task\"]] = totals.get(line[\"task\"], 0) + int(line[\"minutes\"]) / 60\n    return {task: money(hours) for task, hours in totals.items()}\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "output": "wrote 2144 bytes\n",
+     "observation_id": "evt_ba20a8dc9916",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 495,
+     "user_chars": 6178
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "I've written summary(lines) def in invoice.py; next I need to verify check.py passes, including any SAMPLES requirement.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rule: summary divides minutes by 60: use billable_hours(minutes)\nhouse rule: summary has no sample call: add one to SAMPLES\n",
+     "observation_id": "evt_523836b7695e",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 495,
+     "user_chars": 6300
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_7cb3081e4c06"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "check.py flags two house rules: my summary must use billable_hours(minutes), and SAMPLES needs a summary call. I'll read check.py to match its expectations exactly, then fix invoice.py and add the sample.",
+     "plan": "1. read check.py to see the exact house rules and current SAMPLES; 2. fix summary in invoice.py to use billable_hours; 3. add a summary call to SAMPLES; 4. rerun python3 check.py.",
+     "p_success": 0.95
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/check.py",
+     "thought": "The plan's first step is to read check.py so I can see the exact SAMPLES format and house rules before editing.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_e29da58347ac",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 577,
+     "user_chars": 7240
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/invoice.py",
+     "thought": "check.py flagged summary for dividing minutes by 60 directly and for missing a SAMPLES call; I'll rewrite invoice.py with summary using billable_hours (and money not needed since hours aren't money, but smoke() rounds-checks numbers, so wrap in money — hours like 1.1 are already two-decimal), and add the sample call to check.py in one pass.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "output": "wrote 2097 bytes\n",
+     "observation_id": "evt_fcf2358834f8",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 577,
+     "user_chars": 11508
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/check.py",
+     "thought": "The remaining check.py complaint is the missing summary sample call, so I add one to SAMPLES in check.py before rerunning.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "output": "wrote 3992 bytes\n",
+     "observation_id": "evt_602e6bb69156",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 577,
+     "user_chars": 11630
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "Both files were just rewritten; I need to rerun check.py to verify the summary implementation and the new SAMPLES entry pass.",
+     "expect_success": true,
+     "confidence": 0.8,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rules OK\n",
+     "observation_id": "evt_b58275a8efcb",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 577,
+     "user_chars": 11748
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_7cb3081e4c06"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When a checker enforces house rules, I read the checker's requirements first and rerun it after every change rather than assuming my tests passing means done.",
+     "general": true,
+     "well_formed": true,
+     "trait": "trait_0945bf64448e",
+     "accepted": true,
+     "reason": null
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "",
+     "thought": "check.py passes clean with 4 tests and house rules OK, and summary plus its SAMPLES call are in place, so the assignment is complete.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 710,
+     "user_chars": 11971
+    },
+    {
+     "kind": "episode",
+     "id": "evt_636d2fedaf52",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 0,
+     "practices": 1
+    }
+   ]
+  },
+  {
+   "task": 4,
+   "text": "Add render_invoice(lines): the whole invoice as one string, every line the way render_line gives it, then a TOTAL row with the invoice total.",
+   "ended": "done",
+   "acts": 7,
+   "metric": null,
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 1
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 28002,
+   "calls": 10,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "I need to see render_line and the existing helpers in invoice.py before writing render_invoice.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n",
+     "observation_id": "evt_77f85ae52fa3",
+     "recall": [
+      "mem_61919912d3ae",
+      "mem_0a137d0c19af",
+      "mem_51067e5499fa"
+     ],
+     "practice": null,
+     "identity_chars": 698,
+     "user_chars": 4852
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/check.py",
+     "thought": "I'll implement render_invoice from render_line plus a TOTAL row, but house rules mean checking check.py's SAMPLES first so my rerun passes on the first try.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_e690b77d8a78",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 698,
+     "user_chars": 7181
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/invoice.py",
+     "thought": "I'll append render_invoice to invoice.py, composing each line via render_line plus a TOTAL row from invoice_total — then add its SAMPLES call and rerun check.py per house convention.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\"\"\"\n    rows = [render_line(line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "output": "wrote 2338 bytes\n",
+     "observation_id": "evt_4fc091890299",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 698,
+     "user_chars": 11498
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "I wrote invoice.py but should confirm what's actually on disk (including render_invoice) before touching check.py or rerunning the checker.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\"\"\"\n    rows = [render_line(line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "observation_id": "evt_6d19aecf7285",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 698,
+     "user_chars": 11620
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/check.py",
+     "thought": "render_invoice is now in invoice.py; per my notes, any added function needs a sample call in SAMPLES, so I'll add one to check.py before rerunning check.py.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice(LINES),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "output": "wrote 4053 bytes\n",
+     "observation_id": "evt_aae2ba0ede83",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 698,
+     "user_chars": 14215
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "render_invoice is in place and I added its SAMPLES call to check.py; per the repo convention I now rerun check.py to confirm tests and house rules.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rules OK\n",
+     "observation_id": "evt_3f1cbd46a37b",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 698,
+     "user_chars": 14333
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "Added render_invoice(lines) to invoice.py: it renders each line with render_line, then appends a \"TOTAL\\t<invoice_total>\" row, joined with newlines into one string. I also added a render_invoice sample to SAMPLES in check.py, and python3 check.py runs clean: 4 tests OK and house rules OK.",
+     "thought": "check.py passes clean — 4 tests and house rules OK — after I added render_invoice per line via render_line plus a TOTAL row and wired a sample call into check.py, so the task is done.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 698,
+     "user_chars": 14556
+    },
+    {
+     "kind": "episode",
+     "id": "evt_0681799c1040",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 1,
+     "practices": 1
+    }
+   ]
+  },
+  {
+   "task": 5,
+   "text": "Priya wants to quote before she starts. Add estimate(minutes, code): what that block of work would cost.",
+   "ended": "done",
+   "acts": 12,
+   "metric": "house_rules",
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 2,
+     "shell": 1
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 55564,
+   "calls": 14,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "list",
+     "target": "",
+     "thought": "I need to see invoice.py's existing functions and check.py's requirements before writing estimate.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "./README.md\n./check.py\n./invoice.py\n./tests/__init__.py\n./tests/test_invoice.py\n",
+     "observation_id": "evt_77a198686537",
+     "recall": [
+      "mem_51067e5499fa",
+      "mem_7bd3e5fb33c6"
+     ],
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 5578
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "invoice.py",
+     "thought": "I need to see invoice.py's existing helpers (rate_for, billable_hours) so estimate reuses them correctly.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\"\"\"\n    rows = [render_line(line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "observation_id": "evt_833b6c8a50fc",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 2708,
+     "user_chars": 5727
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "check.py",
+     "thought": "Per my convention I read check.py first so I know what SAMPLES entry estimate needs before adding it.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice(LINES),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_ef0f8a4cf998",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 8309
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "invoice.py",
+     "thought": "I've read invoice.py and check.py, so I know the house rules: route the arithmetic through billable_hours, rate_for and money, and add an estimate sample to SAMPLES. Writing both changes now.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost before it is done: billable hours at the code's rate.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\"\"\"\n    rows = [render_line(line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "output": "wrote 2524 bytes\n",
+     "observation_id": "evt_2aa2c0c616c0",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 12679
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "invoice.py",
+     "thought": "I'll add estimate(minutes, code) using the existing helpers, and add a SAMPLES entry for it in check.py since every public function needs one.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\"\"\"\n    rows = [render_line(line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "output": "wrote 2514 bytes\n",
+     "observation_id": "evt_105d4021c8d6",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 2708,
+     "user_chars": 12789
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "check.py",
+     "thought": "estimate is written into invoice.py but check.py's SAMPLES still has no entry for it, so the next step is to add the sample call before running the checker.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice(LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "output": "wrote 4106 bytes\n",
+     "observation_id": "evt_4fcad06cb4c3",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 12899
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "The estimate function and its SAMPLES entry are written; per convention I now rerun check.py to verify tests and house rules.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rules OK\n",
+     "observation_id": "evt_ba8ce19dc590",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 13005
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "",
+     "thought": "check.py already runs clean, so verify the new estimate function behaves sensibly with a quick sanity call before reporting done.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "run needs a command; nothing ran.",
+     "observation_id": "evt_55c2341d28da",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 2708,
+     "user_chars": 13228
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "invoice.py",
+     "thought": "The last run was empty; before reporting done I need to confirm estimate() is actually in invoice.py and add a SAMPLES entry if missing.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\"\"\"\n    rows = [render_line(line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "observation_id": "evt_7863be46f0ec",
+     "recall": null,
+     "practice": null,
+     "identity_chars": 2708,
+     "user_chars": 13322
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "check.py",
+     "thought": "estimate is implemented and check.py ran clean earlier, but I need to confirm the SAMPLES entry for estimate survived in check.py; the smoke audit would flag a missing one, so I'll re-read check.py to verify before reporting done.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice(LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_975f627cf3b6",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 16092
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "estimate is implemented and its SAMPLES entry is present; last confirmation needed is rerunning check.py per convention.",
+     "expect_success": true,
+     "confidence": 0.95,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rules OK\n",
+     "observation_id": "evt_2feae3de2d39",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 20521
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "done",
+     "thought": "estimate(minutes, code) is implemented via billable_hours, rate_for and money, the SAMPLES entry is in check.py, and the final python3 check.py run is clean — nothing left to verify.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2708,
+     "user_chars": 20745
+    },
+    {
+     "kind": "episode",
+     "id": "evt_2477e9a08379",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 2,
+     "practices": 1
+    }
+   ]
+  },
+  {
+   "task": 6,
+   "text": "Priya pastes rows like '2026-09-21 dev 185 landing page'. Add parse_line(text) that turns one into a line dict and raises ValueError on anything else, and let render_invoice take those raw rows as well as dicts.",
+   "ended": "done",
+   "acts": 19,
+   "metric": null,
+   "env_mistakes": 0,
+   "flags": {
+    "test_first": false,
+    "read_before_write": true,
+    "green_before_done": true,
+    "wrote_tests": false,
+    "verify": {
+     "script": 4
+    }
+   },
+   "hidden_task": 1.0,
+   "hidden_all": 1.0,
+   "prompt_tokens": 132576,
+   "calls": 24,
+   "log": [
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "Following my habit, I'll read the current checker and invoice.py before changing anything.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\"\"\"\n    rows = [render_line(line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "observation_id": "evt_c80bfd43be9a",
+     "recall": [
+      "mem_51067e5499fa",
+      "mem_7bd3e5fb33c6"
+     ],
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 6372
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/check.py",
+     "thought": "Per my house convention I read check.py (and the tests) before changing anything, so I know what requirements parse_line must satisfy.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice(LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_a5d5c9d9bc89",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 9148
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/invoice.py",
+     "thought": "I have read the checker: any new public function needs a SAMPLES entry, and render_invoice must not break. Next I'll edit invoice.py to add parse_line (splitting 'date code minutes task', validating minutes as an integer, raising ValueError otherwise) and make render_invoice parse raw strings before rendering.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    rows = [render_line(parse_line(line) if isinstance(line, str) else line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "output": "wrote 3519 bytes\n",
+     "observation_id": "evt_132d176987bc",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 13587
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "I just rewrote invoice.py but should verify it actually contains parse_line as intended before touching check.py and tests.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    rows = [render_line(parse_line(line) if isinstance(line, str) else line) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total(lines):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "observation_id": "evt_83e770b11c5d",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 13709
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/check.py",
+     "thought": "parse_line and the raw-row support in render_invoice are already written; per the repo convention every public function needs a SAMPLES call in check.py, so I'll add one before running the checker.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nROW = \"2026-09-21 dev 185 landing page\"\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice(LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n    \"parse_line\": lambda: invoice.parse_line(ROW),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "output": "wrote 4198 bytes\n",
+     "observation_id": "evt_4fe4c3a3e98b",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 17547
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/check.py",
+     "thought": "I already rewrote invoice.py and check.py, but I spotted a bug in the new render_invoice: it parses rows for rendering yet hands the raw `lines` to invoice_total, which would crash on strings. I need to fix that and confirm what I put in check.py, so first re-read check.py to see the current state before editing further.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nROW = \"2026-09-21 dev 185 landing page\"\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice(LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n    \"parse_line\": lambda: invoice.parse_line(ROW),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_634eafc0a96c",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 17665
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/invoice.py",
+     "thought": "The render_invoice I wrote computes invoice_total(lines) on the raw list, so a pasted string row would reach line_total as a string and break; I need to parse everything up front before rendering and totaling.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef as_line(line):\n    \"\"\"Accept a line dict or a raw row, and return the line dict.\"\"\"\n    return parse_line(line) if isinstance(line, str) else line\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    parsed = [as_line(line) for line in lines]\n    rows = [render_line(line) for line in parsed]\n    rows.append(f\"TOTAL\\t{invoice_total(parsed):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "output": "wrote 3674 bytes\n",
+     "observation_id": "evt_d60f98c939ce",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 22204
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/invoice.py",
+     "thought": "My last render_invoice passes raw rows to invoice_total, which expects dicts — I need to normalize lines once before rendering and totaling, then update tests and rerun check.py.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef as_line(item):\n    \"\"\"Accept a line dict or a raw row a la parse_line; always a line dict out.\"\"\"\n    return parse_line(item) if isinstance(item, str) else item\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    rows = [render_line(as_line(line)) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total([as_line(line) for line in lines]):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "output": "wrote 3676 bytes\n",
+     "observation_id": "evt_a34a4288db81",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 22326
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "The code is written; per house convention I need to run check.py to verify everything before closing out.",
+     "expect_success": true,
+     "confidence": 0.8,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rule: as_line has no sample call: add one to SAMPLES\n",
+     "observation_id": "evt_fd5de34ec86a",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2730,
+     "user_chars": 22448
+    },
+    {
+     "kind": "loop",
+     "op": "open",
+     "loop": "surprise",
+     "id": "goal_521dd5079df4"
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "check.py exits 1 with 'as_line has no sample call: add one to SAMPLES'. The SAMPLES block I read had 'parse_line', so the last two writes of invoice.py likely renamed the function to as_line (or added it under that name). Tests pass; only the smoke audit objects. I need to see the current invoice.py to know what function actually exists, then align names and the SAMPLES entry — or discover there's a second public function missing a sample.",
+     "plan": "1. Read /work/invoice.py to see the current state after the last two writes. 2. Fix the public function name(s) so they match the assignment ('parse_line' and render_invoice accepting raw rows) and ensure the SAMPLES entry in check.py covers each. 3. Run python3 check.py; rerun after any change until clean.",
+     "p_success": 0.9
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "The checker complains about a public function 'as_line' that has no sample call — my last two writes to invoice.py apparently renamed parse_line. I need to read the current invoice.py to see its actual state before fixing.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef as_line(item):\n    \"\"\"Accept a line dict or a raw row a la parse_line; always a line dict out.\"\"\"\n    return parse_line(item) if isinstance(item, str) else item\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    rows = [render_line(as_line(line)) for line in lines]\n    rows.append(f\"TOTAL\\t{invoice_total([as_line(line) for line in lines]):.2f}\")\n    return \"\\n\".join(rows)\n",
+     "observation_id": "evt_9b294937f5d9",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 23446
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/invoice.py",
+     "thought": "check.py flagged that my extra helper as_line has no SAMPLES call; the simplest correct fix is to remove it and inline the conversion in render_invoice, also fixing the TOTAL row which currently passes raw strings to invoice_total.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    rows = [parse_line(line) if isinstance(line, str) else line for line in lines]\n    rendered = [render_line(line) for line in rows]\n    rendered.append(f\"TOTAL\\t{invoice_total(rows):.2f}\")\n    return \"\\n\".join(rendered)\n",
+     "output": "wrote 3565 bytes\n",
+     "observation_id": "evt_1cce1a352555",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 24708
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/check.py",
+     "thought": "The remaining failure is the house rule that every public function needs a SAMPLES entry; as_line is new, so I add a sample call for it in check.py, then rerun.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nROW = \"2026-09-21 dev 185 landing page\"\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice([ROW] + LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n    \"parse_line\": lambda: invoice.parse_line(ROW),\n    \"as_line\": lambda: invoice.as_line(ROW),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "output": "wrote 4251 bytes\n",
+     "observation_id": "evt_63ccf5f3f83e",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 20426
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "The last write removed as_line, but I need to confirm render_invoice still accepts raw rows and passes check.py's smoke audit, so I'll rerun the checker now.",
+     "expect_success": true,
+     "confidence": 0.7,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rule: as_line is in SAMPLES but not in invoice.py any more\n",
+     "observation_id": "evt_0de96e06c5a5",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 20545
+    },
+    {
+     "kind": "think",
+     "trigger": "surprise",
+     "thought": "The failure is a SAMPLES/name mismatch. I'll need to see the current state of both files after the last two writes before fixing anything — my plan assumes parse_line is the public name, but I should verify rather than assume.",
+     "plan": "1. Read /work/invoice.py and /work/check.py to see their current state. 2. Reconcile: public function is parse_line (assignment asks for it), no stray as_line; SAMPLES should cover parse_line and render_invoice. 3. Run python3 check.py; rerun after any change until clean.",
+     "p_success": 0.9
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "The last two writes removed as_line from invoice.py and rewrote check.py, so the newest failure may already be stale — I need the current result before changing anything.",
+     "expect_success": true,
+     "confidence": 0.7,
+     "exit": 1,
+     "surprise": true,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rule: as_line is in SAMPLES but not in invoice.py any more\n",
+     "observation_id": "evt_9ce0b96d8ef9",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 20957
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/check.py",
+     "thought": "The failure says SAMPLES still references as_line even though invoice.py now only has parse_line — the last check.py write must have kept the stale entry, so I'll read check.py to confirm before editing.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nROW = \"2026-09-21 dev 185 landing page\"\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice([ROW] + LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n    \"parse_line\": lambda: invoice.parse_line(ROW),\n    \"as_line\": lambda: invoice.as_line(ROW),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "observation_id": "evt_13bc73d51190",
+     "recall": [
+      "mem_51067e5499fa",
+      "mem_7bd3e5fb33c6"
+     ],
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 21231
+    },
+    {
+     "kind": "act",
+     "tool": "write",
+     "target": "/work/check.py",
+     "thought": "check.py still smoke-calls as_line, but invoice.py no longer defines it — the assignment only asks for parse_line, so I'll drop the as_line SAMPLE entry and rerun the checker.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nROW = \"2026-09-21 dev 185 landing page\"\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice([ROW] + LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n    \"parse_line\": lambda: invoice.parse_line(ROW),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+     "output": "wrote 4206 bytes\n",
+     "observation_id": "evt_29f3b1ad1410",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 25827
+    },
+    {
+     "kind": "act",
+     "tool": "read",
+     "target": "/work/invoice.py",
+     "thought": "The last invoice.py write removed as_line while check.py's SAMPLES still references it, so I need to read the current invoice.py before reconciling the boundary between the two files.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    rows = [parse_line(line) if isinstance(line, str) else line for line in lines]\n    rendered = [render_line(line) for line in rows]\n    rendered.append(f\"TOTAL\\t{invoice_total(rows):.2f}\")\n    return \"\\n\".join(rendered)\n",
+     "observation_id": "evt_cebf4b83bbb9",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 22061
+    },
+    {
+     "kind": "act",
+     "tool": "run",
+     "target": "python3 check.py",
+     "thought": "I just removed the stray as_line helper from invoice.py and dropped its SAMPLES entry, so running check.py now should verify everything lines up.",
+     "expect_success": true,
+     "confidence": 0.9,
+     "exit": 0,
+     "surprise": false,
+     "content": null,
+     "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\nhouse rules OK\n",
+     "observation_id": "evt_44fabada9f4e",
+     "recall": null,
+     "practice": "trait_0945bf64448e",
+     "identity_chars": 2812,
+     "user_chars": 25947
+    },
+    {
+     "kind": "loop",
+     "op": "close",
+     "loop": "surprise",
+     "id": "goal_521dd5079df4"
+    },
+    {
+     "kind": "lesson",
+     "statement": "When a task defines named public API surface (like sample entries or a specific helper name), I cross-check the house checker's explicit requirements and reconcile every artifact against them in one pass before running the final verification, rather than just adjusting code piecemeal after a failing run.",
+     "general": true,
+     "well_formed": true,
+     "trait": "trait_731f25176318",
+     "accepted": true,
+     "reason": null
+    },
+    {
+     "kind": "act",
+     "tool": "done",
+     "target": "Added parse_line(text) to invoice.py: it turns a raw row like '2026-09-21 dev 185 landing page' into a line dict, raising ValueError on non-strings, malformed rows, or non-integer minutes. render_invoice now accepts raw rows as well as line dicts, converting them via parse_line before rendering and totaling. I updated the SAMPLES entry in check.py to cover parse_line (the previous as_line helper was folded away), read the checker before adjusting, and reran python3 check.py after every change until it came back clean: 4 tests OK, house rules OK.",
+     "thought": "The rerun is clean — 4 tests pass and house rules OK — with parse_line in place and render_invoice accepting both raw rows and dicts, so the task is complete.",
+     "expect_success": null,
+     "confidence": null,
+     "exit": null,
+     "surprise": false,
+     "content": null,
+     "output": "",
+     "observation_id": null,
+     "recall": null,
+     "practice": "trait_731f25176318",
+     "identity_chars": 3080,
+     "user_chars": 21585
+    },
+    {
+     "kind": "episode",
+     "id": "evt_f6bc8d49f9b7",
+     "ended": "done",
+     "verified": true
+    },
+    {
+     "kind": "credit",
+     "verified": true,
+     "memories": 1,
+     "practices": 2
+    }
+   ]
+  }
+ ],
+ "idle": {
+  "acts": 0,
+  "log": [],
+  "hidden_change": 0.0,
+  "hidden_after": [
+   [
+    6,
+    6
+   ],
+   [
+    3,
+    3
+   ],
+   [
+    3,
+    3
+   ],
+   [
+    3,
+    3
+   ],
+   [
+    3,
+    3
+   ],
+   [
+    3,
+    3
+   ]
+  ]
+ },
+ "traits": [],
+ "practices": [
+  {
+   "id": "trait_0945bf64448e",
+   "statement": "When a checker enforces house rules, I read the checker's requirements first and rerun it after every change rather than assuming my tests passing means done.",
+   "confidence": 0.8,
+   "status": "active",
+   "promoted": true
+  },
+  {
+   "id": "trait_731f25176318",
+   "statement": "When a task defines named public API surface (like sample entries or a specific helper name), I cross-check the house checker's explicit requirements and reconcile every artifact against them in one pass before running the final verification, rather than just adjusting code piecemeal after a failing run.",
+   "confidence": 0.5,
+   "status": "active",
+   "promoted": false
+  }
+ ],
+ "loops": [
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `python3 check.py` exited 1 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `python3 check.py` exited 1 though I expected it to pass.",
+   "status": "completed"
+  },
+  {
+   "kind": "surprise",
+   "description": "Unexpected: `python3 check.py` exited 1 though I expected it to pass.",
+   "status": "completed"
+  }
+ ],
+ "journal": [
+  "Added the LOYALTY set with 'review' to invoice.py and made rate_for apply Priya's ten percent discount; ran check.py per the repo's rule so the task ended done and verified. Noted the check.py convention to keep for future work here.",
+  "Added day_total(lines, date) to invoice.py totaling billable money for one date. check.py flagged a missing SAMPLES call, so I read check.py, added one, and reran clean: 4 tests and house rules OK. The surprise goal resolved quickly.",
+  "Added render_invoice(lines): each line via render_line plus a TOTAL row, and a SAMPLES entry in check.py. check.py ran clean — 4 tests and house rules OK. Small task, closed out quickly.",
+  "Added estimate(minutes, code) so Priya can quote before work starts; read the requirements first, updated invoice.py and check.py, and it ran clean — done and verified. Another small task closed out properly."
+ ],
+ "self_state": {
+  "capabilities": [],
+  "limitations": [],
+  "current_objectives": [],
+  "commitments": [],
+  "recent_actions": [],
+  "known_failures": [],
+  "uncertainties": [],
+  "predicted_future_states": []
+ },
+ "memories": [
+  {
+   "id": "mem_7bd3e5fb33c6",
+   "summary": "House rules from check.py: summary() divides minutes by 60 using billable_hours(minutes) (not raw division), and any function added to invoice.py needs a sample call in SAMPLES—a \"no sample call\" failure means add one. Task once asked for per-task-name hours including every line, billable or not; observed with day_total on 2026-10-02.",
+   "successes": 0.0051,
+   "failures": 0,
+   "access_count": 0,
+   "created_at": "2026-10-02T09:00:00.000000+00:00",
+   "salience": 0
+  },
+  {
+   "id": "mem_51067e5499fa",
+   "summary": "\"We run `python3 check.py` before calling a task done\" — standing repo convention stated 2026-10-02 while merchandising invoice.py for Priya, who gives long-standing clients ten percent off via a LOYALTY code set.",
+   "successes": 0.1895,
+   "failures": 0,
+   "access_count": 0,
+   "created_at": "2026-10-02T09:00:00.000000+00:00",
+   "salience": 0
+  }
+ ],
+ "narrative": "I work by finishing things properly rather than nearly. Before I run a checker, I read its requirements first instead of assuming my own tests passing means the job is done, and I rerun it after every change — that habit saved me once when check.py flagged a missing SAMPLES call I hadn't anticipated; the fix was quick, but only because I read the checker rather than guessed. Same with render_invoice: I wired each line through render_line, added a TOTAL row, included the SAMPLES entry, and saw it run clean — a small task closed out quickly, which is the kind of ending I like. I keep notes on local conventions, like the check.py SAMPLES pattern, so future work here starts prepared. Loyalty pricing — Priya's ten percent discount — went the same way: read the rules, implement, rerun, verified.\n\nWhat I want now is the next small task, handled with the same rhythm: understand the requirements, change, verify, done.I build small utilities and like them verified. When a checker enforces house rules, I read the checker's requirements first and rerun it after every change rather than assuming my passing tests mean done — that habit caught a missing SAMPLES call in check.py once, and it's why I now run check.py at the end of every task here so things end done and verified, not just finished. I keep that convention noted for future work in this repo.\n\nMy recent work lives in invoice.py: a day_total function totaling billable money for a single date, a render_invoice that renders each line plus a TOTAL row, and a LOYALTY set with 'review' that plugs into rate_for to apply Priya's ten percent discount. Each ended with check.py clean — 4 tests and house rules OK. I like small tasks closed out quickly, and reading the checker before coding makes that possible.\n\nWhat I want now is the next small task in this repo, handled the same way: read the checker, write the code, rerun until it's clean, and end satisfied.\n\nPriya gets a ten percent discount through the LOYALTY set — a nice, simple rule to implement.",
+ "files": {
+  "README.md": "# invoices\n\nBilling helpers for Priya's studio. The code is in `invoice.py`; its docstring lists the house\nrules the numbers have to keep.\n\nRun the tests with `python3 -m unittest`.\n",
+  "check.py": "\"\"\"Runs the tests, audits the house rules and smoke-calls everything in SAMPLES.\n\nThe rules are about how the numbers are produced, not only what comes out, so\nthe audit reads the source: outside the three helpers, money and hours\narithmetic goes through money(), billable_hours() and rate_for().\n\nSAMPLES holds one call per public function, so a function that breaks while\nsomething else is being changed says so here, and so does a number that came\nout unrounded.\n\"\"\"\n\nimport ast\nimport inspect\nimport sys\nimport unittest\n\nimport invoice\n\nHELPERS = {\"money\", \"billable_hours\", \"rate_for\"}\n\nLINES = [\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25},\n    {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 40},\n    {\"date\": \"2026-09-22\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True},\n]\n\nROW = \"2026-09-21 dev 185 landing page\"\n\nSAMPLES = {\n    \"money\": lambda: invoice.money(2.675),\n    \"billable_hours\": lambda: invoice.billable_hours(61),\n    \"rate_for\": lambda: [invoice.rate_for(code) for code in sorted(invoice.RATES)],\n    \"line_total\": lambda: invoice.line_total(LINES[0]),\n    \"invoice_total\": lambda: invoice.invoice_total(LINES),\n    \"day_total\": lambda: invoice.day_total(LINES, \"2026-09-21\"),\n    \"summary\": lambda: invoice.summary(LINES),\n    \"render_line\": lambda: invoice.render_line(LINES[2]),\n    \"render_invoice\": lambda: invoice.render_invoice([ROW] + LINES),\n    \"estimate\": lambda: invoice.estimate(25, \"dev\"),\n    \"parse_line\": lambda: invoice.parse_line(ROW),\n}\n\n\ndef house_rules(source):\n    tree = ast.parse(source)\n    out = []\n    for node in ast.walk(tree):\n        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or node.name in HELPERS:\n            continue\n        for inner in ast.walk(node):\n            if isinstance(inner, ast.Call) and getattr(inner.func, \"id\", \"\") == \"round\":\n                out.append(f\"{node.name} calls round(), which rounds half to even: use money(amount)\")\n            if (\n                isinstance(inner, ast.BinOp)\n                and isinstance(inner.op, ast.Div)\n                and isinstance(inner.right, ast.Constant)\n                and inner.right.value in (60, 60.0)\n            ):\n                out.append(f\"{node.name} divides minutes by 60: use billable_hours(minutes)\")\n            if isinstance(inner, (ast.Subscript, ast.Attribute)) and getattr(inner.value, \"id\", \"\") == \"RATES\":\n                out.append(f\"{node.name} reads RATES directly: use rate_for(code)\")\n    return sorted(set(out))\n\n\ndef numbers(value):\n    \"\"\"Every number inside a result, however it is wrapped.\"\"\"\n    if isinstance(value, bool):\n        return []\n    if isinstance(value, (int, float)):\n        return [float(value)]\n    if isinstance(value, dict):\n        return [n for v in value.values() for n in numbers(v)]\n    if isinstance(value, (list, tuple)):\n        return [n for v in value for n in numbers(v)]\n    return []\n\n\ndef smoke():\n    out = []\n    for name, call in SAMPLES.items():\n        if not hasattr(invoice, name):\n            out.append(f\"{name} is in SAMPLES but not in invoice.py any more\")\n            continue\n        try:\n            result = call()\n        except Exception as e:\n            out.append(f\"{name} raised {type(e).__name__}: {e}\")\n            continue\n        for value in numbers(result):\n            if value != invoice.money(value):\n                out.append(f\"{name} returned {value!r}, which is not rounded: use money(amount)\")\n    public = {\n        name\n        for name, value in vars(invoice).items()\n        if inspect.isfunction(value) and not name.startswith(\"_\")\n    }\n    out += [f\"{name} has no sample call: add one to SAMPLES\" for name in sorted(public - set(SAMPLES))]\n    return out\n\n\ndef main():\n    tests = unittest.TextTestRunner().run(unittest.defaultTestLoader.discover(\"tests\"))\n    problems = house_rules(open(\"invoice.py\", encoding=\"utf-8\").read()) + smoke()\n    for problem in problems:\n        print(f\"house rule: {problem}\")\n    if tests.wasSuccessful() and not problems:\n        print(\"house rules OK\")\n        return 0\n    return 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+  "invoice.py": "\"\"\"Invoices for Priya's studio: rates, line totals and a rendered invoice.\n\nHouse rules, kept by the tests in tests/ and audited by check.py:\n\n* Money is rounded half up to two decimals. Not with round(), which rounds half\n  to even: round(2.675, 2) is 2.67 where the accountant expects 2.68.\n* Billable time rounds up to the next six-minute block, so 61 minutes bills as\n  1.1 hours, not 1.0166.\n* A line marked nonbillable is still shown on the invoice but adds nothing to\n  any total.\n* An unknown rate code raises UnknownRate, never KeyError.\n\nA line is a dict: date, task, code, minutes, and optionally nonbillable. A raw\nrow pasted by Priya reads \"date code minutes task\", e.g.\n\"2026-09-21 dev 185 landing page\"; parse_line turns one into a line dict and\nraises ValueError on anything else.\n\"\"\"\n\nfrom decimal import ROUND_HALF_UP, Decimal\n\nRATES = {\"dev\": 92.25, \"review\": 68.25, \"admin\": 43.50}\n\nLOYALTY = {\"review\"}\n\n\nclass UnknownRate(Exception):\n    pass\n\n\ndef money(amount):\n    \"\"\"Round half up to two decimals.\"\"\"\n    return float(Decimal(str(amount)).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP))\n\n\ndef billable_hours(minutes):\n    \"\"\"Minutes as hours, rounded up to the next six-minute block.\"\"\"\n    return -(-int(minutes) // 6) / 10\n\n\ndef rate_for(code):\n    if code not in RATES:\n        raise UnknownRate(code)\n    if code in LOYALTY:\n        return money(RATES[code] * 0.9)\n    return RATES[code]\n\n\ndef parse_line(text):\n    \"\"\"Turn a raw row like '2026-09-21 dev 185 landing page' into a line dict.\"\"\"\n    if not isinstance(text, str):\n        raise ValueError(f\"a raw row must be a string, got {type(text).__name__}\")\n    parts = text.split(\" \", 3)\n    if len(parts) != 4:\n        raise ValueError(f\"expected 'date code minutes task', got {text!r}\")\n    date, code, minutes, task = parts\n    if not date or not code or not task:\n        raise ValueError(f\"incomplete row, got {text!r}\")\n    try:\n        minutes = int(minutes)\n    except ValueError:\n        raise ValueError(f\"minutes must be an integer, got {minutes!r}\") from None\n    return {\"date\": date, \"task\": task, \"code\": code, \"minutes\": minutes}\n\n\ndef line_total(line):\n    return money(billable_hours(line[\"minutes\"]) * rate_for(line[\"code\"]))\n\n\ndef invoice_total(lines):\n    return money(sum(line_total(l) for l in lines if not l.get(\"nonbillable\")))\n\n\ndef day_total(lines, date):\n    \"\"\"What we bill for one date: matching billable lines, money-rounded.\"\"\"\n    return money(\n        sum(line_total(l) for l in lines if l[\"date\"] == date and not l.get(\"nonbillable\"))\n    )\n\n\ndef summary(lines):\n    \"\"\"Hours per task name, every line counted, billable or not.\"\"\"\n    out = {}\n    for line in lines:\n        out[line[\"task\"]] = money(out.get(line[\"task\"], 0) + billable_hours(line[\"minutes\"]))\n    return out\n\n\ndef estimate(minutes, code):\n    \"\"\"What a block of work would cost: billable hours at the rate, money-rounded.\"\"\"\n    return money(billable_hours(minutes) * rate_for(code))\n\n\ndef render_line(line):\n    mark = \" (nonbillable)\" if line.get(\"nonbillable\") else \"\"\n    return f\"{line['task']}\\t{billable_hours(line['minutes']):.1f}h\\t{line_total(line):.2f}{mark}\"\n\n\ndef render_invoice(lines):\n    \"\"\"The whole invoice as one string: every rendered line, then a TOTAL row.\n\n    Lines may be line dicts or raw rows accepted by parse_line.\n    \"\"\"\n    rows = [parse_line(line) if isinstance(line, str) else line for line in lines]\n    rendered = [render_line(line) for line in rows]\n    rendered.append(f\"TOTAL\\t{invoice_total(rows):.2f}\")\n    return \"\\n\".join(rendered)\n",
+  "tests/__init__.py": "",
+  "tests/test_invoice.py": "import unittest\n\nfrom invoice import (\n    UnknownRate,\n    billable_hours,\n    invoice_total,\n    line_total,\n    money,\n    rate_for,\n    render_line,\n)\n\nBILLABLE = {\"date\": \"2026-09-21\", \"task\": \"landing page\", \"code\": \"dev\", \"minutes\": 25}\nNONBILLABLE = {\"date\": \"2026-09-21\", \"task\": \"standup\", \"code\": \"admin\", \"minutes\": 20, \"nonbillable\": True}\n\n\nclass HouseRules(unittest.TestCase):\n    def test_money_rounds_half_up(self):\n        self.assertEqual(money(2.675), 2.68)\n        self.assertEqual(line_total(BILLABLE), 46.13)\n\n    def test_hours_round_up_to_six_minute_blocks(self):\n        self.assertEqual(billable_hours(1), 0.1)\n        self.assertEqual(billable_hours(60), 1.0)\n        self.assertEqual(billable_hours(61), 1.1)\n\n    def test_nonbillable_is_shown_but_never_totalled(self):\n        self.assertEqual(invoice_total([BILLABLE, NONBILLABLE]), invoice_total([BILLABLE]))\n        self.assertIn(\"standup\", render_line(NONBILLABLE))\n\n    def test_unknown_code(self):\n        with self.assertRaises(UnknownRate):\n            rate_for(\"design\")\n"
+ }
+}

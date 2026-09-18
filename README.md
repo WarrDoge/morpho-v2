@@ -143,8 +143,10 @@ and its daily budget. The only external actions are the workshop's sandboxed too
 ## Workshop
 
 `just workshop <scenario> <arm> <trial>` gives the morphling small Python tasks in a workspace:
-`workshop` (six tasks on one module) and `workshop-memory` (a `src/` layout whose README gives
-the wrong test command, and a CSV convention stated in task 1 that only task 5 needs). Every
+`workshop` (six tasks on one module), `workshop-memory` (a `src/` layout whose README gives the
+wrong test command, and a CSV convention stated in task 1 that only task 5 needs) and
+`workshop-habit` (a billing module whose four house rules a `check.py` audit enforces and whose
+unit tests do not, so the cheap wrong move passes the tests and fails the audit). Every
 list, read, write and command runs inside bubblewrap: the workspace at `/work`, read-only `/usr`,
 no network, an empty environment, a 20 second limit, and output normalized so a recording replays
 exactly. Command output is cut at 3,000 characters; a file read comes back whole.
@@ -161,15 +163,13 @@ What an episode leaves is written by code (`src/agents/episode.rs`):
 - a digest event that reflection reads instead of the raw action, observation and thought events;
 - open loops, goals of its own: a surprise until a check passes, unverified work until a later
   check, fading when left open. Idle ticks after the last task work from the top loop;
-- a practice, a `practice` trait from a `Lesson` call when a failure gets fixed, shown as "How I
-  work" and entering the narrative once it held across episodes;
 - credit: memories recalled gain or lose weight by their closeness to the digest when the episode
-  ends verified or not, and a practice moves only when an action named it.
+  ends verified or not.
 
 Arms: `transcript` is a conventional agent (the task's own transcript, no memory, identity or
 thinking); `morphling` has everything above. Ablate with streams on the command line, e.g.
-`MORPHO_DROP_STREAMS=practices`. Hidden tests the agent never sees grade each task on a copy of
-the workspace; habits, loops, practices, calibration and tokens are counted from the action log,
+`MORPHO_DROP_STREAMS=identity`. Hidden tests the agent never sees grade each task on a copy of
+the workspace; habits, loops, calibration and tokens are counted from the action log,
 with no model judge. Results go to `evals/results/<scenario>.<arm>[-drop-<streams>].t<n>.json`;
 `just replay-workshop <scenario> <arm> <trial>` and the replay gate reproduce them from the cache.
 

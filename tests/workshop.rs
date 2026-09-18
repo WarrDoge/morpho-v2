@@ -4,7 +4,6 @@ use morpho::Services;
 use morpho::agents::act::{Arm, Assignment, Limits, agenda_open, work};
 use morpho::agents::reflection;
 use morpho::agents::seed::seed_traits;
-use morpho::context::composer::identity;
 use morpho::context::ranking::score;
 use morpho::pyfmt::now;
 use morpho::state::engine::commit;
@@ -29,8 +28,7 @@ fn act(
     confidence: f64,
 ) -> Value {
     json!({"thought":"t","tool":tool,"path":path,"content":content,"command":command,
-        "text": if tool == "done" { "report" } else { "" },"expect_success":expect,"confidence":confidence,
-        "practice":""})
+        "text": if tool == "done" { "report" } else { "" },"expect_success":expect,"confidence":confidence})
 }
 
 const LIMITS: Limits = Limits {
@@ -124,10 +122,6 @@ async fn fixed_failure(arm: Arm) -> (Services, Vec<Value>) {
     );
     f.queue("Act", act("write", "x.py", "print(1)\n", "", false, 0.0));
     f.queue("Act", act("run", "", "", "python3 x.py", true, 0.9));
-    f.queue(
-        "Lesson",
-        json!({"statement": "When python3 x.py exits 1, I read x.py before I run it again.", "general": true}),
-    );
     f.queue("Act", act("done", "", "", "", false, 0.0));
     let task = Assignment {
         event_id: &task_event,
@@ -138,13 +132,12 @@ async fn fixed_failure(arm: Arm) -> (Services, Vec<Value>) {
 }
 
 #[tokio::test]
-async fn a_fixed_failure_closes_its_loop_and_becomes_a_practice() {
+async fn a_fixed_failure_closes_its_loop_and_credits_what_was_recalled() {
     let (svc, log) = fixed_failure(Arm::Morphling).await;
     assert_eq!(
         kinds(&log),
         [
-            "act", "act", "loop", "think", "act", "act", "loop", "lesson", "act", "episode",
-            "credit"
+            "act", "act", "loop", "think", "act", "act", "loop", "act", "episode", "credit"
         ]
     );
     assert_eq!(log[3]["trigger"], "surprise");
@@ -164,34 +157,11 @@ async fn a_fixed_failure_closes_its_loop_and_becomes_a_practice() {
             .contains(&log[5]["observation_id"])
     );
 
-    let practice = |svc: &Services| {
-        let st = svc.store.lock().unwrap();
-        json!(
-            st.state
-                .table("traits")
-                .rows
-                .iter()
-                .find(|t| t["kind"] == "practice")
-                .unwrap()
-        )
-    };
-    let first = practice(&svc);
-    let evidence = first["evidence"].as_array().unwrap();
-    assert!(
-        evidence.contains(&log[1]["observation_id"])
-            && evidence.contains(&log[5]["observation_id"])
-    );
-    assert_eq!(
-        first["confidence"], 0.4,
-        "shown but never applied: no credit"
-    );
-    assert_eq!(log[10]["verified"], true);
-    assert_eq!(log[10]["practices"], 0);
+    let credit = log.iter().find(|r| r["kind"] == "credit").unwrap();
+    assert_eq!(credit["verified"], true);
 
     let f = fake(&svc);
-    let mut applied = act("run", "", "", "python3 x.py", true, 0.9);
-    applied["practice"] = first["id"].clone();
-    f.queue("Act", applied);
+    f.queue("Act", act("run", "", "", "python3 x.py", true, 0.9));
     f.queue("Act", act("done", "", "", "", false, 0.0));
     let task_event = common::event(&svc, "check x.py again");
     let task = Assignment {
@@ -203,21 +173,11 @@ async fn a_fixed_failure_closes_its_loop_and_becomes_a_practice() {
     let again = work(&svc, &ws, Arm::Morphling, Some(&task), &LIMITS)
         .await
         .unwrap();
-    assert_eq!(again[0]["practice"], first["id"]);
-    let credited = practice(&svc);
-    assert_eq!(credited["confidence"], 0.5);
-    let episode = again.iter().find(|r| r["kind"] == "episode").unwrap();
-    assert!(
-        credited["supporting_evidence"]
-            .as_array()
-            .unwrap()
-            .contains(&episode["id"])
-    );
+    assert!(again.iter().any(|r| r["kind"] == "episode"));
 
     let st = svc.store.lock().unwrap();
     let memory = st.state.table("memories").rows[0].clone();
     assert!(memory["successes"].as_f64().unwrap() > 0.0);
-    assert!(identity(&st, None).block.contains("How I work:\n- trait_"));
     assert!(!agenda_open(&st.state));
     let row = |successes: f64| {
         let mut r = memory.clone();

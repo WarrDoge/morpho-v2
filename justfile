@@ -46,7 +46,7 @@ trial scenario n *args:
     just eval {{scenario}} --trial {{n}} --label v8-t{{n}} {{args}}
 
 # Coding tasks in a sandbox, e.g. `just workshop workshop-memory morphling 1`; arms: transcript
-# morphling. Ablate with streams on the command line: `MORPHO_DROP_STREAMS=practices just workshop ...`.
+# morphling. Ablate with streams on the command line: `MORPHO_DROP_STREAMS=identity just workshop ...`.
 workshop scenario arm trial *args:
     BACKGROUND_DAILY_TOKEN_BUDGET=100000000 just eval {{scenario}} --arm {{arm}} --trial {{trial}} {{args}}
 

@@ -7,8 +7,6 @@ use serde_json::{Value, json};
 
 use crate::{
     Services,
-    agents::episode::is_practice,
-    context::composer::shown_trait,
     state::models::{LIVE_GOAL, LIVE_TRAIT, Proposal},
     store::state::State,
 };
@@ -49,7 +47,6 @@ pub fn sources(state: &State) -> BTreeMap<String, i64> {
         .rows
         .iter()
         .filter(|r| LIVE_TRAIT.contains(&r["status"].as_str().unwrap_or_default()))
-        .filter(|r| !is_practice(r) || (promoted(state, r) && shown_trait(r)))
         .map(|r| {
             let mut h = DefaultHasher::new();
             (
@@ -64,18 +61,6 @@ pub fn sources(state: &State) -> BTreeMap<String, i64> {
             )
         })
         .collect()
-}
-
-/// A practice becomes part of who the agent is once it held with confidence across episodes.
-pub fn promoted(state: &State, row: &crate::pyfmt::Row) -> bool {
-    let episodes = row["supporting_evidence"]
-        .as_array()
-        .into_iter()
-        .flatten()
-        .filter_map(Value::as_str)
-        .filter(|id| state.event(id).is_some_and(|e| e["type"] == "episode"))
-        .count();
-    is_practice(row) && row["confidence"].as_f64().unwrap_or(0.0) >= 0.6 && episodes >= 2
 }
 
 /// A narrative is stale once any live trait was formed, reworded, contested or retired since it was compiled.

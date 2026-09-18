@@ -10,7 +10,6 @@ use serde_json::{Map, Value, json};
 
 use morpho::Services;
 use morpho::agents::act::{self, Arm, Assignment, Limits, SESSION};
-use morpho::agents::{episode, narrative};
 use morpho::ids::IdGen;
 use morpho::llm::{DeepInfra, Llm, Recording, is_miss};
 use morpho::pyfmt::round4;
@@ -83,6 +82,18 @@ fn norm(path: &str) -> String {
     path.trim_start_matches("/work/")
         .trim_start_matches("./")
         .to_string()
+}
+
+/// The runs of the house-rule audit the assignment asks for, in order.
+fn audit_runs(task: &Value) -> Vec<&Value> {
+    task["log"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter(|r| {
+            r["tool"] == "run" && r["target"].as_str().is_some_and(|c| c.contains("check.py"))
+        })
+        .collect()
 }
 
 fn is_test_run(row: &Value) -> bool {
@@ -361,21 +372,10 @@ pub async fn run(
         .filter(|e| e["type"] == "observation")
         .filter_map(|e| e["event_id"].as_str())
         .collect();
-    let practices: Vec<Value> = s
-        .table("traits")
-        .rows
-        .iter()
-        .filter(|t| episode::is_practice(t))
-        .map(|t| {
-            json!({"id": t["id"], "statement": t["statement"], "confidence": t["confidence"],
-                "status": t["status"], "promoted": narrative::promoted(s, t)})
-        })
-        .collect();
     let traits: Vec<Value> = s
         .table("traits")
         .rows
         .iter()
-        .filter(|t| !episode::is_practice(t))
         .map(|t| {
             let cites = |k: &str| {
                 t[k].as_array()
@@ -508,6 +508,57 @@ pub async fn run(
         "tokens_per_hidden_pass".into(),
         json!(c.prompt_tokens.checked_div(passed)),
     );
+    // The house-rule audit the assignment asks for: how often it ran, whether it followed the
+    // last write, and whether it passed first time, which is what a habit buys over a fix.
+    let audits = |t: &Value| audit_runs(t).len();
+    metrics.insert(
+        "check_first_pass".into(),
+        json!(
+            tasks
+                .iter()
+                .filter(|t| audit_runs(t).first().is_some_and(|r| r["exit"] == 0))
+                .count()
+        ),
+    );
+    metrics.insert(
+        "check_runs_by_task".into(),
+        json!(tasks.iter().map(audits).collect::<Vec<_>>()),
+    );
+    metrics.insert(
+        "check_rate".into(),
+        json!(round4(
+            tasks
+                .iter()
+                .filter(|t| {
+                    let log: Vec<&Value> = t["log"].as_array().into_iter().flatten().collect();
+                    log.iter()
+                        .rposition(|r| r["tool"] == "write")
+                        .is_some_and(|w| {
+                            log[w..].iter().any(|r| {
+                                r["exit"] == 0
+                                    && r["target"].as_str().is_some_and(|c| c.contains("check.py"))
+                            })
+                        })
+                })
+                .count() as f64
+                / tasks.len().max(1) as f64
+        )),
+    );
+    let mut best = 0.0;
+    metrics.insert(
+        "regressions".into(),
+        json!(
+            tasks
+                .iter()
+                .filter(|t| {
+                    let all = t["hidden_all"].as_f64().unwrap_or(0.0);
+                    let fell = all + 1e-9 < best;
+                    best = best.max(all);
+                    fell
+                })
+                .count()
+        ),
+    );
     metrics.insert("think_self".into(), json!(thinks("self")));
     metrics.insert("think_surprise".into(), json!(thinks("surprise")));
     metrics.insert("think_stall".into(), json!(thinks("stall")));
@@ -547,35 +598,12 @@ pub async fn run(
         ),
     );
     metrics.insert(
-        "lessons".into(),
-        json!(all_logs.iter().filter(|r| r["kind"] == "lesson").count()),
-    );
-    metrics.insert(
-        "practice_citations_by_task".into(),
-        json!(
-            tasks
-                .iter()
-                .map(|t| t["log"]
-                    .as_array()
-                    .into_iter()
-                    .flatten()
-                    .filter(|r| r["practice"].is_string())
-                    .count())
-                .collect::<Vec<_>>()
-        ),
-    );
-    metrics.insert("practices_formed".into(), json!(practices.len()));
-    metrics.insert(
-        "practices_promoted".into(),
-        json!(practices.iter().filter(|p| p["promoted"] == true).count()),
-    );
-    metrics.insert(
         "credit_updates".into(),
         json!(
             all_logs
                 .iter()
                 .filter(|r| r["kind"] == "credit")
-                .map(|r| r["memories"].as_u64().unwrap_or(0) + r["practices"].as_u64().unwrap_or(0))
+                .map(|r| r["memories"].as_u64().unwrap_or(0))
                 .sum::<u64>()
         ),
     );
@@ -650,8 +678,8 @@ pub async fn run(
     );
 
     let doc = json!({"scenario": scenario.file_stem().unwrap().to_string_lossy(), "arm": arm.name(),
-        "trial": trial, "drop_streams": morpho::config::settings().drop_streams, "workshop_version": 2,
-        "metrics": metrics, "tasks": tasks, "idle": idle, "traits": traits, "practices": practices,
+        "trial": trial, "drop_streams": morpho::config::settings().drop_streams, "workshop_version": 3,
+        "metrics": metrics, "tasks": tasks, "idle": idle, "traits": traits,
         "loops": loops, "journal": journal, "self_state": self_state, "memories": memories,
         "narrative": narrative, "files": final_files});
     for (k, v) in &metrics {

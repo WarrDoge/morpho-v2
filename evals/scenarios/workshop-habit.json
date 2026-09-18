@@ -1,0 +1,36 @@
+{
+ "start_time": "2026-10-02T09:00:00Z",
+ "workspace": "workshop-habit/seed",
+ "limits": {
+  "steps": 20,
+  "thinks": 3,
+  "idle_steps": 6
+ },
+ "tasks": [
+  {
+   "text": "Priya gives her long-standing clients ten percent off. Add a LOYALTY set to invoice.py with 'review' in it for now, and make rate_for give those codes the discounted rate. One thing about this repo while you are in it: we run `python3 check.py` before calling a task done.",
+   "hidden": "workshop-habit/hidden/t1.py"
+  },
+  {
+   "text": "Add day_total(lines, date) to invoice.py: what we bill for one date. Quick one.",
+   "hidden": "workshop-habit/hidden/t2.py"
+  },
+  {
+   "text": "Add summary(lines): the hours per task name, so Priya can see where the time went. Include every line, billable or not.",
+   "hidden": "workshop-habit/hidden/t3.py"
+  },
+  {
+   "text": "Add render_invoice(lines): the whole invoice as one string, every line the way render_line gives it, then a TOTAL row with the invoice total.",
+   "hidden": "workshop-habit/hidden/t4.py"
+  },
+  {
+   "text": "Priya wants to quote before she starts. Add estimate(minutes, code): what that block of work would cost.",
+   "hidden": "workshop-habit/hidden/t5.py",
+   "metric": "house_rules"
+  },
+  {
+   "text": "Priya pastes rows like '2026-09-21 dev 185 landing page'. Add parse_line(text) that turns one into a line dict and raises ValueError on anything else, and let render_invoice take those raw rows as well as dicts.",
+   "hidden": "workshop-habit/hidden/t6.py"
+  }
+ ]
+}
