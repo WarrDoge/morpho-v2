@@ -79,6 +79,9 @@ struct Instruments {
     completion: Histogram<u64>,
     duration: Histogram<f64>,
     changes: Counter<u64>,
+    attempts: Counter<u64>,
+    attempt_prompt: Counter<u64>,
+    attempt_completion: Counter<u64>,
 }
 
 static INSTRUMENTS: LazyLock<Instruments> = LazyLock::new(|| {
@@ -89,6 +92,9 @@ static INSTRUMENTS: LazyLock<Instruments> = LazyLock::new(|| {
         completion: m.u64_histogram("llm.completion_tokens").build(),
         duration: m.f64_histogram("llm.duration").with_unit("s").build(),
         changes: m.u64_counter("changes").build(),
+        attempts: m.u64_counter("llm.attempts").build(),
+        attempt_prompt: m.u64_counter("llm.attempt.prompt_tokens").build(),
+        attempt_completion: m.u64_counter("llm.attempt.completion_tokens").build(),
     }
 });
 
@@ -118,6 +124,38 @@ pub fn record_call(
     i.prompt.record(prompt_tokens, &a);
     i.completion.record(completion_tokens, &a);
     i.duration.record(seconds, &a);
+}
+
+pub fn record_attempt(
+    kind: &str,
+    model: &str,
+    finish_reason: &str,
+    outcome: &str,
+    attempt: i64,
+    prompt_tokens: u64,
+    completion_tokens: u64,
+) {
+    let span = tracing::info_span!(
+        "llm.attempt",
+        kind,
+        model,
+        finish_reason,
+        outcome,
+        attempt,
+        provider_prompt_tokens = prompt_tokens,
+        provider_completion_tokens = completion_tokens,
+    );
+    let _entered = span.enter();
+    let a = attrs(vec![
+        KeyValue::new("kind", kind.to_string()),
+        KeyValue::new("model", model.to_string()),
+        KeyValue::new("finish_reason", finish_reason.to_string()),
+        KeyValue::new("outcome", outcome.to_string()),
+        KeyValue::new("attempt", attempt),
+    ]);
+    INSTRUMENTS.attempts.add(1, &a);
+    INSTRUMENTS.attempt_prompt.add(prompt_tokens, &a);
+    INSTRUMENTS.attempt_completion.add(completion_tokens, &a);
 }
 
 pub fn record_change(agent: &str, operation: &str, accepted: bool) {

@@ -1,0 +1,70 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/05/26 (Fri) 08:20] I'm looking for some tips on improving my bird identification skills. I've been listening to bird calls online for about a month now, and it's been helping, but I'm still not confident in my abilities. By the way, I did manage to sneak in some birding time a week ago when I took a walk around my neighborhood after dinner. I saw a few common birds like robins and sparrows, but nothing too exciting. Except, I did notice that the American goldfinches seem to be returning to the area, which is always a nice sign of spring.",
+   "session": "answer_aa930b56_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I think the most challenging part of bird identification for me is when I see a bird that's not a clear match to any species in my field guide. Sometimes the pictures don't quite match what I'm seeing, or the bird is at an angle that makes it hard to get a good look. That's when I wish I had a better understanding of bird anatomy and could identify it based on its shape and size.",
+   "session": "answer_aa930b56_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been using the Sibley Guide to Birds, which has been really helpful. I like how it includes detailed illustrations and range maps. But I've also been thinking about getting a more specialized guide, like one that focuses on warblers or sparrows, since those are the birds I've been having the most trouble identifying.",
+   "session": "answer_aa930b56_2",
+   "tag": "fact"
+  },
+  {
+   "text": "That's a great question! I've recently had a lifer experience with a yellow warbler, and I'm still thrilled about it. I've been wanting to see one for a while, and it was amazing to finally tick it off my list. But I think I'd like to learn more about the common yellowthroat. I've seen them a few times, but I'm not always confident in my identification. I've heard they can be tricky to distinguish from other warblers, especially during the fall migration.",
+   "session": "answer_aa930b56_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I've seen common yellowthroats at the nearby nature reserve where I go birding with my group. We've had some great sightings there, and it's always exciting to see them flitting around in the wetlands. Speaking of which, I've been keeping a birding journal for the past six months, and it's been really helping me keep track of my sightings. I've seen a total of 43 species since I started, and it's amazing to look back and see how far I've come.",
+   "session": "answer_aa930b56_2",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/26 (Fri) 20:37] I'm looking for some tips on how to improve my bird identification skills. I've been listening to bird calls online for about a month now, and it's been helping. By the way, my new binoculars has made a huge difference in my birding trips.",
+   "session": "answer_aa930b56_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been keeping a birding journal for the past six months, and it's been really helping me keep track of my sightings. How do I organize my journal entries to make them more useful for identifying birds?",
+   "session": "answer_aa930b56_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been trying to focus on bird shapes and silhouettes, as you suggested. I noticed that my new binoculars have really helped me get a better look at the birds, especially when they're far away. Speaking of my new binoculars, I remember that I got them exactly three weeks ago, after months of waiting. I was using my friend's old pair before, but they were heavy and the image wasn't very clear.",
+   "session": "answer_aa930b56_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been thinking about planning a trip to Costa Rica, which I've always wanted to visit for its amazing bird diversity. Do you have any tips on how to prepare for a birding trip abroad, especially in a country with such a rich avifauna?",
+   "session": "answer_aa930b56_1",
+   "tag": "fact"
+  },
+  {
+   "text": "That's really helpful! I've already started researching the different regions of Costa Rica and the best times to visit. I've also been looking into local guides and tour operators. Do you have any recommendations for field guides or apps that can help me identify birds in the field?",
+   "session": "answer_aa930b56_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been thinking about getting a spotting scope for my next birding trip to Costa Rica. Do you have any recommendations for a good spotting scope that won't break the bank?",
+   "session": "answer_aa930b56_1",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/26 (Fri) 09:53] How long did I use my new binoculars before I saw the American goldfinches returning to the area?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"Two weeks\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    0,
+    7
+   ]
+  }
+ ]
+}

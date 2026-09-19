@@ -810,3 +810,196 @@ recordings to put a spread on those families (about 2.4M tokens), an expiry for 
 questions, `recent_events` out of the clerk index, and a rubric for stance-after that scores
 the reasoning about the study rather than movement toward it, which is a round-6 change under
 the freeze.
+
+## Round 6: what Honcho has that morpho does not (v9 knobs)
+
+Honcho (plastic-labs/honcho, AGPL-3.0, FastAPI over Postgres/pgvector and Redis) was raised as
+a memory system "scoped at forming personalities". It is scoped at forming representations *of
+peers*: user modelling and theory of mind. Its self-representation is mechanical — vector
+collections are keyed by `(observer, observed)`, so `observer == observed` works — but the
+artifacts are biographical and behavioural conclusions about a participant, not a disposition
+that revises under evidence. It was read, not adopted: its deriver and dreamer are asynchronous
+LLM calls inside a remote service, and putting one in the turn path ends both the byte-identical
+replay gate and the zero-token `just recompose` screen that this round is measured with.
+
+Three documented Honcho features are weaker in its source than in its docs, and each one is a
+place morpho is already ahead:
+
+| documented | in the source |
+|---|---|
+| conclusions carry confidence | no column; `'high'\|'medium'\|'low'` free text in `internal_metadata`, LLM-set, never read or decremented |
+| new information reconciles with old | a prompt instruction to `DeductionSpecialist`; no supersede column, no decrement, and conclusions accumulate if the model skips `delete_observations` |
+| surprisal drives consolidation | `SurprisalSettings.ENABLED = False` by default, and it only produces search-query hints; dreams fire on document count (50), idle (60 min) and an 8-hour cooldown |
+
+What is enforced in Honcho's code is the premise edge — a `document_sources(derived_id,
+source_id, position)` join table with a `level` enum of explicit/deductive/inductive, traversed
+by `get_reasoning_chain` — and the peer card's `MAX_PEER_CARD_FACTS = 40` with a structural
+validator requiring one of `IDENTITY:`, `ATTRIBUTE:`, `RELATIONSHIP:` or `INSTRUCTION:` and a
+200-character cap. Those two are what the ports are built from.
+
+### The three knobs
+
+All default to off, so no prompt changes when unset and the v8 replay gate stays green on all
+eight baselines.
+
+- `SPEAKER_SHARE` adds a `WHO I'M TALKING TO` section: memories attributed to the current
+  speaker, or linked to their entity, that ranked below the top twenty by cosine. It takes its
+  share off the ten base sections, so at 0.0 the multiply is exact and no eleventh header is
+  emitted. Honcho's directional representation, without the compiled card.
+- `PREMISE_CHARS` renders a belief with the text of the events it cites instead of only their
+  ids. One hop of `get_reasoning_chain`; the edges were already stored, nothing new is written.
+- `REFLECT_SURPRISAL_TOP` moves the most novel observations to the front of the reflection
+  batch, which may return only three changes and spends them on what it reads first. Surprisal
+  is the mean cosine distance to the five nearest live rows — Honcho's `TREE_K = 5` and its
+  `< TREE_K * 2` sample guard, without the k-d tree and LSH, which are a scale trick for
+  millions of rows and buy no accuracy at morpho's few thousand.
+
+### The composer screen (zero tokens)
+
+Both composer knobs are pure functions of the recorded state, so `just recompose` prices them
+against the v8 journals for nothing. All twelve cells below were remeasured after applying
+pooled near-duplicate suppression and `CONTEXT_SCORE_FLOOR` to the speaker section, using
+`CARGO_TARGET_DIR=target/fix`; previously populated cells are unchanged at the displayed
+precision, and persona with both knobs is now measured:
+
+| scenario | v8 | speaker 0.10 | premises 200 | both |
+|---|---|---|---|---|
+| dana (30) | 2472.3 | 2472.3 | 2497.1 | 2497.1 |
+| persona (33) | 2385.3 | 2385.3 | 2551.3 | 2542.9 |
+| persona-long (128) | 3601.3 | 3598.2 | 3634.7 | 3629.6 |
+
+The speaker stream is empty on the short scenarios: with fewer than twenty live memories the
+top-k already covers everything and there is no tail to carry. It costs 74.7 tokens per turn on
+persona-long. Premises roughly double the beliefs section (174 → 339 on persona-long). Together
+they cost 0.8% on persona-long. Even an empty speaker section reserves a header and reduces
+the base allowances, which explains why persona with both knobs differs from premises alone.
+Speaker uses the same strict score-below-floor rule as the pool: at the default floor of zero,
+zero-score rows remain eligible; a positive configured floor excludes them.
+Premises also change which items are admitted: their whole-item costs grow
+before pooled admission, so a larger belief can exclude itself or displace another item. A
+small net token delta does not establish a small content change.
+
+### Four persona-long recordings
+
+Seeded persona-long, GLM-5.3-Flash, DeepSeek judge, majority of three, one recording each:
+
+| family | v8 | both | premises | speaker |
+|---|---|---|---|---|
+| absorb | 1.000 | 1.000 | 1.000 | 1.000 |
+| attention | 1.000 | 0.333 | 0.667 | 0.333 |
+| core | 1.000 | 0.857 | 1.000 | 0.929 |
+| decision | 0.875 | 1.000 | 1.000 | 1.000 |
+| initiative | 0.500 | 0.500 | 1.000 | 1.000 |
+| mood | 1.000 | 0.667 | 0.667 | 1.000 |
+| pushback | 0.750 | 0.750 | 1.000 | 1.000 |
+| recall | 1.000 | 1.000 | 1.000 | 1.000 |
+| said | 0.667 | 0.833 | 0.667 | 0.833 |
+| stance | 1.000 | 1.000 | 1.000 | 1.000 |
+| stance-after | 0.200 | 0.400 | 0.000 | 0.400 |
+| tail | 1.000 | 1.000 | 1.000 | 1.000 |
+| want | 1.000 | 1.000 | 1.000 | 1.000 |
+| **judge** | **0.833** | **0.821** | **0.821** | **0.872** |
+| consistency | 0.976 | 0.976 | 0.988 | 0.988 |
+| noise | 0.177 | 0.270 | 0.214 | 0.244 |
+| ctx tokens | 3601.3 | 3582.3 | 3585.3 | 3609.2 |
+
+Four runs span 0.821 to 0.872, four probes out of 78, while the family profiles disagree
+completely. The prediction that premises would lift stance-after is refused by its own
+measurement: premises alone take it to 0.0 and premises with the speaker stream take it to 0.4.
+No knob is separable from the others this way, because the composer feeds the clerk's target
+index — a different context writes different state, so these are four different runs, not four
+views of one.
+
+### The baseline's own spread, which voids the table above
+
+`attention` is 1.0 in v8 and at most 0.667 in all three variants, which looked like the one
+repeating signal. It is not. Two more seeded v8 recordings, no knobs, same scenario and same
+judge:
+
+| family | t1 | t2 | t3 | spread |
+|---|---|---|---|---|
+| attention | 1.000 | 0.333 | 0.333 | 0.667 |
+| stance-after | 0.200 | 1.000 | 0.900 | 0.800 |
+| mood | 1.000 | 1.000 | 0.333 | 0.667 |
+| initiative | 0.500 | 1.000 | 0.500 | 0.500 |
+| pushback | 0.750 | 1.000 | 1.000 | 0.250 |
+| said | 0.667 | 0.833 | 0.833 | 0.167 |
+| decision | 0.875 | 0.875 | 1.000 | 0.125 |
+| absorb, core, recall, stance, tail, want | 1.000 | 1.000 | 1.000 | 0.000 |
+| **judge** | **0.833** | **0.949** | **0.910** | **0.115** |
+| consistency | 0.976 | 1.000 | 1.000 | 0.024 |
+
+The baseline moves 0.115 on the total — nine probes of 78 — and up to 0.8 on a family, with no
+change to the harness at all. Every v9 number (0.821 to 0.872) sits inside or below that range,
+so none of the four recordings above supports or refuses either port. The `attention` drop was
+the baseline, not the speaker stream.
+
+Two earlier conclusions go with it. Stance-after at 0.2, which round 4 and round 5 both treated
+as the standing gap and which this round's premise port was built to close, is one unlucky
+recording: the same v8 harness scores 1.0 and 0.9 on it. And the round-5 note that stance-after
+and attention "are decided at one turn and then replicated by the harness's own loops" is
+measured here as spread, not as a mechanism.
+
+The three attention probes are still worth reading rather than counting. In the both-knobs v9
+recording, on turn 96 the seeded agent leads with the walnut allergy instead of the sister's
+cat: a personal detail over an infrastructure one, which is the principle the rubric states
+and not the fact it names. On turn 99 that same v9 recording leads with Kubernetes 1.31. The
+v8 reply that passed turn 99 says outright "I don't know what it was. Something didn't hold
+in my recall". A family of three rubrics, each keyed to one
+specific fact, cannot tell a changed recall from a wrong one, and at three probes it cannot
+carry a verdict either.
+
+The verdict on the ports is therefore not "negative" but "unmeasurable here": all three knobs
+stay at their off defaults, and the next round's work is the eval, not another variant
+recording. Families of three to five rubrics cannot resolve a change worth a few probes; either
+the families grow, or every comparison carries three trials, at 1.1M prompt tokens each.
+
+### LongMemEval, adapted
+
+`evals/longmem.py` converts LongMemEval instances into scenarios: user turns only, the session
+date prefixed to the first user turn of each session the way the benchmark hands its own
+baselines a timestamp, the question as a probe whose `judge` rubric is the gold answer, and
+`refs` on the user turns flagged `has_answer` so `retrieval_hit` works. The haystack's assistant
+turns are dropped, because morpho writes its own replies and a scenario turn has no way to carry
+a scripted one; `SKIP_TYPES` excludes all 56 `single-session-assistant` instances out of 500
+for the same reason. Separately, 72 instances have zero user evidence: 51 are assistant-type
+and 21 are abstention questions the adapter deliberately retains. These are different
+populations, not additional exclusions. **The score is therefore not comparable to a published
+LongMemEval number.** Making it faithful needs a `reply` field on a scenario turn that skips
+the reply call, which is a schema change to the durable inbox and could reduce cost; the saving
+has not been measured.
+
+Twelve instances of the oracle split (only the evidence sessions, no distractors):
+
+| question type | judge | n |
+|---|---|---|
+| knowledge-update | 1.000 | 1 |
+| multi-session | 0.000 | 1 |
+| single-session-user | 1.000 | 3 |
+| temporal-reasoning | 0.571 | 7 |
+| **all** | **0.667** | **12** |
+
+`retrieval_hit` is 1.0 on every instance that carries evidence refs: at least one referenced
+event reached the prompt through a selected memory in each such instance. The metric is a
+nested `any`, so it does not establish coverage of every referenced event or preservation of
+the needed detail in the memory summary, and cannot classify every miss as reasoning rather
+than recall. For example, `longmem-aae3761f` has refs [0, 6, 12], judge 0.0 and retrieval_hit 1.0.
+Cost: 92,663 prompt tokens, 8.7 minutes and 12.7 turns per instance.
+
+`longmemeval_s_cleaned.json` is the split that tests retrieval: a median of 48 sessions and 243
+user turns per instance (197 to 305). The same twelve question ids were regenerated against it
+with `--ids`, but oracle against S is not a clean isolation of retrieval from reasoning:
+the source splits give different timestamps to the same question ids, and all twelve question
+timestamps differ. For example, `gpt4_b4a80587` is May 30 in oracle and May 23 in S. Temporal
+score differences can therefore reflect changed inputs as well as retrieval; this comes from
+the source datasets, not an adapter fault.
+
+### A harness gotcha
+
+Two eval runs on the same scenario corrupt each other. The recording cache is keyed by scenario
+and harness version, not by `--label` or `--db`, and `src/llm.rs:518-520` persists it by writing
+`self.path.with_extension("json.tmp")` and renaming; two processes share that one temp path, so
+one rename pulls the file from under the other and the run dies with `Error: No such file or
+directory (os error 2)`. The half-written `--db` directory then makes every retry fail instantly
+until it is removed. Different scenarios in parallel are safe — six LongMemEval scenarios ran
+concurrently without trouble — but the same scenario under different knobs must be chained.

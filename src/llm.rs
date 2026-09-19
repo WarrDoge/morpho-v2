@@ -165,11 +165,38 @@ impl DeepInfra {
                     .as_str()
                     .is_none_or(str::is_empty)
         };
-        for _ in 0..2 {
-            if !degenerate(&v) {
+        for attempt in 1..=3 {
+            let discarded = degenerate(&v) && attempt < 3;
+            let outcome = if discarded {
+                "resample"
+            } else if degenerate(&v) {
+                "error"
+            } else {
+                "success"
+            };
+            let prompt = v["usage"]["prompt_tokens"].as_u64().unwrap_or(0);
+            let completion = v["usage"]["completion_tokens"].as_u64().unwrap_or(0);
+            telemetry::record_attempt(
+                kind,
+                model.unwrap_or(&self.model),
+                v["choices"][0]["finish_reason"]
+                    .as_str()
+                    .unwrap_or("unknown"),
+                outcome,
+                attempt,
+                prompt,
+                completion,
+            );
+            if !discarded {
                 break;
             }
-            self.counts.lock().unwrap().count(kind, 0);
+            {
+                let mut c = self.counts.lock().unwrap();
+                c.count(kind, 0);
+                c.resample_calls += 1;
+                c.resample_prompt_tokens += prompt;
+                c.resample_completion_tokens += completion;
+            }
             v = self.post("/chat/completions", &body).await?;
         }
         {
@@ -265,6 +292,9 @@ pub struct Counts {
     pub provider_prompt_tokens: u64,
     pub provider_completion_tokens: u64,
     pub cache_misses: u64,
+    pub resample_calls: u64,
+    pub resample_prompt_tokens: u64,
+    pub resample_completion_tokens: u64,
 }
 
 impl Counts {
@@ -341,6 +371,9 @@ impl Recording {
             counts.usage_reported_calls = measured.usage_reported_calls;
             counts.provider_prompt_tokens = measured.provider_prompt_tokens;
             counts.provider_completion_tokens = measured.provider_completion_tokens;
+            counts.resample_calls = measured.resample_calls;
+            counts.resample_prompt_tokens = measured.resample_prompt_tokens;
+            counts.resample_completion_tokens = measured.resample_completion_tokens;
         }
         counts
     }
@@ -840,5 +873,87 @@ mod judge_tests {
         let parts = ["json", "s", "u", "{}"];
         assert_ne!(a.cache_key(None, &parts), b.cache_key(None, &parts));
         assert_eq!(a.cache_key(None, &parts), c.cache_key(None, &parts));
+    }
+}
+
+#[cfg(test)]
+mod usage_tests {
+    use super::*;
+    use axum::{Json, Router, routing::post};
+
+    #[tokio::test]
+    async fn resample_usage_preserves_budget_accounting() {
+        for discarded in [0, 1, 2] {
+            let mut responses = VecDeque::new();
+            for _ in 0..discarded {
+                responses.push_back(json!({
+                    "choices": [{"finish_reason": "length", "message": {"content": "partial"}}],
+                    "usage": {"prompt_tokens": 100, "completion_tokens": 2048}
+                }));
+            }
+            responses.push_back(json!({
+                "choices": [{"finish_reason": "stop", "message": {"content": "done"}}],
+                "usage": {"prompt_tokens": 110, "completion_tokens": 12}
+            }));
+            let requests = std::sync::Arc::new(Mutex::new(Vec::new()));
+            let captured = requests.clone();
+            let responses = std::sync::Arc::new(Mutex::new(responses));
+            let app = Router::new().route(
+                "/chat/completions",
+                post(move |Json(body): Json<Value>| {
+                    captured.lock().unwrap().push(body);
+                    let response = responses.lock().unwrap().pop_front().unwrap();
+                    async { Json(response) }
+                }),
+            );
+            let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+            let mut client = DeepInfra::new();
+            client.base = format!("http://{}", listener.local_addr().unwrap());
+            let server = tokio::spawn(async move { axum::serve(listener, app).await.unwrap() });
+            assert_eq!(
+                client
+                    .chat(None, None, "system", "user", None)
+                    .await
+                    .unwrap(),
+                "done"
+            );
+            let counts = client.counts.lock().unwrap().clone();
+            assert_eq!(counts.resample_calls, discarded);
+            assert_eq!(counts.resample_prompt_tokens, discarded * 100);
+            assert_eq!(counts.resample_completion_tokens, discarded * 2048);
+            let expected = Counts {
+                llm_calls: discarded + 1,
+                calls_by_kind: BTreeMap::from([("text".into(), discarded + 1)]),
+                prompt_tokens_by_kind: BTreeMap::from([("text".into(), 110)]),
+                prompt_tokens: 110,
+                completion_tokens: 12,
+                usage_reported_calls: 1,
+                provider_prompt_tokens: 110,
+                provider_completion_tokens: 12,
+                resample_calls: discarded,
+                resample_prompt_tokens: discarded * 100,
+                resample_completion_tokens: discarded * 2048,
+                ..Counts::default()
+            };
+            assert_eq!(
+                serde_json::to_value(&counts).unwrap(),
+                serde_json::to_value(expected).unwrap()
+            );
+            let recording = Recording::new(Some(client), PathBuf::new(), false, false).unwrap();
+            let measured = recording.counts();
+            assert_eq!(measured.resample_calls, counts.resample_calls);
+            assert_eq!(
+                measured.resample_prompt_tokens,
+                counts.resample_prompt_tokens
+            );
+            assert_eq!(
+                measured.resample_completion_tokens,
+                counts.resample_completion_tokens
+            );
+            let requests = requests.lock().unwrap();
+            assert_eq!(requests.len() as u64, discarded + 1);
+            assert!(requests.iter().all(|body| body == &requests[0]));
+            server.abort();
+        }
     }
 }

@@ -66,9 +66,6 @@ pub fn sources(state: &State) -> BTreeMap<String, i64> {
 /// A narrative is stale once any live trait was formed, reworded, contested or retired since it was compiled.
 pub fn stale(state: &State) -> bool {
     let current = sources(state);
-    if current.is_empty() {
-        return false;
-    }
     let compiled: BTreeMap<String, i64> = state.narrative["data"]["sources"]
         .as_object()
         .into_iter()
@@ -84,7 +81,7 @@ pub async fn run(svc: &Services) -> Result<Option<Proposal>> {
         let st = svc.store.lock().unwrap();
         let s = &st.state;
         let sources = sources(s);
-        if sources.is_empty() {
+        if sources.is_empty() && !stale(s) {
             return Ok(None);
         }
         let pick = |r: &crate::pyfmt::Row, keys: &[&str]| -> Value {
@@ -113,9 +110,10 @@ pub async fn run(svc: &Services) -> Result<Option<Proposal>> {
             })
             .collect();
         let wants: Vec<Value> = s
-            .list_rows("goals", Some(LIVE_GOAL), 10)
+            .list_rows("goals", Some(LIVE_GOAL), usize::MAX)
             .iter()
             .filter(|g| g["origin"] == "self")
+            .take(10)
             .map(|g| pick(g, &["description", "status", "next_step"]))
             .collect();
         let notes: Vec<Value> = s
@@ -147,4 +145,87 @@ pub async fn run(svc: &Services) -> Result<Option<Proposal>> {
         .confidence(1.0)
         .reason("compiled from the current traits"),
     ))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{
+        ids::IdGen,
+        llm::{Fake, Llm},
+        store::{Store, state::obj},
+    };
+
+    #[tokio::test]
+    async fn substance_retirement_goals_and_failed_compilation() {
+        let mut state = State::new();
+        assert!(!stale(&state));
+        state.tables.get_mut("traits").unwrap().rows = vec![
+            obj(json!({
+                "id": "trait_a", "status": "active", "statement": "I prefer tea.",
+                "contradicting_evidence": [], "version": 1, "confidence": 0.8
+            })),
+            obj(json!({
+                "id": "trait_b", "status": "active", "statement": "I like walking.",
+                "contradicting_evidence": []
+            })),
+        ];
+        let compiled = sources(&state);
+        state.narrative["data"] = json!({"text": "I prefer tea.", "sources": compiled});
+        state.tables.get_mut("traits").unwrap().rows.reverse();
+        assert!(!stale(&state));
+        let row = &mut state.tables.get_mut("traits").unwrap().rows[0];
+        row.insert("version".into(), json!(2));
+        row.insert("confidence".into(), json!(0.9));
+        assert!(!stale(&state));
+        for (field, value) in [
+            ("statement", json!("I prefer coffee.")),
+            ("status", json!("uncertain")),
+            ("contradicting_evidence", json!(["event_1"])),
+        ] {
+            let mut changed = state.clone();
+            changed.tables.get_mut("traits").unwrap().rows[0].insert(field.into(), value);
+            assert!(stale(&changed), "{field}");
+        }
+        for row in &mut state.tables.get_mut("traits").unwrap().rows {
+            row.insert("status".into(), json!("retired"));
+        }
+        assert!(sources(&state).is_empty());
+        assert!(stale(&state));
+        state.tables.get_mut("goals").unwrap().rows = (0..21)
+            .map(|i| {
+                obj(json!({
+                    "id": format!("goal_{i}"), "status": "active", "created_at": "same",
+                    "origin": if i < 11 { "self" } else { "user" },
+                    "description": format!("goal {i}")
+                }))
+            })
+            .collect();
+        let dir =
+            std::env::temp_dir().join(format!("morpho-narrative-unit-{}", std::process::id()));
+        let svc = Services::new(
+            Store::open(&dir, IdGen::seeded("narrative")).unwrap(),
+            Llm::Fake(Fake::default()),
+        );
+        svc.store.lock().unwrap().state = state.clone();
+        let Llm::Fake(fake) = svc.llm.as_ref() else {
+            unreachable!()
+        };
+        fake.fail("unavailable");
+        assert!(run(&svc).await.is_err());
+        fake.queue_text(" \n\t ");
+        assert!(run(&svc).await.is_err());
+        assert_eq!(svc.store.lock().unwrap().state.narrative, state.narrative);
+        fake.queue_text("I want to work on my goals.");
+        let proposal = run(&svc).await.unwrap().unwrap();
+        assert_eq!(proposal.payload["sources"], json!({}));
+        let prompt: Value = serde_json::from_str(fake.calls_for("text").last().unwrap()).unwrap();
+        assert_eq!(prompt["dispositions"], json!([]));
+        assert_eq!(prompt["notes"], json!([]));
+        assert_eq!(prompt["wants"].as_array().unwrap().len(), 10);
+        assert_eq!(prompt["wants"][0]["description"], "goal 10");
+        assert_eq!(prompt["wants"][9]["description"], "goal 1");
+        drop(svc);
+        std::fs::remove_dir_all(dir).unwrap();
+    }
 }

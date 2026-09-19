@@ -27,6 +27,19 @@ pub const SECTIONS: [(&str, &str, f64); 10] = [
 ];
 /// Sections ranked together and filled from one shared allowance.
 const POOL: [usize; 3] = [1, 2, 3];
+/// Memories scanned for the speaker stream, and how many of them it may show.
+const SPEAKER_SCAN: usize = 200;
+const SPEAKER_ITEMS: usize = 8;
+
+/// `SPEAKER_SHARE` takes its cut off the ten base sections. At 0.0 the multiply is exact
+/// and no eleventh header is emitted, so composition is unchanged when the knob is unset.
+fn layout(share: f64) -> Vec<(&'static str, &'static str, f64)> {
+    SECTIONS
+        .iter()
+        .map(|&(name, title, base)| (name, title, base * (1.0 - share)))
+        .chain((share > 0.0).then_some(("speaker", "WHO I'M TALKING TO", share)))
+        .collect()
+}
 /// Pooled items this close restate each other; the newer one stays.
 const POOL_DUP_COS: f64 = 0.92;
 
@@ -75,6 +88,34 @@ fn speakers(state: &State, row: &Row) -> BTreeSet<String> {
     out
 }
 
+/// One hop of Honcho's reasoning chain: a conclusion carries the text of what it cites,
+/// not just the ids. Empty unless `PREMISE_CHARS` is set, so prompts are unchanged when off.
+fn grounds(state: &State, row: &Row) -> Vec<Value> {
+    let cap = settings().premise_chars;
+    if cap == 0 {
+        return Vec::new();
+    }
+    evidence(row)
+        .iter()
+        .filter_map(|id| {
+            let text = match state.event(id) {
+                Some(e) => e["payload"].to_string(),
+                None => {
+                    let r = table_for(id).and_then(|t| state.get(t, id))?;
+                    ["summary", "proposition", "statement", "entry"]
+                        .iter()
+                        .find_map(|k| r.get(*k).and_then(Value::as_str))
+                        .unwrap_or_default()
+                        .to_owned()
+                }
+            };
+            (!text.is_empty())
+                .then(|| json!({"id": id, "text": text.chars().take(cap).collect::<String>()}))
+        })
+        .take(3)
+        .collect()
+}
+
 struct Item {
     text: String,
     metadata: Value,
@@ -83,6 +124,9 @@ struct Item {
     omit: Option<String>,
 }
 fn item(state: &State, row: &Row, fields: &[&str], reason: &str) -> Item {
+    item_with(state, row, fields, reason, false)
+}
+fn item_with(state: &State, row: &Row, fields: &[&str], reason: &str, cite: bool) -> Item {
     let id = row
         .get("event_id")
         .or_else(|| row.get("id"))
@@ -92,6 +136,12 @@ fn item(state: &State, row: &Row, fields: &[&str], reason: &str) -> Item {
     for key in fields {
         if let Some(v) = row.get(*key) {
             body[*key] = v.clone();
+        }
+    }
+    if cite {
+        let g = grounds(state, row);
+        if !g.is_empty() {
+            body["grounds"] = Value::Array(g);
         }
     }
     Item {
@@ -399,6 +449,7 @@ pub fn compose_for(
     budget: Option<usize>,
 ) -> Result<(String, Value)> {
     let budget = budget.unwrap_or(settings().context_token_budget);
+    let sections_layout = layout(settings().speaker_share);
     let span = tracing::info_span!(
         "compose",
         tokens = tracing::field::Empty,
@@ -463,8 +514,6 @@ pub fn compose_for(
         }
         memories.sort_by(by_score);
     }
-    let pooled: Vec<&Row> = memories.iter().chain(&beliefs).chain(&journal).collect();
-    let omitted = dedupe(&st, &pooled);
     let words: BTreeSet<_> = lower
         .split(|c: char| !c.is_alphanumeric())
         .filter(|s| s.len() > 2)
@@ -503,6 +552,53 @@ pub fn compose_for(
         .filter_map(|id| state.get("entities", id))
         .collect();
     let relations = state.relationships_for(&entity_ids.into_iter().collect::<Vec<_>>());
+    // Honcho's directional representation: what I know about whoever is talking, even when
+    // the question never evokes it. Cosine alone keeps surfacing what the agent itself cares
+    // about, so this reads the same ranking further down and keeps only speaker-linked rows.
+    let speaker_rows: Vec<Row> = if settings().speaker_share > 0.0 {
+        let theirs: BTreeSet<String> = state
+            .table("entities")
+            .rows
+            .iter()
+            .filter(|e| s(e, "name").eq_ignore_ascii_case(speaker))
+            .map(|e| s(e, "id").to_owned())
+            .collect();
+        let shown: BTreeSet<String> = memories.iter().map(|r| s(r, "id").to_owned()).collect();
+        ranked("memories", SPEAKER_SCAN, Some(LIVE_MEMORY))?
+            .into_iter()
+            .filter(|r| !shown.contains(s(r, "id")))
+            .filter(|r| {
+                speakers(state, r).contains(speaker)
+                    || r.get("entity_ids")
+                        .and_then(Value::as_array)
+                        .into_iter()
+                        .flatten()
+                        .filter_map(Value::as_str)
+                        .any(|id| theirs.contains(id))
+            })
+            .take(SPEAKER_ITEMS)
+            .collect()
+    } else {
+        Vec::new()
+    };
+    let pooled: Vec<&Row> = memories
+        .iter()
+        .chain(&beliefs)
+        .chain(&journal)
+        .chain(&speaker_rows)
+        .collect();
+    let omitted = dedupe(&st, &pooled);
+    let speaker_items = speaker_rows
+        .iter()
+        .map(|r| {
+            item(
+                state,
+                r,
+                &["kind", "summary", "importance", "confidence", "status"],
+                "about the speaker, below the top matches",
+            )
+        })
+        .collect();
     let mut goals = state.list_rows("goals", Some(LIVE_GOAL), usize::MAX);
     goals.extend(state.list_rows("goals", Some(&["completed", "abandoned", "superseded"]), 5));
     goals.sort_by(|a, b| {
@@ -584,11 +680,12 @@ pub fn compose_for(
         beliefs
             .iter()
             .map(|r| {
-                item(
+                item_with(
                     state,
                     r,
                     &["proposition", "confidence", "status", "seq"],
                     "similarity and confidence; conflicts retained",
+                    true,
                 )
             })
             .collect(),
@@ -667,11 +764,14 @@ pub fn compose_for(
             })
             .collect(),
     ];
+    if sections_layout.len() > SECTIONS.len() {
+        sections.push(speaker_items);
+    }
     let identity_meta = identity(&st, Some(emb)).meta;
     drop(st);
     let mut reasons = omitted.into_iter();
     let floor = settings().context_score_floor;
-    for &si in &POOL {
+    for si in POOL.into_iter().chain(SECTIONS.len()..sections.len()) {
         for item in &mut sections[si] {
             item.omit = reasons.next().flatten();
             if item.omit.is_none() && item.score < floor {
@@ -679,13 +779,14 @@ pub fn compose_for(
             }
         }
     }
-    let headers: usize = SECTIONS
+    let headers: usize = sections_layout
         .iter()
         .map(|(_, title, _)| tokens(&format!("## {title}\n\n")))
         .sum();
     let available = budget.saturating_sub(headers);
     let mut remaining = available;
-    for (index, ((name, _, share), items)) in SECTIONS.iter().zip(&mut sections).enumerate() {
+    for (index, ((name, _, share), items)) in sections_layout.iter().zip(&mut sections).enumerate()
+    {
         if dropped(name) {
             items.clear();
             continue;
@@ -696,7 +797,7 @@ pub fn compose_for(
         let mut allowance = (available as f64 * share) as usize;
         for i in items {
             let cost = tokens(&i.text);
-            if cost <= allowance {
+            if i.omit.is_none() && cost <= allowance {
                 i.kept = true;
                 allowance -= cost;
                 remaining -= cost;
@@ -716,7 +817,7 @@ pub fn compose_for(
         .collect();
     candidates.sort_by(|a, b| b.0.total_cmp(&a.0).then((a.1, a.2).cmp(&(b.1, b.2))));
     let mut allowance =
-        (available as f64 * POOL.iter().map(|&i| SECTIONS[i].2).sum::<f64>()) as usize;
+        (available as f64 * POOL.iter().map(|&i| sections_layout[i].2).sum::<f64>()) as usize;
     for (_, si, j) in candidates {
         let cost = tokens(&sections[si][j].text);
         if cost <= allowance {
@@ -726,7 +827,9 @@ pub fn compose_for(
         }
     }
     // Give unused shares back, prioritizing commitments before optional recall.
-    for index in [6, 0, 1, 2, 3, 4, 5, 9, 7, 8] {
+    let mut order = vec![6, 0, 1, 2, 3, 4, 5, 9, 7, 8];
+    order.extend(SECTIONS.len()..sections_layout.len());
+    for index in order {
         for i in &mut sections[index] {
             let cost = tokens(&i.text);
             if !i.kept && i.omit.is_none() && cost <= remaining {
@@ -747,7 +850,7 @@ pub fn compose_for(
     let mut out = Vec::new();
     let mut manifest =
         json!({"budget":budget,"sections":{},"speaker":speaker,"identity":identity_meta});
-    for ((name, title, _), items) in SECTIONS.iter().zip(&sections) {
+    for ((name, title, _), items) in sections_layout.iter().zip(&sections) {
         let kept: Vec<_> = items.iter().filter(|i| i.kept).collect();
         if !kept.is_empty() {
             out.push(format!(
@@ -766,4 +869,81 @@ pub fn compose_for(
     debug_assert!(manifest["tokens"].as_u64().unwrap() <= budget as u64);
     span.record("tokens", manifest["tokens"].as_u64().unwrap_or(0));
     Ok((text, manifest))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{ids::IdGen, llm::Llm, store::obj};
+
+    #[test]
+    fn speaker_tail_obeys_quality_rules() {
+        if std::env::var_os("MORPHO_SPEAKER_TEST").is_none() {
+            let out = std::process::Command::new(std::env::current_exe().unwrap())
+                .args([
+                    "--exact",
+                    "context::composer::tests::speaker_tail_obeys_quality_rules",
+                ])
+                .env("MORPHO_SPEAKER_TEST", "1")
+                .env("SPEAKER_SHARE", "0.10")
+                .env("CONTEXT_SCORE_FLOOR", "0.10")
+                .output()
+                .unwrap();
+            assert!(
+                out.status.success(),
+                "{}",
+                String::from_utf8_lossy(&out.stdout)
+            );
+            return;
+        }
+        let dir = std::env::temp_dir().join(IdGen::random().next("speaker-quality"));
+        let mut st = Store::open(&dir, IdGen::seeded("speaker-quality")).unwrap();
+        let event = st
+            .append_event("user_message", "bob", json!({"text":"facts"}), None, None)
+            .unwrap();
+        let mut query = vec![0.0; settings().embed_dim];
+        query[0] = 1.0;
+        for i in 0..24 {
+            let mut vector = query.clone();
+            let (confidence, x, y, axis) = match i {
+                20 => (0.9, 0.94, 0.34, 1),
+                21 => (0.0, 0.5, 0.866, 2),
+                22 => (0.05, 0.4, 0.916, 3),
+                23 => (0.9, 0.3, 0.954, 4),
+                _ => (0.9, 1.0, 0.0, 1),
+            };
+            vector[0] = x;
+            vector[axis] = y;
+            let id = format!("mem_{i}");
+            let slot = st.vectors.append(&vector).unwrap();
+            st.state.slots.insert(id.clone(), slot);
+            st.state
+                .tables
+                .get_mut("memories")
+                .unwrap()
+                .rows
+                .push(obj(json!({
+                    "id":id, "summary":format!("fact {i}"), "status":"active",
+                    "confidence":confidence, "importance":1.0, "source_events":[event["event_id"]]
+                })));
+        }
+        let svc = Services::new(st, Llm::Fake(Default::default()));
+        let (_, manifest) = compose_for(&svc, &query, "", "bob", None, Some(4000)).unwrap();
+        let items = manifest["sections"]["speaker"]["items"].as_array().unwrap();
+        let tail = |id: &str| items.iter().find(|r| r["id"] == id).unwrap();
+        assert_eq!(tail("mem_20")["included"], false);
+        assert!(
+            tail("mem_20")["omission_reason"]
+                .as_str()
+                .unwrap()
+                .starts_with("duplicate of")
+        );
+        for id in ["mem_21", "mem_22"] {
+            assert_eq!(tail(id)["included"], false);
+            assert_eq!(tail(id)["omission_reason"], "below score floor");
+        }
+        assert_eq!(tail("mem_23")["included"], true);
+        drop(svc);
+        std::fs::remove_dir_all(dir).unwrap();
+    }
 }

@@ -59,3 +59,21 @@ gate:
 # Local traces and metrics: Grafana on :3000, OTLP on :4317/:4318 (set OTEL_EXPORTER_OTLP_ENDPOINT).
 otel:
     docker run --rm -d --name otel-lgtm -p 3000:3000 -p 4317:4317 -p 4318:4318 grafana/otel-lgtm
+
+# LongMemEval, adapted: `just longmem-gen <longmemeval_oracle.json> 20`, then `just longmem`.
+# The adapter drops the haystack's assistant turns, so the score is not a published-benchmark
+# number; see evals/longmem.py.
+longmem-gen dataset n="20" prefix="longmem":
+    python3 evals/longmem.py {{dataset}} --n {{n}} --prefix {{prefix}}
+
+longmem prefix="longmem" *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for f in evals/scenarios/{{prefix}}-*.json; do
+        name=$(basename "$f" .json)
+        [[ $name == *.meta ]] && continue
+        just eval "$name" --label lme {{args}}
+    done
+
+longmem-report *args:
+    python3 evals/longmem.py --report {{args}}

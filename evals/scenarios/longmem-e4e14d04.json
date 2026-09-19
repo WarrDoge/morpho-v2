@@ -1,0 +1,75 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/05/24 (Wed) 23:32] I'm looking for some book recommendations. I just finished reading the latest bestseller by John Grisham and loved it. Speaking of which, I attended a meetup organized by Book Lovers Unite last week where we discussed the book, and it was so much fun debating the plot twists and characters with fellow book lovers. Do you have any suggestions for my next read?",
+   "session": "answer_cf425855_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm intrigued by the legal thrillers, especially Michael Connelly's \"The Lincoln Lawyer\". I've heard great things about his writing style. Can you tell me more about the book's plot and the main character, Mickey Haller?",
+   "session": "answer_cf425855_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm definitely interested in reading \"The Lincoln Lawyer\". Can you tell me more about the series? Are the books standalone or do they need to be read in order?",
+   "session": "answer_cf425855_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll start with \"The Lincoln Lawyer\" and see how I like it. I've heard great things about Michael Connelly's writing style, and I'm curious to see how he develops Mickey Haller's character. By the way, do you have any recommendations for book clubs or online forums where I can discuss the book with other readers? I just attended a meetup organized by a group last week where we discussed the latest bestseller by John Grisham, and it was so much fun debating the plot twists and characters with fellow book lovers.",
+   "session": "answer_cf425855_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm excited to dive into \"The Lincoln Lawyer\" and explore the world of Mickey Haller. I think I'll start with Goodreads and join some groups dedicated to Michael Connelly and legal thrillers. It's great to know that there are so many online communities and book clubs where I can discuss the book with other readers. Thanks for the recommendations!",
+   "session": "answer_cf425855_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'll start by joining some Goodreads groups dedicated to Michael Connelly and legal thrillers. I'll also check out the Michael Connelly Fans Facebook group to see what discussions are happening there. Do you think I should create a post introducing myself and mentioning that I just finished reading the latest bestseller by John Grisham and attended a meetup organized by a group last week, where we discussed the book? That way, I can connect with other readers who might have similar interests.",
+   "session": "answer_cf425855_2",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/24 (Wed) 05:09] I'm looking for some book recommendations. I recently joined a Facebook group called \"Book Lovers Unite\" three weeks ago and I've been loving the discussions and recommendations from the members. Can you suggest some popular books in the thriller genre?",
+   "session": "answer_cf425855_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been meaning to read more thrillers, and these recommendations are really helpful. I've heard of some of these authors before, but haven't gotten around to reading their books yet. Do you think any of these would be good for a book club discussion?",
+   "session": "answer_cf425855_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I think \"Gone Girl\" would be a great choice for a book club discussion, especially since I've already been active in my Facebook group \"Book Lovers Unite\" and I think the members would really enjoy it. Do you think I could get some discussion questions from you to guide the conversation?",
+   "session": "answer_cf425855_1",
+   "tag": "fact"
+  },
+  {
+   "text": "These discussion questions are really helpful! I think they'll definitely help guide the conversation and encourage the members in \"Book Lovers Unite\" to share their thoughts and opinions. I'm also thinking of asking the members to come prepared with their own questions and insights, so we can have a more dynamic discussion. Do you think it's a good idea to set a specific topic or theme for the discussion, like the portrayal of marriage or the impact of social media, to help focus the conversation?",
+   "session": "answer_cf425855_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm thinking of asking the members of \"Book Lovers Unite\" to come prepared to discuss the theme of marriage and relationships in \"Gone Girl\". I think this theme is really relevant to the book and will generate some interesting discussions. Do you think it's a good idea to also ask members to share their own experiences or thoughts about marriage and relationships in general, or would that be too personal?",
+   "session": "answer_cf425855_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll ask the members to come prepared to discuss the theme of marriage and relationships in \"Gone Girl\", and also encourage them to share their thoughts on how the book relates to their own beliefs or experiences with relationships. I'll make sure to establish a safe and respectful environment and set guidelines to keep the discussion focused on the book. Thanks for the advice!",
+   "session": "answer_cf425855_1",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/24 (Wed) 21:38] How long had I been a member of 'Book Lovers Unite' when I attended the meetup?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"Two weeks\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    0,
+    6
+   ]
+  }
+ ]
+}

@@ -1,0 +1,44 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/05/25 (Thu) 14:24] I'm looking to create a cozier atmosphere in my living room. Can you suggest some lamp placement ideas or any other tips to achieve that?",
+   "session": "answer_15d63a22",
+   "tag": "fact"
+  },
+  {
+   "text": "I like those ideas, especially the layered lighting concept. I think I'll try placing a floor lamp behind the sofa. Can you suggest some good floor lamps with a warm tone that would work well with the Philips LED bulb I have in my bedside lamp?",
+   "session": "answer_15d63a22",
+   "tag": "fact"
+  },
+  {
+   "text": "I like the idea of a linen shade, it sounds really cozy. Do you think it would be a good idea to get a floor lamp with a built-in timer or smart features? I've been using the timer function on my desk lamp and it's been really helpful for staying focused.",
+   "session": "answer_15d63a22",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll look into those smart lamp options. I've been meaning to get some smart light bulbs for my kitchen, too. Do you think it's worth investing in a whole smart lighting system, or can I just get a few smart bulbs to start with?",
+   "session": "answer_15d63a22",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll start with a few smart bulbs for my kitchen and see how that goes. I've been meaning to replace the harsh overhead lighting in there anyway, so this might be a good opportunity to try out some new bulbs. Do you think I should get bulbs with color changing capabilities or just stick with white light?",
+   "session": "answer_15d63a22",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll start with some warm white bulbs for my kitchen and see how that goes. I've been using a Philips LED bulb in my bedside lamp, and I really like the warm tone it provides.",
+   "session": "answer_15d63a22",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/26 (Fri) 15:27] What type of bulb did I replace in my bedside lamp?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"Philips LED bulb\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    1
+   ]
+  }
+ ]
+}

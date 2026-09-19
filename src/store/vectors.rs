@@ -55,6 +55,7 @@ impl Vectors {
                 .await?
                 .ok_or_else(|| anyhow::anyhow!("missing vector {slot}"))?;
             let bytes = row.get::<Vec<u8>>(0)?;
+            ensure!(bytes.len() == self.dim * 4, "invalid stored vector {slot}");
             Ok(bytes
                 .as_chunks::<4>()
                 .0
@@ -70,7 +71,6 @@ impl Vectors {
             "invalid query embedding"
         );
         block_on(async {
-            // ponytail: exact scan; add a native ANN index when measured latency warrants it.
             let mut rows = self
                 .db
                 .query(
@@ -100,15 +100,75 @@ impl Vectors {
                     distances.insert(base + i, if d.is_finite() { d } else { 1.0 });
                 }
             }
+            ensure!(
+                (0..self.slots).all(|slot| distances.contains_key(&slot)),
+                "missing stored vectors"
+            );
             Ok(distances)
         })
     }
 
     pub fn similarity_between(&self, a: usize, b: usize) -> Result<f64> {
-        Ok(1.0 - self.distances(&self.get(b)?)?[&a])
+        let distances = self.distances(&self.get(b)?)?;
+        let distance = distances
+            .get(&a)
+            .ok_or_else(|| anyhow::anyhow!("missing vector {a}"))?;
+        Ok(1.0 - distance)
     }
 }
 
 pub fn relevance(similarity: f64) -> f64 {
     1.0 - (1.0 - similarity)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn complete_distances_and_slot_accounting() -> Result<()> {
+        let db = block_on(libsql::Builder::new_local(":memory:").build())?;
+        let db = Arc::new(db.connect()?);
+        block_on(db.execute(
+            "CREATE TABLE vectors(slot INTEGER PRIMARY KEY, embedding F32_BLOB NOT NULL)",
+            (),
+        ))?;
+        let mut vectors = Vectors {
+            db,
+            dim: 2,
+            slots: 0,
+            pending: None,
+        };
+        assert!(vectors.distances(&[1.0, 0.0])?.is_empty());
+        assert!(vectors.distances(&[1.0]).is_err());
+        assert!(vectors.append(&[f32::NAN, 0.0]).is_err());
+        assert_eq!(vectors.slots, 0);
+        assert_eq!(vectors.append(&[1.0, 0.0])?, 0);
+        assert_eq!(vectors.get(0)?, [1.0, 0.0]);
+        assert_eq!(relevance(vectors.similarity_between(0, 0)?), 1.0);
+        assert!(vectors.similarity_between(1, 0).is_err());
+        assert!(vectors.get(1).is_err());
+
+        block_on(vectors.db.execute(
+            "CREATE TRIGGER fail_append BEFORE INSERT ON vectors BEGIN SELECT RAISE(ABORT,'test'); END",
+            (),
+        ))?;
+        assert!(vectors.append(&[0.0, 1.0]).is_err());
+        assert_eq!(vectors.slots, 1);
+        vectors.pending = Some(Vec::new());
+        assert_eq!(vectors.append(&[-1.0, 0.0])?, 1);
+        assert_eq!(vectors.get(1)?, [-1.0, 0.0]);
+        assert_eq!(vectors.distances(&[1.0, 0.0])?.len(), 2);
+        assert_eq!(relevance(vectors.similarity_between(0, 1)?), -1.0);
+
+        block_on(
+            vectors
+                .db
+                .execute("UPDATE vectors SET embedding=x'00' WHERE slot=0", ()),
+        )?;
+        assert!(vectors.get(0).is_err());
+        block_on(vectors.db.execute("DELETE FROM vectors WHERE slot=0", ()))?;
+        assert!(vectors.distances(&[1.0, 0.0]).is_err());
+        Ok(())
+    }
 }

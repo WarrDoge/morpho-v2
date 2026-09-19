@@ -1,0 +1,39 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/05/21 (Sun) 09:11] I'm looking for some recommendations on indoor plants that can thrive in low-light conditions. I recently added a vase with fresh greenery to my kitchen countertop and I'd love to explore more options.",
+   "session": "answer_feb5200f",
+   "tag": "fact"
+  },
+  {
+   "text": "I've heard great things about Snake Plants, but I'm also curious about the ZZ Plant. Can you tell me more about its watering schedule and how often it needs to be fertilized? By the way, I've been doing some redecorating and recently repainted my bedroom walls a lighter shade of gray - it's made the room feel so much brighter!",
+   "session": "answer_feb5200f",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm also thinking of creating a home office nook in the spare bedroom. Do you have any suggestions on how to design the space to maximize productivity and comfort?",
+   "session": "answer_feb5200f",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm thinking of using a floating desk in the middle of the room, and adding some built-in shelving for storage. I've been browsing online for inspiration and ideas, and I'm considering a minimalist aesthetic with a lot of natural wood accents. I also want to incorporate some greenery, maybe a small herb garden or a vase with fresh flowers. Do you have any suggestions on how to choose the right lighting for the space?",
+   "session": "answer_feb5200f",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm considering a pendant light above the desk and some table lamps for task lighting. I've been eyeing a minimalist wooden desk lamp with a simple shade that will complement my natural wood accents. For the pendant light, I'm thinking of a sleek, modern design that will add a touch of sophistication to the space. Do you have any suggestions on how to choose the right pendant light for my home office nook?",
+   "session": "answer_feb5200f",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/21 (Sun) 13:44] What color did I repaint my bedroom walls?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"a lighter shade of gray\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    1
+   ]
+  }
+ ]
+}

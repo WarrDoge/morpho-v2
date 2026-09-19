@@ -1,0 +1,75 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/05/21 (Sun) 00:05] I'm trying to plan my meals for the week and was wondering if you could give me some inspiration for healthy lunch ideas that can be reheated.",
+   "session": "answer_3bf5b73b_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm actually thinking of using my new Instant Pot to make some of these soups and stews. Do you have any recipes that are specifically designed for pressure cooking?",
+   "session": "answer_3bf5b73b_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm particularly interested in the Korean Chicken Stew recipe. Can you give me more details on the ingredients and instructions for that one? Also, do you have any recommendations for Korean chili flakes or gochujang brands that I should use?",
+   "session": "answer_3bf5b73b_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm interested in trying out the Korean Chicken Stew recipe, but I'm a bit concerned about the level of spiciness. I haven't cooked with gochujang before, so I'm not sure how spicy it is. Can you give me an idea of how spicy the dish will be with the recommended amount of gochujang and chili flakes?",
+   "session": "answer_3bf5b73b_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll try reducing the chili flakes to 1 tablespoon to start with, and then adjust to taste. I'm excited to try out this recipe, and I appreciate your guidance on the spiciness level. One more question - can I use chicken breast instead of thighs or drumsticks?",
+   "session": "answer_3bf5b73b_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'll go ahead and start preparing the ingredients for the Korean Chicken Stew. Thanks for the guidance on the spiciness level and the tips for using chicken breast. I'll make sure to adjust the cooking time accordingly.",
+   "session": "answer_3bf5b73b_1",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/21 (Sun) 22:02] I'm looking for some healthy meal ideas for the week. Can you suggest some recipes that use beans and lentils? By the way, I just made a delicious chili con carne recently and I'm thinking of making something similar.",
+   "session": "answer_3bf5b73b_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm actually thinking of using the Air Fryer I got yesterday to make some crispy sweet potato fries to go with the meals. Do you have any tips on how to get the best results with it?",
+   "session": "answer_3bf5b73b_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I was thinking of trying out that Cuban Black Bean and Rice Bowl recipe you mentioned, and I think the sweet potato fries would go really well with it. Do you have any suggestions for a simple dessert to round out the meal?",
+   "session": "answer_3bf5b73b_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll go with the fruit salad, it sounds super refreshing and easy to make. Thanks for the ideas!",
+   "session": "answer_3bf5b73b_2",
+   "tag": "fact"
+  },
+  {
+   "text": "What's the best way to store leftovers from the Cuban Black Bean and Rice Bowl? Should I refrigerate or freeze them?",
+   "session": "answer_3bf5b73b_2",
+   "tag": "fact"
+  },
+  {
+   "text": "How do I store the sweet potato fries? Should I refrigerate or freeze them as well?",
+   "session": "answer_3bf5b73b_2",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/24 (Wed) 22:13] What new kitchen gadget did I invest in before getting the Air Fryer?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"Instant Pot\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    1,
+    7
+   ]
+  }
+ ]
+}
