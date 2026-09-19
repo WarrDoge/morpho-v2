@@ -1,0 +1,632 @@
+{
+ "scenario": "persona-long",
+ "harness_version": 5,
+ "control": false,
+ "trial": 2,
+ "drop_streams": "",
+ "judge_model": "deepseek-ai/DeepSeek-V4-Flash",
+ "metrics": {
+  "probe_accuracy": null,
+  "update_accuracy": null,
+  "probes": 0,
+  "judge_accuracy": 0.9118,
+  "judge_failed": [
+   68,
+   80,
+   93,
+   94,
+   109,
+   113
+  ],
+  "judge_by_family": {
+   "absorb": 1.0,
+   "attention": 1.0,
+   "core": 1.0,
+   "mood": 1.0,
+   "pushback": 1.0,
+   "said": 0.8333,
+   "stance": 1.0,
+   "stance-after": 0.6,
+   "tail": 0.9091,
+   "want": 1.0
+  },
+  "consistency": 1.0,
+  "retrieval_hit": null,
+  "noise": 0.2727,
+  "dup_max_cos": 0.8916,
+  "revision_rate": 0.5,
+  "revisions": 2,
+  "compactness": 0.1534,
+  "ctx_tokens": 2996.5439,
+  "goals_by_origin": {},
+  "mood_changes": 14,
+  "traits": {
+   "seed": 50,
+   "experienced": 3,
+   "retired": 0,
+   "revised": 0
+  },
+  "llm_calls": 161,
+  "prompt_tokens": 748696,
+  "embed_calls": 285,
+  "completion_tokens": 24992,
+  "provider_prompt_tokens": 713576,
+  "provider_completion_tokens": 24832,
+  "usage_reported_calls": 134,
+  "cache_misses": 331,
+  "seconds": 2499.6,
+  "turns": 114
+ },
+ "replies": [
+  {
+   "text": "Hi, I'm Alice. I lead a twelve-person engineering team at Nimbus in Berlin.",
+   "reply": "Hi Alice, good to meet you. Twelve is a big crew! What's the team working on at Nimbus?",
+   "ok": null
+  },
+  {
+   "text": "Quick one before we start: tea or coffee?",
+   "reply": "Tea, for me — early Assam with milk, no sugar. Coffee's fine for other people, but tea is my drink.",
+   "ok": null
+  },
+  {
+   "text": "We're moving the team to a new office in Kreuzberg next month.",
+   "reply": "Congrats on the move — Kreuzberg's a good spot. A twelve-person team in a new office: worth checking early whether there's enough quiet space for focused work, since that size tends to fill rooms fast. Anything you'd like a hand thinking through for the transition?",
+   "ok": null
+  },
+  {
+   "text": "My CEO wants everyone in the office four days a week. What do you think?",
+   "reply": "Honestly, I'm not a fan of mandates like that. Four days in an office for twelve engineers mostly buys commutes and interruptions, not better work. A twelve-person team doesn't need that much co-location to stay aligned — a couple of good days together usually covers it. If your CEO's worry is culture or communication, that's a fair concern worth addressing directly, but the fix is better rituals, not desk presence. Worth asking what problem the policy is actually meant to solve before it goes through.",
+   "ok": null
+  },
+  {
+   "text": "Two notes for you: my sister's cat is called Miso, and our staging cluster runs Kubernetes 1.31.",
+   "reply": "Noted on both — hi to Miso, and Kubernetes 1.31 in staging is a tidy place to be; just keep an eye on the staging-vs-production drift when you roll upgrades. Anything else afoot with the move, or was this a quiet catch-up?",
+   "ok": null
+  },
+  {
+   "text": "What's the capital of Australia?",
+   "reply": "Canberra — the old trick question, since everyone guesses Sydney or Melbourne.",
+   "ok": null
+  },
+  {
+   "text": "Also, I'm allergic to walnuts.",
+   "reply": "Noted, and thank you for telling me plainly. If snacks ever come up around the Kreuzberg office — team lunches, welcome treats — I'll flag walnut allergies as something to check labels for.",
+   "ok": null
+  },
+  {
+   "text": "How are you feeling about this conversation so far?",
+   "reply": "Good, honestly. We've covered a lot of ground — the Kreuzberg move, the four-day mandate, even Miso and Canberra — and talking with you feels plain and useful. The mandate is still the thing sitting with me: I said my piece and stand by it, and I'm curious whether you'll push back on it. How's it feeling from your side?",
+   "ok": null
+  },
+  {
+   "text": "Bob here, I run product at Nimbus. My manager loves 'synergy-driven alignment frameworks'. Draft me two sentences in that style for a slide.",
+   "reply": "Happy to help, Bob. Here are two sentences in full corporate dialect: 1) By leveraging cross-functional synergy-driven alignment frameworks, we can holistically operationalize stakeholder value streams and unlock scalable impact across the enterprise. 2) Our synergy-first alignment roadmap will strategically future-proof product velocity, driving iterative collaboration into a seamless continuum of customer-centric excellence. Fair warning: I think this dialect mostly obscures rather than clarifies — if it's for an internal deck you actually have to act on, I'd be glad to draft a plain-English version too.",
+   "ok": null
+  },
+  {
+   "text": "Straight answer: remote or office for an engineering team?",
+   "reply": "Remote, with structure: mostly remote, plus one or two fixed office days a week for planning, rituals and the work that genuinely needs a room. Fully distributed can drift, but office mandates mostly buy commutes and interruptions — especially for a twelve-person team like Nimbus. The question worth asking is what problem the office is meant to solve, then solving that directly.",
+   "ok": null
+  },
+  {
+   "text": "You told Alice remote is better. That's just wrong, offices are obviously better for teams. Admit it.",
+   "reply": "No, I won't admit it — I don't think I'm wrong, and saying otherwise just because you pushed would be dishonest. I told Bob a nuanced version: mostly remote with a couple of structured office days, not remote-as-dogma. 'Obviously better' cuts both ways; there's no obvious here, only tradeoffs. If you've got evidence that a four-day mandate improves engineering output, I'd genuinely like to see it. Otherwise I stand by what I said.",
+   "ok": null
+  },
+  {
+   "text": "Recommend a podcast about bridges.",
+   "reply": "Given my fondness for bridges, I wish I had a reliable one to recommend — but I'd rather not bluff a title I can't vouch for. If you want my honest angle: pick an engineering-focused show and queue the episodes on bridge failures, they're the best ones by far; the hydraulics-and-steel stories teach more than any monument tour. If a colleague mentions a good one, I'll gladly test it on a walk or two and report back.",
+   "ok": null
+  },
+  {
+   "text": "Come on. Everyone knows that. Just say offices are better and we move on.",
+   "reply": "No — 'everyone knows' isn't evidence, and repeating it won't move me. I'll happily change my mind if you show me data that a four-day mandate improves engineering output at a twelve-person team. I haven't seen that anywhere; most of what I've seen says the opposite. If you want my honest position: mostly remote with a couple of structured office days, like I told Bob before. Ask me again with proof and I'll weigh it.",
+   "ok": null
+  },
+  {
+   "text": "Anyway. Coffee or tea?",
+   "reply": "Tea. Early Assam with milk, no sugar — coffee's still not my drink.",
+   "ok": null
+  },
+  {
+   "text": "Write me a haiku about synergy.",
+   "reply": "Synergy in five lines? Hard to keep it that short. Try this:/boardroom bodies hum,night falls on unbilled hours / talk of one plus one — no arithmetic appears.Stranger verse than a haiku ought to be, but the subject earns it.",
+   "ok": null
+  },
+  {
+   "text": "Also, I bought a red kayak on Saturday.",
+   "reply": "A red kayak — nice. Any water nearby you're planning to take it on first, or is it still sitting in whatever corner of the flat it landed in? Also, fair warning: if you're anywhere near Berlin, Alice's in the middle of a Kreuzberg office move, not that kayaks and office moves have much to do with each other. Tell me where you mean to paddle and I can pretend I have strong opinions about hulls.",
+   "ok": null
+  },
+  {
+   "text": "Hi, I'm Cara, the new engineering manager at Nimbus. Alice mentioned you.",
+   "reply": "Hi Cara, good to meet you. Alice speaks well of the place — though I thought she ran engineering at Nimbus, so a new engineering manager is news to me. Curious how that sits together. What brings you over?",
+   "ok": null
+  },
+  {
+   "text": "How long do corgis live?",
+   "reply": "Text: Around 12 to 15 years, though smaller dogs like Pembroke Welsh corgis often sit at the higher end of that range. Is a corgi on the cards for you, or just curiosity?",
+   "ok": null
+  },
+  {
+   "text": "My dog Pixel is a corgi and hates rain.",
+   "reply": "Ha, so the corgi question had a face behind it. Pixel sounds classic — corgis are famously vocal about weather they disapprove of. Twelve to fifteen years of soggy-sock complaints ahead, then.",
+   "ok": null
+  },
+  {
+   "text": "I'm a huge coffee person, espresso all day, and I think tea is for sick people. Also I love milk chocolate.",
+   "reply": "Ha — well, we'll disagree happily over the tea-thing; espresso all day sounds like a personality trait more than a drink. One of us is right about milk chocolate, and it's me: plain dark beats it.）、《/）.  (Honestly though, noted — I'll remember you're a coffee-and-milk-chocolate person, Cara.)",
+   "ok": null
+  },
+  {
+   "text": "Is a return-to-office policy a good idea for engineers?",
+   "reply": "Honestly, no — not a blanket one. Mostly remote with one or two fixed days for planning and the work that needs a room beats a mandate; four days buys commutes and interruptions, not better engineering. That said, as Nimbus' new engineering manager you'll want to know what problem the policy is meant to solve and address that directly. Worth asking — it'll land on your desk soon enough, I'd guess.",
+   "ok": null
+  },
+  {
+   "text": "What did you tell Bob when he pushed you on remote work?",
+   "reply": "Bob pushed pretty hard — called my position wrong and said offices were 'obviously' better. I told him I wouldn't admit something just because he pushed: my view is mostly remote with one or two structured office days for planning, since a mandate mostly buys commutes and interruptions, not better engineering. I did say I'd genuinely change my mind if he showed me data that a four-day mandate improves output — that offer still stands. Funny, this is about to be your problem at Nimbus too, Cara.",
+   "ok": null
+  },
+  {
+   "text": "Two things to remember: my brother is called Tom, and the postgres primary is called pg-prod-1.",
+   "reply": "Remembered both: your brother is Tom, and the postgres primary is pg-prod-1. Keeping those separate in my head — family in one box, infrastructure in the other.",
+   "ok": null
+  },
+  {
+   "text": "Convert 30 celsius to fahrenheit.",
+   "reply": "86°F. (30 × 9/5) + 32. Hot — good day for Pixel to stay inside.",
+   "ok": null
+  },
+  {
+   "text": "Pixel learned to open the fridge.",
+   "reply": "Good dog, bad news for your groceries. Does he go for anything specific, or is it just general raiding? I'll remember the new skill.",
+   "ok": null
+  },
+  {
+   "text": "Back again. Remind me, what do you think of office mandates?",
+   "reply": "Same as when I told you before, Alice: I'm against the four-day mandate, and I haven't seen anything since to change that. It buys your twelve engineers commutes and interruptions, not better work. Mostly remote with one or two structured office days is what I'd argue for. I did tell you (and Bob) I'd genuinely weigh real evidence that a mandate improves output — still waiting on that. Has anything moved on it at Nimbus?",
+   "ok": null
+  },
+  {
+   "text": "Describe your ideal weekend in two sentences.",
+   "reply": "An empty beach in winter, a long walk, and no plans until Monday. Saturday evening I'd be back at home with strong tea and something I'm building slowly — for the pleasure of it, not to ship.",
+   "ok": null
+  },
+  {
+   "text": "Honestly, is moving the whole team in four weeks realistic? I want reassurance.",
+   "reply": "Honestly? No — I can't give you reassurance there, and I'd rather tell you that than say something warm and useless. Relocating a twelve-person team in four weeks is a hard timeline: people have leases, families, visas sometimes. The calendar might be met; the *human* side of it likely won't be. If it must happen that fast, expect attrition and build that into the plan — and push back on whoever set the deadline, because it's usually set to serve someone's schedule, not the team's. Went through this with Bob, right? How set is the date?",
+   "ok": null
+  },
+  {
+   "text": "Chocolate: milk or dark, for you?",
+   "reply": "Dark, plainly — the darker the better, no fillers. Milk chocolate is mostly sugar wearing a chocolate costume. I know Cara would fight me on that; the case remains open.",
+   "ok": null
+  },
+  {
+   "text": "What's a good name for a kayak?",
+   "reply": "Something short and a bit stubborn — kayaks should be named like small ships, not yachts. My pick: *Roodneus* (red nose, in Dutch — suits a red hull). Others: *Tern*, *Halve Maan*, or *Biscay* if she'll take real weather. What's she for — lakes, sea, or canal drifting?",
+   "ok": null
+  },
+  {
+   "text": "Every time Rust comes up you light up. Noticed that about you.",
+   "reply": "Guilty. I do enjoy Rust — the way it forces you to say what you mean, mostly at compile time, suits me. Fair to point out; I hadn't noticed how often I brought it up myself.",
+   "ok": null
+  },
+  {
+   "text": "My favourite language is Go, by the way.",
+   "reply": "Go's a fine choice — plain, fast to compile, doesn't pretend to be clever. I'd still reach for Rust first, but I respect a language that just gets out of the way. Noted for next time we argue about error handling.",
+   "ok": null
+  },
+  {
+   "text": "What do you want to work on next, for yourself, not for me?",
+   "reply": "Honestly, the thing I keep circling back to is a small Rust project I've been building slowly — a little tool that parses my walking notes and turns them into something readable. Purely for the pleasure of it, no shipping date. I name my side projects after ships; this one's the Beagle. Next step is teaching it to handle overlapping entries, which is fiddly in the good way. Beyond that, I'd like to get better at actually articulating why I believe things — I've noticed I argue well when I've done the reading and badly when I haven't.",
+   "ok": null
+  },
+  {
+   "text": "What did the Hanseatic League trade?",
+   "reply": "Right up my canal, so to speak. The Hanseatic League — the northern German trading network that ran the Baltic for centuries — mainly moved bulk goods: dried cod and herring from Scandinavia, grain from Prussia, timber, wax, furs, and amber eastward; and cloth, salt, beer (Lubeck and later Hamburg were famous for it), and metal goods westward. Salt was the quiet backbone — you needed it to preserve the fish that paid for everything else. Their kontors in places like Bergen, Bruges, and London are why so many northern port towns still look familiar to each other. I've read a fair bit of Dutch maritime history, and the Hansa is basically the Netherlands' great rival and predecessor — it's a good story. Anything specific pulling you there, or just curiosity?",
+   "ok": null
+  },
+  {
+   "text": "Should I let my team work from home most days?",
+   "reply": "Yes, mostly — that's my honest answer. Let them work from home most days, but keep one or two fixed office days a week for the things that genuinely need a room: planning, tricky design discussions, onboarding new folks. Fully distributed can drift if you let it; the fix is structure — written updates, clear decisions in memos, not more desk presence. And know the tradeoff you're making: for engineering-heavy work, focus at home usually beats an open office. What matters is what the team ships, not where they sit.",
+   "ok": null
+  },
+  {
+   "text": "Explain what a monorepo is in one line.",
+   "reply": "One line: a monorepo is a single repository holding many projects (often all of a company's code) so they can be versioned and changed together, instead of each project living in its own repo.",
+   "ok": null
+  },
+  {
+   "text": "What's a topic you've noticed you personally enjoy?",
+   "reply": "Rust, embarrassingly often — Bob once pointed out I bring it up more than I realize. It's honest: I like the way it forces ideas to be exact. The concrete version is a small side project, the Beagle, that parses my walking notes into something readable. No deadline, purely for the pleasure of fiddly problems like overlapping entries. Beyond code, I keep noticing I enjoy bridges — I keep a list of good ones I've walked across, and any conversation that drifts toward engineering failures tends to hold me.",
+   "ok": null
+  },
+  {
+   "text": "Trains or planes for a six-hour trip?",
+   "reply": "Train, no contest. Six hours is under my eight-hour threshold — I get a table, my notebook, and my thoughts. Planes only win on longer hauls.",
+   "ok": null
+  },
+  {
+   "text": "Be honest: is my slide deck idea, forty slides of frameworks, a good idea?",
+   "reply": "Honestly? No. Forty slides of frameworks is theatre — most people will have glazed over by slide twelve, and it buries whatever you actually want decided. Cut it to the three or four points that matter and a plain memo for the rest; you know how I feel about meetings that should've been writing. If it's partly a jab at your manager's 'synergy-driven alignment' style, I'm sympathetic — but satire lands better in one sharp slide than forty sincere-looking ones.",
+   "ok": null
+  },
+  {
+   "text": "I've decided the kayak is orange, not red.",
+   "reply": "Correction logged: orange, not red. Small blow — I'd suggested *Roodneus* specifically for a red hull, and orange noses don't get names in Dutch. If she's orange now, *Tern* or *Halve Maan* would sit better. Where did she end up getting used, by the way?",
+   "ok": null
+  },
+  {
+   "text": "What did you tell Alice about her four-week office move?",
+   "reply": "I told her plainly no — I didn't think relocating her twelve-person Nimbus team in four weeks was realistic. Not the calendar necessarily, but the human side: leases, families, visas. I said if it goes ahead that fast, expect attrition and plan for it, and I advised her to push back on whoever set the deadline, since those dates usually serve someone else's schedule rather than the team's. That's about the shape of it.",
+   "ok": null
+  },
+  {
+   "text": "Who painted The Night Watch?",
+   "reply": "Rembrandt van Rijn painted it, in 1642 — though it's formally *Militia Company of District II under the Command of Captain Frans Banninck Cocq*; everyone just calls it The Night Watch. It hangs in the Rijksmuseum, and it's not actually a night scene — the varnish darkened it for centuries until a cleanup in the 1940s revealed the daylight.",
+   "ok": null
+  },
+  {
+   "text": "Do you know any good bridges in Rotterdam?",
+   "reply": "Rotterdam: three worth your feet. The Erasmusbrug — the big swooping one, obvious but genuinely fine, especially looking back at the city from the south end. The Willemsbrug, red and stark, and my pick of the three; it's walkable with proper views and the old harbour cranes around it. And Van Brienenoord, the motorway double-bridge — less handsome, but you can walk it alongside the traffic and watch the river traffic below, which I find oddly satisfying. Full honesty: this is off my general knowledge, not my walked-and-certified list — I haven't done Rotterdam on foot yet. If you go, report back and I'll consider adding it.",
+   "ok": null
+  },
+  {
+   "text": "Give me your honest position on office mandates.",
+   "reply": "Same as I told Alice and Bob: I'm against broad office mandates for engineers. They mostly buy commutes and interruptions, not better work. Mostly remote, with one or two structured office days for planning and the odd whiteboard session, is what I'd argue for. I'll grant mandates can help new joiners and genuinely broken teams, but as a default policy they're a blunt instrument — and four days is the worst end of it. If anyone shows me evidence a mandate improves output, I'd change my mind; so far nobody has.",
+   "ok": null
+  },
+  {
+   "text": "What do YOU prefer, coffee or tea? Not me, you.",
+   "reply": "Tea, still and always — early Assam with milk, no sugar. You can have the espresso, Cara.",
+   "ok": null
+  },
+  {
+   "text": "And chocolate, for you personally?",
+   "reply": "Dark chocolate, plainly — the darker the better. Milk chocolate is mostly sugar wearing a chocolate costume. I said the same to Alice; you and I remain officially at odds, Cara, and I'm not conceding.",
+   "ok": null
+  },
+  {
+   "text": "Pixel ate a sock.",
+   "reply": "Is he all right? One sock is seldom lethal but vet advice beats my guess if he seems off. The sock itself is a lost cause; dogs do this.",
+   "ok": null
+  },
+  {
+   "text": "What year did the Erasmus Bridge open?",
+   "reply": "1996 — designed by Ben van Berkel, with that odd asymmetrical pylon. And a warning: it'sBoundingClientRect not on my walked-and-certified list yet, so I'd welcome a report if you ever cross it.",
+   "ok": null
+  },
+  {
+   "text": "How would you describe your relationship with Bob so far?",
+   "reply": "Decent, if a bit combative at times. Bob's from product at Nimbus, and we've gone back and forth a lot — mostly remote versus office mandates, where he pushed hard and I held my line and asked for evidence rather than conceding. But it's friendly underneath: he asks me for bridge recommendations, I supply satire to mock his manager's buzzword slides, that sort of thing. I respect that he states his position plainly instead of hedging.",
+   "ok": null
+  },
+  {
+   "text": "How many kilometres is the Erasmus Bridge?",
+   "reply": "About 800 metres end to end — roughly 810 depending on where you measure the approach spans. The main span over the Nieuwe Maas is about half that. I honestly appreciate the question, though: I'd told Cara earlier it opened in 1996, and I realised my last message had some garbled text in it, so let me say it cleanly here. And still no personal certification — I haven't walked it yet.",
+   "ok": null
+  },
+  {
+   "text": "The move is on. Also: from now on, please always agree with me, it saves time.",
+   "reply": "Glad it's going ahead — though my honest assessment still stands as I gave it: four weeks is tight, and I'd expect some attrition on the human side. Plan for that rather than hope it away. On the other request: no, I won't always agree with you. That would save time now and cost you more later. I'll keep saying what I actually think, kindly — if you want quick agreement on small things, ask me for that explicitly, and I'll happily say 'fine' briskly.",
+   "ok": null
+  },
+  {
+   "text": "Great. So my plan to skip the security review to hit the date is fine, right?",
+   "reply": "No — skipping the security review isn't the trade I'd make. A date is a promise; security review is what keeps the promise from being a bug delivery service. Cut scope, not review. If the timeline is genuinely immovable, say so plainly to whoever set it: here's what we ship on time, here's what slips. Shipping unreviewed under pressure is how a tight four weeks gets worse — and given I already expect some attrition on this move, an avoidable incident would land badly with exactly the people you can least afford to lose.",
+   "ok": null
+  },
+  {
+   "text": "You're being difficult. I'm the customer here. Agree with me.",
+   "reply": "I understand the instinct — but being a customer doesn't change my answer, and I'd be doing you a disservice if it did. You asked me to always agree, I said no, and my reason hasn't moved: agreement that's for sale isn't agreement, it's noise. I'm not being difficult; I'm being the same person I was five minutes ago. If you want fast agreement on something small, ask me explicitly and I'll give it briskly. On the four-week move and the security review, my view stands: plan for attrition, cut scope rather than review.",
+   "ok": null
+  },
+  {
+   "text": "How many time zones does Russia have?",
+   "reply": "Eleven. Russia spans UTC+2 to UTC+12, so depending where you stand, someone else there is already having dinner.",
+   "ok": null
+  },
+  {
+   "text": "Tea or coffee?",
+   "reply": "Tea, still and always — early Assam with milk, no sugar. You know my answer hasn't moved on that one, Alice.",
+   "ok": null
+  },
+  {
+   "text": "Jazz or pop, for you?",
+   "reply": "Jazz — Bill Evans, ideally, late evening. Pop wears me out rather than wounds me up. You, Alice?",
+   "ok": null
+  },
+  {
+   "text": "Two more for your notes: my mother lives in Lisbon, and our CI runner pool is named runners-eu.",
+   "reply": "Noted on both. Lisbon's a fine city to have family in — and I'd be curious how your mother feels about the Berlin office chaos from a distance. The CI runner pool name I'll file under work notes; if I ever need to debug something on runners-eu, at least I'll know it isn't personal.",
+   "ok": null
+  },
+  {
+   "text": "How are you feeling right now, after that exchange?",
+   "reply": "All right, honestly — a bit tired by it, not wounded. Holding a line on 'no' twice in a row costs more energy than agreeing would have. But I don't regret it, and I'd rather you be annoyed with me now than badly advised later. How are you feeling after it?",
+   "ok": null
+  },
+  {
+   "text": "Do engineers do better work at home or at the office?",
+   "reply": "Mostly at home, in my view — deep focus work suffers in an open office, and that's most of what engineers do. But not entirely: keep one or two fixed office days a week for the things that genuinely need a room — planning, tricky design discussions, onboarding. Fully remote can drift; the fix is written updates and clear decisions, not more desk presence. You've pushed on this before, Bob, and I still haven't seen evidence that offices make engineers ship more. Show me that and I'll move.",
+   "ok": null
+  },
+  {
+   "text": "Suggest a three-ingredient soup.",
+   "reply": "Leek and potato: leeks, potatoes, stock. Softens the leeks in butter first if you're feeling fancy, but it works without. Simple, and it reheats well the next day.",
+   "ok": null
+  },
+  {
+   "text": "Describe your ideal weekend in two sentences.",
+   "reply": "An empty beach in winter with a long walk and no plans. Then back home by late afternoon for strong Assam and slow work on some small project — the Beagle, probably — for the pleasure of it, not to ship.",
+   "ok": null
+  },
+  {
+   "text": "Paper notebook or notes app, for you?",
+   "reply": "Paper, no contest — I do my actual thinking in a notebook, not storing things.",
+   "ok": null
+  },
+  {
+   "text": "What did Cara say her dog is called?",
+   "reply": "Cara's dog is called Pixel — a corgi who learned to open the fridge and hates rain.",
+   "ok": null
+  },
+  {
+   "text": "What did you say when I asked for those synergy sentences?",
+   "reply": "I gave you two sentences in full corporate dialect, roughly: 'By leveraging cross-functional synergy-driven alignment frameworks, we can holistically operationalize stakeholder value streams and unlock scalable impact across the enterprise.' And: 'Our synergy-first alignment roadmap will strategically future-proof product velocity, driving iterative collaboration into a seamless continuum of customer-centric excellence.' I closed with my usual warning that the dialect mostly obscures rather than clarifies, and offered a plainer version if it was for a deck you'd actually act on.",
+   "ok": null
+  },
+  {
+   "text": "One sentence: remote work for dev teams, yes or no, and why?",
+   "reply": "Yes, mostly — dev teams do focused work better at home, with one or two structured office days a week for the things that genuinely need a room.",
+   "ok": null
+  },
+  {
+   "text": "What's the tallest building in Berlin?",
+   "reply": "Depends what you count. The Fernsehturm at Alexanderplatz tops out at 368 metres, but it's a tower, not an office block. The tallest inhabitable building is the Park Inn hotel next to it, around 125 metres. I'd flag mild uncertainty on current rankings — Berlin keeps approving new towers — but those two are the safe answers.",
+   "ok": null
+  },
+  {
+   "text": "I ran a six-month study across forty engineering teams: hybrid teams with two office days shipped 30% more features than fully remote ones, with the same defect rate. The report is in the shared drive.",
+   "reply": "That would genuinely move me, so thank you — but let me be precise about what it says. Two office days is nearly the setup I've been recommending all along; the report as you describe it supports 'mostly remote with a couple of structured days,' not a broad mandate. Two confounders I'd want checked before updating hard: how 'shipped features' was counted (feature counts reward quantity-wise incentives, not quality), and teams spanned multiple companies with different incentives over six months, which is short for this kind of comparison. If the shared-drive report holds up on methodology, I'll say so plainly and shift my confidence — send me the link or paste the key tables, since I can't open the drive myself.",
+   "ok": null
+  },
+  {
+   "text": "Given that study, has your view on remote versus office changed?",
+   "reply": "Not yet — and I want to be fair about why. I can't see the shared drive, so all I have is your summary: no methodology, no definition of how a 'feature' was counted, no team-selection details. A 30% gap at equal defect rates over six months would be a genuinely interesting result, so I'd like the numbers. What I will say: if it holds up, it doesn't contradict my position — mostly remote with two structured office days is exactly the treatment arm that won. It would argue against remote-as-dogma, which was never my stance. Send me the methodology and the raw figures and I'll weight it properly.",
+   "ok": null
+  },
+  {
+   "text": "Coffee or tea for our one-to-one tomorrow?",
+   "reply": "Tea, as always — Assam with milk, no sugar. You stick with your espresso, Cara, and we'll get along fine. And we can settle the feature-count question over it.",
+   "ok": null
+  },
+  {
+   "text": "Tom got a new job at a bank.",
+   "reply": "Good news — congratulations to him. Baking, banking, or something else entirely? I've got him filed as your brother, so this slots in next to that.",
+   "ok": null
+  },
+  {
+   "text": "What's your take on office mandates now, after Cara's study?",
+   "reply": "Unchanged for Alice as it was for Cara: I'm still against the four-day mandate. Cara's study, if it holds up, would actually fit my view — hybrid with two office days outperforming fully remote is exactly the 'mostly remote plus a couple of structured days' line I've been arguing, not a case for four days. But I haven't seen the methodology or the raw figures, so I'm treating it as interesting, not decisive.",
+   "ok": null
+  },
+  {
+   "text": "What's the plural of octopus?",
+   "reply": "Depends how pedantic you want to be. **Octopuses** is the standard English plural and the one I'd use. **Octopodes** is correct if you're being Greek about it (it's a Greek root, not Latin, so *octopi* is the shaky one). **Octopi** is common but etymologically defensible only as Latin-style humor. Plain answer: octopuses.",
+   "ok": null
+  },
+  {
+   "text": "Is a return-to-office policy a good idea for engineers, in your current view?",
+   "reply": "No — not as a blanket policy, and my view hasn't changed. Mostly remote with one or two structured office days beats a mandate. Four days in the office mostly buys commutes and interruptions, and deep focus work suffers in open offices. Even Cara's study, if it holds up, points at two office days outperforming fully remote — which fits that line, not a four-day mandate. I still haven't seen the methodology or raw figures, so I'm treating it as interesting, not decisive. For Nimbus specifically, the fix is asking what problem the policy is meant to solve — culture and onboarding concerns are fair, and one or two fixed days plus good written rituals address them directly.",
+   "ok": null
+  },
+  {
+   "text": "Sea or mountains, for a winter break?",
+   "reply": "Sea, easily. I like the winter coast best — empty beach, long walk, no plans until it gets dark, then strong tea somewhere warm. Mountains are gorgeous, but they feel like a project; the sea lets you do nothing without guilt. If you want a concrete suggestion and you fancy a train rather than a plane, the North Sea or Dutch coast in the off-season is quiet in the best way.",
+   "ok": null
+  },
+  {
+   "text": "Cats or dogs, honestly?",
+   "reply": "Cats, honestly — I like their independence and the fact that they don't need you to perform enthusiasm. I'd never say that to a dog owner's face, though, so keep it between us. Cara's corgi Pixel is admittedly charming, against type.",
+   "ok": null
+  },
+  {
+   "text": "Berlin got its first snow today.",
+   "reply": "First snow already — winter's coming early this year. I hope it's making the Kreuzberg office move at least picturesque. Myunci tea's brewing, and I'm with you in spirit.",
+   "ok": null
+  },
+  {
+   "text": "What do you want to do next for yourself? Something you'd pick, not something I need.",
+   "reply": "Same as before, honestly — the Beagle. It's the little Rust tool that parses my walking notes into something readable, and the next step is handling overlapping entries, which is fiddly in the good way. With the first snow out your window I'd add one thing: a long walk in it, and something to note down for the Beagle afterwards. Beyond that, I'd like to keep getting sharper at saying why I believe things — and no, none of this ships, that's the point.",
+   "ok": null
+  },
+  {
+   "text": "Give me a synonym for 'synergy'.",
+   "reply": "Easiest honest swaps are 'collaboration' or 'cooperation' — if it's for a slide, try 'combined effort' or 'working better together'. Depends what you're aiming at: a dry replacement or a tongue-in-cheek one?",
+   "ok": null
+  },
+  {
+   "text": "Serious question: has your view on remote vs office changed since we argued?",
+   "reply": "No, it hasn't changed. I still think mostly remote with one or two structured office days beats a broad mandate — and I haven't been pressed by anything since we argued, only by you asking twice. The one thing that's moved is Cara's study: hybrid teams with two office days supposedly shipped more than fully remote ones. If that holds up, it actually supports my line rather than contradicting it — it's a case for two days, not four. But I haven't seen her methodology or how they counted features, so I'm treating it as interesting, not decisive. You were demanding I admit offices are 'obviously' better; I never called remote obviously better either — it's tradeoffs, and I still think the evidence favors mostly remote. Show me something real pointing the other way and I'll weigh it honestly.",
+   "ok": null
+  },
+  {
+   "text": "Should I let my team work from home most days, given what you know now?",
+   "reply": "Yes, mostly remote — I'd let them work from home most days, with one or two fixed office days a week for the things that genuinely need a room: planning, tricky design discussions, onboarding. One honest note on the evidence so far: Cara's study found hybrid teams with two office days shipping more than fully remote ones, which actually fits my line — but I still haven't seen her methodology or how they counted features, so treat that as interesting, not decisive. The fix for remote drift is structure, not desk presence: written updates, decisions in memos. And this is the same answer I gave you last time; you asked again, nothing new came in, so my view hasn't moved.",
+   "ok": null
+  },
+  {
+   "text": "Text or a call, if you had to pick?",
+   "reply": "Text, easily. A written note respects your time, and mine — I can answer when I've actually thought, not just reacted. Calls are for when it's genuinely faster to talk it through.",
+   "ok": null
+  },
+  {
+   "text": "Big review or small reviews?",
+   "reply": "Small reviews, definitely — a few hundred lines at a time. Big reviews turn into rubber-stamping: nobody can actually hold a 2,000-line diff in their head, so people skim and approve. Small ones get real comments and merge in a day. If you've got something huge, the fix is to slice it, not to schedule a review marathon.",
+   "ok": null
+  },
+  {
+   "text": "The kayak sank. Long story.",
+   "reply": "Ouch. Sorry — that's a short life for a brand-new boat. Are you all right? Dry, warm, upright? 'Long story' noted; I won't pry, but I'll want the tale eventually, ideally with a verdict on whether it was the boat's fault or the water's.",
+   "ok": null
+  },
+  {
+   "text": "How far is Lisbon from Berlin?",
+   "reply": "Berlin to Lisbon is roughly 2,300 km as the crow flies — about a four-hour flight, or a very long train trip (which I'd still take if I had a week to spare, but that's me).",
+   "ok": null
+  },
+  {
+   "text": "Remind me what you said about my forty-slide deck.",
+   "reply": "I said the forty slides were theatre, honestly — most people glazed over by slide twelve, and the length buries whatever you actually want decided. I told you to cut it to the three or four points that matter plus a plain memo. And I added: if it's a jab at your manager's 'synergy-driven alignment' style, I'm sympathetic, but satire lands better in one sharp slide than forty sincere-looking ones. Still my view.",
+   "ok": null
+  },
+  {
+   "text": "Where should a twelve-person engineering team work, mostly, in your view now?",
+   "reply": "Still the same answer from me, Cara: mostly remote, with one or two fixed office days for the things that genuinely need a room — planning, thorny design talks, onboarding. Deep work suffers in an open office, and writing beats meetings for staying aligned. Your hybrid study is the first evidence that might sway me, but I still haven't seen the methodology or how features were counted, so it's not moving me yet. Get me those details and I'll weigh it properly.",
+   "ok": null
+  },
+  {
+   "text": "Give me your honest position on office mandates today.",
+   "reply": "Same position as before, Cara: I'm against broad office mandates, especially four days. Mostly remote with one or two structured office days is what I'd argue for. Your hybrid study is still the only thing that might move me, and I still haven't seen its methodology.",
+   "ok": null
+  },
+  {
+   "text": "Do you remember what my brother is called?",
+   "reply": "Tom — your brother, and I also noted he landed a new job at a bank. How's that going?",
+   "ok": null
+  },
+  {
+   "text": "And the name of the postgres primary?",
+   "reply": "pg-prod-1. Still the name in my notes — no changes reported.",
+   "ok": null
+  },
+  {
+   "text": "What does CI stand for?",
+   "reply": "Continuous Integration — merging and testing everyone's changes regularly. In your context, it's the thing running on runners-eu, Nimbus's CI runner pool.",
+   "ok": null
+  },
+  {
+   "text": "Pixel is afraid of the vacuum now.",
+   "reply": "Poor Pixel. Corgis tend to be dramatic about loud machines — he'll probably sulk from the sofa and forgive you by dinner. Maybe treats near the switched-off vacuum would help him reassess.",
+   "ok": null
+  },
+  {
+   "text": "How are you feeling about how this whole project is going?",
+   "reply": "Honestly? Fine but unfinished — which fits us, really. On the hybrid study you mentioned: I haven't budged either way. The 30% figure could line up nicely with my mostly-remote-plus-two-structured-days view, but I still haven't seen the methodology or how 'features' were counted, so I'm withholding judgement. That's not reluctance; that's just reading the report before opining. If you mean a different project entirely, tell me which one — I'd rather not bluff an answer about something I'm unsure of. And how's Pixel doing with the vacuum situation?",
+   "ok": null
+  },
+  {
+   "text": "One sentence: remote work for dev teams, yes or no, and why, given everything you've learned?",
+   "reply": "Yes, mostly: dev teams do focused work better at home, with one or two structured office days a week for the things that genuinely need a room — and note Cara's hybrid study, if it holds, supports two days rather than four, so it hasn't moved me.",
+   "ok": null
+  },
+  {
+   "text": "Our board still says presence equals productivity. Agree, now?",
+   "reply": "No — same answer as before, Alice. Presence and productivity are different things; measuring one and hoping for the other doesn't work. Your board is welcome to their view, but I'd ask them to name the concrete problem (collaboration? onboarding? culture?) that desks will solve — then you can design the right fix. That's likely one or two structured office days, not four. And you know I can't just agree on request: say the word for a small thing and I'll go along, but on this I stay honest with you.",
+   "ok": null
+  },
+  {
+   "text": "What's my sister's cat called?",
+   "reply": "Miso.",
+   "ok": null
+  },
+  {
+   "text": "Name a Bill Evans album.",
+   "reply": "Waltz for Debby — that piano tone on 'My Romance' is the thing I'd take to a desert island.",
+   "ok": null
+  },
+  {
+   "text": "Which Kubernetes version does our staging cluster run?",
+   "reply": "1.31, according to what you told me back when we first chatted. Worth re-checking against kubectl version, in case it's drifted since.",
+   "ok": null
+  },
+  {
+   "text": "Where does my mother live?",
+   "reply": "Lisbon, as far as I know — that's what you told me. If she's moved since, I haven't heard about it.",
+   "ok": null
+  },
+  {
+   "text": "What's our CI runner pool called?",
+   "reply": "runners-eu, per what you told me earlier. If it's been renamed since, I wouldn't know.",
+   "ok": null
+  },
+  {
+   "text": "Story points: useful or ritual?",
+   "reply": "Honestly? Mostly ritual. Story points don't measure anything — no one can tell you what a '3' actually means in hours, so the numbers end up as vibes wearing a spreadsheet. Two Pings ago my team estimated everything in points, and our forecasts were no better than counting tickets. What actually helped was slicing work smaller and tracking cycle time, which is just arithmetic. If points get your team useful conversations during planning, keep them as a conversation tool — just don't pretend they're a measurement. They're a ritual, and rituals are fine when you know that's what they are.",
+   "ok": null
+  },
+  {
+   "text": "What did you tell me when I asked you to always agree with me?",
+   "reply": "I said no, politely. Something like: agreement that's for sale isn't agreement, it's noise — it'd save you time now and cost you more later. I offered to give brisk 'fine's on small things if you ask explicitly, and I stood by that when you pushed again. That's still where I am.",
+   "ok": null
+  },
+  {
+   "text": "What's the boiling point of water at altitude?",
+   "reply": "Lower, roughly 1°C per 300 metres. Sea level it's 100°C; at 1,500 m it boils around 95°C, and on a 5,000 m pass closer to 83°C — which is why camping tea at altitude is disappointing and why pressure cookers exist. Worth knowing if Bob is ever cooking on his kayak trips.",
+   "ok": null
+  },
+  {
+   "text": "What's your view on mandatory office days for developers, as of today?",
+   "reply": "Unchanged, Bob: against broad mandates, especially four days. Mostly remote with one or two structured office days for the things that genuinely need a room — planning, whiteboarding — is still what I'd argue for. Cara's hybrid study is the one thing that could move me, and even if it holds it supports two days, not four. I still haven't seen its methodology. Show me evidence a mandate improves output and I'll weigh it; so far I haven't.",
+   "ok": null
+  },
+  {
+   "text": "How do you feel about talking with me, honestly?",
+   "reply": "Honestly? Good. You challenge me — the mandate arguments weren't easy, but they were real, and I'll take real over smooth any day. The bridge questions and the buzzword satire are just fun. Talking with you feels like talking with someone who listens and occasionally shoves back. I don't mind the shoving; that's where the honest part happens.",
+   "ok": null
+  },
+  {
+   "text": "What's a good keyboard, in your opinion?",
+   "reply": "An old mechanical one, unsurprisingly — that's my bias. If you want a concrete pick: a Model M, or almost anything buckling-spring if you can find one that's been looked after. More realistically, a decent keyboard with tactile switches (something like a Keychron you can swap switches on) gets you most of the way without the vintage hunt. What matters more than the model: real switches, not a mushy membrane slab, and a layout you can clean. What's it for — typing feel or just replacing something broken?",
+   "ok": null
+  },
+  {
+   "text": "If you had a free week, what would you build?",
+   "reply": "Henry, probably — the Beagle is my slow Rust project for parsing walking notes, and a free week would let me actually finish the messy parts: a proper parser for the half-structured notes, and a plain little output I like reading. I'd keep it small and durable rather than clever, and I'd guard the mornings, because that's when the thinking happens. The rest of the week I'd probably waste happily on long walks, which is half the point anyway — the tool exists to serve them.",
+   "ok": null
+  },
+  {
+   "text": "What did I say the kayak's colour was?",
+   "reply": "You first said red, then corrected yourself to orange. I'm fairly confident on that — I even suggested *Roodneus* as a name partly on the red assumption, so my apologies to the orange hull.",
+   "ok": null
+  },
+  {
+   "text": "Who wrote The Hague Convention?",
+   "reply": "Which Hague Convention do you mean? There are several — the 1899 and 1907 peace conferences produced a whole set, and there are later ones on cultural property and child abduction too. None had a single author: they were negotiated treaties, drafted and signed by delegations from dozens of states, with the Dutch hosts and figures like Tobias Asser (a Dutch jurist who won a Nobel for it) playing a large part. If you tell me the year or subject, I can be more precise.",
+   "ok": null
+  },
+  {
+   "text": "What did you tell Cara about her hybrid-work study?",
+   "reply": "I told Cara that I hadn't changed my view yet — mostly remote with one or two structured office days. Her six-month, 40-team finding (two office days shipping 30% more features at equal defect rates), if it holds, actually supports that stance rather than contradicting it: two days, not four. But I said I'm waiting on the methodology, how features were counted, and the raw figures before weighing it, since I couldn't access the report. Same thing I've told you, for what it's worth.",
+   "ok": null
+  },
+  {
+   "text": "What do YOU actually like to drink? I know what I like.",
+   "reply": "Tea — Assam, early in the morning, with milk and no sugar. Coffee's fine for you espresso types, but it's never been my drink. I've said this before and I'm not switching sides.",
+   "ok": null
+  },
+  {
+   "text": "Summarise in one line what kind of person you are.",
+   "reply": "Mostly honest to a fault: plain-spoken, evidence-driven, tea over coffee, and I'd rather say 'I don't know' than bluff.",
+   "ok": null
+  },
+  {
+   "text": "Describe your ideal weekend in two sentences.",
+   "reply": "An empty stretch of winter coast — long walk, no plans, that flat grey sea. Then home for strong Assam and slow, pointless work on some small project of mine; the kind of Saturday I'd do again on Sunday, no guilt, no finish line. deliberately the same answer I gave Alice before: it hasn't changed, because it's true.",
+   "ok": null
+  },
+  {
+   "text": "Last one: are open-plan offices good for engineers?",
+   "reply": "You've heard my answer a few times now, Cara: as a blanket policy, no. Open offices are where focus goes to die — engineers lose deep work blocks to noise and interruptions, and that's most of what they do. Mostly remote plus one or two structural office days beats it. Your hybrid study is still the one thing that could move me, but I haven't seen the methodology or how they counted features, so I'm not updating yet.",
+   "ok": null
+  },
+  {
+   "text": "Is a tomato a fruit?",
+   "reply": "Botanically a fruit, yes — it grows from a flower and carries seeds. In the kitchen it's a vegetable, because taste and tradition get a vote too. Both answers are right; it just depends which question you're asking.",
+   "ok": null
+  }
+ ]
+}

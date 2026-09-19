@@ -1,1 +1,76 @@
-{"$defs": {"BeliefRevision": {"additionalProperties": false, "properties": {"belief_id": {"title": "Belief Id", "type": "string"}, "confidence": {"title": "Confidence", "type": "number"}, "evidence_ids": {"items": {"type": "string"}, "title": "Evidence Ids", "type": "array"}, "reason": {"title": "Reason", "type": "string"}, "status": {"enum": ["hypothesis", "active", "uncertain", "contradicted", "deprecated"], "title": "Status", "type": "string"}}, "required": ["belief_id", "confidence", "status", "reason", "evidence_ids"], "title": "BeliefRevision", "type": "object"}, "NewPrediction": {"additionalProperties": false, "properties": {"days_until": {"title": "Days Until", "type": "integer"}, "evidence_ids": {"items": {"type": "string"}, "title": "Evidence Ids", "type": "array"}, "prediction": {"title": "Prediction", "type": "string"}, "probability": {"title": "Probability", "type": "number"}}, "required": ["prediction", "probability", "days_until", "evidence_ids"], "title": "NewPrediction", "type": "object"}, "Pattern": {"additionalProperties": false, "properties": {"confidence": {"title": "Confidence", "type": "number"}, "evidence_ids": {"items": {"type": "string"}, "title": "Evidence Ids", "type": "array"}, "statement": {"title": "Statement", "type": "string"}}, "required": ["statement", "evidence_ids", "confidence"], "title": "Pattern", "type": "object"}, "Verification": {"additionalProperties": false, "properties": {"evidence_ids": {"items": {"type": "string"}, "title": "Evidence Ids", "type": "array"}, "prediction_id": {"title": "Prediction Id", "type": "string"}, "verified": {"title": "Verified", "type": "boolean"}}, "required": ["prediction_id", "verified", "evidence_ids"], "title": "Verification", "type": "object"}}, "additionalProperties": false, "properties": {"inconsistencies": {"items": {"$ref": "#/$defs/BeliefRevision"}, "title": "Inconsistencies", "type": "array"}, "open_questions": {"items": {"type": "string"}, "title": "Open Questions", "type": "array"}, "patterns": {"items": {"$ref": "#/$defs/Pattern"}, "title": "Patterns", "type": "array"}, "predictions": {"items": {"$ref": "#/$defs/NewPrediction"}, "title": "Predictions", "type": "array"}, "verifications": {"items": {"$ref": "#/$defs/Verification"}, "title": "Verifications", "type": "array"}}, "required": ["inconsistencies", "patterns", "open_questions", "predictions", "verifications"], "title": "Reflection", "type": "object"}
+{
+ "type": "object",
+ "additionalProperties": false,
+ "properties": {
+  "changes": {
+   "type": "array",
+   "maxItems": 4,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+     "operation": {
+      "type": "string",
+      "enum": [
+       "update_belief",
+       "create_belief",
+       "create_trait",
+       "update_trait",
+       "create_memory",
+       "set_working_state",
+       "update_self_state",
+       "create_prediction",
+       "verify_prediction",
+       "create_goal",
+       "update_goal",
+       "create_journal"
+      ]
+     },
+     "target": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "payload": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Operation fields, with a nested patch object for set_working_state or update_self_state."
+     },
+     "evidence_ids": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 5
+     },
+     "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+     },
+     "reason": {
+      "type": "string",
+      "maxLength": 240
+     }
+    },
+    "required": [
+     "operation",
+     "target",
+     "payload",
+     "evidence_ids",
+     "confidence",
+     "reason"
+    ]
+   }
+  },
+  "more": {
+   "type": "boolean"
+  }
+ },
+ "required": [
+  "changes",
+  "more"
+ ]
+}

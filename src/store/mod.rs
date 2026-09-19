@@ -1,4 +1,4 @@
-//! The storage engine: journal + vector file on disk, folded state in memory.
+//! One embedded libSQL database and privately staged, atomic state changes.
 
 pub mod journal;
 pub mod state;
@@ -7,7 +7,9 @@ pub mod vectors;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
 
-use anyhow::Result;
+use anyhow::{Result, ensure};
+use futures_executor::block_on;
+use libsql::{Builder, Connection};
 use serde_json::{Value, json};
 
 use crate::config::settings;
@@ -22,6 +24,8 @@ pub struct Store {
     pub journal: Journal,
     pub vectors: Vectors,
     pub ids: IdGen,
+    pub db: Arc<Connection>,
+    _owner: Arc<std::fs::File>,
 }
 
 pub type Shared = Arc<Mutex<Store>>;
@@ -29,18 +33,173 @@ pub type Shared = Arc<Mutex<Store>>;
 impl Store {
     pub fn open(dir: &Path, ids: IdGen) -> Result<Store> {
         std::fs::create_dir_all(dir)?;
-        let (journal, entries) = Journal::open(&dir.join("journal.jsonl"))?;
-        let vectors = Vectors::open(&dir.join("vectors.f32"), settings().embed_dim)?;
+        let owner = std::fs::OpenOptions::new()
+            .create(true)
+            .read(true)
+            .write(true)
+            .truncate(false)
+            .open(dir.join("coordinator.lock"))?;
+        owner
+            .try_lock()
+            .map_err(|e| anyhow::anyhow!("another coordinator owns {}: {e}", dir.display()))?;
+        let db = Arc::new(block_on(Builder::new_local(dir.join("morpho.db")).build())?.connect()?);
+        block_on(db.execute_batch("PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL;
+            CREATE TABLE IF NOT EXISTS records(seq INTEGER PRIMARY KEY, record TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS vectors(slot INTEGER PRIMARY KEY, embedding F32_BLOB NOT NULL);
+            CREATE TABLE IF NOT EXISTS metadata(key TEXT PRIMARY KEY, value TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS inbox(seq INTEGER PRIMARY KEY AUTOINCREMENT, request_id TEXT NOT NULL UNIQUE,
+              text TEXT NOT NULL, speaker TEXT NOT NULL, session TEXT, reply TEXT, attempts INTEGER NOT NULL DEFAULT 0,
+              error TEXT, retry_at INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+        "))?;
+        let model = format!("{}:{}", settings().embed_model, settings().embed_dim);
+        let mut rows = block_on(db.query("SELECT value FROM metadata WHERE key='embedding'", ()))?;
+        if let Some(row) = block_on(rows.next())? {
+            ensure!(
+                row.get::<String>(0)? == model,
+                "embedding model/dimensions differ from stored database; explicit re-embedding required"
+            );
+        } else {
+            let tx = block_on(db.transaction())?;
+            let legacy = journal::read_legacy(&dir.join("journal.jsonl"))?;
+            let vector_path = dir.join("vectors.f32");
+            let bytes = if vector_path.exists() {
+                std::fs::read(vector_path)?
+            } else {
+                Vec::new()
+            };
+            let stride = settings().embed_dim * 4;
+            ensure!(stride > 0, "EMBED_DIM must be positive");
+            let slots = bytes.len() / stride;
+            for (i, chunk) in bytes.chunks_exact(stride).enumerate() {
+                block_on(tx.execute(
+                    "INSERT INTO vectors VALUES (?,vector32(?))",
+                    libsql::params![i as i64, chunk.to_vec()],
+                ))?;
+            }
+            for (seq, e) in legacy {
+                let referenced: Vec<usize> = match &e.record {
+                    Record::Event(r) => r
+                        .get("vector")
+                        .and_then(Value::as_u64)
+                        .map(|v| v as usize)
+                        .into_iter()
+                        .collect(),
+                    Record::Commit(c) => c.vectors.values().copied().collect(),
+                    _ => Vec::new(),
+                };
+                ensure!(
+                    referenced.iter().all(|s| *s < slots),
+                    "legacy record {seq} references missing vector"
+                );
+                block_on(tx.execute(
+                    "INSERT INTO records VALUES (?,?)",
+                    libsql::params![seq as i64, serde_json::to_string(&e.record)?],
+                ))?;
+            }
+            block_on(tx.execute("INSERT INTO metadata VALUES ('embedding',?)", [model]))?;
+            block_on(tx.commit())?;
+        }
+        drop(rows);
+        let entries = Journal::entries(&db)?;
+        let journal = Journal {
+            db: db.clone(),
+            seq: entries.last().map_or(0, |(seq, _)| *seq),
+            pending: None,
+        };
+        let mut rows = block_on(db.query("SELECT count(*) FROM vectors", ()))?;
+        let slots = block_on(rows.next())?.unwrap().get::<i64>(0)? as usize;
+        let vectors = Vectors {
+            db: db.clone(),
+            dim: settings().embed_dim,
+            slots,
+            pending: None,
+        };
         let mut state = State::new();
-        for (offset, e) in &entries {
-            state.apply(*offset, &e.record);
+        for (seq, e) in entries {
+            state.apply(seq, &e.record);
         }
         Ok(Store {
             state,
             journal,
             vectors,
             ids,
+            db,
+            _owner: Arc::new(owner),
         })
+    }
+
+    /// A private projection: no database writes and no speculative state visible to readers.
+    pub fn fork(&self) -> Store {
+        let mut journal = self.journal.clone();
+        journal.pending.get_or_insert_with(Vec::new);
+        let mut vectors = self.vectors.clone();
+        vectors.pending.get_or_insert_with(Vec::new);
+        // ponytail: clone the in-memory projection; use incremental projections if memory pressure warrants it.
+        Store {
+            state: self.state.clone(),
+            journal,
+            vectors,
+            ids: self.ids.clone(),
+            db: self.db.clone(),
+            _owner: self._owner.clone(),
+        }
+    }
+
+    pub fn publish(&mut self, mut staged: Store, reply: Option<(&str, &Value)>) -> Result<()> {
+        if self.journal.pending.is_some() {
+            *self = staged;
+            return Ok(());
+        }
+        let records = staged.journal.pending.as_ref().expect("staged store");
+        let base = staged.journal.seq - records.len() as u64;
+        ensure!(
+            self.journal.seq == base,
+            "state changed while turn was staged"
+        );
+        let vectors = staged.vectors.pending.as_ref().expect("staged vectors");
+        let tx = block_on(self.db.transaction())?;
+        for (i, v) in vectors.iter().enumerate() {
+            block_on(tx.execute(
+                "INSERT INTO vectors VALUES (?,vector32(?))",
+                libsql::params![(self.vectors.slots + i) as i64, vectors::bytes(v)],
+            ))?;
+        }
+        for (i, r) in records.iter().enumerate() {
+            block_on(tx.execute(
+                "INSERT INTO records VALUES (?,?)",
+                libsql::params![(base + i as u64 + 1) as i64, serde_json::to_string(r)?],
+            ))?;
+        }
+        if let Some((id, result)) = reply {
+            let changed = block_on(tx.execute(
+                "UPDATE inbox SET reply=?,error=NULL WHERE request_id=? AND reply IS NULL",
+                libsql::params![serde_json::to_string(result)?, id],
+            ))?;
+            ensure!(changed == 1, "request already completed or missing");
+        }
+        block_on(tx.commit())?;
+        staged.journal.pending = None;
+        staged.vectors.pending = None;
+        *self = staged;
+        Ok(())
+    }
+
+    pub fn metadata(&self, key: &str) -> Result<Option<String>> {
+        block_on(async {
+            let mut rows = self
+                .db
+                .query("SELECT value FROM metadata WHERE key=?", [key])
+                .await?;
+            Ok(rows.next().await?.map(|r| r.get::<String>(0)).transpose()?)
+        })
+    }
+
+    pub fn set_metadata(&self, key: &str, value: &str) -> Result<()> {
+        block_on(self.db.execute(
+            "INSERT INTO metadata VALUES (?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+            [key, value],
+        ))?;
+        Ok(())
     }
 
     pub fn shared(self) -> Shared {
@@ -125,66 +284,13 @@ impl Store {
             .collect()
     }
 
-    pub fn similar(&self, table: &str, q: &[f32], k: usize, statuses: Option<&[&str]>) -> Vec<Row> {
+    pub fn similar(
+        &self,
+        table: &str,
+        q: &[f32],
+        k: usize,
+        statuses: Option<&[&str]>,
+    ) -> Result<Vec<Row>> {
         self.state.similar(table, &self.vectors, q, k, statuses)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Write;
-
-    pub fn temp_dir(name: &str) -> std::path::PathBuf {
-        let d = std::env::temp_dir().join(format!("morpho-test-{}-{name}", std::process::id()));
-        let _ = std::fs::remove_dir_all(&d);
-        d
-    }
-
-    #[test]
-    fn fold_equals_live_and_torn_tail_is_dropped() {
-        let dir = temp_dir("store");
-        let dim = settings().embed_dim;
-        let mut st = Store::open(&dir, IdGen::seeded("t")).unwrap();
-        st.append_event("user_message", "user", json!({"text": "hi"}), None, None)
-            .unwrap();
-        let slot = st.vectors.append(&vec![0.5; dim]).unwrap();
-        let after = obj(json!({"id": "mem_1", "summary": "x", "status": "active",
-            "created_at": "2026-09-11T10:00:00.000000+00:00"}));
-        st.append(Record::Commit(Commit {
-            proposal: obj(json!({"id": "prop_1", "decision": "accepted"})),
-            transitions: vec![obj(
-                json!({"id": 1, "proposal_id": "prop_1", "table_name": "memories",
-                "object_id": "mem_1", "before": null, "after": after}),
-            )],
-            vectors: [("mem_1".to_string(), slot)].into(),
-        }))
-        .unwrap();
-        st.set_cursor("memory", 1).unwrap();
-        st.take_snapshot(json!({"memories": []})).unwrap();
-        let live = st.state.clone();
-        drop(st);
-
-        let mut f = std::fs::OpenOptions::new()
-            .append(true)
-            .open(dir.join("journal.jsonl"))
-            .unwrap();
-        f.write_all(b"{\"seq\":9,\"event\":{\"id\":2,\"event_id\":\"evt_torn")
-            .unwrap();
-        let mut v = std::fs::OpenOptions::new()
-            .append(true)
-            .open(dir.join("vectors.f32"))
-            .unwrap();
-        v.write_all(&[1, 2, 3]).unwrap();
-
-        let st = Store::open(&dir, IdGen::seeded("t")).unwrap();
-        assert_eq!(st.state, live);
-        assert_eq!(st.vectors.slots, 1);
-        assert_eq!(st.state.get("memories", "mem_1").unwrap()["summary"], "x");
-        assert_eq!(st.snapshots(5).unwrap().len(), 1);
-        assert_eq!(st.state.cursor("memory"), 1);
-        let hits = st.similar("memories", &vec![0.5; dim], 5, Some(&["active"]));
-        assert_eq!(hits[0]["relevance"], json!(1.0));
-        let _ = std::fs::remove_dir_all(&dir);
     }
 }

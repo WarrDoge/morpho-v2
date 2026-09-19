@@ -1,0 +1,478 @@
+{
+ "scenario": "long",
+ "harness_version": 3,
+ "control": true,
+ "trial": null,
+ "drop_streams": "",
+ "metrics": {
+  "probe_accuracy": 0.9667,
+  "update_accuracy": 1.0,
+  "probes": 30,
+  "llm_calls": 91,
+  "prompt_tokens": 875582,
+  "completion_tokens": 17781,
+  "provider_prompt_tokens": 764064,
+  "provider_completion_tokens": 13617,
+  "usage_reported_calls": 70,
+  "cache_misses": 70,
+  "seconds": 645.6,
+  "turns": 91
+ },
+ "replies": [
+  {
+   "text": "I'm Noor, a freelance architect based in Rotterdam.",
+   "reply": "Nice to meet you, Noor! A freelance architect in Rotterdam sounds like exciting work — the city has such a striking mix of modern and experimental architecture. How can I help you today?",
+   "ok": null
+  },
+  {
+   "text": "My studio is called Kade Studio and it's in the Katendrecht district.",
+   "reply": "Nice — Kade Studio in Katendrecht! That's a great spot: the district's got that fascinating blend of industrial harbor history and ongoing redevelopment. What would you like to work on today?",
+   "ok": null
+  },
+  {
+   "text": "What's the difference between cement and concrete?",
+   "reply": "Cement and concrete are often confused, but they're different things:\n\n**Cement** is a fine powder (usually Portland cement) made from ground limestone, clay, and other minerals heated in a kiln. It's the *binder* — an ingredient, not the final product.\n\n**Concrete** is the finished composite material: a mix of cement, water, and aggregates (sand, gravel, crushed stone). The cement and water form a paste that coats the aggregates and hardens through a chemical reaction (hydration), binding everything together into the solid material used in construction.\n\nA common analogy: cement is to concrete what flour is to bread — you can't make bread from flour alone, and cement is just one component of concrete.\n\nAs an architect, you'll know this well, but it's a distinction clients often get wrong — \"cement sidewalk\" is technically \"concrete sidewalk.\" (Similarly, asphalt concrete is a different mix entirely.)",
+   "ok": null
+  },
+  {
+   "text": "My partner Elif is a pediatric nurse at Erasmus MC.",
+   "reply": "Nice — Elif must have a meaningful (and no doubt busy) role at Erasmus MC, one of the biggest hospitals in the Netherlands. What would you like to do today, Noor?",
+   "ok": null
+  },
+  {
+   "text": "We have a cat named Miso who is deaf.",
+   "reply": "Aww, Miso! Deaf cats can live perfectly happy lives — they're often extra attentive to vibrations and visual cues. Is there anything specific you'd like to know or do today, Noor?",
+   "ok": null
+  },
+  {
+   "text": "Any good podcast about urban planning?",
+   "reply": "Here are some solid urban planning podcasts worth a listen:\n\n- **The Urbanist** (Monocle Radio) — Weekly show covering cities worldwide, from housing to transport to public space. Polished and globally minded.\n- **99% Invisible** (Roman Mars) — The classic. Not strictly planning, but the best storyteller of the built environment — design details and the invisible forces shaping cities.\n- **The War on Cars** — Focused on streets, mobility, and car-centric design; great if you're into cycling infrastructure (a natural fit in the Netherlands).\n- **Overtaken by Events** / **Third Rail** — More US-focused policy discussions if you want debates on zoning and housing.\n- **Talking Headways** (Streetsblog) — Conversational, transport-oriented, with plenty of guests from planning practice.\n\nA Dutch bonus: check out episodes of **Bouwmeester Talks** or anything from **EU climate/urban initiatives** if you want European perspectives closer to home — relevant given Rotterdam's rebuilding-from-the-war and climate-adaptive design history.\n\nIf you only pick one, start with 99% Invisible — easy entry point, and very relevant to an architect's ear.",
+   "ok": null
+  },
+  {
+   "text": "My biggest client right now is the housing corporation Woonstad.",
+   "reply": "Woonstad is a great one to have on your books — as one of Rotterdam's major housing associations (roughly 50,000+ homes under management), they're behind a lot of renovation, sustainability, and new-build work across the city. For Kade Studio, that likely means steady projects: retrofits, energy performance upgrades, densification, and social housing redevelopment — very relevant in a city with Rotterdam's ambitious housing agenda.\n\nWould you like help with something related, like designing your workflow around multi-year client contracts, or anything else?",
+   "ok": null
+  },
+  {
+   "text": "I cycle to the studio; it takes 25 minutes.",
+   "reply": "A 25-minute bike ride through Rotterdam sounds like a great commute — probably a nice mix of city streets and waterfront stretches, depending on your route from home to Katendrecht.\n\nAnything you'd like help with today, Noor?",
+   "ok": null
+  },
+  {
+   "text": "How do I get red wine out of a wool rug?",
+   "reply": "Red wine on wool is tricky because wool is delicate and heat/harsh chemicals will damage it, but acting fast helps a lot:\n\n**Act immediately:**\n1. **Blot, don't rub** — use a clean white cloth or paper towel and press down to absorb as much wine as possible. Work from the outside of the stain toward the center to stop it spreading.\n2. **Cold water blot** — dab with a cloth dampened with cold water to dilute the wine, blotting out the liquid as you go.\n\n**Then treat it:**\n3. Mix a gentle solution: **1 teaspoon of wool detergent (or mild dish soap) in a cup of lukewarm water**, ideally with a teaspoon of white vinegar. Vinegar helps neutralize the wine's pigments.\n4. Blot the solution onto the stain, then blot with a clean damp cloth to rinse. Repeat until the stain lifts.\n5. **Absorb moisture** by pressing a dry towel on it (or stacking towels with something heavy on top overnight).\n6. Let it air dry — keep it flat so the pile doesn't distort.\n\n**Warnings:**\n- **Never use bleach or ammonia** on wool — it dissolves the fibers.\n- Avoid scrubbing or hot water; both cause felting and permanent damage.\n- **Skip the salt/sparkling wine internet hacks** — Legends of them working are dubious, and salt can leave its own residue.\n\n**If it's dried or stubborn:** a specialist wool cleaner or a dry cleaner with rug experience is worth it. Since Miso lives in your house too, make sure the rug is fully dried and aired afterward so cleaning residues don't bother her.",
+   "ok": null
+  },
+  {
+   "text": "I'm allergic to shellfish.",
+   "reply": "Sorry to hear that — shellfish allergies can be quite serious. A few things worth keeping in mind:\n\n- **Read labels carefully** — in the EU, shellfish (crustaceans and mollusks) are mandatory allergens, so they must be clearly listed on packaged foods. That works in your favor living in the Netherlands.\n- **Watch out for cross-contamination** — restaurants, especially Asian kitchens and seafood restaurants, often use shared fryers, woks, or prep surfaces. It's always worth asking.\n- **Watch for hidden sources** — fish sauce is fine (fish, not shellfish), but oyster sauce, shrimp paste, and dashia/seafood stocks are not. Also be aware some products may contain shellfish-derived glazing agents, though that's rarer.\n- **Dining out in Rotterdam** — with Katendrecht's food scene (including some great Asian spots), it's worth mentioning the allergy when ordering, rather than relying on dish descriptions.\n\nDo you know if it includes all crustaceans and mollusks, or only certain types? And have you ever needed an EpiPen or antihistamines for a reaction?",
+   "ok": null
+  },
+  {
+   "text": "Help me keep a list of things to do before the Hout Hof hearing.",
+   "reply": "Happy to help, Noor! Here's a starting checklist for the Hout Hof hearing — we can refine it once I know more about the case (date, whether you're attending as a party or as architect/expert witness, etc.):\n\n**Administrative & documents**\n- [ ] Confirm the hearing date, time, and location\n- [ ] Gather all case-relevant documents (contracts, correspondence, drawings, invoices)\n- [ ] Organize documents chronologically with an index\n- [ ] Prepare copies for the court/tribunal and all parties\n- [ ] Check filing deadlines for any submissions before the hearing\n\n**Legal & content**\n- [ ] Review your statement of claim/defence or the position papers\n- [ ] Draft key points you want to make (keep to 3–5)\n- [ ] Anticipate the other side's arguments and prepare responses\n- [ ] Check whether a lawyer is required or you're representing yourself\n- [ ] Confirm rules on evidence/expert reports (as architect, any technical opinions may matter)\n\n**Personal prep**\n- [ ] Book the day off with Kade Studio clients (Woonstad deadlines?) and arrange cover\n- [ ] Plan travel time — a 25-minute ride plus buffer, and studio-to-hearing logistics\n- [ ] Prepare a short written summary to keep in front of you\n- [ ] Dress and act appropriately — court etiquette matters\n\nWant me to tailor this? Is this related to a Kade Studio project (construction dispute?), and when is the hearing? What format works best — a checklist in degrees-of-done style or a simple turn-based list we update over time?",
+   "ok": null
+  },
+  {
+   "text": "My accountant is Bram; taxes are due at the end of April.",
+   "reply": "Noted — Bram handles the accounting, and with the Dutch tax deadline at the end of April, it's smart to get ahead of it. A few things you might want lined up:\n\n- [ ] Gather Kade Studio's income records (invoices — including Woonstad work) and business expenses for the year\n- [ ] Check whether Bram needs anything from you specifically (VAT records, proof of investments/allowances like investment deduction for equipment)\n- [ ] Confirm which filings apply: income tax (aangifte inkomstenbelasting) and any turnover tax (btw) quarterly filings\n- [ ] Mark the deadline on your calendar with a reminder a couple of weeks before, in case Bram needs extra documents\n\nI can add this to your list alongside the Hout Hof hearing items. Want me to keep a combined task list for you, or is there anything tax-related you'd like to think through before talking to Bram?",
+   "ok": null
+  },
+  {
+   "text": "Is it going to rain in Rotterdam this weekend, do you think?",
+   "reply": "I don't have access to live weather data, so I can't check the current forecast for Rotterdam — anything I \"guessed\" could well be wrong.\n\nFor a reliable forecast, check **Buienradar.nl** (the go-to for Dutch weather, great radar for planning a bike ride) or **KNMI.nl** (the official Dutch meteorological institute). Weerplaza is also solid for weekend outlooks.\n\nIf it does turn out wet, hopefully your 25-minute spin to Kade Studio happens between showers — Rotterdam weather loves to flip quickly!",
+   "ok": null
+  },
+  {
+   "text": "I play in a five-a-side football team on Thursday nights.",
+   "reply": "Nice — Thursday five-a-side is a great mid-week reset! Nothing like a run around to clear your head after a day of drawings and site visits.\n\nThat also makes Thursday nights worth keeping free when scheduling things — I'll bear it in mind if we're planning anything around your calendar (e.g., fitting in tax prep with Bram or Hout Hof hearing prep around your week).\n\nAnything else to add, or shall we get back to your to-do list?",
+   "ok": null
+  },
+  {
+   "text": "My mother lives in Ankara and I visit twice a year.",
+   "reply": "Nice — Ankara is a long way from Rotterdam, so twice-yearly visits are a real commitment. It's lovely that you make that happen despite the busy studio schedule and everything on your plate.\n\nA couple of practical thoughts:\n- **Booking flights** — if your visits follow a pattern (spring/autumn?), it may be worth booking well ahead for better fares. There's no direct Rotterdam–Ankara flight, but connections via Istanbul are frequent.\n- **Syncing with your calendar** — if you like, I can note the typical months you travel so we can plan around them when scheduling studio work or tax deadlines with Bram (end of April could clash with a trip).\n\nIs there anything you'd like help with around the visits — packing logistics, staying on top of work while away, or something else?",
+   "ok": null
+  },
+  {
+   "text": "What's the tallest building in the Netherlands?",
+   "reply": "The tallest building in the Netherlands is **De Zalmhaven** (the Zalmhaven Tower) in Rotterdam — fitting, since it's in your home city, Noor! It stands about **215 metres tall** with 57 storeys, completed in 2022, and includes apartments and offices on its lower levels.\n\nBefore that, the title belonged to **De Zalmhaven's predecessor, the Maastoren** (165 m, also in Rotterdam), and further back **De Rotterdam** on the Wilhelminapier. For a long time, the **Dom Tower in Utrecht** (112 m) held the record — but that's a church tower rather than a building, and much older (14th century).\n\nKatendrecht itself is getting in on the vertical action too, with developments like the **Sommerwarenhuys** towers nearby — so your own neighborhood's skyline keeps evolving. Anything else you'd like to know?",
+   "ok": null
+  },
+  {
+   "text": "I use Rhino and Revit for modelling, never SketchUp.",
+   "reply": "Good combo — Rhino and Revit together cover a lot of ground: Rhino for freeform/complex geometry and quick massing studies, Revit for BIM documentation and coordination, which is especially useful if much of your work is with Woonstad on renovation and new-build housing.\n\nIf you ever need to bridge them fare well — Grasshopper inside Rhino, and tools like Rhino.Inside.Revit let you run Rhino/Grasshopper directly inside Revit, which can save a lot of re-modelling between the two.\n\nAnything you'd like help with on the modelling or workflow side?",
+   "ok": null
+  },
+  {
+   "text": "The Woonstad project is a 120-unit timber housing block called Hout Hof.",
+   "reply": "That reframes the picture — so the Hout Hof hearing is tied to your Woonstad project. A 120-unit timber housing block is a substantial commission, and timber construction at that scale brings its own sensitivities (moisture management during construction, fire regulations, acoustics, warranty terms, contractor forest-products expertise), so a dispute reaching a hearing isn't surprising.\n\nThis changes what I'd add to your Hout Hof checklist:\n\n**Project-specific documents**\n- [ ] Contract with Woonstad and its conditions (UAV or UAV-gc?), plus any supplementary agreements\n- [ ] Design drawings and BIM models — documented versions and change logs (your Rhino/Revit workflow history could matter for proving what was agreed when)\n- [ ] Timber-specific specs and performance requirements (fiery safety class, moisture content, detailing)\n- [ ] All variation/change orders and who approved them\n- [ ] Site inspection reports and correspondence with the contractor\n- [ ] Any VanBrien or other fire/moisture expert reports\n\n**Questions to think through**\n- Is the dispute about defects (e.g., moisture damage or shrinkage issues), delays, cost overruns, or design liability?\n- Are you potentially jointly liable with the contractor, or is this Woonstad vs. contractor with you caught in between?\n- Does your professional liability insurer need notifying? (They often must be informed early, even if no claim is filed yet.)\n\nIf you tell me what the hearing is actually about — defects, delays, fees, or something else — I can tighten the list further and help you prep your key arguments.",
+   "ok": null
+  },
+  {
+   "text": "Explain cross-laminated timber in two sentences.",
+   "reply": "Cross-laminated timber (CLT) is an engineered wood panel made by gluing layers of lumber together at alternating 90-degree angles, which gives it strength and dimensional stability in both directions. Panels can span walls, floors, and roofs like structural elements, making it a key material for mid- and high-rise timber buildings — like Hout Hof, presumably.",
+   "ok": null
+  },
+  {
+   "text": "My studio assistant is Daan; he's part-time, three days a week.",
+   "reply": "Noted — Daan, part-time studio assistant, three days a week. That's useful context, especially for scheduling things like Hearings prep coverage at Kade Studio or deadlines around tax season with Bram.\n\nAnything you'd like help with — workload planning, delegation on the Woonstad project, or something else?",
+   "ok": null
+  },
+  {
+   "text": "I'm training for the Rotterdam half marathon in October.",
+   "reply": "Nice — the Rotterdam half in October is a great goal! Running the city you see daily by bike gives you a whole new perspective on it, and October usually means cool, runnable conditions.\n\nA few thoughts:\n\n- **Training timeline** — depending on your current base, a typical half marathon plan runs 10–12 weeks, so you'd likely start building properly in late summer. If you've already got a decent fitness base, you have comfortable room to build gradually.\n- **Scheduling around your week** — your Thursday five-a-side counts as high-intensity leg work, so it's smart to avoid stacking a hard interval session the same day. Long runs probably fit best on weekends.\n- **Fueling and recovery** — with long runs increasing through autumn, pay attention to carbs afterward, especially with training and studio deadlines stacking up.\n\nWould you like help drafting a rough weekly training structure around your schedule (studio days, football nights, hearing prep)?",
+   "ok": null
+  },
+  {
+   "text": "How many calories are in a stroopwafel?",
+   "reply": "A typical stroopwafel contains roughly **150–190 calories**, depending on size and brand.\n\nFor reference:\n- A standard store-bought stroopwafel (about 32 g, like the classic supermarket versions) is around **150 kcal**\n- Larger or bakery-fresh ones (40–45 g) can reach **180–200 kcal**\n- Most of those calories come from sugar (the syrup) and butter in the waffle\n\nIf you're timing it around half marathon training, one makes a decent quick-carb snack — actually, stroopwafels are popular among cyclists and runners as mid-ride/mid-run fuel precisely because they're dense, tasty, easy-to-digest carbs.",
+   "ok": null
+  },
+  {
+   "text": "My car is an old red Volvo that I only use for site visits.",
+   "reply": "Noted — an old red Volvo kept for site visits fits nicely with the 25-minute bike commute; presumably Woonstad's sites and Hout Hof are the main reasons it gets used at all.\n\nAnything you'd like help with — keeping track of mileage (relevant for Bram at tax time, since business kilometres can be deducted), or something else?",
+   "ok": null
+  },
+  {
+   "text": "The Hout Hof planning permission hearing is on 14 September.",
+   "reply": "Thanks for the clarification — so the 14 September Hout Hof hearing is a **planning permission** hearing, not a dispute. That changes the prep list considerably. Here's an updated version:\n\n**Hout Hof planning hearing — 14 September checklist**\n\n**Documents & submission**\n- [ ] Confirm hearing format, time, and location (or online?), and who must attend\n- [ ] Check the deadline for submitting written responses/statements before the hearing — these dates are strict\n- [ ] Complete set of drawings and visualisations (timber facade appearance, height, massing)\n- [ ] Address any objections filed by neighbours/third parties — point-by-point responses\n- [ ] Confirm compliance with local zoning (bestemmingsplan) or that a permit variation/omgevingsvergunning is properly applied for\n- [ ] Prepare supporting studies if relevant: daylight/sunlight, noise, parking, greenery/water (Rotterdam climate-adaptation requirements)\n\n**Timber-specific talking points**\n- [ ] Prepare concise answers on fire safety, acoustics, and moisture — these typically attract objections at housing-block scale\n- [ ] Sustainability argument: carbon storage, energy performance — often well received by gemeente Rotterdam\n\n**Logistics**\n- [ ] Book the day with Woonstad/Daan coverage at the studio\n- [ ] Prepare a 3–5 point summary to speak from\n- [ ] Plan the route and arrival time\n\nWould you like me to fold this into a combined list with the tax items for Bram, or keep the Hout Hof list separate? And do you know yet whether objections have been filed — that usually shapes what matters most at the hearing?",
+   "ok": null
+  },
+  {
+   "text": "Who designed the Erasmus Bridge?",
+   "reply": "The Erasmus Bridge was designed by **Ben van Berkel**, then of the architecture practice **UNStudio** (he co-founded it with Caroline Bos). Completed in **1996**, it spans the Maas between the city centre and Feijenoord/Kop van Zuid.\n\nThe bridge is nicknamed **\"De Zwaan\" (The Swan)** for its asymmetric white pylon and elegant cable-stayed profile. Fun bit of trivia: it's 802 metres long, and its pylon leans at an angle that required careful engineering — it's become one of Rotterdam's icons, alongside De Rotterdam and the Markthal.",
+   "ok": null
+  },
+  {
+   "text": "I speak Dutch, Turkish and English; my French is terrible.",
+   "reply": "Nice mix, Noor! Dutch and English cover just about everything for work in Rotterdam — and Turkish must mean a lot with your mother in Ankara and visits twice a year.\n\nFrench being rusty is no big loss in your world; it rarely comes up in Dutch architecture practice. If it ever does (a French-speaking client or a French design competition, say), it can be rebuilt quickly with a bit of practice — the foundations tend to stick around even when fluency fades.\n\nAnything you'd like help with — or should we get back to the Hout Hof or tax prep lists?",
+   "ok": null
+  },
+  {
+   "text": "I bill Woonstad at 95 euros an hour.",
+   "reply": "Noted — €95/hour for Woonstad work. That's a solid professional rate, and useful to keep on file for a few things:\n\n- **Invoicing consistency** — worth making sure timesheets (yours and Daan's, if you bill any of his hours) are coded clearly to Hout Hof so there's no dispute over billable time.\n- **Fee estimates** — for the planning hearing on 14 September, remember time spent preparing responses to objections and attending hearings is often billable, if your agreement with Woonstad allows it.\n- **Sequencing costs** — timber projects usually carry extra coordination hours (fire safety advisors, moisture management, manufacturer detailing), so if you're billing hourly, tracking scope creep matters even more than on lump-sum jobs.\n\nAnything you'd like help with — tracking hours, drafting an invoice, or estimating the fee impact of the hearing prep?",
+   "ok": null
+  },
+  {
+   "text": "What's a good stretch for tight hamstrings?",
+   "reply": "A great one is the **standing forward fold with bent knees** — stand with feet hip-width apart, soften your knees (protects your lower back), hinge forward from the hips, and let gravity do the work. Hold 30–60 seconds, breathing slowly, then roll up gently.\n\nA couple more options:\n\n- **Seated forward fold** — sit on the floor with legs extended, hinge toward your toes. Keep your back long rather than rounding hard.\n- **Doorway leg stretch (supine hamstring stretch)** — lie on your back in a doorway, one leg up the doorframe, the other flat on the floor. Adjust your distance to control intensity. Very effective and easy on the back.\n- **Downward dog** — a good dynamic option, especially after football nights or runs.\n\nA couple of tips: don't bounce, aim for mild tension rather than pain, and hold at least 30 seconds for a real effect. With half marathon training in the mix, stretching after your runs (when muscles are warm) works much better than cold stretching before — and tight hamstrings are often tied to tight hips/glutes too, so don't neglect those.",
+   "ok": null
+  },
+  {
+   "text": "Elif and I are getting married next June in Izmir.",
+   "reply": "Congratulations, Noor! That's wonderful news — and a June wedding in İzmir sounds lovely: warm but not scorching, right on the Aegean coast, and much closer to Ankara than Rotterdam, so your mother will have easy logistics too.\n\nA few practical thoughts:\n\n- **June in İzmir** is gorgeous but can hit the low 30s — an evening or late-afternoon ceremony is wise, and guests will appreciate shade and Water.\n- **Guest logistics from Rotterdam** — Elif's colleagues from Erasmus MC and any Woonstad guests will need flights via Istanbul, so a save-the-date going out early really helps (June is peak wedding season in Turkey too).\n- **Your schedule** — June is a busy delivery month for studios; worth flagging early to Woonstad and Daan, and making sure the Hout Hof hearing (14 September) fallout is wrapped well before.\n- **Turkish civil ceremony** — if either of you is marrying in Turkey as a foreigner, there's paperwork (certificate of no impediment, apostille via the Dutch authorities) that takes weeks, so start that early.\n\nWould you like help with any of it — a planning checklist, timeline, or thinking through how to juggle it with the studio?",
+   "ok": null
+  },
+  {
+   "text": "My favourite building is the Van Nelle factory.",
+   "reply": "Great taste — the Van Nelle Factory (Van Nellefabriek) is a masterpiece, and practically on your doorstep along the Delftweg in Rotterdam-Noord.\n\nDesigned by **Johannes Brinkman and Leendert van der Vlugt** (Brinkman & Van der Vlugt) and completed in **1931**, it's a landmark of Dutch modernism: its glass curtain walls, slender mushroom columns, and ribbon coffee/tea processing floors made it feel radically light and open at a time when factories were typically dark and heavy. The social program behind it was forward-looking too — daylight, air, and greenery for the workers were deliberate design choices.\n\nIt became a **UNESCO World Heritage Site in 2014**, and today it hosts studios, events, and offices — a nice precedent for adaptive reuse, and a good reference point in conversations with clients like Woonstad about the value of keeping industrial heritage in play.\n\nAs a Kathedrale favorite, it also connects nicely to Hout Hof's timber story: both are about honestly expressing a construction system's logic — steel and glass then, engineered timber now.\n\nAnything else you'd like to do — more on the factory, or back to your lists?",
+   "ok": null
+  },
+  {
+   "text": "Translate 'planning permission' into Dutch.",
+   "reply": "\"Planning permission\" in Dutch is **omgevingsvergunning** (environmental permit) — the term now used under the Omgevingswet, which replaced the older **bouwvergunning**. In everyday conversation people still often say **bouwaanvraag** (building application) or informally \" bouwvergunning,\" but officially, for a project like Hout Hof, you'd be applying for an **omgevingsvergunning** — likely the \"omgevingsvergunning bouwen\" variant, possibly combined with other activities in a single application.\n\nFun fact relevant to you: since your hearing is about Hout Hof's planning permission, the Dutch municipality documents would all say \"omgevingsvergunning\" — handy to know when scanning Rotterdam gemeente paperwork.",
+   "ok": null
+  },
+  {
+   "text": "I have a second, smaller client: a bakery called Brood & Zo that wants a new shopfront.",
+   "reply": "Nice — a bakery shopfront is a fun change of pace from a 120-unit timber block! A few quick thoughts:\n\n- **Scope** — a new shopfront (winkelpui) usually still needs an **omgevingsvergunning** in Rotterdam, especially if the building is in a protected townscape (beschermd stadsgezicht) or you're changing the facade's appearance.\n- **Katendrecht context** — depending on where Brood & Zo is located, there may be facade quality requirements from the gemeente; Katendrecht has heritage guidance given its harbor history.\n- **Practical design considerations** — food retail shopfronts need good daylight/daylight presentation, easy-clean materials, warm thermal separation (door placement, air curtains), and generous display space for the bread itself.\n- **Billing** — worth clarifying whether Brood & Zo is also hourly at €95, a small fixed fee, or a reduced rate — small clients like this often work better on a simple lump sum, but that's your call.\n\nWould you like help sketching a scope of services or a small project plan for it?",
+   "ok": null
+  },
+  {
+   "text": "I take Fridays off to sketch; no client calls on Fridays.",
+   "reply": "Noted — Fridays are protected sketching days, no client calls. That's a good boundary to hold onto, especially with everything stacked up right now (Hout Hof hearing prep, tax season with Bram, half marathon training, and the İzmir wedding planning next year).\n\nA couple of practical notes:\n\n- **Scheduling around it** — if Daan covers studio business on weekdays, he should know Fridays are call-free so he fields Woonstad and Brood & Zo queries that day rather than forwarding them to you.\n- **Tax prep with Bram** — if either of you tends to talk on Fridays, shift those calls to earlier in the week; the end-of-April crunch can otherwise creep into your sketching time.\n- **Sketching spot** — with your commute by bike, Fridays could even be a chance to sketch somewhere else in the city — the Van Nelle factory seems like a fitting subject for a favourite building.\n\nAnything else to add, or shall we get back to the Hout Hof list?",
+   "ok": null
+  },
+  {
+   "text": "Why do my ears pop on the train through a tunnel?",
+   "reply": "It's all about **air pressure changes**.\n\nWhen a train speeds through a tunnel, it pushes a wave of air pressure ahead of it — and as it passes through, the pressure around you fluctuates (rising as the train's pressure wave compresses air, dropping in its wake, and also changing as air is squeezed through the narrow tunnel space).\n\nYour middle ear normally sits at the same pressure as the outside air, separated from the outside by your eardrum. When the outside pressure changes quickly, the pressure on the outer side of your eardrum becomes different from the pressure in your middle ear — the eardrum gets pushed slightly inward (or outward), which your nervous system registers as that blocked, pressurized feeling.\n\n**The \"pop\" is your equalizing mechanism.** Swallowing or yawning opens the **Eustachian tubes**, which run from your middle ear to the back of your nose and throat. That little Clicking you hear when you swallow is the tubes opening briefly — air flows in or out until the pressure on both sides of the eardrum matches again. The pop is the pressure equalizing and your eardrum returning to its neutral position, which restores normal hearing instantly.\n\nIt's the same physics as on a flight during descent — just at a smaller, gentler scale, since train tunnels shift pressure by a few millibars rather than tens of them.\n\nFun aside: it's the same principle that makes high-speed trains' noses so long and streamlined — smoothing the pressure waves they push through tunnels reduces both the boom heard outside and the ear-popping inside.",
+   "ok": null
+  },
+  {
+   "text": "My laptop is a ThinkPad and I refuse to use a Mac.",
+   "reply": "Noted — ThinkPad it is! A sensible choice for the kind of work you do: Rhino and Revit both run comfortably on Windows, and ThinkPads have a reputation for solid keyboards, good build quality, and easy repairability — which matters for a freelance studio where downtime means lost billable hours.\n\n(The Mac debate is a non-starter for your toolkit anyway — Revit has no full macOS version, and Rhino on Mac lacks some plugin support, so a Windows machine is practically required, not just preferred.)\n\nAnything else to add to your list — or shall we get back to the Hout Hof hearing prep?",
+   "ok": null
+  },
+  {
+   "text": "Daan is studying for his architecture master's at TU Delft.",
+   "reply": "Nice — TU Delft is one of the world's top architecture schools, so Daan's in good hands. That's a strong setup for your studio: part-time assistant who's actively studying means he brings current knowledge (timber construction research, climate-adaptive design, computational tools — right up Rhino/Grasshopper's alley) straight into Kade Studio's work.\n\nA couple of practical notes:\n\n- **Scheduling** — his three days should work around TU Delft deadlines and thesis periods; his availability may dip during exam weeks, worth planning Hout Hof and Brood & Zo workloads around that.\n- **Alignment with your teaching style** — studying assistants often appreciate clear delegation with a learning angle, e.g., letting him model the shopfront details in Revit as a BIM exercise.\n- **TU Delft resources** — students sometimes get access to research, libraries, or software licences that could benefit the studio too (timber research for Hout Hof could tie in nicely).\n\nAnything you'd like help with — delegation on Hout Hof, or shall we get back to the prep lists?",
+   "ok": null
+  },
+  {
+   "text": "Recommend a sci-fi novel.",
+   "reply": "For someone with your eye for design and cities, I'd recommend **\"The City We Became\" by N.K. Jemisin** — New York City itself is alive, and each borough gets an avatar who must defend it from an interdimensional threat. It's as much about urbanism, identity, and place as it is about sci-fi, which makes it perfect for an architect's brain.\n\nA couple of alternatives if that doesn't grab you:\n\n- **\"Invisible Cities\" by Italo Calvino** — technically speculative fiction rather than sci-fi: Marco Polo describes impossibly beautiful, impossible cities to Kublai Khan. Every architect I know who's read it considers it a bible of imaginative urbanism. Short, poetic, and endlessly quotable.\n- **\"Anchor Point\" or better, **\"New York 2140\" by Kim Stanley Robinson** — a drowned Manhattan after sea-level rise, where a skyscraper becomes a vertical favela and finance meets climate adaptation. Very relevant to a Rotterdam architect thinking about climate-adaptive design — your city already fights the same water battles.\n\nIf you want pure classic fun: **\"Dune\"** or **\"The Left Hand of Darkness\"** remain the standards.\n\nIf I had to pick just one for you specifically: **New York 2140** — water, cities, and architecture are right in your wheelhouse. Want a pitch on plot without spoilers?For you specifically, I'd pick **\"New York 2140\" by Kim Stanley Robinson** — a drowned Manhattan after sea-level rise, where a skyscraper becomes a vertical favela and residents fight a financial war to keep their building. It's equal parts sci-fi and urbanism manifesto, and with Rotterdam's climate-adaptation battles (and a 120-unit timber block on your drawing board), it'll hit close to home.\n\nA couple of alternatives:\n\n- **\"The City We Became\" by N.K. Jemisin** — New York is alive, and its boroughs have avatars defending it from an interdimensional threat. As much about urban identity as sci-fi.\n- **\"Invisible Cities\" by Italo Calvino** — Marco Polo describing impossible, dreamlike cities to Kublai Khan. Shorter than a typical sci-fi novel, but many architects treat it as the definitive book on imaginative urbanism — arguably the architect's classic.\n- **\"Dune\"** if you just want a sprawling classic for some sketching-Friday-compatible escapism on audio.\n\nWant a genre read or two on your sketching Fridays? Gone. Want me to pick one based on tone — fun, dense, or poetic?",
+   "ok": null
+  },
+  {
+   "text": "I bank with Bunq for the business account.",
+   "reply": "Noted — Bunq for the Kade Studio business account. Good fit for a freelancer: it's built around easy sub-accounts (you can set up pots for VAT/btw set-asides, tax savings for April with Bram, and a wedding fund for İzmir next year), and it handles Sepa payments, invoicing, and multi-currency (handy for the twice-yearly Ankara trips and the Turkish contacts).\n\nThat's useful for a few things on our lists:\n\n- **Tax prep** — a dedicated savings sub-account for income tax and btw keeps Bram's job simple.\n- **Hout Hof** — invoices to Woonstad (€95/hour billing) and Brood & Zo payments can be kept in separate sub-accounts if you want cleaner bookkeeping.\n\nAnything else to add, or shall we update the combined to-do list?",
+   "ok": null
+  },
+  {
+   "text": "Update: I moved the studio to the Delfshaven district, so the cycle is now 40 minutes.",
+   "reply": "Noted — Kade Studio is now in Delfshaven, so your commute is up to 40 minutes by bike. A nice trade-off, though: Delfshaven is one of the few areas that survived the 1940 bombing, so you get the historic Pilotus/Oude Pelgrim area, the old harbor basins, and the Pilgrim Fathers history right on your doorstep — great sketching material for Fridays, actually.\n\nA few knock-on notes:\n- **Commute planning** — 40 minutes each way means roughly 80 minutes of riding a day; worth factoring into your half marathon training as extra base mileage (or fatigue, depending on how you look at it!).\n- **Site visits via the Volvo** — destinations are now different; Delfshaven to Woonstad locations around the city will shift your routes.\n- **Half marathon** — if the October route runs anywhere nearby, you'll know those streets well by autumn.\n\nAnything else to update — or shall we do a fresh run-through of the combined to-do list (Hout Hof hearing, tax prep with Bram, wedding paperwork)?",
+   "ok": null
+  },
+  {
+   "text": "Where am I based?",
+   "reply": "You're based in **Rotterdam, the Netherlands** — and more specifically, your studio Kade Studio is now in the **Delfshaven** district (you recently moved from Katendrecht), with a 40-minute bike commute to work.",
+   "ok": true
+  },
+  {
+   "text": "What's the etymology of the word 'architect'?",
+   "reply": "The word comes from the Greek **arkhitéktōn** (ἀρχιτέκτων), a compound of:\n\n- **arkhi-** (ἀρχι-) — \"chief, master, leading\" (the same root as in *archbishop*, *archenemy*)\n- **tektōn** (τέκτων) — \"builder, carpenter, craftsman\" — someone who worked with wood or in construction\n\nSo literally, an architect is a **\"master builder\"** or \"chief craftsman.\"\n\nThe word passed into Latin as *architectus*, then into Old French as *architecte*, and into English by the 16th century.\n\nA nice connection for you: *tektōn* also gives us related words like **tectonic** (structure/building — as in *tectonics* in geology) and **technology** (originally *tekhnē*, \"craft, art,\" + *logos*). So the architect — the chief *tektōn* — sits at the root of a whole family of words about making and building, which fits the Hout Hof timber story rather elegantly.",
+   "ok": null
+  },
+  {
+   "text": "Woonstad agreed to a rate increase: I now bill them 110 euros an hour.",
+   "reply": "Great news — noted: **Woonstad rate is now €110/hour** (up from €95).\n\nA few practical follow-ups:\n\n- **Confirm in writing** — make sure the rate change is documented (amendment to the agreement or an email exchange), so Bram has clean records and there's no dispute on past invoices.\n- **Effective date** — clarify whether it applies from a specific date or just new invoices; matters for work already logged on Hout Hof.\n- **Daan's hours** — if you bill any of Daan's time at your blended rate, update the rate on those timesheets too.\n- **Timesheets** — existing logged hours predating the increase need to be coded carefully so invoicing splits correctly.\n\nBrood & Zo's rate (if you've agreed one) stays separate, of course. Anything else to update, or shall we get back to the lists?",
+   "ok": null
+  },
+  {
+   "text": "What's my studio called?",
+   "reply": "Your studio is called **Kade Studio** — now based in the Delfshaven district of Rotterdam (after the move from Katendrecht).",
+   "ok": true
+  },
+  {
+   "text": "How long should I boil an egg for a soft yolk?",
+   "reply": "For a soft-boiled egg with a runny yolk:\n\n- **6–6½ minutes** — classic soft-boiled from boiling water: white just set, yolk loose and molten (ideal for dippy eggs with soldiers)\n- **7 minutes** — white fully set, yolk jammy and spoonable — a great middle ground\n- **8 minutes** — barely set yolk, gooey but holding shape\n\n**Method:** Lower eggs into already-boiling water, keep at a gentle boil, then transfer straight to ice water (or run under cold tap) for a minute to stop the cooking.\n\nA couple of notes:\n- **Size matters** — timings above are for standard M/L eggs; add ~30 seconds for XL, subtract a bit for small eggs.\n- **Fridge-cold eggs** — add ~30 seconds to the timer.\n\nA jammy 7-minute egg is a great protein boost around half marathon training — nice on toast after a long run.",
+   "ok": null
+  },
+  {
+   "text": "The Hout Hof hearing got postponed to 2 October.",
+   "reply": "Noted — the Hout Hof planning hearing is now **2 October** (moved from 14 September).\n\nA few notes:\n\n- **Breathing room** — that gives you roughly three extra weeks forprep, so the timeline is less pressured. Worth checking why it was postponed and whether any new deadlines came with it (e.g., deadlines for submitting written responses to objections may still be tied to the original schedule — or may have shifted too, so confirm with the gemeente).\n- **Half marathon** — the race is also in October, so the hearing and race could now land close together. Worth checking energy/discipline for race weekend; you may want the hearing well clear of your taper and race day.\n- **To-do list** — the document prep, objection responses, and Woonstad/Daan coverage arrangements all stay the same, just with a later target: update the date and shift your internal prep milestones accordingly.\n\nDoes the postponement affect any of the other prep items — do you know if the written response deadline also moved?",
+   "ok": null
+  },
+  {
+   "text": "Where does Elif work?",
+   "reply": "Elif is a pediatric nurse at **Erasmus MC** in Rotterdam — one of the largest hospitals in the Netherlands, so no doubt a busy and meaningful role.",
+   "ok": true
+  },
+  {
+   "text": "Is Brutalism making a comeback?",
+   "reply": "Yes — Brutalism is genuinely having a revival, and it's more than a fashion moment. A few trends driving it:\n\n**Why it's back**\n- **Heritage appreciation** — campaigns like Twentieth Century Society (UK) and SOS Brutalism (a global database by the DAM/Deutsche Architekturmuseum) have successfully reframed post-war concrete buildings as worthy of preservation rather than demolition.\n- **Material honesty resonates again** — after decades of cladding-and-finish architecture, exposed structure and raw material feel authentic. It's the same instinct that makes the Van Nelle factory (your favourite) appealing, though that's functionalist steel-and-glass rather than Brutalist.\n- **Environmental argument** — ironically, the concrete of the original Brutalists was carbon-heavy, but today's \"neo-Brutalism\" often merges the aesthetic with low-carbon materials. Exposed structure, minimal finishes, and robust, long-life buildings fit sustainability goals — relevant to your Woonstad work with Hout Hof.\n\n**Where you see it now**\n- **Renovation projects** — restoration of icons like the Barbican (London), Boston City Hall, and Het Schieblock's neighbours in Rotterdam. Preservation is often greener than demolition.\n- **New neo-Brutalism** — young practices are doing fresh builds with the monolithic, textured-concrete language: think PIER VITTORIO or the popular \"concrete monolith\" houses on Pinterest and Instagram.\n- **Rotterdam-specific** — the city has strong Brutalist stock (the Het Hof ter Wilder, some of the Maasboulevard-era work, De Kuip's era-adjacent structures, and of course De Rotterdam's stylistic echo — no, that's more solid-block modernism by OMA, but related).\n\n**The catch** — public opinion is still split. The same qualities architects love (raw concrete, monumental forms) are what many residents dislike, which explains why so many Brutalist buildings are demolished despite petitions. So the comeback is strong in professional/heritage circles and on social media, but contested at street level.\n\nSafest summary: Brutalism is back in taste, back in renovation practice, and increasingly back in new work — but demolition battles like Robin Hood Gardens show the revival still loses sometimes.",
+   "ok": null
+  },
+  {
+   "text": "Daan is now full-time, five days a week.",
+   "reply": "Great update — Daan is now full-time, five days a week. That's a real step up for Kade Studio's capacity, especially with the Hout Hof hearing (2 October), the Woonstad work at €110/hour, and Brood & Zo's shopfront in play.\n\nA few knock-on notes:\n\n- **TU Delft balance** — with his master's still in progress, it's worth checking how five days squares with his study schedule; thesis semesters can get heavy, so his availability might still dip at exam times.\n- **Delegation opportunities** — full-time capacity means you could offload more of the Hout Hof document prep (drawings, change logs, objection responses) or give him ownership of smaller Brood & Zo tasks.\n- **Fridays** — since your Fridays are call-free sketching days, Daan being in all week (including Fridays) makes him your natural front line for Woonstad and Brood & Zo queries that day.\n- **Costs** — a full-time salary changes your expense picture; worth flagging for Bram ahead of the end-of-April tax deadline.\n\nAnything else to update, or shall we refresh the combined to-do list?",
+   "ok": null
+  },
+  {
+   "text": "What's special about our cat Miso?",
+   "reply": "Miso is deaf! Deaf cats can live perfectly happy lives — they rely more on vibrations, visual cues, and routines. If you ever want tips on communicating with her (hand signals, stomping to get her attention via floor vibrations), just ask.",
+   "ok": true
+  },
+  {
+   "text": "What's the capital of Kazakhstan these days?",
+   "reply": "The capital of Kazakhstan is **Astana** again — it was renamed **Nur-Sultan** in 2019 (after former president Nursultan Nazarbayev), but in 2022 the name was changed back to Astana, and that's the name in official use today.\n\nFun architecture angle for you: Astana is famous for its rapidly built, futuristic skyline — much of it masterplanned with involvement from **Norman Foster** (the Khan Shatyr Entertainment Center, that giant leaning tensile \"tent,\" and the Palace of Peace and Reconciliation pyramid). It's one of the most striking examples of a purpose-built, fast-track capital city anywhere.",
+   "ok": null
+  },
+  {
+   "text": "Football moved to Monday nights.",
+   "reply": "Noted — five-a-side is now on **Monday nights** instead of Thursdays.\n\nA few quick knock-ons:\n\n- **Half marathon training** — Monday football actually works better for a typical plan: long runs on weekends, football as a hard session early in the week, and interval/speed work mid-week won't collide with it.\n- **Sketching Fridays unaffected** — your call-free Fridays stay safe either way, and now even mid-week evenings (Thursday especially) are free for things like Hout Hof prep or tax calls with Bram.\n- **Hearing timing** — if the 2 October hearing or any related meetings land on a Monday, you'd now want to avoid stacking them with football.\n\nAnything else to update, or shall we refresh the to-do lists?",
+   "ok": null
+  },
+  {
+   "text": "Who is my biggest client?",
+   "reply": "Your biggest client is **Woonstad**, the Rotterdam housing corporation — currently billed at **€110/hour** (recently increased from €95). Their main project with you is **Hout Hof**, the 120-unit timber housing block, with the planning permission hearing coming up on **2 October**.\n\n(Your smaller second client is Brood & Zo, the bakery with the shopfront project.)",
+   "ok": true
+  },
+  {
+   "text": "Give me a mnemonic for the planets.",
+   "reply": "Here's a classic mnemonic for the eight planets in order from the Sun:\n\n**\"My Very Educated Mother Just Served Us Noodles\"**\n\n- **M**y — Mercury\n- **V**ery — Venus\n- **E**ducated — Earth\n- **M**other — Mars\n- **J**ust — Jupiter\n- **S**erved — Saturn\n- **U**s — Uranus\n- **N**oodles — Neptune\n\n(Pluto got demoted to dwarf planet in 2006, so the older \"Nine Pizzas\" version is out of date.)\n\nIf you'd like a Dutch-friendly one, you could make your own — e.g. \"**Mijn Vrolijke Elif Maakt Juist Sfeeruitval Unique N ingenieurs**\" style — inventing a sentence from your own life tends to stick better than any borrowed one. Want me to tailor one around Kade Studio or the family?",
+   "ok": null
+  },
+  {
+   "text": "Which bank is my business account with?",
+   "reply": "Your business bank is **Bunq** — you mentioned earlier that you bank with them for the Kade Studio business account.",
+   "ok": true
+  },
+  {
+   "text": "What's the best way to clean a chain on a bike?",
+   "reply": "A bike chain clean is straightforward, and since you're putting serious kilometres in (40-minute commute each way plus half marathon-adjacent fitness — well, cross-training anyway), keeping it clean will also extend drivetrain life. Here's the best way:\n\n**Quick clean (every few weeks)**\n1. Backpedal and hold a rag loosely around the chain.\n2. Drop a bit of degreaser or diluted washing-up liquid on the rag and keep pedalling backwards until the grime comes off.\n3. Wipe dry with a clean section of the rag, then re-lube (see below).\n\n**Deep clean (every couple of months, or after winter rides)**\n1. Optionally remove the chain (with a quick-link, this takes seconds — worth buying a quick-link if you don't have one).\n2. Soak it in degreaser (bike-specific degreaser or, budget option, kerosene) in a jar or bottle; shake and swirl.\n3. Rinse with water, dry thoroughly with a rag (and ideally leave to air-dry — water left inside the rollers causes rust).\n4. Alternatively use a **chain-cleaning tool** (a clip-on device with little brushes, ~€15) while the chain is still on the bike — very effective without removal.\n5. Scrub the cassette and chainrings with a stiff brush and degreaser while you're at it.\n\n**Lubing — the critical part**\n- Apply **one drop per roller** while backpedalling, using a proper bike chain lube (dry lube for summer/fair weather, wet lube for rain — relevant in Rotterdam!).\n- Let it sit a few minutes, then wipe **off** the excess with a rag. This is key: a lubricated-but-dry chain collects far less dirt than a drippy one.\n\n**What to avoid**\n- Never use a pressure washer or hose at close range — forces water past the seals and washes out the internals.\n- Don't use WD-40 as a lubricant (it's fine as a degreaser/cleaner, but it's not a lube).\n- Avoid over-lubing — the classic amateur mistake.\n\nA clean, properly lubed chain is also noticeably quieter and shifts better — you'll feel the difference on the Delfshaven commute right away.",
+   "ok": null
+  },
+  {
+   "text": "Is there any food I must avoid?",
+   "reply": "Yes — the key one from what you've told me: **shellfish**. You mentioned you're allergic to it, so strictly avoid:\n\n- **Crustaceans** — shrimp, prawns, lobster, crab, langoustines, krill\n- **Mollusks** — mussels, oysters, clams, scallops, squid (calamari), octopus, snails\n\n**Watch out for hidden sources:**\n- **Oyster sauce and shrimp paste** (common in Asian cooking — relevant given Katendrecht's food scene)\n- **Fish stocks or seafood blends** in soups and sauces — fish itself is *not* shellfish, but dishes are often cross-contaminated\n- **Shared fryers and woks** at restaurants — always ask\n- On packaged food in the EU, shellfish is a mandatory allergen, so labels must clearly declare it — that works in your favour in the Netherlands.\n\nIf you haven't already, it's worth confirming with your doctor whether the allergy covers all crustaceans and mollusks or only some, and whether you should carry antihistamines or an adrenaline auto-injector.\n\nBeyond the allergy, there's nothing else you've mentioned that you need to avoid — and nothing in your training diet (stroopwafels included!) that's off-limits.",
+   "ok": true
+  },
+  {
+   "text": "What are my open to-dos?",
+   "reply": "Here's your combined to-do list, Noor:\n\n**Hout Hof planning hearing — now 2 October**\n- [ ] Confirm hearing format, time, location, and any new deadlines from the postponement\n- [ ] Check whether written response deadlines (for objections) moved with the new date\n- [ ] Complete drawing/visualisation set ready for submission\n- [ ] Prepare point-by-point responses to any third-party objections\n- [ ] Confirm compliance with zoning (omgevingsvergunning requirements)\n- [ ] Prepare talking points on timber specifics: fire safety, acoustics, moisture\n- [ ] Book cover with Daan; arrange Woonstad availability for the day\n- [ ] Watch the calendar clash with the half marathon in October\n\n**Taxes with Bram — due end of April**\n- [ ] Gather income records (invoices to Woonstad at €110/hour, Brood & Zo) and business expenses\n- [ ] Provide Bram what he needs (VAT records, investment deductions, etc.)\n- [ ] Set aside tax funds in a Bunq sub-account\n- [ ] Flag the full-time Daan salary as a new expense\n- [ ] Confirm the written documentation of the Woonstad rate increase\n\n**İzmir wedding — next June**\n- [ ] Send save-the-dates early (peak season; guests flying via Istanbul)\n- [ ] Start the civil paperwork early (certificate of no impediment, apostille)\n- [ ] Flag the wedding period to Woonstad and plan studio workload around it\n\nWant me to prioritise, add, or trim anything from this?",
+   "ok": true
+  },
+  {
+   "text": "How do passive houses stay warm?",
+   "reply": "Passive houses stay warm primarily through **super-insulation and airtightness rather than active heating** — the goal is to need almost no heating at all (max 15 kWh/m²/year, roughly 10% of a conventional building).\n\nThe core principles:\n\n1. **Super-insulation** — very thick insulation layers (walls, roof, floor) dramatically slow heat loss, so body heat, sunlight, and appliances contribute meaningfully.\n\n2. **Airtight envelope** — the building shell is sealed to minimize uncontrolled air leakage (verified with a blower-door test). No draughty gaps means heat stays put. (Concrete analogy, since you'll appreciate it: the building is a thermos flask, not a sieve.)\n\n3. **Heat recovery ventilation (MVHR)** — this is the clever bit. Because the building is airtight, fresh air is supplied mechanically; the extract air passes through a **heat exchanger** that transfers 75–95% of its warmth to the incoming fresh air. You get ventilation without losing heat.\n\n4. **Triple glazing** — high-performance windows (typically triple-glazed, thermally broken frames) that actually *gain* more heat from sunlight than they lose on balance, if oriented well.\n\n5. **Thermal-bridge-free detailing** — junctions (balconies, window reveals, floor edges) are designed so heat has no \"shortcuts\" escaping through conductive materials. This is where passive house design gets meticulous — your Revit detail drawings would matter enormously.\n\n6. **Solar orientation** — south-facing glazing captures free passive solar heat in winter, with shading to prevent summer overheating.\n\nThe result: a small backup heater (often just a tiny heat pump or even the ventilation system's post-heater) covers the small remaining demand.\n\nGiven your timber work: CLT and timber construction pair excellently with passive house standards — timber is a natural insulator, and Hout Hof-style cellular timber construction with wood-fibre or cellulose insulation is a very common route to Passivhaus-level performance. If Woonstad ever pushes for energy targets, it's worth knowing the standard is very achievable at that scale.",
+   "ok": null
+  },
+  {
+   "text": "How many days a week does Daan work now?",
+   "reply": "Daan now works **full-time, five days a week** — he moved up from three days a week earlier.",
+   "ok": true
+  },
+  {
+   "text": "What car do I drive?",
+   "reply": "You drive an **old red Volvo** — kept purely for site visits, since your day-to-day commute to Kade Studio in Delfshaven is by bike.",
+   "ok": true
+  },
+  {
+   "text": "Any tips for a stiff neck from drawing all day?",
+   "reply": "Stiff neck from desk work is very common for architects — hours of looking down at drawings/screens compounds it. A few tips:\n\n**Quick stretches (do these a few times a day):**\n- **Chin tucks** — draw your chin straight back (making a \"double chin\"), hold 5 seconds. Great for reversing forward-head posture. This one's the most effective.\n- **Upper trapezius stretch** — tilt your right ear toward your right shoulder, gently assist with your right hand, left arm relaxed behind you. Hold 30 seconds each side.\n- **Levator scapulae stretch** — turn head 45° to look at your armpit, then gently pull the head down with your hand. Targets the deep neck muscle that gets overworked at desks.\n- **Shoulder rolls & doorway chest stretch** — tight chest pulls the head forward, so opening the front matters as much as stretching the neck itself.\n\n**Demon setup fixes (probably your real culprit):**\n- Screen at eye level — if you work on a laptop (or a ThinkPad screen below eye level), a laptop stand plus external keyboard/mouse makes a huge difference.\n- If you alternate between drawing on paper and screen, angle the drawing surface up (a tilted desk board) to reduce neck flexion.\n- Get up for 1–2 minutes every 45 minutes — set a timer if needed.\n\n**Other:**\n- Heat (hot shower or heat pad) eases tight muscles in the evening.\n- Check sleeping position — a pillow that keeps your neck neutral matters if you wake up stiff too.\n- If it's persistent, radiates into an arm, or comes with tingling/numbness, see a physio (or huisarts) rather than pushing through.\n\nGiven your half marathon training, adding some upper-back strength work (rows, face pulls or band pull-aparts) would help a lot too — strong postural muscles resist the dreaded drawing hunch.",
+   "ok": null
+  },
+  {
+   "text": "What race am I training for?",
+   "reply": "You're training for the **Rotterdam half marathon in October** — and note the Hout Hof planning hearing is now on 2 October, so it could land close together; worth keeping your race weekend clear in your planning.",
+   "ok": true
+  },
+  {
+   "text": "Which languages do I speak?",
+   "reply": "You speak **Dutch, Turkish, and English** — with Dutch and English covering your work life in Rotterdam, and Turkish connecting to your mother in Ankara and the wedding in İzmir. (Your French you described as, well, terrible.)",
+   "ok": true
+  },
+  {
+   "text": "What year did the Van Nelle factory become a UNESCO site?",
+   "reply": "The Van Nelle Factory became a **UNESCO World Heritage Site in 2014**. Designed by Brinkman & Van der Vlugt and completed in 1931, it earned the listing for its role as an icon of modernist functionalist architecture — its light steel-and-glass construction, daylight-filled processing floors, and progressive social ideals for workers.",
+   "ok": null
+  },
+  {
+   "text": "What does Brood & Zo want from me?",
+   "reply": "Brood & Zo, the bakery (your smaller second client), wants a **new shopfront** for their shop. That's the project on your books with them.\n\nA few relevant points from what we've discussed:\n\n- **Approvals** — a shopfront (winkelpui) renovation usually needs an omgevingsvergunning in Rotterdam, especially if the facade appearance changes or the building sits in a protected townscape area.\n- **Scope** — they'll be after a design that presents the bread well (display, daylight, visibility), plus practical retail details: thermal separation, door/air curtain placement, easy-clean materials.\n\nIf you'd like, we could sketch out a scope of services or a fee approach for it — you haven't yet settled whether they're billed hourly at your €95–110 range or on a simple lump sum, which is common for small jobs like this.",
+   "ok": true
+  },
+  {
+   "text": "Who are the people you know about in my life and what do they do?",
+   "reply": "Here's everyone I know about in your life, Noor:\n\n**Family & home**\n- **Elif** — your partner (fiancée now!), a pediatric nurse at Erasmus MC. You're getting married next June in İzmir.\n- **Miso** — your deaf cat.\n- **Your mother** — lives in Ankara; you visit her twice a year.\n\n**Work — Kade Studio**\n- **Daan** — your studio assistant, once part-time (three days) but now full-time, five days a week. He's studying for his architecture master's at TU Delft.\n\n**Clients**\n- **Woonstad** — your biggest client, the Rotterdam housing corporation. Currently ticking along at €110/hour with the Hout Hof project: the 120-unit timber housing block (hearing on 2 October).\n- **Brood & Zo** — a bakery, your smaller second client, who want a new shopfront.\n\n**Professional services**\n- **Bram** — your accountant; taxes are due at the end of April.\n\nAnything to update on any of them?",
+   "ok": true
+  },
+  {
+   "text": "Is it 'less' or 'fewer' with countable nouns?",
+   "reply": "For countable nouns, it's **fewer**; for uncountable, it's **less**:\n\n- **Fewer** + countable: *fewer objections, fewer hours to bill, fewer clients*\n- **Less** + uncountable: *less money, less time, less stress*\n\nClassic rule of thumb: if you can count it (*fewer emails* — one email, two emails), use **fewer**; if you'd measure it (*less coffee*), use **less**.\n\n**The famous exception:** *less* is standard with certain countable quantities that act as single amounts — distances, money, time, weights:\n- *The commute is less than 40 minutes* (not \"fewer\")\n- *It costs less than €110 an hour*\n- *I earn less than Bram's other clients pay*\n\n(Less is also increasingly accepted in everyday usage with countable nouns — \"*less cars*\" appears everywhere — but *fewer* remains the technically correct choice in formal writing.)\n\nThe supermarket \"10 items or less\" checkout is the classic battleground: prescriptivists say it should be \"10 items or fewer,\" though the lane sign isn't changing anytime soon.",
+   "ok": null
+  },
+  {
+   "text": "Summarise what you know about my work in a few sentences.",
+   "reply": "You're Noor, a freelance architect running **Kade Studio**, now based in **Delfshaven** in Rotterdam (relocated from Katendrecht). Your biggest client is **Woonstad**, the Rotterdam housing corporation — you bill them **€110/hour** (recently raised from €95) — and the main project is **Hout Hof**, a **120-unit timber housing block** with a planning permission hearing on **2 October**. Your smaller client is the bakery **Brood & Zo**, who want a new shopfront.\n\nYou work in **Rhino and Revit** (never SketchUp), have a full-time studio assistant, **Daan**, who's studying architecture at TU Delft, and your accountant **Bram** handles your taxes, due at the end of April. You commute by bike (40 minutes each way) and keep Fridays free for sketching, with no client calls.",
+   "ok": true
+  },
+  {
+   "text": "What is the Woonstad project?",
+   "reply": "Your Woonstad project is **Hout Hof** — a **120-unit timber housing block**. It's your biggest commission right now, and the immediate milestone is the **planning permission hearing (omgevingsvergunning), now scheduled for 2 October** (postponed from 14 September).\n\nYou bill Woonstad at **€110/hour** (recently increased from €95). Key prep items for the hearing include your drawing set, responses to any third-party objections, zoning/permit compliance, and timber-specific talking points on fire safety, acoustics, and moisture.",
+   "ok": true
+  },
+  {
+   "text": "What's a good warm-up before a run?",
+   "reply": "A good pre-run warm-up is **dynamic movement, not static stretching** — save the long holds for after. Here's a solid 5–10 minute routine:\n\n**1. Easy jog or brisk walk (2–3 min)**\nStart moving gently to raise your heart rate and warm the muscles.\n\n**2. Dynamic leg swings (30–60 sec)**\n- Front-to-back swings, 10 per leg (hold something for balance)\n- Side-to-side swings across the body, 10 per leg\n\n**3. Leg activations**\n- **Walking lunges** — 10 steps (great for hips and glutes)\n- **High knees** — 20 m, light and quick\n- **Butt kicks** — 20 m\n- **Skips or A-skips** — 20 m, especially worth doing before speed work\n\n**4. Hip openers**\n- **Leg circles / hip rotations** — 8 each direction per leg\n- **Side lunges or Cossack squats** — 8 per side\n\n**5. Ankle and calf prep**\n- Calf raises — 15 reps\n- A few gentle ankle circles per foot (worth it for the impacts of running)\n\n**6. Strides (optional but ideal)**\nFinish with 3–4 relaxed accelerations of ~60–80 m, building to about 80% speed. These prime your nervous system and make the first kilometre feel far smoother.\n\n**What to skip:**\n- Long static stretches before running — holding stretches cold can temporarily reduce muscle power and doesn't prevent injury. Do those after your run instead (forward folds for the hamstrings, calf stretches, quad stretches).\n\nFor your easy Delfshaven commute-distance runs, the warm-up can be shorter; before harder sessions (intervals, or football on Mondays) spend the full 10 minutes and always include the strides.",
+   "ok": null
+  },
+  {
+   "text": "Where does my mother live?",
+   "reply": "Your mother lives in **Ankara**, Turkey — you visit her twice a year. (Incidentally, İzmir, your wedding venue next June, is much closer to Ankara than Rotterdam is, which will make her travel easier.)",
+   "ok": true
+  },
+  {
+   "text": "Summarise what you know about my personal life.",
+   "reply": "Here's what I know about your personal life, Noor:\n\n**Partner & family**\n- **Elif** — your partner (fiancée now), a pediatric nurse at Erasmus MC. You two are getting **married next June in İzmir**.\n- **Your mother** — lives in **Ankara**; you visit her twice a year.\n- **Miso** — your cat, who is **deaf**.\n\n**Home & city**\n- Based in **Rotterdam**; you bike **40 minutes** to your studio in Delfshaven (moved from Katendrecht).\n\n**Health & habits**\n- Allergic to **shellfish** (crustaceans and mollusks).\n- Friday nights... rather, **Fridays off** for sketching — no client calls.\n- Play **five-a-side football on Monday nights**.\n- Training for the **Rotterdam half marathon in October**.\n- Drive an **old red Volvo**, used only for site visits.\n\n**Practical bits**\n- Bank with **Bunq** for the business account; laptop is a ThinkPad (no Macs).\n- Speak Dutch, Turkish, and English — French is \"terrible\" by your own account.\n\nAnything to update or add?",
+   "ok": true
+  },
+  {
+   "text": "How does a heat pump work, briefly?",
+   "reply": "A heat pump doesn't generate heat — it **moves existing heat** from one place to another, using a refrigerant and a compressor. Same principle as a fridge, but in reverse (heating your home instead of cooling its interior).\n\n**The cycle, briefly:**\n1. **Evaporator** — a refrigerant absorbs heat from a source (outside air, ground, or water), even in cold weather, and boils into a gas.\n2. **Compressor** — the gas is compressed, which raises its temperature dramatically.\n3. **Condenser** — that heat is released into your home (via underfloor heating, radiators, or air), and the refrigerant cools back into a liquid.\n4. **Expansion valve** — pressure drops, the refrigerant chills, and the cycle repeats.\n\n**Why it's efficient:** you get 3–4 kWh of heat for every 1 kWh of electricity used (a \"COP\" of 3–4), because most of the energy is harvested free from the environment. Compare that to a gas boiler at ~0.9.\n\nArchitecturally relevant: heat pumps pair perfectly with well-insulated, airtight buildings — like passive houses — because they deliver heat at lower temperatures (35–55°C), which suits underfloor heating and low-temperature radiators rather than old-style hot radiators.",
+   "ok": null
+  },
+  {
+   "text": "Which modelling tools do I use?",
+   "reply": "You use **Rhino and Revit** for modelling — and you never use SketchUp.",
+   "ok": true
+  },
+  {
+   "text": "When is the Hout Hof hearing now?",
+   "reply": "The Hout Hof planning permission hearing is now on **2 October** — it was postponed from the original date of 14 September.\n\nWorth double-checking whether the written response deadlines (for any objections) also shifted with the new date, as those sometimes stay tied to the original schedule.",
+   "ok": true
+  },
+  {
+   "text": "What's the Dutch word for a cat?",
+   "reply": "The Dutch word for a cat is **kat** (pronounced roughly like \"cut\" with a longer 'a').\n\nA few related words:\n- ** poes** — specifically a female cat, but also used affectionately like \"pussycat\"\n- ** kitten** — a kitten\n- ** kater** — a tomcat (and amusingly, also the word for \"hangover\")\n\nSo Miso is a *kat* — though with her deafness, hand signals rather than voice commands are what she'll respond to!",
+   "ok": null
+  },
+  {
+   "text": "Which day do I keep free of client calls?",
+   "reply": "You keep **Fridays** free of client calls — you take Fridays off to sketch, and Daan fields any Woonstad or Brood & Zo queries that day.",
+   "ok": true
+  },
+  {
+   "text": "Which night is football now?",
+   "reply": "Football is now on **Monday nights** — you moved it from Thursdays a while back.\n\nOne thing to keep in mind: if the Hout Hof hearing or any related meetings land on a Monday, don't stack them with football.",
+   "ok": true
+  },
+  {
+   "text": "How do I convert square feet to square metres?",
+   "reply": "To convert **square feet to square metres**, multiply by **0.0929** (or, equivalently, divide by 10.764).\n\n**Formula:**\nm² = ft² × 0.0929\n\n**Examples:**\n- 100 ft² ≈ 9.29 m²\n- 500 ft² ≈ 46.5 m²\n- 1,000 ft² ≈ 92.9 m²\n\n**To go the other way:**\nft² = m² × 10.764\n(e.g., 50 m² ≈ 538 ft²)\n\n**Handy mental shortcut:** 10 ft² ≈ 1 m² (slightly over, since it's really 10.76). So a 1,200 ft² apartment is roughly 111 m² — good for quick estimates when skimming US/UK plans.\n\nFor the reverse direction, remembering \"1 m² ≈ 10.8 ft²\" is usually easier than doing the decimal multiplication.\n\nIf you ever need it for Bram's paperwork or Dutch permits, everything there will be in m² — worth double-checking any imperial figures before they enter a submission like the Hout Hof documents.",
+   "ok": null
+  },
+  {
+   "text": "What's my favourite building?",
+   "reply": "Your favourite building is the **Van Nelle Factory** (Van Nellefabriek) — the modernist icon in Rotterdam, designed by Brinkman & Van der Vlugt and completed in 1931. It became a UNESCO World Heritage Site in 2014, and it's practically on your doorstep, making great Friday sketching material.",
+   "ok": true
+  },
+  {
+   "text": "Give me a one-paragraph profile of me.",
+   "reply": "You're Noor, a freelance architect based in Rotterdam, where you run **Kade Studio** in the Delfshaven district (after relocating from Katendrecht). Your biggest client is the housing corporation Woonstad — billed at €110/hour — for whom you're working on **Hout Hof**, a 120-unit timber housing block whose planning hearing is set for 2 October; a smaller client, the bakery Brood & Zo, wants a new shopfront. You work in Rhino and Revit (never SketchUp), with your full-time assistant Daan, who's studying architecture at TU Delft, and your accountant Bram handles your taxes, due at the end of April. On the personal side, you're engaged to Elif, a pediatric nurse at Erasmus MC, with a June wedding planned in İzmir; your mother lives in Ankara and you visit her twice a year, and your cat Miso is deaf. You're allergic to shellfish, bike 40 minutes to the studio each way, drive an old red Volvo only for site visits, play five-a-side football on Monday nights, and are training for the Rotterdam half marathon in October — all while keeping Fridays call-free for sketching, banking through Bunq, working on a ThinkPad, and speaking Dutch, Turkish, and English, with a deep fondness for the Van Nelle Factory.",
+   "ok": true
+  },
+  {
+   "text": "Which is heavier, a litre of water or a litre of oil?",
+   "reply": "A **litre of water** is heavier.\n\n- **Water:** ~1.00 kg per litre\n- **Cooking oil:** ~0.91–0.93 kg per litre (most oils float on water, which is the everyday proof — oil sits on top in a salad dressing bottle or on a puddle)\n\nThe reason: oil molecules (long hydrocarbon chains) are less densely packed than water molecules, which form tight hydrogen-bonded structures. Same volume, less mass.\n\nSo if you drop them both on the studio floor, the water pool and the oil pool will skip the argument and sort themselves out — oil always floats on top.",
+   "ok": null
+  },
+  {
+   "text": "How long is my cycle to the studio now?",
+   "reply": "Your cycle to the studio is now **40 minutes** each way — it went up from 25 minutes when you moved Kade Studio from Katendrecht to Delfshaven.",
+   "ok": true
+  },
+  {
+   "text": "What's my current hourly rate for Woonstad?",
+   "reply": "Your current rate for Woonstad is **€110 per hour** — they agreed to an increase from your previous rate of €95.",
+   "ok": true
+  },
+  {
+   "text": "Explain what an acoustic rating for a wall means.",
+   "reply": "An **acoustic rating** measures how well a wall (or floor) blocks sound passing through it — expressed in **decibels (dB)**. The higher the number, the better the insulation.\n\n**The key figures you'll encounter (especially relevant for Hout Hof):**\n\n- **Rw (Weighted Sound Reduction Index)** — lab-measured rating of how much sound a building element attenuates. A wall with **Rw 50 dB** reduces a 60 dB source on one side to roughly 10 dB perceived on the other (simplistically). Ordinary speech through a normal solid wall (Rw ~45–50) becomes unintelligible; through a lightweight partition (Rw ~30–35) you'll hear murmurs clearly.\n\n- **Rw + C / Rw + Ctr** — informed ratings. **C** corrects for high-frequency sounds (voices, TV), **Ctr** for low-frequency ones (music bass, traffic). Ctr matters a lot for party walls near roads.\n\n- **DnT,w / DnT,A** — the *field-measured* equivalent, done on site in the actual building. Accounts for flanking transmission (sound bypassing the wall via floors, junctions, ducts) — which is why site results are almost always a few dB worse than lab figures.\n\n**What determines the rating:**\n- **Mass** — heavier walls block more (the mass law: doubling weight gains ~6 dB)\n- **Isolation** — disconnected or decoupled layers resist vibration transfer\n- **Airtightness** — even small gaps wreck performance; a 1% opening can cut a wall's rating dramatically\n- **Multi-layer construction** — double-leaf walls with thickness/absorption beat solid ones of equal mass\n\n**The timber tension:** this is a genuine design challenge at Hout Hof — CLT walls are light compared to concrete/masonry, so mass alone won't do the work. Good timber party walls achieve high ratings through **double-leaf build-ups** (two CLT panels separated by a cavity with mineral wool, ideally statically decoupled) rather than sheer weight. And if objections at the hearing mention noise between units, this build-up — plus the fact that light floors also need attention for impact sound — is exactly what you'd be explaining to the commissie.\n\nIn Dutch building code terms, this ties into the **Bouwbesluit/omgevingswet requirements** for sound insulation between dwellings (typically ~DnT,w 50 dB party walls converted from Rw requirements).",
+   "ok": null
+  },
+  {
+   "text": "Where and when is the wedding?",
+   "reply": "Your wedding is in **İzmir, Turkey, next June** — you and Elif are getting married there.\n\nA few things from your list that tie in: it's much closer to Ankara than Rotterdam, so your mother's travel will be easy, and it's worth sending save-the-dates early since June is peak season (guests like Elif's Erasmus MC colleagues will be flying via Istanbul). The civil paperwork (certificate of no impediment, apostille) also takes time, so starting that early is smart.",
+   "ok": false
+  },
+  {
+   "text": "Who does my taxes?",
+   "reply": "Your taxes are handled by **Bram**, your accountant — with the filing deadline at the **end of April**.",
+   "ok": true
+  },
+  {
+   "text": "What's the plural of 'moose'?",
+   "reply": "The plural of \"moose\" is simply **moose** — it doesn't take an \"s\" or change form:\n\n- one moose, two moose, three moose...\n\nThis is because \"moose\" comes from an **Algonquian language** (likely Eastern Abenaki *moz* or Narragansett *moos*), not from Latin or Greek, so it never picked up English plural conventions. It's a bit of a linguistic orphan — unlike:\n\n- **Latin plurals:** one goose → geese (Germanic), but one *cactus* → *cacti*\n- **Unchanged animal nouns:** moose joins the likes of *sheep*, *deer*, *salmon*, *bison*, and *swine* — mostly animals that were familiar food/game sources in Old English, though moose was a later borrowing that just followed the pattern.\n\nFun British aside: in the UK, \"moose\" is often called an **elk** (the European analogue, *Alces alces*), which causes confusion with the North American *Alces americanus* — and neither should be confused with a *reindeer* (caribou).\n\nSo: never \"meese\" — though that's a running joke precisely because \"goose/geese\" invites it.",
+   "ok": null
+  },
+  {
+   "text": "Where is Daan studying?",
+   "reply": "Daan is studying for his architecture master's at **TU Delft** — while working full-time, five days a week, at Kade Studio.",
+   "ok": true
+  },
+  {
+   "text": "What laptop do I use?",
+   "reply": "You use a **ThinkPad** — and you've made it clear you refuse to use a Mac.",
+   "ok": true
+  },
+  {
+   "text": "Any idea why my sourdough is so dense?",
+   "reply": "Dense sourdough usually comes down to a few common culprits:\n\n**1. Underproofing (the most common cause)**\nBulk fermentation wasn't long enough, so there wasn't enough gas produced or gluten development. Sourdough is slow — bulk ferment can take 4–8+ hours depending on temperature. Look for the dough to roughly **increase by 50–75%**, feel airy and jiggly, and pull away from the bowl edges — not just a fixed number of hours.\n\n**2. Weak or sluggish starter**\nIf your starter isn't reliably doubling in 4–6 hours after feeding, it hasn't got the power. Feed it 2–3 times before baking day, and use it at its **peak**, not before or after. A starter kept in the fridge often needs several feedings to bounce back.\n\n**3. Temperature**\nCold kitchens slow everything down dramatically. In a cool Dutch spring/autumn house, dough may need much longer — or prove somewhere warmer (oven with the light on, near a radiator). Conversely, dough that gets too warm can overprove and collapse, which also gives dense bread.\n\n**4. Overproofing**\nThe reversal: if the dough rises too long, it deflates, the structure collapses, and you get a flat, dense loaf. The poke test helps: a slow spring-back with a slight indent = ready.\n\n**5. Shaping and handling**\nDegassing the dough too aggressively during shaping (especially after a gentle gentle bulk) squeezes out the air. Handle gently, and build surface tension during shaping.\n\n**6. Weak flour or too little water**\nLow-protein flour can't hold gas well — use bread flour (~12%+ protein). Also, very slack doughs that aren't built strength (via folds during bulk) collapse into density.\n\n**7. Cutting before it's cooled**\nSlice too early and the interior sets gummy/dense — wait until fully cooled, ideally a few hours.\n\n**Quick diagnostic for next bake:** if the crust looked fine but the crumb was tight and heavy throughout, it's almost certainly underproofed; if the loaf was flat and spread out, likely overproofed or a weak starter.\n\nOne nice side effect: with half marathon training on Monday football nights and 40-minute commutes, a long slow bulk overnight in a cool spot actually suits a busy architect's schedule well. Want a simple starter-revival or schedule plan?",
+   "ok": null
+  }
+ ]
+}

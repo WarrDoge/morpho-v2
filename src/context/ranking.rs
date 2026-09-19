@@ -1,10 +1,12 @@
 //! score = relevance × importance × recency × confidence × reinforcement (SPEC §15).
+//! Reinforcement = (1 + ln1p(access_count)) × 2(1 + successes)/(2 + successes + failures).
 
 use chrono::{DateTime, Utc};
 use serde_json::Value;
 
 use crate::pyfmt::{Row, dt_of};
 
+/// Replay-compatible decay uses whole days and an e-folding time despite the parameter name.
 pub fn recency_factor(row: &Row, now: &DateTime<Utc>, half_life_days: f64) -> f64 {
     let reference = dt_of(row.get("last_reinforced_at"))
         .or_else(|| dt_of(row.get("created_at")))
@@ -20,7 +22,9 @@ fn f(row: &Row, k: &str, default: f64) -> f64 {
 pub fn score(row: &Row, relevance: f64, now: &DateTime<Utc>, half_life_days: f64) -> f64 {
     let importance = f(row, "importance", 1.0);
     let confidence = f(row, "confidence", 1.0);
-    let reinforcement = 1.0 + f(row, "access_count", 0.0).ln_1p();
+    let (successes, failures) = (f(row, "successes", 0.0), f(row, "failures", 0.0));
+    let credit = 2.0 * (1.0 + successes) / (2.0 + successes + failures);
+    let reinforcement = (1.0 + f(row, "access_count", 0.0).ln_1p()) * credit;
     relevance * importance * recency_factor(row, now, half_life_days) * confidence * reinforcement
 }
 

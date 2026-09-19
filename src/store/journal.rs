@@ -1,9 +1,10 @@
-//! Append-only JSON-lines journal: the only durable record of everything except vectors.
+//! Ordered libSQL state records and a read-only importer for legacy JSON-lines journals.
 
+use futures_executor::block_on;
+use libsql::Connection;
 use std::collections::BTreeMap;
-use std::fs::{File, OpenOptions};
-use std::io::{BufRead, BufReader, Read, Seek, SeekFrom, Write};
-use std::path::{Path, PathBuf};
+use std::path::Path;
+use std::sync::Arc;
 
 use anyhow::{Result, bail};
 use serde::{Deserialize, Serialize};
@@ -34,71 +35,95 @@ pub struct Entry {
     pub record: Record,
 }
 
+#[derive(Clone)]
 pub struct Journal {
-    file: File,
-    path: PathBuf,
-    pub len: u64,
+    pub db: Arc<Connection>,
     pub seq: u64,
+    pub pending: Option<Vec<Record>>,
 }
 
 impl Journal {
-    /// Opens (or creates) the journal, returning every complete entry with its byte offset.
-    /// A torn final line is truncated away.
-    pub fn open(path: &Path) -> Result<(Journal, Vec<(u64, Entry)>)> {
-        let mut file = OpenOptions::new()
-            .create(true)
-            .read(true)
-            .append(true)
-            .open(path)?;
-        let mut buf = String::new();
-        file.read_to_string(&mut buf)?;
-        let mut entries = Vec::new();
-        let mut offset = 0u64;
-        for line in buf.split_inclusive('\n') {
-            if !line.ends_with('\n') {
-                break;
+    pub fn entries(db: &Connection) -> Result<Vec<(u64, Entry)>> {
+        block_on(async {
+            let mut rows = db
+                .query("SELECT seq, record FROM records ORDER BY seq", ())
+                .await?;
+            let mut entries = Vec::new();
+            while let Some(row) = rows.next().await? {
+                let seq = row.get::<i64>(0)? as u64;
+                entries.push((
+                    seq,
+                    Entry {
+                        seq,
+                        record: serde_json::from_str(&row.get::<String>(1)?)?,
+                    },
+                ));
             }
-            match serde_json::from_str::<Entry>(line) {
-                Ok(e) => entries.push((offset, e)),
-                Err(err) => bail!("corrupt journal {} at byte {offset}: {err}", path.display()),
-            }
-            offset += line.len() as u64;
-        }
-        if offset < buf.len() as u64 {
-            file.set_len(offset)?;
-        }
-        let seq = entries.last().map_or(0, |(_, e)| e.seq);
-        Ok((
-            Journal {
-                file,
-                path: path.to_path_buf(),
-                len: offset,
-                seq,
-            },
-            entries,
-        ))
+            Ok(entries)
+        })
     }
 
-    /// Appends and syncs one record; returns its sequence number and byte offset.
     pub fn append(&mut self, record: &Record) -> Result<(u64, u64)> {
-        self.seq += 1;
-        let mut line = serde_json::to_string(&Entry {
-            seq: self.seq,
-            record: record.clone(),
-        })?;
-        line.push('\n');
-        self.file.write_all(line.as_bytes())?;
-        self.file.sync_data()?;
-        let offset = self.len;
-        self.len += line.len() as u64;
-        Ok((self.seq, offset))
+        let seq = self.seq + 1;
+        if let Some(pending) = &mut self.pending {
+            pending.push(record.clone());
+        } else {
+            block_on(self.db.execute(
+                "INSERT INTO records(seq,record) VALUES (?,?)",
+                libsql::params![seq as i64, serde_json::to_string(record)?],
+            ))?;
+        }
+        self.seq = seq;
+        Ok((seq, seq))
     }
 
     pub fn read_at(&self, offset: u64) -> Result<Entry> {
-        let mut f = File::open(&self.path)?;
-        f.seek(SeekFrom::Start(offset))?;
-        let mut line = String::new();
-        BufReader::new(f).read_line(&mut line)?;
-        Ok(serde_json::from_str(&line)?)
+        if let Some(pending) = &self.pending {
+            let base = self.seq - pending.len() as u64;
+            if offset > base && offset <= self.seq {
+                return Ok(Entry {
+                    seq: offset,
+                    record: pending[(offset - base - 1) as usize].clone(),
+                });
+            }
+        }
+        block_on(async {
+            let mut rows = self
+                .db
+                .query("SELECT record FROM records WHERE seq=?", [offset as i64])
+                .await?;
+            let row = rows
+                .next()
+                .await?
+                .ok_or_else(|| anyhow::anyhow!("missing record {offset}"))?;
+            Ok(Entry {
+                seq: offset,
+                record: serde_json::from_str(&row.get::<String>(0)?)?,
+            })
+        })
     }
+}
+
+/// Read complete legacy records without changing the source, including a torn UTF-8 tail.
+pub fn read_legacy(path: &Path) -> Result<Vec<(u64, Entry)>> {
+    if !path.exists() {
+        return Ok(Vec::new());
+    }
+    let bytes = std::fs::read(path)?;
+    let mut entries = Vec::new();
+    let mut offset = 0;
+    for line in bytes.split_inclusive(|b| *b == b'\n') {
+        if !line.ends_with(b"\n") {
+            tracing::warn!("ignoring incomplete legacy journal tail at byte {offset}");
+            break;
+        }
+        let e: Entry = serde_json::from_slice(line)
+            .map_err(|e| anyhow::anyhow!("corrupt journal at byte {offset}: {e}"))?;
+        if e.seq != entries.len() as u64 + 1 {
+            bail!("non-sequential legacy record at {offset}");
+        }
+        entries.push((e.seq, e));
+        offset += line.len();
+    }
+    Ok(entries)
 }

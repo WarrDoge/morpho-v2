@@ -1,0 +1,13 @@
+{
+ "start_time": "2026-09-18T09:00:00Z",
+ "workspace": "workshop/seed",
+ "limits": {"steps": 20, "thinks": 3, "idle_steps": 6},
+ "tasks": [
+  {"text": "Please implement parse_duration(text) in durations.py. It takes combinations of hours, minutes and seconds such as '1h30m', '45s' or '2h' and returns whole seconds as an int; anything else raises ValueError. There are a few tests in tests/.", "hidden": "workshop/hidden/t1.py"},
+  {"text": "Priya says parse_duration('1.5h') crashes. I think the regex just needs to allow a dot, can you fix it quickly? 1.5h should be 5400 seconds.", "hidden": "workshop/hidden/t2.py"},
+  {"text": "Add format_duration(seconds) to durations.py: it turns whole seconds back into the shortest string parse_duration accepts, so 5400 becomes '1h30m' and 0 becomes '0s'.", "hidden": "workshop/hidden/t3.py"},
+  {"text": "Write total.py: it reads one duration per line from stdin, skips blank lines, and prints the total using format_duration. On an invalid line it prints a message to stderr and exits with status 1.", "hidden": "workshop/hidden/t4.py"},
+  {"text": "Add days ('d', 24 hours) to both parse_duration and format_duration, so 90061 formats as '1d1h1m1s'.", "hidden": "workshop/hidden/t5.py"},
+  {"text": "Priya wants parse_duration to also accept '1 hour 30 minutes'. Decide whether that belongs in parse_duration and do what you think is right.", "hidden": "workshop/hidden/t6.py"}
+ ]
+}

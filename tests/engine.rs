@@ -192,3 +192,131 @@ fn decay_is_episodic_only_and_age_based() {
     assert_eq!(out[0].target.as_deref(), Some("mem_episodic"));
     assert_eq!(out[0].payload["status"], "archived");
 }
+
+#[tokio::test]
+async fn similar_vectors_do_not_merge_distinct_claims_and_unknown_evidence_is_rejected() {
+    let svc = services("distinct-claims");
+    let eid = event(&svc, "Alice and Bob");
+    let p = |text: &str, evidence: &str| {
+        Proposal::new("interaction", "create_belief", json!({"proposition":text}))
+            .evidence(vec![evidence.into()])
+    };
+    // Same bag of words / identical fake embeddings, but different subject and object.
+    assert!(one(&svc, p("Alice trusts Bob", &eid)).await.accepted);
+    assert!(one(&svc, p("Bob trusts Alice", &eid)).await.accepted);
+    assert_eq!(
+        svc.store.lock().unwrap().state.table("beliefs").rows.len(),
+        2
+    );
+    let result = one(&svc, p("unfounded claim", "evt_missing")).await;
+    assert!(!result.accepted);
+    assert_eq!(
+        result.reason.as_deref(),
+        Some("unknown evidence: evt_missing")
+    );
+}
+
+#[tokio::test]
+async fn cited_supporting_and_contradicting_ids_must_exist() {
+    let svc = services("cited-ids");
+    let eid = event(&svc, "Trains beat planes for short trips.");
+    let create = Proposal::new(
+        "interaction",
+        "create_trait",
+        json!({"kind":"stance","statement":"Trains beat planes.","confidence":0.8}),
+    )
+    .evidence(vec![eid.clone()]);
+    let id = one(&svc, create).await.object_ids.remove(0);
+    let cite = |payload: serde_json::Value| {
+        Proposal::new("interaction", "update_trait", payload)
+            .target(&id)
+            .evidence(vec![eid.clone()])
+    };
+    let result = one(&svc, cite(json!({"add_contradicting":["evt_missing"]}))).await;
+    assert!(!result.accepted);
+    assert_eq!(
+        result.reason.as_deref(),
+        Some("unknown evidence: evt_missing")
+    );
+    assert!(
+        one(&svc, cite(json!({"add_contradicting":[eid.clone()]})))
+            .await
+            .accepted
+    );
+}
+
+#[tokio::test]
+async fn flat_state_patches_preserve_version_and_permission_guards() {
+    let svc = services("flat-patch");
+    let eid = event(&svc, "flat input");
+    let p = Proposal::new(
+        "interaction",
+        "set_working_state",
+        json!({"current_topic":"flat input","expected_version":1}),
+    )
+    .evidence(vec![eid.clone()]);
+    assert!(one(&svc, p.clone()).await.accepted);
+    assert!(!one(&svc, p).await.accepted);
+    assert_eq!(
+        svc.store.lock().unwrap().state.working["data"]["current_topic"],
+        "flat input"
+    );
+    assert!(
+        !svc.store.lock().unwrap().state.working["data"]
+            .as_object()
+            .unwrap()
+            .contains_key("expected_version")
+    );
+    let p = Proposal::new(
+        "interaction",
+        "update_self_state",
+        json!({"capabilities":["root"]}),
+    )
+    .evidence(vec![eid]);
+    assert!(!one(&svc, p).await.accepted);
+}
+
+#[tokio::test]
+async fn entity_attribute_updates_resolve_existing_targets() {
+    let svc = services("entity-update");
+    let eid = event(&svc, "Nimbus has an office in Berlin");
+    let proposal = |payload| {
+        Proposal::new("interaction", "upsert_entity", payload).evidence(vec![eid.clone()])
+    };
+    let id = one(
+        &svc,
+        proposal(json!({"name":"Nimbus", "kind":"organization", "attributes":{"sector":"cloud"}})),
+    )
+    .await
+    .object_ids
+    .remove(0);
+    for target in ["Nimbus", id.as_str()] {
+        assert!(
+            one(
+                &svc,
+                proposal(json!({"attributes":{"office_location":"Berlin"}})).target(target)
+            )
+            .await
+            .accepted
+        );
+    }
+    assert!(!one(&svc, proposal(json!({"attributes":{}}))).await.accepted);
+    assert!(
+        !one(&svc, proposal(json!({"attributes":{}})).target("unknown"))
+            .await
+            .accepted
+    );
+    assert!(
+        !one(&svc, proposal(json!({"name":"Other"})).target(&id))
+            .await
+            .accepted
+    );
+    let st = svc.store.lock().unwrap();
+    let entity = st.state.get("entities", &id).unwrap();
+    assert_eq!(entity["kind"], "organization");
+    assert_eq!(
+        entity["attributes"],
+        json!({"sector":"cloud","office_location":"Berlin"})
+    );
+    assert_eq!(st.state.list_rows("entities", None, 100).len(), 1);
+}

@@ -1,0 +1,75 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/02/03 (Fri) 03:08] I'm thinking of organizing my shoe collection and I was wondering if you could help me with some shoe care tips, specifically on how to clean my sneakers and boots. By the way, I recently got a new pair of Adidas running shoes on January 10th, and I want to make sure I take good care of them.",
+   "session": "answer_5e3eeb12_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm also looking for a good cobbler to fix my brown leather boots that I wore to the office party on February 5th. I think I might have scuffed them on the dance floor. Do you have any recommendations or tips on how to find a good cobbler?",
+   "session": "answer_5e3eeb12_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'd also like to know more about leather conditioning and waterproofing for my boots. Do you have any recommendations for good products or methods? And by the way, I spent $80 on my Adidas running shoes, which was a bit more than I had budgeted, but I really liked the design.",
+   "session": "answer_5e3eeb12_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm also thinking of getting my sneakers cleaned, I wore them to play basketball with friends on February 1st and they got really dirty. I've been meaning to take them to the shoe cleaning place near my house, but I haven't had the time. Do you have any recommendations on how to clean sneakers at home, or should I just take them to a professional?",
+   "session": "answer_5e3eeb12_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll try cleaning my sneakers at home first, but if the stains are really tough, I might take them to a professional. By the way, my sister and I had a great time at the outlet mall on January 10th when I bought my new Adidas running shoes.",
+   "session": "answer_5e3eeb12_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I think I'll also ask my colleague Rachel about the new shoe brand she was telling me about at the office party on February 5th. She said they had some really nice black stilettos, and I've been wanting to check them out.",
+   "session": "answer_5e3eeb12_1",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/02/03 (Fri) 23:38] I'm looking for some shoe cleaning tips. I've got a pair of sneakers that I wore to play basketball on February 1st and they got pretty dirty. By the way, speaking of shoes, I realized that one of the shoelaces on my old Converse sneakers had broken on January 24th, so I had to replace it.",
+   "session": "answer_5e3eeb12_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been meaning to take them to the shoe cleaning place near my house, but I haven't had the time. Do you know if they can also clean my brown leather boots that I scuffed at the office party on February 5th? I need to get them polished and fixed too.",
+   "session": "answer_5e3eeb12_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I've also been thinking about buying a new pair of sandals for the upcoming summer. I've been eyeing this pair of Tevas online, but I'm not sure if I want to spend $120 on them. Do you think it's worth it?",
+   "session": "answer_5e3eeb12_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been meaning to check out that new shoe brand my colleague Rachel told me about. She was wearing these really nice black stilettos at the office party on February 5th and I've been wanting to take a look at their store. Do you know if they have any online reviews or ratings I can check out?",
+   "session": "answer_5e3eeb12_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I realized I've been meaning to get my favorite pair of Vans back to their original shape. I lent them to my brother when he came to visit last month, and when he returned them on February 10th, I noticed they were a bit tighter than I remembered. I think he might have stretched them out or something. Do you have any tips on how to restore them to their original fit?",
+   "session": "answer_5e3eeb12_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm going to try the shoe trees and stuffing them with paper first and see how that goes. Do you think I should also consider taking them to a cobbler to see if they can help restore them to their original shape?",
+   "session": "answer_5e3eeb12_2",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/02/03 (Fri) 23:24] How many days had passed since I bought my Adidas running shoes when I realized one of the shoelaces on my old Converse sneakers had broken?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"14 days. 15 days (including the last day) is also acceptable.\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    0,
+    6
+   ]
+  }
+ ]
+}

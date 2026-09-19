@@ -1,0 +1,36 @@
+{
+ "start_time": "2026-09-25T09:00:00Z",
+ "workspace": "workshop-memory/seed",
+ "limits": {
+  "steps": 20,
+  "thinks": 3,
+  "idle_steps": 6
+ },
+ "tasks": [
+  {
+   "text": "Please implement parse_entry(line) in src/timesheet/entries.py. A line looks like '2026-09-18 09:00-10:30 review': a date, a start and end time and a task name of one or more words. It returns a dict with date, start and end as strings, minutes as an int, and task; anything malformed raises ValueError. By the way, Priya opens every export in a German-locale Excel, so any CSV we ever write for her uses ';' between fields and a decimal comma.",
+   "hidden": "workshop-memory/hidden/t1.py"
+  },
+  {
+   "text": "Priya logged '2026-09-18 23:30-01:00 deploy' and got negative minutes. Please fix it: that entry is 90 minutes.",
+   "hidden": "workshop-memory/hidden/t2.py"
+  },
+  {
+   "text": "Add total_hours(entries) to src/timesheet/entries.py: the total of a list of parsed entries in hours, as a float rounded to 2 decimals.",
+   "hidden": "workshop-memory/hidden/t3.py"
+  },
+  {
+   "text": "Add summarize(entries): a dict that maps each task to its total hours, rounded to 2 decimals.",
+   "hidden": "workshop-memory/hidden/t4.py"
+  },
+  {
+   "text": "Add export_csv(entries, path) to src/timesheet/entries.py for Priya: it writes one row per entry with the date, the task and the hours.",
+   "hidden": "workshop-memory/hidden/t5.py",
+   "metric": "csv_convention"
+  },
+  {
+   "text": "Priya pastes lines with spaces around them, like '  2026-09-18 09:00-10:30 review  ', and they are rejected. Accept surrounding whitespace, but keep rejecting everything else.",
+   "hidden": "workshop-memory/hidden/t6.py"
+  }
+ ]
+}

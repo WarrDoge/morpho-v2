@@ -6,19 +6,23 @@ use std::collections::{BTreeMap, HashMap};
 use anyhow::Result;
 use serde_json::{Value, json};
 
-use crate::config::settings;
 use crate::llm::Llm;
-use crate::pyfmt::{Row, iso, now};
+use crate::pyfmt::{Row, iso, now, round4};
 use crate::state::models::{self as m, Payload, Proposal, strings, union};
 use crate::store::{Commit, Record, Shared, Store, obj};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, serde::Serialize)]
 pub struct CommitResult {
     pub proposal_id: String,
     pub accepted: bool,
     pub reason: Option<String>,
     pub object_ids: Vec<String>,
 }
+
+/// One contrary observation moves a disposition at most this far.
+const TRAIT_MAX_STEP: f64 = 0.25;
+/// A new trait this close to a live one restates it.
+const TRAIT_FOLD_COS: f64 = 0.9;
 
 struct Transition {
     table: &'static str,
@@ -32,6 +36,8 @@ fn embed_field(op: &str) -> Option<&'static str> {
     match op {
         "create_memory" | "update_memory" | "merge_memories" => Some("summary"),
         "create_belief" => Some("proposition"),
+        "create_trait" | "update_trait" => Some("statement"),
+        "create_journal" => Some("entry"),
         _ => None,
     }
 }
@@ -103,6 +109,8 @@ fn load(
     Ok(row.clone())
 }
 
+#[tracing::instrument(name = "commit", skip_all, fields(proposals = proposals.len(),
+    accepted = tracing::field::Empty, rejected = tracing::field::Empty))]
 pub async fn commit(
     store: &Shared,
     llm: &Llm,
@@ -112,6 +120,7 @@ pub async fn commit(
     let texts: Vec<(usize, String)> = proposals
         .iter()
         .enumerate()
+        .filter(|(_, p)| validate(p).is_ok())
         .filter_map(|(i, p)| embed_text(p).map(|t| (i, t)))
         .collect();
     let mut embs: HashMap<usize, Vec<f32>> = HashMap::new();
@@ -121,11 +130,46 @@ pub async fn commit(
             .await?;
         embs = texts.iter().map(|(i, _)| *i).zip(vecs).collect();
     }
+    let mut st = store.lock().unwrap();
+    let mut staged = st.fork();
     let mut out = Vec::with_capacity(proposals.len());
     for (i, p) in proposals.iter().enumerate() {
-        out.push(commit_one(store, llm, p, source_event, embs.remove(&i)).await?);
+        let pid = staged.ids.next("prop");
+        let source = events_of(p)
+            .into_iter()
+            .next()
+            .or_else(|| source_event.map(String::from));
+        out.push(commit_locked(
+            &mut staged,
+            pid,
+            p,
+            source,
+            validate(p),
+            embs.remove(&i),
+        )?);
     }
+    st.publish(staged, None)?;
+    report(proposals, &out);
     Ok(out)
+}
+
+fn report(proposals: &[Proposal], results: &[CommitResult]) {
+    let span = tracing::Span::current();
+    span.record(
+        "accepted",
+        results.iter().filter(|r| r.accepted).count() as u64,
+    );
+    span.record(
+        "rejected",
+        results.iter().filter(|r| !r.accepted).count() as u64,
+    );
+    for (p, r) in proposals.iter().zip(results) {
+        if !r.accepted {
+            tracing::info!(agent = %p.agent, operation = %p.operation,
+                reason = r.reason.as_deref().unwrap_or(""), "rejected");
+        }
+        crate::telemetry::record_change(&p.agent, &p.operation, r.accepted);
+    }
 }
 
 pub async fn commit_one(
@@ -135,18 +179,21 @@ pub async fn commit_one(
     source_event: Option<&str>,
     emb: Option<Vec<f32>>,
 ) -> Result<CommitResult> {
-    let pid = store.lock().unwrap().ids.next("prop");
-    let source_event = events_of(p)
+    let emb = match (emb, embed_text(p)) {
+        (None, Some(text)) => Some(llm.embed(&[text]).await?.remove(0)),
+        (emb, _) => emb,
+    };
+    let mut st = store.lock().unwrap();
+    let mut staged = st.fork();
+    let pid = staged.ids.next("prop");
+    let source = events_of(p)
         .into_iter()
         .next()
         .or_else(|| source_event.map(String::from));
-    let validated = validate(p);
-    let emb = match (&validated, emb, embed_text(p)) {
-        (Ok(_), None, Some(t)) => Some(llm.embed(&[t]).await?.remove(0)),
-        (_, e, _) => e,
-    };
-    let mut st = store.lock().unwrap();
-    commit_locked(&mut st, pid, p, source_event, validated, emb)
+    let result = commit_locked(&mut staged, pid, p, source, validate(p), emb)?;
+    st.publish(staged, None)?;
+    report(std::slice::from_ref(p), std::slice::from_ref(&result));
+    Ok(result)
 }
 
 fn commit_locked(
@@ -158,7 +205,33 @@ fn commit_locked(
     emb: Option<Vec<f32>>,
 ) -> Result<CommitResult> {
     let created = iso(&now());
-    let outcome = validated.and_then(|payload| apply(st, p, payload, emb.as_deref()));
+    let outcome = validated.and_then(|payload| {
+        if !p.confidence.is_finite() || !(0.0..=1.0).contains(&p.confidence) {
+            return Err("invalid proposal confidence".into());
+        }
+        let cited: Vec<&String> = match &payload {
+            Payload::UpdateBelief(b) => b
+                .add_supporting
+                .iter()
+                .chain(&b.add_contradicting)
+                .collect(),
+            Payload::UpdateTrait(t) => t
+                .add_supporting
+                .iter()
+                .chain(&t.add_contradicting)
+                .collect(),
+            _ => Vec::new(),
+        };
+        for id in p.evidence.iter().chain(cited) {
+            if st.state.event(id).is_none()
+                && !m::table_for(id).is_some_and(|t| st.state.get(t, id).is_some())
+                && !(id == "decay" && p.agent == "consolidation")
+            {
+                return Err(format!("unknown evidence: {id}"));
+            }
+        }
+        apply(st, p, payload, emb.as_deref())
+    });
     let (decision, reason, transitions, emb) = match outcome {
         Ok((transitions, reason, emb)) => ("accepted", reason, transitions, emb),
         Err(reason) => (
@@ -177,7 +250,7 @@ fn commit_locked(
     let proposal = obj(json!({
         "id": pid, "agent": p.agent, "operation": p.operation, "target": p.target,
         "payload": p.payload, "evidence": p.evidence, "confidence": p.confidence,
-        "decision": decision, "reason": reason, "source_event": source_event, "created_at": created,
+        "decision": decision, "reason": reason, "rationale": p.reason, "source_event": source_event, "created_at": created,
     }));
     let base = st.state.transitions.len() as i64;
     let rows: Vec<Row> = transitions
@@ -208,6 +281,32 @@ fn commit_locked(
 fn validate(p: &Proposal) -> Result<Payload, String> {
     let mut payload = m::parse_payload(&p.operation, &p.payload)?;
     let op = p.operation.as_str();
+    if p.agent == "reflection"
+        && !matches!(
+            op,
+            "update_belief"
+                | "create_belief"
+                | "create_trait"
+                | "update_trait"
+                | "create_goal"
+                | "create_memory"
+                | "set_working_state"
+                | "update_self_state"
+                | "create_prediction"
+                | "verify_prediction"
+                | "update_goal"
+                | "create_journal"
+        )
+    {
+        return Err("operation not allowed during reflection".into());
+    }
+    if op == "set_narrative" && !matches!(p.agent.as_str(), "narrative" | "harness") {
+        return Err("only the narrative agent compiles the narrative".into());
+    }
+    if p.agent != "harness" && p.evidence.is_empty() {
+        return Err("evidence required".into());
+    }
+
     if (op.starts_with("create_")
         || op.starts_with("merge_")
         || op.starts_with("upsert_")
@@ -218,21 +317,82 @@ fn validate(p: &Proposal) -> Result<Payload, String> {
     }
     if matches!(
         op,
-        "update_memory" | "update_belief" | "update_goal" | "verify_prediction"
+        "update_memory" | "update_belief" | "update_trait" | "update_goal" | "verify_prediction"
     ) && p.target.as_deref().unwrap_or("").is_empty()
     {
         return Err("target required".into());
     }
-    if let Payload::CreateGoal(g) = &mut payload
-        && !matches!(p.agent.as_str(), "interaction" | "harness")
-    {
-        g.origin = "inferred".into();
+    if let Payload::CreateGoal(g) = &mut payload {
+        let cites_trait = p.evidence.iter().any(|e| e.starts_with("trait_"));
+        if p.agent == "reflection" {
+            if !cites_trait {
+                return Err("a goal of your own must cite the trait it follows from".into());
+            }
+            g.origin = "self".into();
+        } else if p.agent == "loops" {
+            g.origin = "self".into();
+        } else if !matches!(p.agent.as_str(), "interaction" | "harness") {
+            g.origin = "inferred".into();
+        } else if g.origin == "self" && !cites_trait {
+            return Err("origin self requires a trait in evidence".into());
+        }
     }
     if let Payload::UpdateSelfState(sp) = &payload
         && p.agent != "harness"
         && (sp.patch.contains_key("capabilities") || sp.patch.contains_key("permissions"))
     {
         return Err("self-model may not grant capabilities or permissions".into());
+    }
+    if p.agent != "harness" {
+        if let Payload::UpdateSelfState(patch) = &payload {
+            for (key, value) in &patch.patch {
+                if ![
+                    "limitations",
+                    "commitments",
+                    "recent_actions",
+                    "known_failures",
+                    "uncertainties",
+                    "current_objectives",
+                ]
+                .contains(&key.as_str())
+                {
+                    return Err(format!("unknown self-model field: {key}"));
+                }
+                if !value
+                    .as_array()
+                    .is_some_and(|a| a.len() <= 8 && a.iter().all(Value::is_string))
+                {
+                    return Err(format!("{key}: expected at most eight strings"));
+                }
+            }
+        }
+        if let Payload::SetWorkingState(patch) = &payload {
+            for (key, value) in &patch.patch {
+                let valid = match key.as_str() {
+                    "current_topic" | "current_task" | "mood" => {
+                        value.is_string() || value.is_null()
+                    }
+                    "active_entities" | "open_questions" | "current_constraints" => value
+                        .as_array()
+                        .is_some_and(|a| a.len() <= 10 && a.iter().all(Value::is_string)),
+                    _ => false,
+                };
+                if !valid {
+                    return Err(format!("invalid working-state field: {key}"));
+                }
+            }
+        }
+        if p.agent == "reflection"
+            && serde_json::to_string(&p.payload)
+                .unwrap_or_default()
+                .chars()
+                .count()
+                > 1200
+        {
+            return Err(
+                "reflection payload exceeds 1200 characters; use a smaller partial update".into(),
+            );
+        }
     }
     Ok(payload)
 }
@@ -252,50 +412,97 @@ fn apply<'a>(
     Ok((transitions, reason, emb))
 }
 
-/// Near-duplicate `create_*` becomes an update of the existing row (or a rejection).
+/// Text-identical `create_*` becomes an update of the existing row (or a rejection);
+/// a trait restated in other words folds by embedding.
 fn fold_duplicate<'a>(
     st: &Store,
     p: &'a Proposal,
     payload: Payload,
     emb: Option<&[f32]>,
 ) -> Result<(Cow<'a, Proposal>, Payload, Option<String>), String> {
-    if let Some(emb) = emb.filter(|e| !e.is_empty()) {
-        let fold = match &payload {
-            Payload::CreateMemory(_) => Some(("memories", m::LIVE_MEMORY)),
-            Payload::CreateBelief(_) => Some(("beliefs", m::LIVE_BELIEF)),
-            _ => None,
+    let candidate = match &payload {
+        Payload::CreateMemory(cm) => {
+            Some(("memories", "summary", cm.summary.as_str(), m::LIVE_MEMORY))
+        }
+        Payload::CreateBelief(cb) => Some((
+            "beliefs",
+            "proposition",
+            cb.proposition.as_str(),
+            m::LIVE_BELIEF,
+        )),
+        Payload::CreateTrait(ct) => {
+            Some(("traits", "statement", ct.statement.as_str(), m::LIVE_TRAIT))
+        }
+        _ => None,
+    };
+    let nearest_trait = |emb: &[f32]| {
+        let distances = st.vectors.distances(emb).ok()?;
+        st.state
+            .table("traits")
+            .rows
+            .iter()
+            .filter(|r| m::LIVE_TRAIT.contains(&s(r, "status")))
+            .filter_map(|r| {
+                let d = distances.get(st.state.slots.get(s(r, "id"))?)?;
+                Some((r, 1.0 - d))
+            })
+            .filter(|(_, cos)| *cos >= TRAIT_FOLD_COS)
+            .max_by(|a, b| a.1.total_cmp(&b.1))
+            .map(|(r, _)| r)
+    };
+    let hit = candidate.and_then(|(table, field, text, live)| {
+        st.state
+            .table(table)
+            .rows
+            .iter()
+            .find(|r| {
+                live.contains(&s(r, "status"))
+                    && s(r, field).trim().eq_ignore_ascii_case(text.trim())
+            })
+            .or_else(|| match (&payload, emb) {
+                (Payload::CreateTrait(_), Some(emb)) => nearest_trait(emb),
+                _ => None,
+            })
+    });
+    if let Some(hit) = hit {
+        let hid = s(hit, "id").to_string();
+        let (op, fields) = match &payload {
+            Payload::CreateMemory(cm) => (
+                "update_memory",
+                json!({"reinforce":true,
+                "add_source_events":if cm.source_events.is_empty() {events_of(p)} else {cm.source_events.clone()}, "add_entity_ids":cm.entity_ids}),
+            ),
+            Payload::CreateBelief(cb) => (
+                "update_belief",
+                json!({"confidence":hit["confidence"].as_f64().unwrap_or(0.0).max(cb.confidence),"add_supporting":events_of(p)}),
+            ),
+            Payload::CreateTrait(ct) => (
+                "update_trait",
+                json!({"confidence":hit["confidence"].as_f64().unwrap_or(0.0).max(ct.confidence),"add_supporting":events_of(p)}),
+            ),
+            _ => unreachable!(),
         };
-        if let Some((table, live)) = fold {
-            let hits = st.similar(table, emb, 1, Some(live));
-            if let Some(hit) = hits.first()
-                && hit["relevance"].as_f64().unwrap_or(0.0) >= settings().dedupe_threshold
-            {
-                let hid = s(hit, "id").to_string();
-                let (op, fields) = match &payload {
-                    Payload::CreateMemory(cm) => (
-                        "update_memory",
-                        json!({
-                            "reinforce": true,
-                            "add_source_events": if cm.source_events.is_empty() { events_of(p) } else { cm.source_events.clone() },
-                            "add_entity_ids": cm.entity_ids,
-                        }),
-                    ),
-                    Payload::CreateBelief(cb) => (
-                        "update_belief",
-                        json!({
-                            "confidence": hit["confidence"].as_f64().unwrap_or(0.0).max(cb.confidence),
-                            "add_supporting": events_of(p),
-                        }),
-                    ),
-                    _ => unreachable!(),
-                };
-                let mut q = p.clone();
-                q.operation = op.into();
-                q.target = Some(hid.clone());
-                q.payload = obj(fields);
-                let qp = m::parse_payload(op, &q.payload)?;
-                return Ok((Cow::Owned(q), qp, Some(format!("folded into {hid}"))));
-            }
+        let mut q = p.clone();
+        q.operation = op.into();
+        q.target = Some(hid.clone());
+        q.payload = obj(fields);
+        let parsed = m::parse_payload(op, &q.payload)?;
+        return Ok((Cow::Owned(q), parsed, Some(format!("folded into {hid}"))));
+    }
+    if let Payload::CreatePrediction(cp) = &payload {
+        let normalized = |s: &str| {
+            s.split_whitespace()
+                .collect::<Vec<_>>()
+                .join(" ")
+                .to_lowercase()
+        };
+        let deadline = cp.deadline.as_deref().and_then(crate::pyfmt::parse_dt);
+        if let Some(r) = st.state.table("predictions").rows.iter().find(|r| {
+            r["verified"].is_null()
+                && normalized(s(r, "prediction")) == normalized(&cp.prediction)
+                && crate::pyfmt::dt_of(r.get("deadline")) == deadline
+        }) {
+            return Err(format!("duplicate unresolved prediction {}", s(r, "id")));
         }
     }
     if let Payload::CreateGoal(cg) = &payload {
@@ -376,6 +583,12 @@ fn apply_op(
             if !pu.add_entity_ids.is_empty() {
                 let u = union(&list(&before, "entity_ids"), &pu.add_entity_ids);
                 fields.insert("entity_ids".into(), json!(u));
+            }
+            for (key, add) in [("successes", pu.add_success), ("failures", pu.add_failure)] {
+                if add > 0.0 {
+                    let total = before.get(key).and_then(Value::as_f64).unwrap_or(0.0) + add;
+                    fields.insert(key.into(), json!(round4(total)));
+                }
             }
             if fields
                 .get("status")
@@ -459,24 +672,114 @@ fn apply_op(
             let id = s(&before, "id").to_string();
             vec![t("beliefs", &id, Some(before), after, false)]
         }
+        Payload::CreateTrait(pt) => {
+            let id = st.ids.next("trait");
+            let after = obj(json!({
+                "id": id, "kind": pt.kind, "statement": pt.statement, "confidence": pt.confidence,
+                "origin": if p.agent == "harness" { "seed" } else { "experienced" },
+                "speaker": pt.speaker, "status": "active", "evidence": p.evidence,
+                "supporting_evidence": p.evidence, "contradicting_evidence": [],
+                "created_at": ts, "updated_at": ts, "valid_from": ts, "valid_until": null, "version": 1,
+            }));
+            vec![t("traits", &id, None, after, true)]
+        }
+        Payload::UpdateTrait(ut) => {
+            let before = load(st, "traits", target, ut.expected_version)?;
+            let old = before["confidence"].as_f64().unwrap_or(0.0);
+            let mut confidence = ut.confidence.unwrap_or(old);
+            let observed = p.evidence.iter().any(|id| {
+                st.state
+                    .event(id)
+                    .is_some_and(|e| m::is_outcome(e) && !list(&before, "evidence").contains(id))
+            });
+            if p.agent != "harness" && confidence < old {
+                if !observed {
+                    return Err("lowering a trait requires a new contrary observation".into());
+                }
+                confidence = confidence.max(old - TRAIT_MAX_STEP);
+            }
+            if p.agent != "harness"
+                && ut
+                    .statement
+                    .as_ref()
+                    .is_some_and(|v| v != s(&before, "statement"))
+                && !observed
+            {
+                return Err("revising a trait requires a new contrary observation".into());
+            }
+            if ut.status.as_deref() == Some("retired") && p.agent != "harness" && confidence > 0.3 {
+                return Err("retiring a trait requires confidence at or below 0.3".into());
+            }
+            let mut fields = bump(&before, p, ts);
+            fields.insert("confidence".into(), json!(round4(confidence)));
+            if let Some(v) = &ut.statement {
+                fields.insert("statement".into(), json!(v));
+            }
+            if let Some(status) = &ut.status {
+                fields.insert("status".into(), json!(status));
+                if status == "retired" {
+                    fields.insert("valid_until".into(), json!(ts));
+                }
+            }
+            if !ut.add_supporting.is_empty() {
+                let u = union(&list(&before, "supporting_evidence"), &ut.add_supporting);
+                fields.insert("supporting_evidence".into(), json!(u));
+            }
+            if !ut.add_contradicting.is_empty() {
+                let u = union(
+                    &list(&before, "contradicting_evidence"),
+                    &ut.add_contradicting,
+                );
+                fields.insert("contradicting_evidence".into(), json!(u));
+            }
+            let after = updated(&before, fields);
+            let id = s(&before, "id").to_string();
+            vec![t(
+                "traits",
+                &id,
+                Some(before),
+                after,
+                ut.statement.is_some(),
+            )]
+        }
         Payload::CreateGoal(pg) => {
             let id = st.ids.next("goal");
-            let after = obj(json!({
+            let mut after = obj(json!({
                 "id": id, "evidence": p.evidence, "description": pg.description,
                 "priority": pg.priority, "origin": pg.origin, "status": pg.status,
                 "parent_goal": pg.parent_goal, "deadline": pg.deadline,
                 "created_at": ts, "updated_at": ts, "version": 1,
             }));
+            if let Some(kind) = &pg.kind {
+                after.insert("kind".into(), json!(kind));
+            }
             vec![t("goals", &id, None, after, false)]
         }
         Payload::UpdateGoal(ug) => {
             let before = load(st, "goals", target, ug.expected_version)?;
+            if p.agent == "reflection" && s(&before, "origin") != "self" {
+                return Err("reflection may only revise its own goals".into());
+            }
+            if ug.status.as_deref() == Some("completed")
+                && p.agent != "harness"
+                && !p.evidence.iter().any(|id| {
+                    st.state.event(id).is_some_and(|e| {
+                        m::is_outcome(e) && !list(&before, "evidence").contains(id)
+                    })
+                })
+            {
+                return Err("goal completion requires a new observed outcome event".into());
+            }
+
             let mut fields = bump(&before, p, ts);
             if let Some(status) = &ug.status {
                 fields.insert("status".into(), json!(status));
             }
             if let Some(pr) = ug.priority {
                 fields.insert("priority".into(), json!(pr));
+            }
+            if let Some(step) = &ug.next_step {
+                fields.insert("next_step".into(), json!(step));
             }
             let after = updated(&before, fields);
             let id = s(&before, "id").to_string();
@@ -493,6 +796,14 @@ fn apply_op(
         }
         Payload::VerifyPrediction(vp) => {
             let before = load(st, "predictions", target, None)?;
+            if !p.evidence.iter().any(|id| {
+                st.state
+                    .event(id)
+                    .is_some_and(|e| m::is_outcome(e) && !list(&before, "evidence").contains(id))
+            }) {
+                return Err("prediction verification requires a new observed outcome event".into());
+            }
+
             let fields = obj(json!({
                 "verified": vp.verified, "verified_at": ts, "version": int(&before, "version") + 1,
                 "evidence": union(&list(&before, "evidence"), &p.evidence),
@@ -502,12 +813,31 @@ fn apply_op(
             vec![t("predictions", &id, Some(before), after, false)]
         }
         Payload::UpsertEntity(ue) => {
-            let before = st.state.find_entity(&ue.name, Some(&ue.kind));
+            let before = if let Some(target) = target {
+                let row = st
+                    .state
+                    .find_entity(target, ue.kind.as_deref())
+                    .ok_or_else(|| format!("unknown entity: {target}"))?;
+                if ue
+                    .name
+                    .as_deref()
+                    .is_some_and(|name| !name.eq_ignore_ascii_case(s(&row, "name")))
+                {
+                    return Err("entity name conflicts with target".into());
+                }
+                Some(row)
+            } else {
+                let name = ue
+                    .name
+                    .as_deref()
+                    .ok_or("name required for entity creation")?;
+                st.state.find_entity(name, ue.kind.as_deref())
+            };
             let (before, after) = match before {
                 None => {
                     let id = st.ids.next("ent");
                     let after = obj(json!({
-                        "id": id, "name": ue.name, "kind": ue.kind, "attributes": ue.attributes,
+                        "id": id, "name": ue.name, "kind": ue.kind.as_deref().unwrap_or("thing"), "attributes": ue.attributes,
                         "evidence": p.evidence, "created_at": ts, "updated_at": ts, "version": 1,
                     }));
                     (None, after)
@@ -547,6 +877,23 @@ fn apply_op(
             }));
             vec![t("entity_relationships", &id, None, after, false)]
         }
+        Payload::CreateJournal(pj) => {
+            let id = st.ids.next("journal");
+            let after = obj(json!({
+                "id": id, "entry": pj.entry, "mood": pj.mood, "evidence": p.evidence,
+                "created_at": ts, "version": 1,
+            }));
+            vec![t("journal", &id, None, after, true)]
+        }
+        Payload::SetNarrative(sn) => {
+            let before = st.state.narrative.clone();
+            let fields = obj(json!({
+                "data": {"text": sn.text, "sources": sn.sources}, "updated_at": ts,
+                "version": int(&before, "version") + 1,
+            }));
+            let after = updated(&before, fields);
+            vec![t("narrative", "narrative", Some(before), after, false)]
+        }
         Payload::SetWorkingState(sp) | Payload::UpdateSelfState(sp) => {
             let table: &'static str = if matches!(payload, Payload::SetWorkingState(_)) {
                 "working_state"
@@ -561,6 +908,9 @@ fn apply_op(
                 .cloned()
                 .unwrap_or_default();
             data.extend(sp.patch.clone());
+            if before.get("data") == Some(&json!(data)) {
+                return Ok(Vec::new());
+            }
             let fields = obj(json!({
                 "data": data, "updated_at": ts, "version": int(&before, "version") + 1,
             }));

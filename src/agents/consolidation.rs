@@ -5,7 +5,7 @@ use std::collections::{HashMap, HashSet};
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use serde_json::{Value, json};
+use serde_json::json;
 
 use super::base::{clamp, fmt_rows};
 use crate::Services;
@@ -13,7 +13,8 @@ use crate::config::settings;
 use crate::context::ranking::decayed_importance;
 use crate::llm::CONSOLIDATION;
 use crate::pyfmt::{Row, now};
-use crate::state::models::{LIVE_MEMORY, Proposal, strings, union};
+use crate::state::models::{LIVE_BELIEF, LIVE_MEMORY, LIVE_TRAIT, Proposal, strings, union};
+use crate::store::state::State;
 
 pub const SYSTEM: &str = "You are the consolidation agent of a persistent-state assistant.
 Given memories (episodic and semantic): (1) merge groups that describe the same fact or episode
@@ -89,15 +90,42 @@ fn dedupe(ids: &[String]) -> Vec<&str> {
     out
 }
 
+fn protect_cited_evidence(state: &State, proposals: &mut Vec<Proposal>, enabled: bool) {
+    if !enabled {
+        return;
+    }
+    let referenced: HashSet<String> = [("beliefs", LIVE_BELIEF), ("traits", LIVE_TRAIT)]
+        .into_iter()
+        .flat_map(|(table, live)| {
+            state
+                .table(table)
+                .rows
+                .iter()
+                .filter(move |r| live.contains(&r["status"].as_str().unwrap_or_default()))
+        })
+        .flat_map(|r| {
+            ["evidence", "supporting_evidence", "contradicting_evidence"]
+                .into_iter()
+                .flat_map(|k| r.get(k).map(strings).unwrap_or_default())
+        })
+        .collect();
+    proposals.retain(|p| !p.target.as_ref().is_some_and(|id| referenced.contains(id)));
+}
+
+#[tracing::instrument(name = "consolidation", skip_all)]
 pub async fn run(svc: &Services) -> Result<Vec<Proposal>> {
     let now = now();
-    let live = svc
-        .store
-        .lock()
-        .unwrap()
-        .state
-        .list_rows("memories", Some(LIVE_MEMORY), 200);
-    let mut proposals = decay_proposals(&live, &now);
+    let (live, mut proposals) = {
+        let st = svc.store.lock().unwrap();
+        let live = st.state.list_rows("memories", Some(LIVE_MEMORY), 200);
+        let mut proposals = decay_proposals(&live, &now);
+        protect_cited_evidence(
+            &st.state,
+            &mut proposals,
+            settings().decay_keeps_cited_evidence,
+        );
+        (live, proposals)
+    };
     let archived: HashSet<String> = proposals.iter().filter_map(|p| p.target.clone()).collect();
     let candidates: Vec<&Row> = live
         .iter()
@@ -184,6 +212,58 @@ pub async fn run(svc: &Services) -> Result<Vec<Proposal>> {
                 .confidence(0.5),
         );
     }
-    let _: Option<&Value> = None;
     Ok(proposals)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::store::obj;
+
+    #[test]
+    fn decay_evidence_protection_is_opt_in() {
+        let now = "2026-01-01T00:00:00Z".parse::<DateTime<Utc>>().unwrap();
+        let rows: Vec<Row> = [
+            "supported",
+            "contradicting",
+            "trait",
+            "unreferenced",
+            "retired",
+        ]
+        .into_iter()
+        .map(|id| {
+            obj(json!({
+                "id": id, "kind": "episodic", "importance": 0.0,
+                "access_count": 0, "version": 1
+            }))
+        })
+        .collect();
+        let mut state = State::new();
+        state.tables.get_mut("beliefs").unwrap().rows = vec![
+            obj(
+                json!({"status": "active", "supporting_evidence": ["supported"],
+                "contradicting_evidence": ["contradicting"]}),
+            ),
+            obj(json!({"status": "deprecated", "supporting_evidence": ["retired"]})),
+        ];
+        state.tables.get_mut("traits").unwrap().rows = vec![
+            obj(json!({"status": "uncertain", "evidence": ["trait"]})),
+            obj(json!({"status": "retired", "evidence": ["retired"]})),
+        ];
+        let mut proposals = decay_proposals(&rows, &now);
+        let original = serde_json::to_value(&proposals).unwrap();
+        protect_cited_evidence(&state, &mut proposals, false);
+        assert_eq!(serde_json::to_value(&proposals).unwrap(), original);
+        protect_cited_evidence(&state, &mut proposals, true);
+        assert_eq!(
+            proposals
+                .iter()
+                .filter_map(|p| p.target.as_deref())
+                .collect::<Vec<_>>(),
+            ["unreferenced", "retired"]
+        );
+        let mut boundary = rows[0].clone();
+        boundary.insert("importance".into(), json!(settings().memory_archive_floor));
+        assert!(decay_proposals(&[boundary], &now).is_empty());
+    }
 }

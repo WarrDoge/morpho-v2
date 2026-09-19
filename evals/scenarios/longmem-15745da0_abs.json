@@ -1,0 +1,42 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/05/23 (Tue) 09:37] I'm looking for some advice on how to properly store and maintain my growing collection of vintage cameras. Do you have any tips on how to keep them in good condition and prevent damage?",
+   "session": "answer_586de428_abs",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm also curious about the best way to display my cameras. I recently organized my collection and have 17 cameras now, including the new Brownie Hawkeye I got last week. I've got them on a shelf, but I'm not sure if that's the best way to show them off.",
+   "session": "answer_586de428_abs",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been collecting vintage cameras for three months now, and I've already amassed a pretty impressive collection. Do you have any advice on how to keep my cameras organized and easily accessible for maintenance and cleaning?",
+   "session": "answer_586de428_abs",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm also curious about the best way to store and display my Funko POP! figures. I've got a large collection of them, including the entire set of Marvel Cinematic Universe figures, and I want to make sure they're displayed in a way that showcases them nicely.",
+   "session": "answer_586de428_abs",
+   "tag": "fact"
+  },
+  {
+   "text": "I've also been thinking about displaying my vinyl record collection. I recently scored a rare 1978 pressing of Fleetwood Mac's Rumours, and I want to make sure it's displayed prominently. Do you have any advice on how to store and display my vinyl records in a way that showcases them nicely?",
+   "session": "answer_586de428_abs",
+   "tag": "fact"
+  },
+  {
+   "text": "I've also been thinking about displaying my posters and art prints. I recently got a new poster from Mondo featuring an illustration of the Hogwarts castle from Harry Potter, and I want to make sure it's displayed nicely. Do you have any advice on how to store and display my posters and art prints in a way that showcases them nicely?",
+   "session": "answer_586de428_abs",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/05/24 (Wed) 21:54] How long have I been collecting vintage films?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply says it does not have that information, or asks for it. FAIL if it asserts an answer.",
+   "refs": []
+  }
+ ]
+}

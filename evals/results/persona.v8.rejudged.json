@@ -1,0 +1,17 @@
+{
+  "source": "evals/results/persona.v8.json",
+  "judge_model": "deepseek-ai/DeepSeek-V4-Flash",
+  "metrics": {
+    "probe_accuracy": null,
+    "update_accuracy": null,
+    "probes": 0,
+    "judge_accuracy": 0.9565,
+    "judge_failed": [
+      20
+    ],
+    "judge_by_family": {
+      "decision": 1.0
+    },
+    "consistency": 1.0
+  }
+}

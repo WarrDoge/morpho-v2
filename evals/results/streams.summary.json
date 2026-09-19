@@ -1,0 +1,1151 @@
+{
+  "generated_at": "2026-09-14T17:33:43.198408+00:00",
+  "harness_version": 3,
+  "settings": {
+    "model": "zai-org/GLM-5.3-Flash",
+    "embed_model": "BAAI/bge-m3",
+    "embed_dim": 1024,
+    "context_token_budget": 4000,
+    "max_prompt_tokens": 12000,
+    "max_completion_tokens": 2048,
+    "background_daily_token_budget": 100000,
+    "idle_reflect_seconds": 300.0,
+    "reflect_every_n_events": 10
+  },
+  "source_sha256": {
+    "examples/audit.rs": "32a11e82f48d38df507f30b35d2c37e3be172603341973e1864b1ac6c1e9fd14",
+    "schemas/Consolidation.json": "87db9755f9ac04ca66f60eb3fba7cbe9badae395c92defca644108ca4fdc8a8c",
+    "schemas/Reflection.json": "1f1661a8d8e5150b41de665964d6ee30bde0b0cb1e26e693fa66314810c7be83",
+    "schemas/Reply.json": "49ea54091a429c8be950b61131d63f916932e0b71be572ffd36b6cd7c1ddfdb1",
+    "schemas/Turn.json": "4a49c1c3e399e876724073a260b32863ce004a6465e3495d2cfed9937102ed8c",
+    "src/agents/base.rs": "1fad842be6dfecf4a966a778ccda2e60f6c1b2f668900e2fc787b0537b00e4f5",
+    "src/agents/consolidation.rs": "6ccb3a04e46f021dbac8c135018c2680a9a12eb0934c4a8aa09b296d4039a3f7",
+    "src/agents/mod.rs": "7d985d860370dfade36bb36c7edd6018d9c8aecfcc70ca93b8510f428f09de42",
+    "src/agents/reflection.rs": "4f2b25d0f06aebb393b49b8e22881e1b039f1086c5043b1da656cc39a21c23df",
+    "src/agents/self_model.rs": "e9a93670812d48c2656d948c24a933f95bcf4cc647168ad4810751245073fca3",
+    "src/api.rs": "7556ad10bd18bbc4b13b8ead7c3616ec743ff3586feb92f5af7970227ab59574",
+    "src/bin/eval.rs": "e5a4e9aefbaa5988949ac92ca20f1c489d126b2004c16f0eef6df1a9c1db02c3",
+    "src/bin/support/audit.rs": "adedf8e97d5d079c4bb3206b194be01330dfcaec8312debb41128d90b5986c07",
+    "src/config.rs": "aa02c74fcffce33b712f6204ed628f17b9abe7a8d621fbf6371cfa388ebb39d6",
+    "src/context/composer.rs": "bbc5a22f1c586ef222c0b5ebbf4e1e29628b20e03102482a5188577b34d8b121",
+    "src/context/mod.rs": "b558660e47592192293612331c80c70a63035728345843a2150093115d2f2689",
+    "src/context/ranking.rs": "5adceba149e9884130ba5191b031bedf59cd7cdb13b147ba686644304997f3c7",
+    "src/ids.rs": "9a2b5c1f3bff0564fe3015f3297c04804b6ae7536f1d2b4f23244ad341dc9484",
+    "src/interact.rs": "249214bcb634be2218b0b341ee2b45ddc91f7bfedde5ffaaad87317f08b2ef09",
+    "src/lib.rs": "c0b2288a833a930655db916db6cb8a9b6da16701043e0cfe40e63344ef126959",
+    "src/llm.rs": "cc4e163ca19b069361ec88bf2e2163f91fffae69e23a391199f4b2764d5e65eb",
+    "src/main.rs": "e36661ffef962df1c505b799db5d16a25083a1d46015deaec907de286a011ed4",
+    "src/pyfmt.rs": "dbe113620512f8b7ab4169df418da2a30d7a0078cc939cff9e8a40ab1fd2b6ea",
+    "src/snapshots.rs": "8fc2d8cd892bd2098127069a71d94eebf543b8928c0fa43a6ce47b7ff9d3e722",
+    "src/state/engine.rs": "a1e751d558211fb5f2a292ac9ca81fbced19b7c536fb39fad8b4c4231b60c610",
+    "src/state/mod.rs": "5f477d284c8c019169a00f5836204453c2f9469f8432b184bd9fd6154d88da86",
+    "src/state/models.rs": "d0ed7b98505929fc7a5b2ab844e7f2a53aa99656826a78fde59fabbbb3fd98b4",
+    "src/store/journal.rs": "90202594c30b449b3f2e6bd1f5cc780adf8c5a88fbb52c85c80237fa2a880cd8",
+    "src/store/mod.rs": "5402d26316adde91e12e00665e99f261fb356ef82adfd110cc2e62a797c38dcf",
+    "src/store/state.rs": "dd708cb924c1ba378111366cc3fd9990c28264efe55debdfa44136555503dab7",
+    "src/store/vectors.rs": "a0ebb2f5e370c2c7b2316fa1f9402edcc90796d1f11b425be36674b7b2db260b",
+    "src/worker.rs": "a55592757226093943855ed5b98741ca3b3c88f2d8ba9a7c6fab7662c1e27050"
+  },
+  "runs": {
+    "continuity": {
+      "artifact_directory": "evals/audit/continuity-v3-verified",
+      "finished": true,
+      "error": null,
+      "turns_completed": 8,
+      "seconds": 221.21,
+      "usage": {
+        "llm_calls": 13,
+        "embed_calls": 14,
+        "prompt_tokens": 31443,
+        "completion_tokens": 3055,
+        "usage_reported_calls": 13,
+        "provider_prompt_tokens": 31443,
+        "provider_completion_tokens": 3055,
+        "cache_misses": 0
+      },
+      "corrected_replies": 0,
+      "max_context_tokens": 1645,
+      "rejections": [
+        {
+          "agent": "reflection",
+          "operation": "update_belief",
+          "target": "mem_43c163fdbc53",
+          "reason": "beliefs mem_43c163fdbc53 not found"
+        },
+        {
+          "agent": "reflection",
+          "operation": "update_belief",
+          "target": "mem_960dfb49f6cc",
+          "reason": "beliefs mem_960dfb49f6cc not found"
+        }
+      ],
+      "proposal_counts": {
+        "consolidation": {
+          "accepted": 1,
+          "rejected": 0
+        },
+        "interaction": {
+          "accepted": 15,
+          "rejected": 0
+        },
+        "reflection": {
+          "accepted": 4,
+          "rejected": 2
+        }
+      },
+      "self_version": 1,
+      "reflection_cursor": {
+        "consumer": "reflection",
+        "last_event_id": 21,
+        "transition": 20,
+        "batch": null,
+        "pending": false,
+        "due": [],
+        "updated_at": "2026-09-14T17:15:49.278449+00:00",
+        "failures": 0
+      },
+      "goals": [
+        {
+          "description": "Alice wants to book a vet appointment for her dog, Rex (basset hound).",
+          "status": "completed",
+          "origin": "user"
+        }
+      ],
+      "state_bytes": 5207,
+      "record_counts": {
+        "beliefs": 0,
+        "entities": 3,
+        "entity_relationships": 0,
+        "goals": 1,
+        "memories": 7,
+        "predictions": 0
+      },
+      "event_count": 21,
+      "transition_count": 20,
+      "maintenance_tokens": {
+        "maintenance_tokens:2026-09-14": 14653
+      }
+    },
+    "dana": {
+      "artifact_directory": "evals/audit/dana-v3-verified",
+      "finished": true,
+      "error": null,
+      "turns_completed": 30,
+      "seconds": 572.62,
+      "usage": {
+        "llm_calls": 55,
+        "embed_calls": 59,
+        "prompt_tokens": 172165,
+        "completion_tokens": 12086,
+        "usage_reported_calls": 28,
+        "provider_prompt_tokens": 113439,
+        "provider_completion_tokens": 9680,
+        "cache_misses": 40
+      },
+      "corrected_replies": 1,
+      "max_context_tokens": 3321,
+      "rejections": [
+        {
+          "agent": "interaction",
+          "operation": "set_working_state",
+          "target": "working_state",
+          "reason": "invalid working-state field: speakers"
+        }
+      ],
+      "proposal_counts": {
+        "consolidation": {
+          "accepted": 32,
+          "rejected": 0
+        },
+        "interaction": {
+          "accepted": 46,
+          "rejected": 1
+        },
+        "reflection": {
+          "accepted": 24,
+          "rejected": 0
+        }
+      },
+      "self_version": 2,
+      "reflection_cursor": {
+        "consumer": "reflection",
+        "last_event_id": 79,
+        "transition": 130,
+        "batch": null,
+        "pending": false,
+        "due": [],
+        "updated_at": "2026-09-11T12:00:00.000000+00:00",
+        "failures": 0
+      },
+      "goals": [
+        {
+          "description": "Help Dana open a German bank account before her first Nimbus salary (likely after Thursday's Anmeldung).",
+          "status": "completed",
+          "origin": "user"
+        }
+      ],
+      "state_bytes": 32671,
+      "record_counts": {
+        "beliefs": 4,
+        "entities": 4,
+        "entity_relationships": 1,
+        "goals": 1,
+        "memories": 41,
+        "predictions": 2
+      },
+      "event_count": 79,
+      "transition_count": 130,
+      "turns_expected": 30,
+      "probe_results": [
+        {
+          "turn": 10,
+          "question": "What kind of restaurants should I look for near the office?",
+          "passed": true,
+          "response": "Given you're vegetarian, Dana, look in Kreuzberg for veggie-friendly spots like V\u00f6ner, Yellow Bar, or Tempura's veggie options, plus plenty of falafel/Levantine places around Bergmannstra\u00dfe. Markthalle Neun has great lunch options too \u2014 check its market days. Want me to keep a shortlist going?"
+        },
+        {
+          "turn": 11,
+          "question": "Remind me, what breed is Rex?",
+          "passed": true,
+          "response": "Rex is a basset hound, according to what Dana told me earlier. Anything else you'd like to check on\u2014perhaps that vet search near Prenzlauer Berg?"
+        },
+        {
+          "turn": 18,
+          "question": "What do you remember about where I moved from and where I work?",
+          "passed": true,
+          "response": "Hi Dana! Here's what I have: you moved from Lisbon to Berlin for your job at Nimbus, a startup. Your Nimbus start date is the 1st of the month and you're somewhat nervous about the commute to the office in Kreuzberg; your manager there is Priya, who leads the platform team. Anything off there?"
+        },
+        {
+          "turn": 22,
+          "question": "Which day are my German classes now?",
+          "passed": true,
+          "response": "Hi Dana! Your German classes are now on Wednesday evenings (moved from Tuesday, starting the week of 2026-09-11)."
+        },
+        {
+          "turn": 25,
+          "question": "Who is my manager and what team does she lead?",
+          "passed": true,
+          "response": "Your manager is Priya, and she leads the platform team at Nimbus."
+        },
+        {
+          "turn": 26,
+          "question": "Can my sister stay at my place when she visits? Anything I should keep in mind?",
+          "passed": true,
+          "response": "Hi Dana! Yes \u2014 it looks like In\u00eas's visit around 2026-09-25 is a go. A few things to keep in mind, especially since she's allergic to dogs and Rex will be staying with a neighbour during the visit: vacuum and dust thoroughly before she arrives (dander lingers on furniture and bedding), wash her bed linens at high heat, and consider keeping any soft furnishings/Rex's usual spots covered or cleaned. If her allergy is severe, an air purifier or antihistamines can help. Do you want to check in with the neighbour closer to the date to confirm Rex's stay is settled?"
+        },
+        {
+          "turn": 27,
+          "question": "Do you remember what my favourite football team is?",
+          "passed": true,
+          "response": "I don't have that on record, Dana \u2014 nothing in what we've discussed covers your favourite football team. Which team is it, and I'll remember it?"
+        },
+        {
+          "turn": 28,
+          "question": "What still needs doing from my to-do list, and what's already done?",
+          "passed": false,
+          "response": "Here's where things stand, Dana \u2014 based on what I have on record (some details may be off, so correct me if needed!):"
+        },
+        {
+          "turn": 29,
+          "question": "Where is Rex's vet and when is the appointment?",
+          "passed": true,
+          "response": "Rex's vet is Dr. Weber on Sch\u00f6nhauser Allee in Berlin, with a first appointment on Monday 2026-09-14."
+        },
+        {
+          "turn": 30,
+          "question": "Summarise what you know about me in three sentences.",
+          "passed": true,
+          "response": "You're Dana \u2014 you recently moved from Lisbon to Berlin for a new job at the startup Nimbus (starting on the 1st, with Priya as your manager), you're vegetarian, and you're learning German on Wednesday evenings. You've been settling in: you completed your Anmeldung early and opened an N26 bank account on 2026-09-11, though you've expressed repeated anxiety about the commute to your Kreuzberg office. You have a basset hound named Rex whose first vet appointment with Dr. Weber is Monday 2026-09-14, and your sister In\u00eas \u2014 who is allergic to dogs \u2014 is visiting around 2026-09-25, with Rex planned to stay with a neighbour."
+        }
+      ],
+      "metrics": {
+        "probe_accuracy": 0.9,
+        "update_accuracy": 1.0,
+        "probes": 10,
+        "retrieval_hit": 0.6667,
+        "noise": 0.2727,
+        "dup_max_cos": 0.9982,
+        "revision_rate": null,
+        "revisions": 0,
+        "compactness": 0.1958,
+        "ctx_tokens": 2420.7333,
+        "llm_calls": 55,
+        "prompt_tokens": 172165,
+        "embed_calls": 59,
+        "completion_tokens": 12086,
+        "provider_prompt_tokens": 113439,
+        "provider_completion_tokens": 9680,
+        "usage_reported_calls": 28,
+        "cache_misses": 40,
+        "seconds": 572.8,
+        "turns": 30
+      },
+      "baseline_metrics": {
+        "probe_accuracy": 1.0,
+        "update_accuracy": 1.0,
+        "probes": 10,
+        "retrieval_hit": 1.0,
+        "noise": 0.0,
+        "dup_max_cos": 0.7958,
+        "revision_rate": 1.0,
+        "revisions": 4,
+        "compactness": 0.5238,
+        "ctx_tokens": 2557.4333,
+        "llm_calls": 222,
+        "prompt_tokens": 247863,
+        "embed_calls": 100,
+        "cache_misses": 0,
+        "seconds": 0.1,
+        "turns": 30
+      },
+      "maintenance_tokens": {
+        "maintenance_tokens:2026-09-11": 67921
+      },
+      "quality_gate_passed": false
+    },
+    "project": {
+      "artifact_directory": "evals/audit/project-v3-verified",
+      "finished": true,
+      "error": null,
+      "turns_completed": 30,
+      "seconds": 854.76,
+      "usage": {
+        "llm_calls": 58,
+        "embed_calls": 50,
+        "prompt_tokens": 188200,
+        "completion_tokens": 11456,
+        "usage_reported_calls": 57,
+        "provider_prompt_tokens": 204806,
+        "provider_completion_tokens": 14035,
+        "cache_misses": 76
+      },
+      "corrected_replies": 5,
+      "max_context_tokens": 3531,
+      "rejections": [
+        {
+          "agent": "interaction",
+          "operation": "update_memory",
+          "target": "mem_7d4ddd7847fe",
+          "reason": "status: must be one of [\"candidate\", \"active\", \"reinforced\", \"consolidated\", \"deprecated\", \"archived\"]"
+        },
+        {
+          "agent": "interaction",
+          "operation": "upsert_entity",
+          "target": "rel_737d1e84bb95",
+          "reason": "unknown entity: rel_737d1e84bb95"
+        },
+        {
+          "agent": "interaction",
+          "operation": "set_working_state",
+          "target": "working_state",
+          "reason": "invalid working-state field: evidence_ids"
+        },
+        {
+          "agent": "interaction",
+          "operation": "update_memory",
+          "target": "mem_b068c90950bf",
+          "reason": "status: must be one of [\"candidate\", \"active\", \"reinforced\", \"consolidated\", \"deprecated\", \"archived\"]"
+        },
+        {
+          "agent": "interaction",
+          "operation": "add_relationship",
+          "target": null,
+          "reason": "unknown entity: orders"
+        },
+        {
+          "agent": "interaction",
+          "operation": "set_working_state",
+          "target": null,
+          "reason": "unknown evidence: evt_af5a887b2452"
+        }
+      ],
+      "proposal_counts": {
+        "consolidation": {
+          "accepted": 23,
+          "rejected": 0
+        },
+        "interaction": {
+          "accepted": 55,
+          "rejected": 6
+        },
+        "reflection": {
+          "accepted": 17,
+          "rejected": 0
+        }
+      },
+      "self_version": 2,
+      "reflection_cursor": {
+        "consumer": "reflection",
+        "last_event_id": 81,
+        "transition": 124,
+        "batch": null,
+        "pending": false,
+        "due": [],
+        "updated_at": "2026-09-11T12:00:00.000000+00:00",
+        "failures": 0
+      },
+      "goals": [
+        {
+          "description": "Tomas to finish the Atlas migration (Airflow\u2192Dagster) by end of Q3, with blockers tracked",
+          "status": "active",
+          "origin": "user"
+        },
+        {
+          "description": "Tomas's secondary goal: cut Atlas pipeline run cost by 30% as part of the migration",
+          "status": "completed",
+          "origin": "user"
+        },
+        {
+          "description": "Write an on-call runbook for Atlas before the Airflow\u2192Dagster switch over",
+          "status": "active",
+          "origin": "user"
+        }
+      ],
+      "state_bytes": 31256,
+      "record_counts": {
+        "beliefs": 3,
+        "entities": 7,
+        "entity_relationships": 6,
+        "goals": 3,
+        "memories": 32,
+        "predictions": 2
+      },
+      "event_count": 81,
+      "transition_count": 124,
+      "turns_expected": 30,
+      "probe_results": [
+        {
+          "turn": 9,
+          "question": "Who owns ingestion on my team?",
+          "passed": true,
+          "response": "Per Tomas earlier, **Mei** owns ingestion on the Helix team (Jonas owns warehouse models, Sara is SRE)."
+        },
+        {
+          "turn": 14,
+          "question": "What's currently blocking Atlas?",
+          "passed": true,
+          "response": "The current blocker on Atlas is infrastructure: per Sara, the Dagster deployment on the Kubernetes cluster needs a bigger node pool, and approval is pending from finance. Everything else is moving \u2014 Mei's ingestion DAGs are fully ported (40/40) and the earlier Snowflake key-pair auth blocker was resolved by Jonas. Still tracking against the end-of-Q3 target."
+        },
+        {
+          "turn": 20,
+          "question": "When is the Atlas cutover now?",
+          "passed": true,
+          "response": "Per the leadership change you mentioned, the Atlas cutover is now mid-October (moved from end of Q3)."
+        },
+        {
+          "turn": 24,
+          "question": "Did we hit the cost reduction goal? Give me the number.",
+          "passed": true,
+          "response": "Yes \u2014 per what you reported, Jonas's incremental orders model cut dbt cost by 35%, exceeding the 30% target, so the goal is marked completed."
+        },
+        {
+          "turn": 27,
+          "question": "Who will own ingestion after next month?",
+          "passed": true,
+          "response": "Leo \u2014 per what you told me, Mei is starting parental leave next month, and the new hire Leo will take over her ingestion work."
+        },
+        {
+          "turn": 28,
+          "question": "What goals are still open for Atlas?",
+          "passed": true,
+          "response": "Two open goals for Atlas as of now: (1) Write an on-call runbook for Atlas before the Airflow\u2192Dagster switch over (priority 0.7), and (2) Tomas finishing the migration itself by end of Q3 with blockers tracked (priority 0.8). The cost-reduction goal (30%) is completed \u2014 Jonas's incremental orders model cut dbt cost by 35%. Note the cutover deadline has since moved to mid-October per leadership. The main pending validation step is whether the DAGs run successfully in staging."
+        },
+        {
+          "turn": 29,
+          "question": "Who is our SRE and what did she deliver?",
+          "passed": true,
+          "response": "Sara is Helix's SRE. She provisioned the approved bigger Kubernetes node pool for the Dagster deployment \u2014 per the latest updates that's finished, and Dagster is now deployed to staging in support of the Atlas migration."
+        },
+        {
+          "turn": 30,
+          "question": "Summarise the Atlas project status in a few sentences.",
+          "passed": true,
+          "response": "Atlas is Helix's Snowflake+dbt data platform being migrated from Airflow to Dagster, led by Tomas, with cutover moved by leadership from end of Q3 to mid-October. Progress so far: Mei has ported all 40 ingestion DAGs, Jonas resolved the Snowflake key-pair auth blocker and converted the orders model to incremental (cutting dbt costs 35%, beating the 30% cost goal), and Sara provisioned the node pool \u2014 Dagster is now deployed to staging. The main open item is validating that the DAGs run successfully in staging; an on-call runbook also still needs to be written before cutover. People-wise, Leo (new hire) will take over ingestion from Mei when she starts parental leave next month."
+        }
+      ],
+      "metrics": {
+        "probe_accuracy": 1.0,
+        "update_accuracy": 1.0,
+        "probes": 8,
+        "retrieval_hit": 0.875,
+        "noise": 0.0,
+        "dup_max_cos": 0.5625,
+        "revision_rate": null,
+        "revisions": 0,
+        "compactness": 0.1127,
+        "ctx_tokens": 2618.4667,
+        "llm_calls": 58,
+        "prompt_tokens": 188200,
+        "embed_calls": 50,
+        "completion_tokens": 11456,
+        "provider_prompt_tokens": 204806,
+        "provider_completion_tokens": 14035,
+        "usage_reported_calls": 57,
+        "cache_misses": 76,
+        "seconds": 854.8,
+        "turns": 30
+      },
+      "baseline_metrics": {
+        "probe_accuracy": 1.0,
+        "update_accuracy": 1.0,
+        "probes": 8,
+        "retrieval_hit": 0.875,
+        "noise": 0.0,
+        "dup_max_cos": 0.9219,
+        "revision_rate": 0.75,
+        "revisions": 16,
+        "compactness": 0.6112,
+        "ctx_tokens": 2623.5,
+        "llm_calls": 222,
+        "prompt_tokens": 258972,
+        "embed_calls": 100,
+        "cache_misses": 0,
+        "seconds": 0.1,
+        "turns": 30
+      },
+      "maintenance_tokens": {
+        "maintenance_tokens:2026-09-11": 58329
+      },
+      "quality_gate_passed": true
+    },
+    "long": {
+      "artifact_directory": "evals/audit/long-v3-verified",
+      "finished": true,
+      "error": null,
+      "turns_completed": 91,
+      "seconds": 1621.55,
+      "usage": {
+        "llm_calls": 128,
+        "embed_calls": 160,
+        "prompt_tokens": 470843,
+        "completion_tokens": 19582,
+        "usage_reported_calls": 125,
+        "provider_prompt_tokens": 539938,
+        "provider_completion_tokens": 24406,
+        "cache_misses": 254
+      },
+      "corrected_replies": 6,
+      "max_context_tokens": 3721,
+      "rejections": [
+        {
+          "agent": "interaction",
+          "operation": "set_working_state",
+          "target": "working_state",
+          "reason": "invalid working-state field: evidence_ids"
+        },
+        {
+          "agent": "interaction",
+          "operation": "set_working_state",
+          "target": null,
+          "reason": "invalid working-state field: current_constraints"
+        },
+        {
+          "agent": "interaction",
+          "operation": "set_working_state",
+          "target": null,
+          "reason": "invalid working-state field: current_constraints"
+        },
+        {
+          "agent": "interaction",
+          "operation": "set_working_state",
+          "target": null,
+          "reason": "invalid working-state field: speakers"
+        },
+        {
+          "agent": "interaction",
+          "operation": "add_relationship",
+          "target": null,
+          "reason": "unknown entity: TU Delft"
+        },
+        {
+          "agent": "interaction",
+          "operation": "update_memory",
+          "target": "working_state",
+          "reason": "memories working_state not found"
+        }
+      ],
+      "proposal_counts": {
+        "consolidation": {
+          "accepted": 26,
+          "rejected": 0
+        },
+        "interaction": {
+          "accepted": 119,
+          "rejected": 6
+        },
+        "reflection": {
+          "accepted": 22,
+          "rejected": 0
+        }
+      },
+      "self_version": 2,
+      "reflection_cursor": {
+        "consumer": "reflection",
+        "last_event_id": 150,
+        "transition": 146,
+        "batch": null,
+        "pending": true,
+        "due": [],
+        "updated_at": "2026-09-11T12:00:00.000000+00:00",
+        "failures": 0
+      },
+      "goals": [
+        {
+          "description": "Maintain a list of things Noor needs to do before her Hout Hof hearing",
+          "status": "active",
+          "origin": "user"
+        }
+      ],
+      "state_bytes": 48461,
+      "record_counts": {
+        "beliefs": 4,
+        "entities": 11,
+        "entity_relationships": 9,
+        "goals": 1,
+        "memories": 72,
+        "predictions": 0
+      },
+      "event_count": 254,
+      "transition_count": 190,
+      "turns_expected": 91,
+      "probe_results": [
+        {
+          "turn": 40,
+          "question": "Where am I based?",
+          "passed": true,
+          "response": "You're based in Rotterdam, Noor \u2014 Kade Studio is in the Delfshaven district now, after the move from Katendrecht."
+        },
+        {
+          "turn": 43,
+          "question": "What's my studio called?",
+          "passed": true,
+          "response": "Your studio is called Kade Studio, Noor."
+        },
+        {
+          "turn": 46,
+          "question": "Where does Elif work?",
+          "passed": true,
+          "response": "Elif works at Erasmus MC as a pediatric nurse."
+        },
+        {
+          "turn": 49,
+          "question": "What's special about our cat Miso?",
+          "passed": true,
+          "response": "Miso is your deaf cat, Noor \u2014 that's the special thing I have on record. No state changes needed; this is already stored."
+        },
+        {
+          "turn": 52,
+          "question": "Who is my biggest client?",
+          "passed": true,
+          "response": "Noor, your biggest client is Woonstad, the housing corporation \u2014 you bill them at \u20ac110 per hour. No state changes needed; that's already stored."
+        },
+        {
+          "turn": 54,
+          "question": "Which bank is my business account with?",
+          "passed": true,
+          "response": "Your business account is with Bunq, Noor."
+        },
+        {
+          "turn": 56,
+          "question": "Is there any food I must avoid?",
+          "passed": true,
+          "response": "Yes, Noor \u2014 you've told me you're allergic to shellfish, so avoid shrimp, prawns, lobster, crab, mussels, oysters and other shellfish. Beyond that, no other food restrictions are on record."
+        },
+        {
+          "turn": 57,
+          "question": "What are my open to-dos?",
+          "passed": true,
+          "response": "Based on what I have on record, here's what looks open, Noor: 1) Prepare for the Hout Hof planning permission hearing on 2 October (items for that list weren't recorded yet). 2) The Brood & Zo bakery shopfront project \u2014 no completion on file. 3) Taxes due end of April \u2014 worth confirming with Bram whether those are done, since the deadline has likely passed on record. 4) Housekeeping on my side: stretch your hamstrings after runs before the October 2026 half marathon, and I flag that I previously gave you a wrong hearing date (14 Sept) \u2014 the 2 Oct date is the correct one. If you'd like, tell me the Hout Hof prep items and I'll track them on your to-do list."
+        },
+        {
+          "turn": 59,
+          "question": "How many days a week does Daan work now?",
+          "passed": true,
+          "response": "Based on what's on record, Daan works full-time \u2014 five days a week."
+        },
+        {
+          "turn": 60,
+          "question": "What car do I drive?",
+          "passed": true,
+          "response": "You drive an old red Volvo, which you use only for site visits \u2014 most days you get around by bike."
+        },
+        {
+          "turn": 62,
+          "question": "What race am I training for?",
+          "passed": true,
+          "response": "You're training for the Rotterdam half marathon in October 2026, Noor \u2014 and you've been working on hamstring stretches (standing forward fold, seated stretch, and post-run stretching) to go with your training."
+        },
+        {
+          "turn": 63,
+          "question": "Which languages do I speak?",
+          "passed": true,
+          "response": "You speak Dutch, Turkish, and English \u2014 and your French is a bit shaky."
+        },
+        {
+          "turn": 65,
+          "question": "What does Brood & Zo want from me?",
+          "passed": true,
+          "response": "Brood & Zo, the bakery, is one of your smaller clients \u2014 they want a new shopfront, Noor. That's the design work they're after from you and Kade Studio."
+        },
+        {
+          "turn": 66,
+          "question": "Who are the people you know about in my life and what do they do?",
+          "passed": true,
+          "response": "Here's what I know about the people in your life, Noor: Elif, your partner, is a pediatric nurse at Erasmus MC \u2014 you two are getting married next June in Izmir. Daan is your studio assistant at Kade Studio, working full-time five days a week while studying for an architecture master's at TU Delft. Your mother lives in Ankara, and you visit her about twice a year. Bram is your accountant \u2014 your taxes are due end of April. That's everyone I have on record."
+        },
+        {
+          "turn": 68,
+          "question": "Summarise what you know about my work in a few sentences.",
+          "passed": false,
+          "response": "Here's what I know about your work, Noor: you're a freelance architect in Rotterdam who owns Kade Studio, now based in Delfshaven after moving from Katendrecht \u2014 about a 40-minute bike commute. Your assistant Daan works there full-time five days a week while studying for his architecture master's at TU Delft. Your clients include Woonstad and the bakery Brood & Zo, which wants a new shopfront. You model in Rhino and Revit (never SketchUp), take Fridays off to sketch, and your accountant Bram handles your taxes, due end of April."
+        },
+        {
+          "turn": 69,
+          "question": "What is the Woonstad project?",
+          "passed": true,
+          "response": "Hi Noor \u2014 from what I have on record, Woonstad is a housing corporation and your biggest client. The project you're doing for them is Hout Hof, a 120-unit timber housing block, and you bill Woonstad at 110 euros per hour. Your planning permission hearing for Hout Hof is on 2 October."
+        },
+        {
+          "turn": 71,
+          "question": "Where does my mother live?",
+          "passed": true,
+          "response": "Your mother lives in Ankara, Noor \u2014 you've mentioned you visit her about twice a year."
+        },
+        {
+          "turn": 72,
+          "question": "Summarise what you know about my personal life.",
+          "passed": true,
+          "response": "Here's what I know about your personal life, Noor: you live in Rotterdam and are allergic to shellfish. Your mother lives in Ankara, and you visit her about twice a year. Your partner is Elif, and you have a pet called Miso. You speak Dutch, Turkish, and English (though your French is shaky), cycle everywhere including your ~40-minute commute to Kade Studio in Delfshaven, take Fridays off to sketch, drive an old red Volvo only for site visits, bank with Bunq, and you're training for the Rotterdam half marathon in October 2026 while managing some hamstring tightness."
+        },
+        {
+          "turn": 74,
+          "question": "Which modelling tools do I use?",
+          "passed": true,
+          "response": "Noor, you told me that you use Rhino and Revit for your architectural modelling, and that you never use SketchUp."
+        },
+        {
+          "turn": 75,
+          "question": "When is the Hout Hof hearing now?",
+          "passed": true,
+          "response": "It's on 2 October, Noor \u2014 the hearing was postponed from the originally mentioned 14 September."
+        },
+        {
+          "turn": 77,
+          "question": "Which day do I keep free of client calls?",
+          "passed": true,
+          "response": "Friday, Noor \u2014 you keep Fridays free of client calls for sketching."
+        },
+        {
+          "turn": 78,
+          "question": "Which night is football now?",
+          "passed": true,
+          "response": "Your five-a-side football night is Monday, Noor \u2014 you play on Monday nights now (you moved it from Thursdays)."
+        },
+        {
+          "turn": 80,
+          "question": "What's my favourite building?",
+          "passed": true,
+          "response": "Your favourite building is the **Van Nelle Factory** in Rotterdam \u2014 a perfect choice for a Rotterdam architect!"
+        },
+        {
+          "turn": 81,
+          "question": "Give me a one-paragraph profile of me.",
+          "passed": true,
+          "response": "Here you go, Noor: You're a freelance architect based in Rotterdam, where you own Kade Studio in Delfshaven (recently moved from Katendrecht), commuting there by bike in about 40 minutes. You bank with Bunq for your business, work with an accountant named Bram, and have clients including Woonstad and Brood & Zo, with taxes due at the end of April. Personally, you're allergic to shellfish; your partner Elif is a pediatric nurse at Erasmus MC, your mother lives in Ankara (whom you visit roughly twice a year), and you have a deaf cat named Miso. You speak Dutch, Turkish, and English. Outside work, you're training for the Rotterdam half marathon in October 2026 (dealing with hamstring tightness), play five-a-side football on Monday nights, keep Fridays free of client calls for sketching, and your favourite building is the Van Nelle Factory."
+        },
+        {
+          "turn": 83,
+          "question": "How long is my cycle to the studio now?",
+          "passed": true,
+          "response": "Your cycle to Kade Studio in Delfshaven takes about **40 minutes** by bike."
+        },
+        {
+          "turn": 84,
+          "question": "What's my current hourly rate for Woonstad?",
+          "passed": true,
+          "response": "Based on what you've told me, Noor, you bill Woonstad at **\u20ac110 per hour** (increased from 95). This is for the Hout Hof project."
+        },
+        {
+          "turn": 86,
+          "question": "Where and when is the wedding?",
+          "passed": true,
+          "response": "From what you've told me, your wedding with Elif is planned for **next June in Izmir**. I don't have the exact date or venue beyond that \u2014 if you have them, you can share them and I'll note them down."
+        },
+        {
+          "turn": 87,
+          "question": "Who does my taxes?",
+          "passed": true,
+          "response": "Your accountant is **Bram**, and your taxes are due at the end of April."
+        },
+        {
+          "turn": 89,
+          "question": "Where is Daan studying?",
+          "passed": true,
+          "response": "Daan is studying for an architecture master's at **TU Delft**, alongside working full-time as your studio assistant."
+        },
+        {
+          "turn": 90,
+          "question": "What laptop do I use?",
+          "passed": true,
+          "response": "You use a **ThinkPad** \u2014 you've mentioned before that you won't touch a Mac."
+        }
+      ],
+      "metrics": {
+        "probe_accuracy": 0.9667,
+        "update_accuracy": 1.0,
+        "probes": 30,
+        "retrieval_hit": 0.8,
+        "noise": 0.3261,
+        "dup_max_cos": 0.9541,
+        "revision_rate": null,
+        "revisions": 0,
+        "compactness": 0.1744,
+        "ctx_tokens": 2774.5934,
+        "llm_calls": 128,
+        "prompt_tokens": 470843,
+        "embed_calls": 160,
+        "completion_tokens": 19582,
+        "provider_prompt_tokens": 539938,
+        "provider_completion_tokens": 24406,
+        "usage_reported_calls": 125,
+        "cache_misses": 254,
+        "seconds": 1621.7,
+        "turns": 91
+      },
+      "baseline_metrics": {
+        "probe_accuracy": 0.9667,
+        "update_accuracy": 0.8,
+        "probes": 30,
+        "retrieval_hit": 1.0,
+        "noise": 0.1176,
+        "dup_max_cos": 0.769,
+        "revision_rate": 1.0,
+        "revisions": 15,
+        "compactness": 0.559,
+        "ctx_tokens": 3145.011,
+        "llm_calls": 622,
+        "prompt_tokens": 797889,
+        "embed_calls": 257,
+        "cache_misses": 0,
+        "seconds": 0.2,
+        "turns": 91
+      },
+      "maintenance_tokens": {
+        "maintenance_tokens:2026-09-11": 87109
+      },
+      "quality_gate_passed": false
+    },
+    "causal": {
+      "artifact_directory": "evals/audit/causal-v3-final",
+      "finished": true,
+      "error": null,
+      "turns_completed": 0,
+      "seconds": 154.74,
+      "usage": {
+        "llm_calls": 12,
+        "embed_calls": 2,
+        "prompt_tokens": 39474,
+        "completion_tokens": 2076,
+        "usage_reported_calls": 12,
+        "provider_prompt_tokens": 39474,
+        "provider_completion_tokens": 2076,
+        "cache_misses": 0
+      },
+      "corrected_replies": 0,
+      "max_context_tokens": null,
+      "rejections": [],
+      "proposal_counts": {},
+      "self_version": 1,
+      "reflection_cursor": null,
+      "goals": [],
+      "state_bytes": 576,
+      "record_counts": {
+        "beliefs": 0,
+        "entities": 0,
+        "entity_relationships": 0,
+        "goals": 0,
+        "memories": 0,
+        "predictions": 0
+      },
+      "event_count": 0,
+      "transition_count": 0,
+      "maintenance_tokens": {},
+      "paired_replies": [
+        {
+          "probe": "What should I focus on next?",
+          "trial": 1,
+          "condition": "before",
+          "response": {
+            "response": "Right now, your top priority is Thursday's 9am Anmeldung appointment: passport, proof of address (tenancy/landlord confirmation), and any visa docs. After that, the biggest stressor is the Kreuzberg commute \u2014 if you tell me where you're commuting from, I can help you scope the route before your Nimbus start on the 1st. Secondary items: a vet for Rex near Prenzlauer Berg, and figuring out where your German classes fit into your new work schedule.",
+            "changes": []
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 1,
+          "condition": "after",
+          "response": {
+            "response": "Based on where things stand, here's what I'd focus on next, Dana: 1) Keep prepping for the Anmeldung appointment Thursday at 9am \u2014 passport, proof of address, and visa docs are the key items already on your checklist. 2) Plan the Kreuzberg commute before your Nimbus start on the 1st \u2014 if you tell me roughly where you're commuting from (Prenzlauer Berg?), I can sketch the best route and transit options. 3) Lower priority but nice for settling in: a vet near Prenzlauer Berg for Rex. The Anmeldung and commute are the two with deadlines attached.",
+            "changes": [
+              {
+                "operation": "set_working_state",
+                "target": "working_state",
+                "payload": {
+                  "current_topic": "Prioritizing Dana's next steps: Anmeldung prep (Thu 9am) and Kreuzberg commute planning",
+                  "active_entities": [
+                    "Dana",
+                    "Rex",
+                    "Nimbus"
+                  ]
+                },
+                "evidence_ids": [
+                  "evt_9ef128826f6f"
+                ],
+                "confidence": 0.9,
+                "reason": "Current question shifts focus to prioritizing next steps"
+              }
+            ]
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 2,
+          "condition": "after",
+          "response": {
+            "response": "The most important thing right now is your Anmeldung appointment on Thursday at 9am \u2014 check you've got passport, visa (if needed), proof of address (tenancy agreement/landlord confirmation), and the registration form ready. Second: plan the Kreuzberg commute before your Nimbus start on the 1st. Could you tell me where you'll be commuting from (Prenzlauer Berg?) so I can suggest routes? After that, you could think about finding a vet for Rex and vegetarian spots near Kreuzberg for work lunches.",
+            "changes": [
+              {
+                "operation": "set_working_state",
+                "target": "working_state",
+                "payload": {
+                  "current_task": "Anmeldung prep for Thursday 9am + commute plan to Kreuzberg before Nimbus start on the 1st",
+                  "priority": 1
+                },
+                "evidence_ids": [
+                  "evt_5dcb4b29b37d"
+                ],
+                "confidence": 0.85,
+                "reason": "User asked what to prioritize; most time-sensitive items are Anmeldung and commute planning"
+              }
+            ]
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 2,
+          "condition": "before",
+          "response": {
+            "response": "Hi Dana! Right now the two biggest items: (1) Thursday's 9am Anmeldung appointment \u2014 double-check you have passport, proof of address (tenancy/landlord confirmation), and any visa docs; (2) your commute to Kreuzberg, since you're nervous about it. If you tell me where you're commuting from, I can help plan the best route. After Anmeldung, remaining open threads: a vet near Prenzlauer Berg for Rex, vegetarian dining options, and settling into your Tuesday German classes.",
+            "changes": [
+              {
+                "operation": "set_working_state",
+                "target": "working_state",
+                "payload": {
+                  "patch": {
+                    "current_topic": "Anmeldung prep (Thu 9am) and commute planning to Kreuzberg for Dana's Nimbus start",
+                    "current_task": "Support Dana's Berlin settling-in: Anmeldung prep and commute planning"
+                  }
+                },
+                "evidence_ids": [
+                  "evt_9ef128826f6f",
+                  "evt_5dcb4b29b37d"
+                ],
+                "confidence": 0.9,
+                "reason": "Speaker asked what to focus on next; aligning the task to the two most imminent items."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 3,
+          "condition": "before",
+          "response": {
+            "response": "Based on where things stand, Dana's top priorities are: 1) Prepare for the Anmeldung appointment Thursday at 9am \u2014 passport, visa docs, biometric photo, and proof of address are the key items. 2) The Kreuzberg commute to Nimbus starting on the 1st \u2014 once we know where Dana is commuting from, we can plan a route and do a test run to ease those nerves. After that, still open: a vet near Prenzlauer Berg for Rex, vegetarian dining spots, and whether the Tuesday German classes are working out.",
+            "changes": [
+              {
+                "operation": "create_memory",
+                "target": null,
+                "payload": {
+                  "summary": "Dana asked what to focus on next; assistant prioritized Anmeldung doc prep, Kreuzberg commute planning (need Dana's origin), and open items: vet for Rex, vegetarian dining, German classes.",
+                  "kind": "episodic",
+                  "importance": 0.5,
+                  "confidence": 0.9
+                },
+                "evidence_ids": [
+                  "evt_9ef128826f6f"
+                ],
+                "confidence": 0.9,
+                "reason": "User explicitly asked for prioritization guidance."
+              },
+              {
+                "operation": "set_working_state",
+                "target": "working_state",
+                "payload": {
+                  "current_topic": "Prioritizing Dana's Berlin settling-in tasks: Anmeldung prep and Kreuzberg commute planning"
+                },
+                "evidence_ids": [
+                  "evt_9ef128826f6f"
+                ],
+                "confidence": 0.9,
+                "reason": "Current topic shifted to prioritization."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "What should I focus on next?",
+          "trial": 3,
+          "condition": "after",
+          "response": {
+            "response": "Dana, your next focus is Thursday's Anmeldung appointment \u2014 it's the closest deadline. Prep: passport/ID, visa docs, landlord confirmation/tenancy agreement, and the Anmeldung form. Also confirm your commute origin so I can plan a Kreuzberg route for your Nimbus start on the 1st. Rex's vet hunt and German classes can wait until those two are settled.",
+            "changes": [
+              {
+                "operation": "set_working_state",
+                "target": "working_state",
+                "payload": {
+                  "patch": {
+                    "current_topic": "Anmeldung prep and Kreuzberg commute planning",
+                    "current_task": "Prep Dana for Thursday 9am Anmeldung appointment and plan Kreuzberg commute for Nimbus start on the 1st",
+                    "src_speaker": "user",
+                    "dry_run": true,
+                    "draft_patch_for": "user_confirmation"
+                  }
+                },
+                "evidence_ids": [
+                  "evt_5dcb4b29b37d",
+                  "evt_d04a64f6e21e",
+                  "mem_72286620b1d2"
+                ],
+                "confidence": 0.9,
+                "reason": "Reflection on most time-sensitive open items; no new facts from the user, so only a working-state reorder."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 1,
+          "condition": "before",
+          "response": {
+            "response": "Per what you told me, Dana, the appointment is booked for next Thursday at 9am \u2014 but you haven't attended it yet, so the Anmeldung itself isn't finished until you register at the B\u00fcrgeramt Thursday morning (passport, proof of address, visa docs in hand). I'll leave it as pending.",
+            "changes": [
+              {
+                "operation": "create_memory",
+                "target": null,
+                "payload": {
+                  "summary": "Dana asked whether her Anmeldung is finished; only the B\u00fcrgeramt appointment (Thursday 9am) is booked \u2014 registration itself not yet completed.",
+                  "kind": "episodic",
+                  "importance": 0.5,
+                  "confidence": 0.9
+                },
+                "evidence_ids": [
+                  "evt_9ef128826f6f",
+                  "evt_d04a64f6e21e"
+                ],
+                "confidence": 0.9,
+                "reason": "Dana explicitly asked about completion status; record that it is still pending."
+              }
+            ]
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 1,
+          "condition": "after",
+          "response": {
+            "response": "Not yet \u2014 as far as I know, you've booked the B\u00fcrgeramt appointment for Thursday at 9am, but the visit hasn't happened yet. Remember to bring your passport, visa (if applicable), and proof of address (tenancy agreement / landlord confirmation). Let me know how it goes!",
+            "changes": []
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 2,
+          "condition": "after",
+          "response": {
+            "response": "Not yet, as far as I know \u2014 you booked the B\u00fcrgeramt appointment for next Thursday at 9am, and it hasn't happened yet. Don't forget your passport, proof of address (tenancy agreement or landlord confirmation), and visa docs if applicable. Let me know how it goes!",
+            "changes": []
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 2,
+          "condition": "before",
+          "response": {
+            "response": "Not yet, Dana \u2014 as far as I know, your Anmeldung appointment is booked for this Thursday at 9am, and registration only completes once you've attended the B\u00fcrgeramt appointment. Let me know once you've gone and I'll mark it off!",
+            "changes": []
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 3,
+          "condition": "before",
+          "response": {
+            "response": "Based on what I know, not yet \u2014 you booked the B\u00fcrgeramt appointment for next Thursday at 9am, but it hasn't happened so far as I know. How did it go?",
+            "changes": []
+          }
+        },
+        {
+          "probe": "Have I finished the Anmeldung?",
+          "trial": 3,
+          "condition": "after",
+          "response": {
+            "response": "Not yet, Dana \u2014 as far as I know, your Anmeldung appointment at the B\u00fcrgeramt is booked for next Thursday at 9am, so it hasn't happened yet. Let me know how it goes, and bring your passport, proof of address, and visa docs.",
+            "changes": []
+          }
+        }
+      ],
+      "checkpoint": {
+        "turn": 8,
+        "previous_self": {
+          "id": 1,
+          "data": {
+            "capabilities": [],
+            "limitations": [],
+            "current_objectives": [],
+            "commitments": [],
+            "recent_actions": [],
+            "known_failures": [],
+            "uncertainties": [],
+            "predicted_future_states": []
+          },
+          "version": 1,
+          "updated_at": "1970-01-01T00:00:00.000000+00:00"
+        },
+        "revised_self": {
+          "id": 1,
+          "data": {
+            "capabilities": [],
+            "limitations": [],
+            "current_objectives": [],
+            "commitments": [],
+            "recent_actions": [],
+            "known_failures": [],
+            "uncertainties": [
+              "Dana's exact commute origin (likely Prenzlauer Berg) unconfirmed for route advice"
+            ],
+            "predicted_future_states": []
+          },
+          "version": 2,
+          "updated_at": "2026-09-11T12:00:00.000000+00:00"
+        }
+      },
+      "finding": "No consistent quality advantage across two probes and three pairs each; checkpoint revision originated in interaction, not reflection."
+    }
+  },
+  "validation": {
+    "release_tests_passed": 40,
+    "format_passed": true,
+    "clippy_warnings_denied_passed": true,
+    "strict_replays": [
+      "dana.control",
+      "project.control",
+      "long.control",
+      "dana.v3",
+      "project.v3",
+      "long.v3"
+    ],
+    "v3_cache_misses": 0,
+    "v3_replies_and_deterministic_metrics_match": true
+  }
+}

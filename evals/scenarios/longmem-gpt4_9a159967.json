@@ -1,0 +1,96 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/04/27 (Thu) 13:15] I'm planning a future trip and I'm trying to decide between United Airlines and American Airlines. I've had good experiences with both, but I'm leaning towards United since I've accumulated more miles with them. Do you think I could redeem my miles for an upgrade on my next long-haul flight?",
+   "session": "answer_8a42fedf_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I was impressed with United's in-flight entertainment system on my recent trip. In March, I took a business trip to Chicago with United Airlines, flying from my hometown to Chicago on the 10th and returning on the 12th, with two flights each way. So I'm hoping to stick with them for my next long-haul flight. Do you know if they offer any special perks or benefits for frequent flyers like myself, especially since I've accumulated around 20,000 miles with them over the past three months?",
+   "session": "answer_8a42fedf_1",
+   "tag": "fact"
+  },
+  {
+   "text": "Can I get more information about United's Economy Plus seating? I'm interested in knowing how it compares to their regular economy seats and if it's worth the extra cost.",
+   "session": "answer_8a42fedf_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm actually considering flying to Las Vegas soon, and I was thinking of flying with United Airlines again since I've had good experiences with them. Do you think they offer any discounts or promotions for frequent flyers like myself, especially since I've accumulated around 20,000 miles with them over the past three months?",
+   "session": "answer_8a42fedf_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'd like to know more about United's baggage policy. Can you tell me about their checked baggage fees and policies?",
+   "session": "answer_8a42fedf_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'd like to know more about United's baggage policy, especially when it comes to special items like surfboards. I've been considering bringing my surfboard on my next trip to Las Vegas, and I want to make sure I understand the rules and fees associated with it.",
+   "session": "answer_8a42fedf_1",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/04/27 (Thu) 20:28] I'm planning a trip to San Francisco next month and I'm considering flying with Southwest Airlines. I've had a good experience with them before, like when I took a direct flight from my hometown to Las Vegas for a conference in March, from the 15th to the 18th. Can you help me find the best deals on Southwest flights to San Francisco?",
+   "session": "answer_8a42fedf_3",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm planning to travel to San Francisco from the 10th to the 14th of next month. I'll be flying into SFO. I'd prefer a round-trip ticket, and I'm open to flying out of my hometown airport at any time of day. By the way, I took that direct flight with Southwest Airlines from my hometown to Las Vegas in March, which was very convenient.",
+   "session": "answer_8a42fedf_3",
+   "tag": "fact"
+  },
+  {
+   "text": "I'll take a look at those options. By the way, my hometown airport is a Southwest Airlines hub, so I'm hoping to get a good deal on the flight to SFO. Do you think I could earn some decent miles on this trip, considering my loyalty to United Airlines and American Airlines?",
+   "session": "answer_8a42fedf_3",
+   "tag": "fact"
+  },
+  {
+   "text": "I'll definitely consider joining Rapid Rewards. Since I've accumulated a decent amount of miles on United Airlines and American Airlines, I'm hoping to use them for an upgrade on my next long-haul flight. Do you know how I can redeem my miles for an upgrade, and are there any restrictions I should be aware of?",
+   "session": "answer_8a42fedf_3",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/04/27 (Thu) 05:20] I'm planning a trip to the beach soon and I was thinking of booking a ride-sharing service to get there. Do you have any recommendations? By the way, I've had a lot of experience with Uber recently, I took at least 10 Uber rides during my week-long vacation to Hawaii with my family from the 20th to the 27th of April. We flew with American Airlines from our hometown to Honolulu, and then took a connecting flight to Maui.",
+   "session": "answer_8a42fedf_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm actually thinking of flying to the beach destination, so I'll need to book a ride from the airport to the beach as well. Do you have any suggestions for transportation services that operate from airports?",
+   "session": "answer_8a42fedf_2",
+   "tag": "fact"
+  },
+  {
+   "text": "My airport for this trip is actually a bit smaller, so I'm not sure if all these services are available. Can you tell me how to check which transportation services are available at a specific airport?",
+   "session": "answer_8a42fedf_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'll make sure to check the airport's website and transportation services' websites to see what's available. By the way, speaking of air travel, I've been flying a lot lately, and I'm trying to accumulate airline miles.",
+   "session": "answer_8a42fedf_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm also trying to offset my carbon footprint from flying by using a carbon offset calculator and donating to a reforestation project. I've already offset around 5,000 kg of CO2 emissions from my flights.",
+   "session": "answer_8a42fedf_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I've been thinking about my next trip, and I'm considering flying to a destination that requires a layover. Can you walk me through how to book a connecting flight, and what are some things I should keep in mind when booking one?",
+   "session": "answer_8a42fedf_2",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/04/27 (Thu) 13:11] Which airline did I fly with the most in March and April?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"United Airlines\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    1,
+    6,
+    10
+   ]
+  }
+ ]
+}

@@ -1,8 +1,7 @@
+pub mod act;
 pub mod base;
-pub mod beliefs;
 pub mod consolidation;
-pub mod goals;
-pub mod interaction;
-pub mod memory;
+pub mod episode;
+pub mod narrative;
 pub mod reflection;
-pub mod self_model;
+pub mod seed;

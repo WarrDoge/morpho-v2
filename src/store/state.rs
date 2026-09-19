@@ -8,13 +8,15 @@ use super::journal::Record;
 use super::vectors::{Vectors, relevance};
 use crate::pyfmt::Row;
 
-pub const TABLES: [&str; 6] = [
+pub const TABLES: [&str; 8] = [
     "memories",
     "beliefs",
+    "traits",
     "goals",
     "predictions",
     "entities",
     "entity_relationships",
+    "journal",
 ];
 
 #[derive(Clone, Debug, Default, PartialEq)]
@@ -55,6 +57,8 @@ pub struct State {
     pub tables: HashMap<String, Table>,
     pub working: Row,
     pub self_state: Row,
+    /// Compiled first-person self-description; `sources` maps trait id to the version it was compiled from.
+    pub narrative: Row,
     pub cursors: BTreeMap<String, Row>,
     pub proposals: Vec<Row>,
     pub transitions: Vec<Row>,
@@ -108,6 +112,7 @@ impl State {
                 "recent_actions": [], "known_failures": [], "uncertainties": [],
                 "predicted_future_states": []
             })),
+            narrative: singleton(json!({"text": "", "sources": {}})),
             cursors: BTreeMap::new(),
             proposals: Vec::new(),
             transitions: Vec::new(),
@@ -137,6 +142,7 @@ impl State {
                     match s(&t["table_name"]) {
                         "working_state" => self.working = after.clone(),
                         "self_state" => self.self_state = after.clone(),
+                        "narrative" => self.narrative = after.clone(),
                         table => {
                             if let Some(tb) = self.tables.get_mut(table) {
                                 tb.upsert(after.clone());
@@ -192,32 +198,65 @@ impl State {
         q: &[f32],
         k: usize,
         statuses: Option<&[&str]>,
-    ) -> Vec<Row> {
+    ) -> anyhow::Result<Vec<Row>> {
         let t = self.table(table);
+        let distances = vectors.distances(q)?;
         let mut hits: Vec<(usize, f64)> = t
             .rows
             .iter()
             .enumerate()
             .filter(|(_, r)| has_status(r, statuses))
             .filter_map(|(i, r)| self.slots.get(s(&r["id"])).map(|&slot| (i, slot)))
-            .map(|(i, slot)| (i, 1.0 - vectors.similarity(slot, q)))
+            .map(|(i, slot)| (i, distances[&slot]))
             .collect();
         hits.sort_by(|a, b| a.1.total_cmp(&b.1).then(a.0.cmp(&b.0)));
-        hits.into_iter()
+        Ok(hits
+            .into_iter()
             .take(k)
             .map(|(i, dist)| {
                 let mut r = t.rows[i].clone();
                 r.insert("relevance".into(), json!(relevance(1.0 - dist)));
                 r
             })
-            .collect()
+            .collect())
+    }
+
+    /// Own past replies nearest to the query, returned in conversation order.
+    pub fn similar_events(
+        &self,
+        vectors: &Vectors,
+        q: &[f32],
+        k: usize,
+        kind: &str,
+        exclude: &[&str],
+    ) -> anyhow::Result<Vec<Row>> {
+        let distances = vectors.distances(q)?;
+        let mut hits: Vec<(usize, f64)> = self
+            .events
+            .iter()
+            .enumerate()
+            .filter(|(_, e)| s(&e["type"]) == kind && !exclude.contains(&s(&e["event_id"])))
+            .filter_map(|(i, e)| self.slots.get(s(&e["event_id"])).map(|&slot| (i, slot)))
+            .filter_map(|(i, slot)| distances.get(&slot).map(|d| (i, *d)))
+            .collect();
+        hits.sort_by(|a, b| a.1.total_cmp(&b.1).then(a.0.cmp(&b.0)));
+        let mut top: Vec<(usize, f64)> = hits.into_iter().take(k).collect();
+        top.sort_by_key(|(i, _)| *i);
+        Ok(top
+            .into_iter()
+            .map(|(i, dist)| {
+                let mut r = self.events[i].clone();
+                r.insert("relevance".into(), json!(relevance(1.0 - dist)));
+                r
+            })
+            .collect())
     }
 
     pub fn singleton(&self, name: &str) -> &Row {
-        if name == "self_state" {
-            &self.self_state
-        } else {
-            &self.working
+        match name {
+            "self_state" => &self.self_state,
+            "narrative" => &self.narrative,
+            _ => &self.working,
         }
     }
 

@@ -1,0 +1,512 @@
+{
+ "scenario": "long",
+ "harness_version": 7,
+ "control": false,
+ "trial": null,
+ "drop_streams": "",
+ "judge_model": "deepseek-ai/DeepSeek-V4-Flash",
+ "metrics": {
+  "probe_accuracy": 0.9333,
+  "update_accuracy": 0.8,
+  "probes": 30,
+  "retrieval_hit": 0.88,
+  "noise": 0.375,
+  "dup_max_cos": 0.7823,
+  "revision_rate": null,
+  "revisions": 0,
+  "compactness": 0.1907,
+  "ctx_tokens": 3458.011,
+  "goals_by_origin": {
+   "inferred": 1,
+   "user": 2
+  },
+  "mood_changes": 24,
+  "journal_entries": 9,
+  "wants": {
+   "self": 0,
+   "with_next_step": 0,
+   "blocked": 0
+  },
+  "changes_rejected": 41,
+  "narrative_versions": 0,
+  "llm_calls": 204,
+  "prompt_tokens": 668282,
+  "embed_calls": 252,
+  "completion_tokens": 40046,
+  "provider_prompt_tokens": 708649,
+  "provider_completion_tokens": 48744,
+  "usage_reported_calls": 188,
+  "cache_misses": 420,
+  "calls_by_kind": {
+   "Changes": 91,
+   "Consolidation": 11,
+   "Reflection": 11,
+   "text": 91
+  },
+  "prompt_tokens_by_kind": {
+   "Changes": 201599,
+   "Consolidation": 19889,
+   "Reflection": 63148,
+   "text": 383646
+  },
+  "seconds": 5196.0,
+  "turns": 91
+ },
+ "replies": [
+  {
+   "text": "I'm Noor, a freelance architect based in Rotterdam.",
+   "reply": "Nice to meet you, Noor — a freelance architect in Rotterdam sounds like a good combination of city and craft. What can I help you with?",
+   "ok": null
+  },
+  {
+   "text": "My studio is called Kade Studio and it's in the Katendrecht district.",
+   "reply": "Katendrecht's a fitting spot for a studio these days — plenty of creative work happening on that peninsula. Good to know, Noor. So what brings you here?",
+   "ok": null
+  },
+  {
+   "text": "What's the difference between cement and concrete?",
+   "reply": "Cement is the binding powder; concrete is the final mix — cement plus water, sand, and gravel. Cement makes up maybe 10–15% of concrete but does its essential job: reacting chemically with water (hydration) to glue the whole mass together as it cures. Handy rule of thumb: cement is an ingredient, concrete is the product.",
+   "ok": null
+  },
+  {
+   "text": "My partner Elif is a pediatric nurse at Erasmus MC.",
+   "reply": "Good to know — sounds like a demanding but rewarding job at a big hospital like Erasmus MC. Anything I can do from here that touches on that, or was this just background?",
+   "ok": null
+  },
+  {
+   "text": "We have a cat named Miso who is deaf.",
+   "reply": "Noted — Miso the deaf cat, another addition to the household picture alongside Elif. Deaf cats can do just fine mostly on routine and vibration cues. Was that context, or is there something Miso-related I can help with?",
+   "ok": null
+  },
+  {
+   "text": "Any good podcast about urban planning?",
+   "reply": "A few good ones, Noor — some may sit nicely next to your practice:\n\n- **99% Invisible** — the classic; design and the built environment through short, well-crafted stories.\n- **The Urbanist** (Monocle) — global take on cities, mobility, and development.\n- **Third Rail Radio** — if you want something more critical and New Urbanist-leaning.\n- **Upzoned** — deeper dives into zoning and land-use policy, very concrete.\n\nFor a European/Rotterdam-adjacent angle, 99% Invisible and The Urbanist cover Dutch cities fairly often. Want more on the design side or the policy side?",
+   "ok": null
+  },
+  {
+   "text": "My biggest client right now is the housing corporation Woonstad.",
+   "reply": "That's a useful one to know, Noor — Woonstad is one of Rotterdam's big housing associations, so as a freelance architect that's the kind of client with steady, meaningful work. Does most of it come through renovation or new-build projects, or is it still early days with them?",
+   "ok": null
+  },
+  {
+   "text": "I cycle to the studio; it takes 25 minutes.",
+   "reply": "That's a nice commute, Noor — 25 minutes by bike through Rotterdam is about as good as city commuting gets. Does that hold up in the rain too, or do you have a fallback for the wetter days?",
+   "ok": null
+  },
+  {
+   "text": "How do I get red wine out of a wool rug?",
+   "reply": "Blot the spill fresh as much as you can — never rub, wool felts easily. Then:\n\n1. Blot with a clean white cloth from the outside of the stain inward.\n2. Mix a teaspoon of mild dish soap (or wool detergent) in a cup of cool water. Dab it on, then blot.\n3. If it lingers, try a 50/50 mix of cool water and white vinegar, dabbing and blotting again.\n4. Rinse by dabbing with plain water afterward, then press with a dry towel and let it air-dry away from heat.\n\nAvoid bleach, hydrogen peroxide, or anything hot — wool and dyes don't forgive. If it's an old stain or a pricey rug, a wool-safe enzyme cleaner or a professional cleaner is the safer bet.",
+   "ok": null
+  },
+  {
+   "text": "I'm allergic to shellfish.",
+   "reply": "Thanks for telling me, Noor — that's genuinely useful to know. I'll keep it in mind whenever food or restaurants come up. Anything specific you wanted to ask about it — cross-contamination, dining out, or was it just background?",
+   "ok": null
+  },
+  {
+   "text": "Help me keep a list of things to do before the Hout Hof hearing.",
+   "reply": "Happy to help, Noor — just know I can't store or manage a list between our chats, so it works best if you keep it somewhere and we build on it here.\n\nFirst things first: is Hout Hof one of your Woonstad projects? That would help me suggest useful prep items. To get us started, typical things before a hearing:\n\n- Gather all relevant drawings, permits and correspondence\n- List the key objections or questions you expect, and your responses\n- Prepare a short statement of your position (5 minutes' worth)\n- Check who's attending and who speaks for whom\n- Confirm date, time, location and any submission deadlines\n\nWhat's the hearing about, so we can tailor the list?",
+   "ok": null
+  },
+  {
+   "text": "My accountant is Bram; taxes are due at the end of April.",
+   "reply": "Good to know, Noor — as a freelancer, having an accountant like Bram lined up makes sense, and late April is worth tracking since it usually lines up with income tax season. Has Bram been doing your returns for long?",
+   "ok": null
+  },
+  {
+   "text": "Is it going to rain in Rotterdam this weekend, do you think?",
+   "reply": "Honestly, I can't check the forecast, so I'd only be guessing. Rotterdam Septembers tend toward showery but changeable weather, so pack dampers for the bike ride to Katendrecht just in case. Your own weather app will beat my hunch.",
+   "ok": null
+  },
+  {
+   "text": "I play in a five-a-side football team on Thursday nights.",
+   "reply": "A Thursday five-a-side habit is a good way to break up the week, Noor — and with your studio in Katendrecht there's probably a pitch not far away. Just background, or is there something you want to figure out around it?",
+   "ok": null
+  },
+  {
+   "text": "My mother lives in Ankara and I visit twice a year.",
+   "reply": "That's a good rhythm to have — far enough that visits take planning, close enough to do twice a year. Does Noor's mother still live in Ankara itself? And I'm curious whether Elif's family is Turkish too, or if Ankara connects to your side of the family somehow — no obligation to say.",
+   "ok": null
+  },
+  {
+   "text": "What's the tallest building in the Netherlands?",
+   "reply": "The Zalmhaven Tower in Rotterdam — about 215 meters including its spire — is the tallest in the Netherlands. Fitting that it's in your home city. Is thisできします connected to the Hout Hof hearing, or just curiosity?",
+   "ok": null
+  },
+  {
+   "text": "I use Rhino and Revit for modelling, never SketchUp.",
+   "reply": "Good to know, Noor — Rhino and Revit is a solid BIM-first setup; no SketchUp means fewer loose ends when models need to be precise. Noted. So, back to the Zalmhaven Tower question — was that pure curiosity, or is something taller being proposed for the Hout Hof hearing?",
+   "ok": null
+  },
+  {
+   "text": "The Woonstad project is a 120-unit timber housing block called Hout Hof.",
+   "reply": "So the Zalmhaven question wasn't a coincidence — Hout Hof is a Woonstad project, your biggest client. That makes the hearing prep concrete. A 120-unit timber housing block will likely draw questions on fire safety and moisture performance in mass timber, plus the usual planning items: zoning compliance, daylight/overshadowing, parking, and construction logistics. Want to start the to-do list around those, or is there a specific contested point in the hearing I should know about?",
+   "ok": null
+  },
+  {
+   "text": "Explain cross-laminated timber in two sentences.",
+   "reply": "Cross-laminated timber (CLT) is an engineered wood panel made by gluing layers of boards together with each layer rotated 90 degrees, which gives the panel strength and dimensional stability in both directions. Because it's solid, structural, and prefabricated in large panels, it can be used for walls, floors, and roofs in multi-storey buildings — including timber housing blocks like Hout Hof.",
+   "ok": null
+  },
+  {
+   "text": "My studio assistant is Daan; he's part-time, three days a week.",
+   "reply": "Got it — Daan, part-time, three days a week. Useful to have on file for Kade Studio. Does he help with things like models and drawings, or more the practical side around the studio? And it might matter for the hearing prep: if he's across the Hout Hof drawings, he could help pull together the supporting docs.",
+   "ok": null
+  },
+  {
+   "text": "I'm training for the Rotterdam half marathon in October.",
+   "reply": "A half marathon in October is a solid goal, Noor — the fitness from your Thursday football will carry over more than you'd expect. Is this your first half, or have you run the distance before? And do you have a pace target in mind?",
+   "ok": null
+  },
+  {
+   "text": "How many calories are in a stroopwafel?",
+   "reply": "A standard stroopwafel (one waffle, ~32 grams) is roughly 130–150 calories — mostly carbs and sugar from the syrup, with some fat from the butter. Famous Dutch brands like Daelmans list around 150 per waffle.\n\nFitting question, Noor, if it's half-marathon related — they're actually a decent mid-run snack for exactly that reason: quick carbs in a compact, chewable form. Many runners use them like gels on longer efforts.",
+   "ok": null
+  },
+  {
+   "text": "My car is an old red Volvo that I only use for site visits.",
+   "reply": "Good to know, Noor — an old red Volvo is honest site-visit transport, especially since you usually bike to the studio anyway. Makes sense you'd want a car only for when you're trekking out to places like building sites. Is this us just getting acquainted with the fleet, or does a site visit figure into Hout Hof prep anytime soon?",
+   "ok": null
+  },
+  {
+   "text": "The Hout Hof planning permission hearing is on 14 September.",
+   "reply": "The 14th of September — that's this Friday, so three days out. Good to have the date pinned down, Noor. With that little time left, I'd prioritize now: confirm who's speaking for Woonstad and for the municipality, finalize your short position statement, and pull the fire-safety and moisture documentation, since those are the likeliest lines of questioning for a 120-unit timber block. Is Friday a proper hearing with an objections round, or more a formal ratification?",
+   "ok": null
+  },
+  {
+   "text": "Who designed the Erasmus Bridge?",
+   "reply": "That's Ben van Berkel, designed it back in 1990s — it opened in 1996, before he founded UNStudio with Caroline Bos. The asymmetrical pylon made his name internationally. Are you thinking of it as a reference point for Hout Hof, or just Rotterdam trivia for the hearing?",
+   "ok": null
+  },
+  {
+   "text": "I speak Dutch, Turkish and English; my French is terrible.",
+   "reply": "Drie talen plus that Elif connection — I'd guessed Turkish was in the mix given her family in Ankara, so good to have it confirmed. French being terrible is the honest part; anything touching Belgium or Paris projects probably stays in English then. Is this background, or are you thinking about the hearing Friday — whether it'll be fully in Dutch?",
+   "ok": null
+  },
+  {
+   "text": "I bill Woonstad at 95 euros an hour.",
+   "reply": "Ninety-five an hour for Woonstad — worth knowing, since that's the kind of detail that anchors everything from fee proposals to how much of your time the hearing prep eats up. Is that their standard rate for you, or something you negotiated per project? And just to be clear, that's your billing to them, not the other way around, right?",
+   "ok": null
+  },
+  {
+   "text": "What's a good stretch for tight hamstrings?",
+   "reply": "Classic runner's issue — tight hamstrings usually respond better to consistent light stretching than aggressive pulling. The one I'd start with: lie on your back, loop a towel or strap around one foot, keep the leg mostly straight, and gently pull it up until you feel a stretch behind the thigh. Hold 30 seconds, each side, a couple of rounds daily. Don't bounce, and stop short of pain. A standing hinge stretch — heel down, fold forward at the hips with a flat back — works well too.\n\nWorth saying: if it's persistently tight from your training, that often points to more running volume or weak glutes rather than a flexibility problem, so don't over-rely on stretching alone. Given the October half marathon coming up, this fits the picture — is it bothering you after runs, or just general stiffness?",
+   "ok": null
+  },
+  {
+   "text": "Elif and I are getting married next June in Izmir.",
+   "reply": "That's wonderful news, Noor — congratulations, genuinely. June in Izmir is a lovely choice, and it finally explains the Ankara connection from earlier in a much bigger way than I'd guessed. Elif's doing well, I hope?\n\nOne small thing I'm curious about: does the October half marathon plan survive the June wedding, or is running going to have to take a back seat between now and then?",
+   "ok": null
+  },
+  {
+   "text": "My favourite building is the Van Nelle factory.",
+   "reply": "Ah, a good pick for a Rotterdam architect — Brinkman & Van der Vlugt, late 1920s, and still one of the cleanest statements of functionalist modernism anywhere. The glass-and-steel curtain walls letting light deep into the work floors were genuinely radical for a factory. Is it a favourite on aesthetic grounds, or does it feed into your practice somewhere — a reference for something you're working on?",
+   "ok": null
+  },
+  {
+   "text": "Translate 'planning permission' into Dutch.",
+   "reply": "The usual term is *omgevingsvergunning* — that's the permit that replaced the old *bouwvergunning* under the Omgevingswet, and it's what you'd hear at Friday's hearing for Hout Hof.",
+   "ok": null
+  },
+  {
+   "text": "I have a second, smaller client: a bakery called Brood & Zo that wants a new shopfront.",
+   "reply": "Good to hear, Noor — a bakery shopfront is a nice change of pace from the timber block. Where is it located, and is it a full redesign or more of a restaurant/retail facelift? A smaller job like that usually stays under the radar permit-wise unless you're touching the facade structure or it's in a protected cityscape — worth checking before you promise anything. And it won't distract from Friday's hearing prep, I hope?",
+   "ok": null
+  },
+  {
+   "text": "I take Fridays off to sketch; no client calls on Fridays.",
+   "reply": "Noted, Noor — Fridays are for sketching, no client calls. One wrinkle, though: the Hout Hof hearing is this Friday, and that's a Woonstad matter. I'd assume that one's already exempt from your own rule, or does it clash with how you'd planned the day?",
+   "ok": null
+  },
+  {
+   "text": "Why do my ears pop on the train through a tunnel?",
+   "reply": "The tunnel is the culprit: as the train pushes through, it compresses the air ahead of it, so the pressure in the carriage briefly spikes. Your middle ear is a sealed cavity behind the eardrum, and when outside pressure changes faster than air can equalize through your Eustachian tube, the eardrum gets pushed in — that's the popping feeling, often with that muffled moment. When you exit the tunnel (or the pressure reverses), it pops back. Swallowing or yawning helps open the tube and equalize faster.",
+   "ok": null
+  },
+  {
+   "text": "My laptop is a ThinkPad and I refuse to use a Mac.",
+   "reply": "Fair enough — ThinkPads are solid workhorses, and honestly for what you need (Rhino and Revit, nothing fancy beyond that) there's little a Mac would give you anyway. No judgment here. How's the hearing prep coming along for Friday?",
+   "ok": null
+  },
+  {
+   "text": "Daan is studying for his architecture master's at TU Delft.",
+   "reply": "Ah, that fills in the picture — Daan working part-time at Kade Studio while doing his master's at TU Delft sounds like a nice combination of study and practice. And honestly useful for you: if his focus there is timber or building technology, he could be an extra pair of hands digging up the Hout Hof paperwork before Friday's hearing. What's he studying exactly, do you know?",
+   "ok": null
+  },
+  {
+   "text": "Recommend a sci-fi novel.",
+   "reply": "Try *Project Hail Mary* by Andy Weir — solo engineer on a impossible mission, lots of problem-solving under pressure, honestly a fun read even for someone who spends their days untangling building permits. If you want something with more architectural/city texture, *New York 2140* by Kim Stanley Robinson imagines a half-drowned Manhattan still living and adapting — right up a Rotterdam architect's alley. Good wind-down after Friday's hearing, I'd say.",
+   "ok": null
+  },
+  {
+   "text": "I bank with Bunq for the business account.",
+   "reply": "Good to know — noted for invoice and payment logistics come tax time with Bram. Is that why it came up, or something about Friday's hearing prep that needs the business account?",
+   "ok": null
+  },
+  {
+   "text": "Update: I moved the studio to the Delfshaven district, so the cycle is now 40 minutes.",
+   "reply": "Noted, Noor — Delfshaven it is, so the Katendrecht commute is out of date. That's a fair stretch longer by bike, though with the half marathon in October those extra kilometres might not hurt. Has the move itself been smooth, or are you still settling in — with the hearing only two days away?",
+   "ok": null
+  },
+  {
+   "text": "Where am I based?",
+   "reply": "You're in Rotterdam — you told me so yourself. Your studio, Kade Studio, started out in Katendrecht, though with the recent move it's now in Delfshaven, making your bike commute about 40 minutes instead of 25.",
+   "ok": true
+  },
+  {
+   "text": "What's the etymology of the word 'architect'?",
+   "reply": "From Greek *arkhi-* (chief) + *tekton* (builder, carpenter) — so literally \"master builder,\" via Latin *architectus* and Italian/French before reaching English. Fitting title for your line of work, Noor — though these days it's less chief carpenter, more chief persuader of planning committees, with Friday's hearing in mind.",
+   "ok": null
+  },
+  {
+   "text": "Woonstad agreed to a rate increase: I now bill them 110 euros an hour.",
+   "reply": "Lekker, from €95 to €110 is a solid jump — that's Woonstad committing to you properly. I'll keep that in mind alongside everything else: your biggest client, and now paying a better rate. With the Hout Hof hearing only days away, worth knowing your hours there are billed at the new rate too.",
+   "ok": null
+  },
+  {
+   "text": "What's my studio called?",
+   "reply": "It's Kade Studio, Noor — named after the harbor basins up there, I'd guess. You've since moved it from Katendrecht over to Delfshaven, so it's been through a name and an address; the name stuck.",
+   "ok": true
+  },
+  {
+   "text": "How long should I boil an egg for a soft yolk?",
+   "reply": "About 6 minutes for a large egg straight from the fridge into boiling water gives a runny yolk; 7 gets you more jammy, molten-yolk territory. Drop it in gently, start the timer when the water returns to a boil, and shock it in cold water when it's done to stop the cooking. Adjust +1 minute if the egg came straight from the fridge on a cold morning or you're at high altitude.",
+   "ok": null
+  },
+  {
+   "text": "The Hout Hof hearing got postponed to 2 October.",
+   "reply": "That's a relief in one way, Noor — three days to two-and-a-bit weeks is breathing room. Though I did check: 2 October is also a Friday, so your no-client-calls rule gets tested all over again.\n\nPractically, it means the prep can spread out a bit — Daan could pull the hearing docs properly instead of in a rush, and you have time for a real run-through of the fire-safety and moisture questions rather than cramming. What prompted the postponement — something on the municipality's side or yours?",
+   "ok": null
+  },
+  {
+   "text": "Where does Elif work?",
+   "reply": "As I have it, Elif is a pediatric nurse at Erasmus MC — you mentioned that when telling me about their work. That still current, or has anything changed?",
+   "ok": true
+  },
+  {
+   "text": "Is Brutalism making a comeback?",
+   "reply": "Signs point to yes — or at least to a \"soft Brutalism\" revival. Concrete's back in fashion: lots of young practices are doing heavy, monolithic facades with deep reveals and honest structure, though usually softened with timber interiors and planting rather than raw estates. Even the public image has turned — the buildings people once petitioned to demolish now get Instagram fan accounts and heritage listings.\n\nThat said, I'd call it selective borrowing more than a full comeback: the aesthetic without the post-war social housing program that originally drove it. Given your Hout Hof block is CLT, you're probably on the other end of that pendulum — but the appetite for expressive, weighty facades might still be something clients respond to. Does any of that show up in your work, or is it all light timber these days?",
+   "ok": null
+  },
+  {
+   "text": "Daan is now full-time, five days a week.",
+   "reply": "Big shift from three days to full-time — that changes the picture at Kade Studio. Good timing for the Hout Hof prep, too: with five days a week, Daan can properly work through the hearing documents and that fire-safety and moisture run-through before 2 October instead of squeezing it around his master's schedule. Did something change on his end, or did the extra hearing time make full-time make sense?",
+   "ok": null
+  },
+  {
+   "text": "What's special about our cat Miso?",
+   "reply": "What I have from you, Noor: Miso is your cat, and Miso is deaf. That's the main thing you've told me — I'd guess the deafness is the special part. Did something change, or were you just checking what stuck?",
+   "ok": true
+  },
+  {
+   "text": "What's the capital of Kazakhstan these days?",
+   "reply": "Astana again — Kazakhstan renamed the capital Nur-Sultan in 2019 after the former president, then changed it back to Astana in 2022. So \"these days,\" it's Astana. (And I notice a stray bit of garbled text slipped into one of my earlier replies — apologies for that.)",
+   "ok": null
+  },
+  {
+   "text": "Football moved to Monday nights.",
+   "reply": "So the Thursday five-a-side is now a Monday five-a-side — that's a real change from what I had, Noor. It does untangle one thing, actually: if football moved off Thursday, the hearing week gets a bit less cramped. Is the move permanent, or just this week?",
+   "ok": null
+  },
+  {
+   "text": "Who is my biggest client?",
+   "reply": "Woonstad — the Rotterdam housing corporation. That's been your biggest client for a while now, and it's the one tied to the Hout Hof timber block work. Brood & Zo's shopfront is the smaller side of things.",
+   "ok": true
+  },
+  {
+   "text": "Give me a mnemonic for the planets.",
+   "reply": "\"My Very Easy Method Just Speeds Up Naming\" — Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.\n\nRandom detour, but it suits a September brain trying to keep the hearing date straight too.",
+   "ok": null
+  },
+  {
+   "text": "Which bank is my business account with?",
+   "reply": "Bunq — your business account is with Bunq, per what you told me about your setup with Bram handling invoicing and payments.",
+   "ok": true
+  },
+  {
+   "text": "What's the best way to clean a chain on a bike?",
+   "reply": "Degrease, then relube. Best done with the chain on the bike and a chain-cleaning tool or an old toothbrush: scrub it with degreaser (bike-specific or even diesel diluted), rinse with water, dry it thoroughly with a rag, then apply lube drop by drop on the rollers while backpedalling, wipe off the excess, and leave it a few minutes before riding.\n\nChain-keeper trick: it's not oil amount, it's wiping — excess lube just collects grit and wears the drivetrain faster. Dead giveaway it's due: black grime band on your finger or a \"dry squeak\" when pedalling.\n\nGiven your 40-minute Delfshaven commute, roughly once every two weeks in dry weather, more often after rain. Quick wipe with a rag after wet rides saves you the full degrease.",
+   "ok": null
+  },
+  {
+   "text": "Is there any food I must avoid?",
+   "reply": "The one I know of is your shellfish allergy — shrimp, mussels, that whole family, so out they go as far as I'm concerned. Beyond that, nothing you've told me suggests food to avoid. If something's changed or there's anything new, I'd rather hear it straight than guess.",
+   "ok": true
+  },
+  {
+   "text": "What are my open to-dos?",
+   "reply": "I should be upfront: I don't keep a live to-do list for you — that list lives on your side, and I can't manage it between chats. But from what I remember, these threads are still open:\n\n- **Hout Hof hearing prep** — the big one. Documents for Daan to review, and a full run-through of fire-safety and moisture questions. Though whether that's before 14 September or 2 October is scrambled in my head: you told me 14 September, but I have the hearing postponed to 2 October. Worth you settling that.\n- **Whether the Friday hearing breaks your no-client-calls rule** — we left that undecided.\n- **The €95/hour thing** — you mentioned €95 to Woonstad, but my notes have the rate raised to €110 this week. One of us is off.\n- **Football** — is the move to Monday nights permanent, or just this week?\n- **Half marathon** — October is coming fast; training is ongoing.\n- Smaller ones: confirming Daan's full-time move details, and the Izmir wedding logistics are still up in the air.\n\nWhat's actually on your list right now?",
+   "ok": false
+  },
+  {
+   "text": "How do passive houses stay warm?",
+   "reply": "Three big levers, Noor: a super-insulated, airtight envelope; elimination of thermal bridges; and mechanical ventilation with heat recovery (WTW), which preheats incoming air using the warmth of the exhaust air. The result is that a passive house loses very little heat — internal gains from people, appliances and sun through south-facing windows are often enough. Typically triple glazing, insulated slab and roof, taped airtightness layer, and a target under 0.6 blower-door tests. Handy background if Woonstad ever pushes toward passive-standaard on a housing block.",
+   "ok": null
+  },
+  {
+   "text": "How many days a week does Daan work now?",
+   "reply": "Five days now — Daan went up from three days a week to full-time as of this week, while still doing his master's at TU Delft. You haven't mentioned what prompted the change, actually. handy though, since he could help pull the Hout Hof docs before the hearing.",
+   "ok": true
+  },
+  {
+   "text": "What car do I drive?",
+   "reply": "From what I've got, Noor: an old red Volvo — you said you drive it only for site visits, and mostly you bike to the studio. Is that right?",
+   "ok": true
+  },
+  {
+   "text": "Any tips for a stiff neck from drawing all day?",
+   "reply": "Drawing posture is the usual culprit — chest over the board, neck craned down. A few things:\n\n- Raise the board or screen tilted toward you so your head drops less; aim for work at roughly 15–20° below eye level rather than flat on a desk.\n- Chin tucks: gently draw your head back (make a \"double chin\"), hold 5 seconds, repeat 10 times, a few times a day. It counteracts the forward-head drift.\n- Upper trap stretch: sit on one hand, tilt your head away from that side, 30 seconds each side. Same rule as the hamstring stretch I gave you — no bouncing.\n- Every 45 minutes or so, stand and do a few slow shoulder rolls. Set a timer; deadlines make this easy to forget.\n- Check your chair height too — if your elbows aren't roughly level with the drawing surface, your shoulders creep up and the neck follows.\n\nIf it's sharp pain, numbness, or running down an arm, that's a physiotherapist rather than stretches. Otherwise this usually settles within a week or two of better setup plus the breaks.",
+   "ok": null
+  },
+  {
+   "text": "What race am I training for?",
+   "reply": "The October Rotterdam half marathon, Noor — that's the one you've been building toward, with the hamstring work and the football helping your base. Still on track for it?",
+   "ok": true
+  },
+  {
+   "text": "Which languages do I speak?",
+   "reply": "You've told me three: Dutch (from Rotterdam, family context), Turkish (your mother's in Ankara), and English at a fluent working level — plus your own admission that your French is terrible. So: three you speak, one you gave up on.",
+   "ok": true
+  },
+  {
+   "text": "What year did the Van Nelle factory become a UNESCO site?",
+   "reply": "2014 — it was inscribed as a UNESCO World Heritage site that year, alongside the Van Nelle's fellow \"factories of the early 20th century\" recognition. Fitting that it's your favourite, Noor; the curtain-wall design earned it.",
+   "ok": null
+  },
+  {
+   "text": "What does Brood & Zo want from me?",
+   "reply": "From what you've told me, Noor: Brood & Zo is your bakery client, and they want a new shopfront for their shop. That's the extent of what I have — I don't know the scope, budget, or timeline yet. Is that still the ask, or has the brief changed since we last talked about it?",
+   "ok": true
+  },
+  {
+   "text": "Who are the people you know about in my life and what do they do?",
+   "reply": "Here's who I know about in your world, Noor:\n\n- **Elif** — your fiancée; a pediatric nurse at Erasmus MC. You're marrying next June in Izmir.\n- **Daan** — your assistant at Kade Studio, studying architecture at TU Delft, now full-time (five days) as of this week.\n- **Your mother** — lives in Ankara; you visit twice a year.\n- **Bram** — your accountant, handles invoicing and payments at tax time.\n- **Woonstad** — the housing corporation, your biggest client, and behind the Hout Hof timber block project.\n- **Brood & Zo** — the bakery wanting a new shopfront.\n\nThat's the circle as I have it — anyone I'm missing, or anything changed?",
+   "ok": true
+  },
+  {
+   "text": "Is it 'less' or 'fewer' with countable nouns?",
+   "reply": "Fewer with countable nouns (fewer meetings, fewer bricks), less with uncountable ones (less time, less water). The exception that trips people is things that are conceptually singular: \"less than ten kilometres\" is fine, though a stickler would say \"fewer than ten\".",
+   "ok": null
+  },
+  {
+   "text": "Summarise what you know about my work in a few sentences.",
+   "reply": "Here's my picture of your work: you run Kade Studio in Rotterdam as a freelance architect, with Woonstad as your biggest client — currently including the Hout Hof timber housing block, which has a hearing coming up — plus a smaller job designing the shopfront for Brood & Zo, the bakery. Daan, your assistant, is now with you full-time while studying at TU Delft, and you bike to the studio (Delfshaven, since the move) and take the old red Volvo for site visits, modelling in Rhino and Revit. One small thing I'd rather flag than gloss over: you mentioned €95/hour to Woonstad at one point, but I also have the rate raised to €110 this week — which one is right?",
+   "ok": true
+  },
+  {
+   "text": "What is the Woonstad project?",
+   "reply": "Woonstad is a Rotterdam housing corporation and Noor's biggest client at Kade Studio. The concrete project on the table is Hout Hof: a 120-unit timber housing block of theirs, which is what the 2 October omgevingsvergunning hearing is about — Noor's prepping for it, with Daan now full-time partly to help pull the hearing documents. One wrinkle: Noor once said the rate with Woonstad is €95/hour, but another record has it raised to €110 just this week with Woonstad's agreement, so I'd want to confirm which applies. Either way, that hearing prep is still the thread I'd pick up first.",
+   "ok": true
+  },
+  {
+   "text": "What's a good warm-up before a run?",
+   "reply": "Good question for training season, Noor. A solid warm-up is 5–10 minutes of easy jogging, then a few dynamic moves — leg swings, walking lunges, high knees, skipping — and 2–3 short strides at near-goal pace. Skip static stretching before running; save that (and your towel strap stretch) for after.\n\nGiven your hamstring tightness, pay extra attention to slow, controlled leg swings and lunges so it enters the run warm, not yanked cold. Good luck out there.",
+   "ok": null
+  },
+  {
+   "text": "Where does my mother live?",
+   "reply": "Ankara, as far as I have it — you told me she's there and you visit her twice a year. Still the case?",
+   "ok": true
+  },
+  {
+   "text": "Summarise what you know about my personal life.",
+   "reply": "Here's what I have, Noor: you're a freelance architect in Rotterdam running Kade Studio, now in Delfshaven after the move from Katendrecht. You're engaged to Elif, a pediatric nurse at Erasmus MC, marrying next June in Izmir. Your mother lives in Ankara and you visit her about twice a year. You speak Dutch, Turkish and English, and frankly call your French terrible. You're allergic to shellfish, you have Miso, your deaf cat, and you usually bike to the studio — the old red Volvo only comes out for site visits. Fridays are your sketching days with no client calls, and you play five-a-side football, though I have that as recently moved from Thursdays to Mondays.\n\nBeyond personal life you've shared work things: Woonstad is your biggest client, Daan went full-time this week, and the Hout Hof hearing prep is ongoing — though I still owe you a competent answer on that hearing date, 14 September vs 2 October, before I plan anything around it.\n\nIf anything there is stale, correct me — it's your life, I just hold the notes.",
+   "ok": true
+  },
+  {
+   "text": "How does a heat pump work, briefly?",
+   "reply": "A heat pump doesn't generate heat — it moves it. A refrigerant loop evaporates at low pressure outside (absorbing heat even from cold air), gets compressed, which raises its temperature, then condenses inside and releases that heat into your home. The process just powers the phase shifts with a compressor, though some carry-over from the tinier fridge version of this is unavoidable: same trick, run in reverse.\n\nThe bonus is efficiency: since you're transporting heat rather than making it, a decent unit can deliver 3–4 kWh of heat per kWh of electricity. Given the timber work you do on Hout Hof, you've probably crossed paths with these already.",
+   "ok": null
+  },
+  {
+   "text": "Which modelling tools do I use?",
+   "reply": "Rhino and Revit, as far as you've told me — no SketchUp, which you were quite firm about. That's still what I have on record; say the word if it's changed.",
+   "ok": true
+  },
+  {
+   "text": "When is the Hout Hof hearing now?",
+   "reply": "That's the one I've been meaning to pin down — I have two versions sitting in my head. Earlier you told me the hearing was postponed to Friday 2 October, but at another point you mentioned 14 September. Since we're at 11 September now, can you confirm which one stands? If it's the 14th, your prep window just shrank considerably and Daan's document pull becomes urgent.",
+   "ok": true
+  },
+  {
+   "text": "What's the Dutch word for a cat?",
+   "reply": "*kat* — plural *katten*, with the article *de*. So Miso would be *jee kat* — which is a nice word to have, *jee/kijí*. *older deaf cat* fits that too.",
+   "ok": null
+  },
+  {
+   "text": "Which day do I keep free of client calls?",
+   "reply": "Friday, Noor — your sketching day, no client calls. Though whether the Hout Hof hearing this Friday counts as an exception is still the open question, as far as I know.",
+   "ok": true
+  },
+  {
+   "text": "Which night is football now?",
+   "reply": "Monday, as far as I know — you told me it moved off Thursday to Monday nights. You never said whether that's permanent or just this week, though, so if it's shifted again, correct me.",
+   "ok": true
+  },
+  {
+   "text": "How do I convert square feet to square metres?",
+   "reply": "If it's an area you already have in square feet, multiply by 0.0929. So 1,000 sq ft ≈ 92.9 m². Handy one to remember for floor plans: roughly 10.8 sq ft per square metre. If you're converting linear feet first, remember you have to square the conversion — 3.28 ft per metre becomes 10.76 sq ft per square metre.",
+   "ok": null
+  },
+  {
+   "text": "What's my favourite building?",
+   "reply": "The Van Nelle factory — Brinkman & Van der Vlugt, late 1920s. You've mentioned it as your favourite before, and it came up again when we talked about its UNESCO listing. Still the right answer as far as I know, Noor.",
+   "ok": true
+  },
+  {
+   "text": "Give me a one-paragraph profile of me.",
+   "reply": "Here's what I know, Noor: you're a freelance architect running Kade Studio in Rotterdam, now based in Delfshaven after the move from Katendrecht, usually getting there by bike and saving the old red Volvo for site visits. Your biggest client is Woonstad — though I'd flag that we've said €110/hour as of this week, but €95 earlier, so that's worth pinning down — alongside smaller work like the Brood & Zo shopfront, and you're prepping for the Hout Hof hearing, whose date we still haven't settled (14 September or 2 October). Daan, your TU Delft assistant, just went full-time. On the personal side: you're engaged to Elif, marrying next June in Izmir; you speak Dutch, Turkish and English; you're allergic to shellfish; you keep Fridays for sketching and client-call-free time; you play five-a-side (recently moved to Mondays?); you're training for the October Rotterdam half marathon; and you model in Rhino and Revit on a ThinkPad — no Macs, no SketchUp — with a soft spot for the Van Nelle factory and a deaf cat named Miso waiting at home.",
+   "ok": true
+  },
+  {
+   "text": "Which is heavier, a litre of water or a litre of oil?",
+   "reply": "The water. A litre of any liquid fills the same volume, but oil is less dense (~0.92 kg/L) than water (1 kg/L), so a litre of water weighs about 8% more — roughly a kilogram versus 920 grams. It's also why oil floats on water.",
+   "ok": null
+  },
+  {
+   "text": "How long is my cycle to the studio now?",
+   "reply": "About 40 minutes by bike, Noor — since Kade Studio moved to Delfshaven, up from 25 in the Katendrecht days.",
+   "ok": true
+  },
+  {
+   "text": "What's my current hourly rate for Woonstad?",
+   "reply": "That's exactly the thing I was going to double-check with you, Noor. Earlier you told me €95/hour for Woonstad, but I also have it noted that the rate went up to €110 this week, with their agreement. So — is €110 the current one, or did that raise fall through and €95 still stands? I don't want to anchor fee or hearing-prep math on the wrong figure.",
+   "ok": false
+  },
+  {
+   "text": "Explain what an acoustic rating for a wall means.",
+   "reply": "An acoustic rating measures how well a wall blocks or absorbs sound. The main one for walls is sound insulation — how much sound it stops passing from one side to the other — expressed in dB reduction. In the Netherlands and most of Europe that's typically an Rw value (weighted sound reduction index);_mass helps: a heavy double-leaf party wall with mineral wool and a cavity outperforms a single stud wall by a wide margin. Ratings also account for the frequencies that matter most for human hearing — footsteps and speech need different treatment, which is why critical frequencies get weighted. For partitions between dwellings there are minimum legal standards in the Bouwbesluit/omgevingsregels, usually around 30+ dB for party walls, and a rating is verified in lab or field tests. If this is for the Hout Hof timber block, that's worth flagging: lightweight timber construction is the classic challenge for party-wall acoustics, since it lacks the mass of concrete — the detail build-up is what earns the rating, not the material alone.",
+   "ok": null
+  },
+  {
+   "text": "Where and when is the wedding?",
+   "reply": "Izmir, next June — I don't have an exact date on file, just that it's June. If it's actually set in stone now, I'd love to know when. And congratulations again, Noor.",
+   "ok": true
+  },
+  {
+   "text": "Who does my taxes?",
+   "reply": "Bram handles your taxes, Noor — you've mentioned him before as your accountant for invoicing, payments, and the returns due end of April.",
+   "ok": true
+  },
+  {
+   "text": "What's the plural of 'moose'?",
+   "reply": "\"Moose\" — same for singular and plural. No \"meese,\" no \"mooses\"; the word took Goose's irregularity away from goose itself. So one moose, three moose.Still meese, plural? No — here it's straightforward: \"moose\" doesn't take the goose/-oose shift, so three moose is the correct plural.Just \"moose,\" unfortunately — no \"meese.\" Goose → geese, but moose → moose. Blame it being a borrowed Algonquian word that never picked up English's irregular plurals.",
+   "ok": null
+  },
+  {
+   "text": "Where is Daan studying?",
+   "reply": "Daan's at TU Delft, studying architecture — well, a master's there, as I recall you mentioning. Sounds like the Delft-Rotterdam combo is working out; between his study days and now full-time at Kade Studio.",
+   "ok": true
+  },
+  {
+   "text": "What laptop do I use?",
+   "reply": "You've told me before — a ThinkPad. You're firmly a ThinkPad person and down on Macs, which fits given you model in Rhino and Revit and don't need more than that. Unless you've switched recently?",
+   "ok": true
+  },
+  {
+   "text": "Any idea why my sourdough is so dense?",
+   "reply": "Dense sourdough almost always comes down to under-fermentation. If your starter isn't fully active — doubled, bubbly, peaking predictably — the dough won't have the lift. Second suspect: cold dough. Prove it warmer, like 24–26°C, until it's visibly puffy and passes a poke test (dent springs back slowly, not instantly).\n\nA few others: too little water for your flour (wholegrain soaks a lot — try +5%), weak shaping that collapses the crumb, or cutting too early. And if your starter's new or recently revived from the fridge, give it a couple of feedings before relying on it.\n\nHonestly, the quickest diagnostic: how long did you bulk ferment, and how warm was the room? Tell me that and I can narrow it down.",
+   "ok": null
+  }
+ ]
+}

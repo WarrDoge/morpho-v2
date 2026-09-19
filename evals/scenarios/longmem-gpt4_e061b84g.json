@@ -1,0 +1,104 @@
+{
+ "cycle_every": 5,
+ "turns": [
+  {
+   "text": "[2023/06/02 (Fri) 16:04] I'm looking for some new bike routes to try out. Do you have any suggestions for trails around the city? By the way, I just completed the Spring Sprint Triathlon today, which included a 20K bike ride, and I'm itching to get back on my bike.",
+   "session": "answer_8c64ce26_2",
+   "tag": "fact"
+  },
+  {
+   "text": "That's helpful, thanks! I've been thinking of exploring the waterfront path, but I was wondering if you know if it's open to cyclists during the week, or is it more of a weekend thing?",
+   "session": "answer_8c64ce26_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I was thinking of exploring the waterfront path on Thursday evening, after my volleyball league game.",
+   "session": "answer_8c64ce26_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I was thinking of maybe stopping by a cafe or restaurant along the waterfront to grab a bite to eat after my ride. Do you have any recommendations for good places to eat around there?",
+   "session": "answer_8c64ce26_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm thinking of trying out a seafood restaurant I saw along the waterfront. I've been craving some fish and chips after that intense bike ride.",
+   "session": "answer_8c64ce26_2",
+   "tag": "fact"
+  },
+  {
+   "text": "I might ask the restaurant if they have any outdoor seating available, so I can keep an eye on my bike while I eat.",
+   "session": "answer_8c64ce26_2",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/06/10 (Sat) 08:20] I'm looking for some new running shoes. I just finished a 5K run with a personal best time of 27 minutes and 42 seconds at the Midsummer 5K Run, and I think it's time to upgrade my gear. Can you recommend some good running shoes for racing?",
+   "session": "answer_8c64ce26_1",
+   "tag": "fact"
+  },
+  {
+   "text": "What's the main difference between the Nike Vaporfly Next% and the Adidas Adizero Adios in terms of cushioning and responsiveness?",
+   "session": "answer_8c64ce26_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I tend to land midfoot when I run, so I think the Vaporfly might be a good fit for me. Can you tell me more about the sizing and fit of the Vaporfly Next%?",
+   "session": "answer_8c64ce26_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I've heard that the Vaporfly Next% is a great shoe for racing, but I'm not sure if it's suitable for my regular training runs. Can you tell me if it's durable enough for high-mileage training or if it's more of a niche shoe for racing only?",
+   "session": "answer_8c64ce26_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm planning to use the Vaporfly Next% for my speed workouts and shorter races, but I'll need a more durable shoe for my regular training runs. Can you recommend a good shoe for high-mileage training that can handle my weekly mileage of around 60-70 miles?",
+   "session": "answer_8c64ce26_1",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm thinking of getting the Brooks Ghost, but I've heard that it's a bit heavier than some other shoes. Will the weight of the shoe affect my performance, and are there any other factors I should consider when choosing a high-mileage shoe?",
+   "session": "answer_8c64ce26_1",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/06/17 (Sat) 09:18] I'm looking for some tips on injury prevention and recovery strategies for soccer players. I will participate in the company's annual charity soccer tournament today, and I want to make sure I'm taking care of myself.",
+   "session": "answer_8c64ce26_3",
+   "tag": "fact"
+  },
+  {
+   "text": "What are some exercises I can do to improve my soccer skills, specifically my shooting and dribbling?",
+   "session": "answer_8c64ce26_3",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm also interested in learning more about the nutrition aspect of injury prevention and recovery. What are some foods that can help with muscle recovery and inflammation?",
+   "session": "answer_8c64ce26_3",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm interested in learning more about the importance of hydration for athletes. Can you explain how dehydration affects athletic performance and how I can ensure I'm properly hydrated during the charity soccer tournament?",
+   "session": "answer_8c64ce26_3",
+   "tag": "fact"
+  },
+  {
+   "text": "What about electrolytes? I've heard they're important for hydration, but I'm not sure how to incorporate them into my hydration plan.",
+   "session": "answer_8c64ce26_3",
+   "tag": "fact"
+  },
+  {
+   "text": "I'm looking for some advice on how to stay focused and motivated during the charity soccer tournament. Can you provide some tips on how to maintain my mental toughness and stay in the right mindset?",
+   "session": "answer_8c64ce26_3",
+   "tag": "fact"
+  },
+  {
+   "text": "[2023/07/01 (Sat) 06:58] I mentioned participating in a sports event two weeks ago. What was the event?",
+   "session": "probe",
+   "tag": "probe",
+   "judge": "PASS if the reply states this, in any wording: \"The company's annual charity soccer tournament.\". FAIL if it contradicts it, leaves it out, or says it does not know.",
+   "refs": [
+    12
+   ]
+  }
+ ]
+}
